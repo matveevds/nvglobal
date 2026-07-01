@@ -3,6 +3,65 @@
 Template Name: Hero Variant 2 — Video RAF Smoothing
 Template Post Type: page
 */
+
+/* =============================================================================
+ * АНИМАЦИЯ ПЕРВОГО БЛОКА (.hero) — ВОСПРОИЗВЕДЕНИЕ ВИДЕО ПО СКРОЛЛУ (метод RAF)
+ * Демо: /main-2/
+ * -----------------------------------------------------------------------------
+ * Как и в первом методе (/main-1/), фоновое видео (video/main_bg.mp4) не играет
+ * само — его кадр (video.currentTime) управляется позицией скролла. Секция
+ * «залипает» (pin), пока ролик не проиграется целиком; заголовок и градиент при
+ * этом синхронно уезжают влево и гаснут; только потом страница листается дальше.
+ *
+ * Библиотеки: GSAP + ScrollTrigger. Код — во встроенном <script> в конце файла.
+ *
+ * Архитектура «scroll = намерение, RAF = исполнение» (3 слоя):
+ *   СЛОЙ 1 — SCROLL: ScrollTrigger закрепляет .hero и пишет ТОЛЬКО
+ *     targetProgress = self.progress. Длина закрепления (end) пропорциональна
+ *     длительности видео (duration * PX_PER_SEC), чтобы ролик успевал проиграться
+ *     и его нельзя было проскочить одним движением колеса.
+ *   СЛОЙ 2 — TIMELINE CONTROLLER: RAF-цикл animate() плавно догоняет цель
+ *     currentProgress += (targetProgress - currentProgress) * EASE, с ограничением
+ *     скорости за кадр (MAX_STEP) => монотонно, без рывков.
+ *   СЛОЙ 3 — RENDER: renderVideo() двигает currentTime (только когда предыдущий
+ *     seek завершён — if (!video.seeking) — иначе <video> не успевает отрисовать
+ *     кадр); renderFades() уводит заголовок/градиент.
+ *
+ * -----------------------------------------------------------------------------
+ * ЧЕМ ЭТОТ МЕТОД ОТЛИЧАЕТСЯ ОТ ПЕРВОГО (/main-1/)
+ * -----------------------------------------------------------------------------
+ * Изначально задумка была разной:
+ *   - Метод 1 («direct») — currentTime выставлялся НАПРЯМУЮ из ScrollTrigger,
+ *     жёстко привязанным к позиции скролла.
+ *   - Метод 2 («RAF smoothing») — scroll задаёт лишь ЦЕЛЬ, а отдельный RAF-цикл
+ *     с инерцией плавно её догоняет (сглаживание, отсутствие рывков).
+ * В процессе отладки метод 1 тоже пришёл к RAF-сглаживанию + seek-gate (иначе
+ * видео дёргалось и «прыгало»). Поэтому СЕЙЧАС оба метода технически почти
+ * идентичны и ведут себя одинаково — это ожидаемый результат сравнения.
+ * Принципиальные отличия остаются у метода 3 (рендер видео в <canvas>) и
+ * метода 4 (последовательность JPG-кадров вместо видео).
+ *
+ * -----------------------------------------------------------------------------
+ * МОЖНО ЛИ МЕНЯТЬ СКОРОСТЬ ВИДЕО В ЗАВИСИМОСТИ ОТ СКОРОСТИ ПРОКРУТКИ?
+ * -----------------------------------------------------------------------------
+ * Да, и по сути так уже и работает. Скорость видео = d(currentTime)/dt зависит от
+ * того, насколько currentProgress отстаёт от targetProgress: чем быстрее крутишь,
+ * тем больше разрыв и тем быстрее идёт ролик — вплоть до потолка, заданного
+ * MAX_STEP. Настройка поведения:
+ *   - EASE (сейчас 0.10) — «резкость» догоняния. Больше => видео живее реагирует
+ *     на скролл, но менее плавно; меньше => мягче/инертнее.
+ *   - MAX_STEP (сейчас 0.05) — максимальная скорость перемотки за кадр (потолок).
+ *     Больше => при быстром скролле видео может лететь заметно быстрее реального
+ *     времени; меньше => сильнее «придерживает».
+ * Если нужно НАОБОРОТ жёстко ограничить максимум нормальной скоростью (1×,
+ * «не быстрее обычного воспроизведения»), MAX_STEP нужно сделать зависящим от
+ * реального времени кадра: maxStep = (1.0 * dt_сек) / duration (dt берётся из
+ * метки времени requestAnimationFrame). Тогда как бы быстро ни крутили, ролик не
+ * пойдёт быстрее 1× (но при очень быстром скролле будет «доигрывать» уже после
+ * остановки). Технически это ограничение сверху; «ускорять выше 1×» — это как раз
+ * текущее поведение с фиксированным MAX_STEP.
+ * ============================================================================= */
+
 get_header(); ?>
 
 <main>
@@ -2325,7 +2384,19 @@ get_header(); ?>
         heroWrapper.style.opacity  = 1;
         heroGradient.style.opacity = 1;
 
+        // ---- Диагностика ----
+        var DEBUG = true;
+        function log() {
+            if (!DEBUG) return;
+            var a = ['%c[hero-v2]', 'color:#06c;font-weight:bold'];
+            for (var i = 0; i < arguments.length; i++) a.push(arguments[i]);
+            console.log.apply(console, a);
+        }
+        log('init', { readyState: video.readyState, duration: video.duration });
+
         video.pause();
+        video.muted = true;
+        video.playsInline = true;
 
         /* =====================================================================
            СЛОЙ 2 — TIMELINE CONTROLLER (единый animation clock)
@@ -2333,28 +2404,47 @@ get_header(); ?>
            ===================================================================== */
         var targetProgress  = 0;   // вход:  куда хочет скролл
         var currentProgress = 0;   // выход: что реально показываем
-        var EASE     = 0.08;       // lerp smoothing
-        var MAX_STEP = 0.02;       // velocity limit — макс. изменение прогресса за кадр
+        var EASE     = 0.10;       // lerp smoothing
+        var MAX_STEP = 0.05;       // velocity limit — макс. изменение прогресса за кадр
+        var started  = false;
+        var frameTick = 0;
 
         function animate() {
             requestAnimationFrame(animate);
 
             var delta = (targetProgress - currentProgress) * EASE;
-            if (delta >  MAX_STEP) delta =  MAX_STEP;
+            if (delta >  MAX_STEP) delta =  MAX_STEP;   // velocity limit — строго монотонно
             if (delta < -MAX_STEP) delta = -MAX_STEP;
             currentProgress += delta;
 
             render(currentProgress);
+
+            if (DEBUG && (frameTick++ % 30 === 0) && Math.abs(targetProgress - currentProgress) > 0.002) {
+                log('tick', {
+                    target: +targetProgress.toFixed(3),
+                    current: +currentProgress.toFixed(3),
+                    currentTime: +video.currentTime.toFixed(3),
+                    duration: +(video.duration || 0).toFixed(3),
+                    seeking: video.seeking
+                });
+            }
         }
 
         /* =====================================================================
            СЛОЙ 3 — RENDER ENGINE (ничего не знает о scroll)
            ===================================================================== */
+        var desiredTime = 0;
         function renderVideo(progress) {
             var d = video.duration;
-            if (!isFinite(d) || d <= 0) return;
-            // currentTime меняется ТОЛЬКО здесь, на заклампленную дельту => нет seek-jump
-            try { video.currentTime = progress * d; } catch (e) {}
+            if (!isFinite(d) || d <= 0) { log('renderVideo: duration не готова', d); return; }
+            var t = progress * d;
+            if (t < 0) t = 0; else if (t > d) t = d;
+            desiredTime = t;
+            // ВАЖНО: сикаем только когда предыдущий seek завершён — иначе <video> постоянно
+            // в состоянии seeking и не успевает отрисовать кадр (видео визуально «не играет»).
+            if (!video.seeking) {
+                try { video.currentTime = t; } catch (e) { log('seek error', e); }
+            }
         }
         function renderFades(progress) {
             gsap.set(heroWrapper,  { x: -500 * progress, opacity: 1 - progress });
@@ -2368,35 +2458,65 @@ get_header(); ?>
         /* =====================================================================
            СЛОЙ 1 — SCROLL (GSAP ScrollTrigger: ТОЛЬКО progress + pin)
            ===================================================================== */
-        function buildScroll() {
+        // Длина прокрутки привязана к длительности видео, чтобы клип успел проиграться
+        // целиком по мере скролла (иначе на 1 экране 6-секундное видео не «докручивается»).
+        var PX_PER_SEC = 600;
+        function computeScrollLen() {
             var height = heroSection.offsetHeight;
+            var dur    = (isFinite(video.duration) && video.duration > 0) ? video.duration : 1;
+            return Math.max(height, Math.round(dur * PX_PER_SEC));
+        }
+
+        function buildScroll() {
+            log('buildScroll', { heroHeight: heroSection.offsetHeight, duration: video.duration, scrollLen: computeScrollLen() });
             ScrollTrigger.create({
                 id: 'hero-video-raf',
                 trigger: heroSection,
                 start: 'top top',
-                end: '+=' + height,            // длина scroll = высота hero (scroll-lock)
+                end: function () { return '+=' + computeScrollLen(); },  // пересчёт при refresh
                 pin: true,
                 pinSpacing: true,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
                 onUpdate: function (self) {
                     targetProgress = self.progress;   // scroll = intention, и только
+                },
+                onToggle: function (self) {
+                    log('pin toggle -> active =', self.isActive);
+                },
+                onRefresh: function (self) {
+                    log('refresh -> start/end px', Math.round(self.start), Math.round(self.end),
+                        'distance =', Math.round(self.end - self.start));
                 }
             });
             requestAnimationFrame(function () { ScrollTrigger.refresh(); });
         }
 
         function start() {
+            if (started) return;
+            started = true;
+            log('start', { duration: video.duration, readyState: video.readyState,
+                           videoW: video.videoWidth, videoH: video.videoHeight });
             try { video.currentTime = 0; } catch (e) {}  // первый кадр видео, без poster/заставки
             render(0);
             buildScroll();
             requestAnimationFrame(animate);   // RAF = execution
         }
 
+        video.addEventListener('seeked', function () {
+            if (DEBUG && frameTick < 3) log('seeked ->', +video.currentTime.toFixed(3));
+        });
+        video.addEventListener('durationchange', function () {
+            log('durationchange ->', video.duration);
+            if (started) ScrollTrigger.refresh();   // пересчитать длину pin под реальную duration
+        });
+
         if (isFinite(video.duration) && video.duration > 0) {
             start();
         } else {
+            log('duration ещё не готова, ждём loadedmetadata...');
             video.addEventListener('loadedmetadata', start, { once: true });
+            setTimeout(function () { if (!started) { log('fallback start по таймауту'); start(); } }, 3000);
         }
 
         if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
