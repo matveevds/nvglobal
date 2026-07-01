@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/quote",
+  "title": "Цитата",
+  "description": "Блок для оформления цитат с указанием автора и его должности.",
+  "icon": "format-quote",
+  "category": "neurovision",
+  "keywords": ["цитата", "quote", "цитирование", "автор", "высказывание"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "quote.php",
+    "jsx": true
+  },
+  "style": "file:./quote.css",
+  "editorStyle": "file:./quote.editor.css"
+}

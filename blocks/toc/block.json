@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/toc",
+  "title": "Оглавление",
+  "description": "Автоматическое оглавление из заголовков H2–H3 в тексте записи.",
+  "icon": "list-view",
+  "category": "neurovision",
+  "keywords": ["toc", "оглавление", "список", "навигация"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "toc.php"
+  },
+  "style": "file:./toc.css",
+  "editorStyle": "file:./toc.editor.css"
+}

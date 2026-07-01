@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/single-image",
+  "title": "Одиночное изображение",
+  "description": "Блок вывода одного изображения с подписью и источником.",
+  "icon": "format-image",
+  "category": "neurovision",
+  "keywords": ["image", "single", "изображение", "картинка"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "single-image.php",
+    "jsx": true
+  },
+  "style": "file:./single-image.css",
+  "editorStyle": "file:./single-image.editor.css",
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"]
+  }
+}

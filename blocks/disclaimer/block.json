@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/disclaimer",
+  "title": "Дисклеймер",
+  "description": "Информационный блок для юридических предупреждений, условий и ограничений ответственности.",
+  "icon": "warning",
+  "category": "neurovision",
+  "keywords": ["disclaimer", "дисклеймер", "предупреждение", "юридическая информация", "note"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "disclaimer.php",
+    "jsx": true
+  },
+  "style": "file:./disclaimer.css",
+  "editorStyle": "file:./disclaimer.editor.css"
+}

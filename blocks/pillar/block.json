@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/pillar",
+  "title": "Шкала",
+  "description": "Столбец диаграммы",
+  "icon": "chart-bar",
+  "category": "neurovision",
+  "keywords": ["pillar", "столбец", "Шкала"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "pillar.php",
+    "jsx": true
+  },
+  "style": "file:./pillar.css",
+  "editorStyle": "file:./pillar.editor.css"
+}

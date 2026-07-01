@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/stages",
+  "title": "Этапы (timeline)",
+  "description": "Этапы timeline",
+  "icon": "arrow-down-alt",
+  "category": "neurovision",
+  "keywords": ["timeline", "этапы"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "stages.php",
+    "jsx": true
+  },
+  "style": "file:./stages.css",
+  "editorStyle": "file:./stages.editor.css"
+}

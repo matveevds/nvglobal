@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/slider",
+  "title": "Слайдер",
+  "description": "Слайдер изображений",
+  "icon": "format-gallery",
+  "category": "neurovision",
+  "keywords": ["slider", "слайдер", "images"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "slider.php",
+    "jsx": true
+  },
+  "style": "file:./slider.css",
+  "editorStyle": "file:./slider.editor.css",
+  "script": "file:./slider.js",
+  "editorScript": "file:./slider.js"
+}

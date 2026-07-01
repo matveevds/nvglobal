@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/result",
+  "title": "Вывод",
+  "description": "Этапы timeline",
+  "icon": "analytics",
+  "category": "neurovision",
+  "keywords": ["result", "итог", "вывод"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "result.php",
+    "jsx": true
+  },
+  "style": "file:./result.css",
+  "editorStyle": "file:./result.editor.css"
+}

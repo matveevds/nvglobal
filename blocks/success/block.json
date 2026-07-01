@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/success",
+  "title": "Врезка: успех",
+  "description": "Врезка для отображения успешных действий, подтверждений и положительных уведомлений.",
+  "icon": "yes-alt",
+  "category": "neurovision",
+  "keywords": ["success", "успех", "подтверждение", "уведомление", "positive"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "success.php",
+    "jsx": true
+  },
+  "style": "file:./success.css",
+  "editorStyle": "file:./success.editor.css"
+}

@@ -1,0 +1,71 @@
+.post_content .nv-single-image {
+  margin: 12px 0 40px;
+}
+.nv-single-image {
+  
+}
+.nv-single-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nv-single-image__wrapper {
+
+}
+
+
+.nv-single-image__img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.nv-single-image__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.nv-single-image__caption {
+  color: var(--Text-White, #FBFBFB);
+  text-align: center;
+  font-size: var(--Text-Body-Text-Size-Regular, 16px);
+  width: 100%;
+}
+
+.nv-single-image__source {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nv-single-image__source,
+.nv-single-image__source a {
+  color: var(--Text-White, #FBFBFB);
+  font-size: var(--Text-Button-Size-Small, 14px);
+  font-weight: 700;
+}
+
+.nv-single-image__source a {
+  text-decoration: none;
+}
+
+.nv-single-image__source-link {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.nv-single-image__source-link:hover {
+  color:#F9AA66;
+  text-decoration: underline;
+}
+
+.nv-single-image__source-link:hover svg path {
+  fill:#F9AA66;
+}

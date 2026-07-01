@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/two-images",
+  "title": "Две картинки",
+  "description": "Блок из двух изображений рядом",
+  "icon": "format-gallery",
+  "category": "neurovision",
+  "keywords": ["images", "gallery", "two"],
+  "supports": {
+    "align": ["wide", "full"]
+  },
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "two-images.php",
+    "jsx": true
+  },
+  "style": "file:./two-images.css",
+  "editorStyle": "file:./two-images.editor.css"
+}

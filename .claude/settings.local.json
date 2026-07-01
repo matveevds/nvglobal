@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -nE \"\\\\.hero\\(__|_| |\\\\{|\\\\.|,\\)|#heroCanvas\" css/styles.css)",
+      "Bash(cp main-page.php main-page-video-scroll.php)",
+      "Bash(cp main-page.php main-page-video-raf.php)",
+      "Bash(cp main-page.php main-page-canvas-video.php)",
+      "Bash(cp main-page.php main-page-lite-images.php)",
+      "Bash(git --version)",
+      "Bash(gh auth *)",
+      "Bash(git config *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m 'Initial commit: NVGlobal WordPress theme *)"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/code",
+  "title": "Блок кода",
+  "description": "Блок кода для отображения",
+  "icon": "editor-code",
+  "category": "neurovision",
+  "keywords": ["code", "блок", "код"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "code.php",
+    "jsx": true
+  },
+  "style": "file:./code.css",
+  "editorStyle": "file:./code.editor.css"
+}

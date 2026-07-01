@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/about",
+  "title": "Врезка о нас",
+  "description": "",
+  "icon": "archive",
+  "category": "neurovision",
+  "keywords": ["about", "О нас"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "about.php",
+    "jsx": true
+  },
+  "example": {
+    "attributes": {
+      "data": {
+        "text_content": "<p>Описание</p>",
+        "ssylka_na_istochnik": "",
+        "tekst_ssylki": ""
+      }
+    }
+  },
+  "style": "file:./about.css",
+  "editorStyle": "file:./about.editor.css"
+}

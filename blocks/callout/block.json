@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/callout",
+  "title": "Коммерческая врезка",
+  "description": "Нейтральная врезка для дополнительной информации, комментариев и уточнений.",
+  "icon": "info-outline",
+  "category": "neurovision",
+  "keywords": ["callout", "врезка"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "callout.php",
+    "jsx": true
+  },
+  "style": "file:./callout.css",
+  "editorStyle": "file:./callout.editor.css"
+}

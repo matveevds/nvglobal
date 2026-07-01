@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/note",
+  "title": "Примечание",
+  "description": "Нейтральная врезка для дополнительной информации, комментариев и уточнений.",
+  "icon": "info-outline",
+  "category": "neurovision",
+  "keywords": ["note", "примечание", "инфо", "информация", "message"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "note.php",
+    "jsx": true
+  },
+  "example": {
+    "attributes": {
+      "data": {
+        "text_content": "<p><strong>Примечание:</strong> пример текста для превью блока.</p>",
+        "ssylka_na_istochnik": "",
+        "tekst_ssylki": ""
+      }
+    }
+  },
+  "style": "file:./note.css",
+  "editorStyle": "file:./note.editor.css"
+}

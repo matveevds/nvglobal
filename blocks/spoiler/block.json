@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/spoiler",
+  "title": "Спойлер",
+  "description": "Раскрывающийся спойлер",
+  "icon": "editor-insertmore",
+  "category": "neurovision",
+  "keywords": ["spoiler", "спойлер", "toggle", "accordion", "faq"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "spoiler.php",
+    "jsx": true
+  },
+  "style": "file:./spoiler.css",
+  "editorStyle": "file:./spoiler.editor.css",
+  "script": "file:./spoiler.js",
+  "editorScript": "file:./spoiler.js"
+}

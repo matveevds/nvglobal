@@ -1,0 +1,118 @@
+.post__content .callout  {
+  margin-bottom: 32px;
+}
+
+.callout {
+    
+
+}
+
+.callout__wrapper {
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background: var(--Main-Grad, linear-gradient(104deg, #FE7338 0%, #EA3700 100%));
+    gap:24px;
+}
+
+.callout__icon {
+    width: 64px;
+    height: 64px;
+}
+
+.callout__content {
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+}
+
+.callout__title {
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 116.667%;
+}
+
+.post__content .callout__text p{
+    color: var(--Secondary-White, #FFF);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+.post__content .callout-btn {
+    padding: 12px 12px 12px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
+    background: var(--Secondary-White, #FFF);
+    display: flex;
+    gap:8px;
+    align-self: flex-end;
+    max-width: unset;
+    width: fit-content;
+}
+
+.post__content .callout-btn:hover,
+.post__content .callout-btn:focus,
+.post__content .callout-btn:active {
+    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
+    opacity: 0.8;
+    background: var(--Secondary-White, #FFF);
+}
+@media (hover: none) {
+  .post__content .callout-btn:hover {
+    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
+    opacity: 1;
+    background: #fff;
+  }
+}
+
+.callout-btn span {
+    color: var(--Secondary-Black, #2E2E2E);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 150%;
+}
+
+
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+    
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+
+}
+
+@media (max-width: 767.98px) {
+
+}
+
+@media (max-width: 575.98px) {
+  .callout__wrapper {
+    padding: 16px;
+  }
+  .post__content .callout__text p {
+    font-size: 16px;
+  }
+
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/tabs",
+  "title": "Табы",
+  "description": "Вкладки с контентом",
+  "icon": "index-card",
+  "category": "neurovision",
+  "keywords": ["tabs", "вкладки"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "tabs.php",
+    "jsx": true
+  },
+  "style": "file:./tabs.css",
+  "editorStyle": "file:./tabs.editor.css",
+  "script": "file:./tabs.js"
+}

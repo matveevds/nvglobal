@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/warning",
+  "title": "Врезка: предупреждение",
+  "description": "Врезка для выделения важных предупреждений и критической информации.",
+  "icon": "warning",
+  "category": "neurovision",
+  "keywords": ["warning", "предупреждение", "alert", "врезка", "notice"],
+  "acf": {
+    "mode": "auto",
+    "renderTemplate": "warning.php",
+    "jsx": true
+  },
+  "style": "file:./warning.css",
+  "editorStyle": "file:./warning.editor.css"
+}
