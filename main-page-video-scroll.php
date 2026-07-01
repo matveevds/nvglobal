@@ -2370,7 +2370,7 @@ get_header(); ?>
         heroGradient.style.opacity = 1;
 
         // ---- Диагностика ----
-        var DEBUG = true;
+        var DEBUG = false;   // служебный вывод в консоль отключён
         function log() {
             if (!DEBUG) return;
             var a = ['%c[hero-v1]', 'color:#0a0;font-weight:bold'];
