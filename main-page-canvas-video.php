@@ -2329,7 +2329,19 @@ get_header(); ?>
         heroWrapper.style.opacity  = 1;
         heroGradient.style.opacity = 1;
 
+        // ---- Диагностика ----
+        var DEBUG = true;
+        function log() {
+            if (!DEBUG) return;
+            var a = ['%c[hero-v3]', 'color:#a0a;font-weight:bold'];
+            for (var i = 0; i < arguments.length; i++) a.push(arguments[i]);
+            console.log.apply(console, a);
+        }
+        log('init', { readyState: video.readyState, duration: video.duration });
+
         video.pause();
+        video.muted = true;
+        video.playsInline = true;
 
         /* =====================================================================
            СЛОЙ 2 — TIMELINE CONTROLLER (единый animation clock)
@@ -2337,8 +2349,11 @@ get_header(); ?>
            ===================================================================== */
         var targetProgress  = 0;   // вход:  сырой прогресс скролла
         var currentProgress = 0;   // выход: сглаженный, монотонный прогресс
-        var EASE     = 0.08;       // lerp smoothing
-        var MAX_STEP = 0.02;       // velocity limit — макс. изменение прогресса за кадр
+        var EASE     = 0.10;       // lerp smoothing
+        var MAX_STEP = 0.05;       // velocity limit — макс. изменение прогресса за кадр
+        var started  = false;
+        var frameTick = 0;
+        var drewCount = 0;
 
         // Рисуем текущий кадр видео на canvas по принципу object-fit: cover.
         // cover всегда полностью заполняет холст => clearRect не нужен (нет «пустого» состояния).
@@ -2371,18 +2386,27 @@ get_header(); ?>
             }
 
             ctx.drawImage(video, dx, dy, dw, dh);
+            drewCount++;
         }
 
         /* =====================================================================
            СЛОЙ 3 — RENDER ENGINE (ничего не знает о scroll)
            ===================================================================== */
+        var desiredTime = 0;
         function renderCanvas(progress) {
             var d = video.duration;
             if (isFinite(d) && d > 0) {
-                // currentTime меняется ТОЛЬКО здесь, на заклампленную дельту => нет seek-jump
-                try { video.currentTime = progress * d; } catch (e) {}
+                var t = progress * d;
+                if (t < 0) t = 0; else if (t > d) t = d;
+                desiredTime = t;
+                // ВАЖНО: сикаем только когда предыдущий seek завершён — иначе <video> постоянно
+                // в состоянии seeking, декодер не успевает обновить кадр, и на canvas попадает
+                // застывшая картинка (визуально видео «не играет»).
+                if (!video.seeking) {
+                    try { video.currentTime = t; } catch (e) { log('seek error', e); }
+                }
             }
-            // Canvas всегда рисует последний стабильный кадр, не реагируя на промежуточный scroll
+            // Canvas всегда рисует последний ДЕКОДИРОВАННЫЙ кадр, не реагируя на промежуточный scroll
             drawFrame();
         }
         function renderFades(progress) {
@@ -2403,40 +2427,82 @@ get_header(); ?>
             currentProgress += delta;
 
             render(currentProgress);
+
+            if (DEBUG && (frameTick++ % 30 === 0) && Math.abs(targetProgress - currentProgress) > 0.002) {
+                log('tick', {
+                    target: +targetProgress.toFixed(3),
+                    current: +currentProgress.toFixed(3),
+                    currentTime: +video.currentTime.toFixed(3),
+                    duration: +(video.duration || 0).toFixed(3),
+                    seeking: video.seeking,
+                    drawnFrames: drewCount
+                });
+            }
         }
 
         /* =====================================================================
            СЛОЙ 1 — SCROLL (GSAP ScrollTrigger: ТОЛЬКО progress + pin)
            ===================================================================== */
-        function buildScroll() {
+        // Длина прокрутки привязана к длительности видео, чтобы клип успел проиграться
+        // целиком по мере скролла (иначе на 1 экране 6-секундное видео не «докручивается»).
+        var PX_PER_SEC = 600;
+        function computeScrollLen() {
             var height = heroSection.offsetHeight;
+            var dur    = (isFinite(video.duration) && video.duration > 0) ? video.duration : 1;
+            return Math.max(height, Math.round(dur * PX_PER_SEC));
+        }
+
+        function buildScroll() {
+            log('buildScroll', { heroHeight: heroSection.offsetHeight, duration: video.duration, scrollLen: computeScrollLen() });
             ScrollTrigger.create({
                 id: 'hero-canvas-video',
                 trigger: heroSection,
                 start: 'top top',
-                end: '+=' + height,            // длина scroll = высота hero (scroll-lock)
+                end: function () { return '+=' + computeScrollLen(); },  // пересчёт при refresh
                 pin: true,
                 pinSpacing: true,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
                 onUpdate: function (self) {
                     targetProgress = self.progress;   // scroll = intention, и только
+                },
+                onToggle: function (self) {
+                    log('pin toggle -> active =', self.isActive);
+                },
+                onRefresh: function (self) {
+                    log('refresh -> start/end px', Math.round(self.start), Math.round(self.end),
+                        'distance =', Math.round(self.end - self.start));
                 }
             });
             requestAnimationFrame(function () { ScrollTrigger.refresh(); });
         }
 
         function start() {
+            if (started) return;
+            started = true;
+            log('start', { duration: video.duration, readyState: video.readyState,
+                           videoW: video.videoWidth, videoH: video.videoHeight });
             try { video.currentTime = 0; } catch (e) {}
             render(0);            // первый кадр сразу
             buildScroll();
             requestAnimationFrame(animate);   // RAF = execution
         }
 
+        video.addEventListener('seeked', function () {
+            if (DEBUG && frameTick < 3) log('seeked ->', +video.currentTime.toFixed(3));
+        });
+        video.addEventListener('durationchange', function () {
+            log('durationchange ->', video.duration);
+            if (started) ScrollTrigger.refresh();   // пересчитать длину pin под реальную duration
+        });
+
+        // Для canvas нужен и первый декодированный кадр (videoWidth), и duration
         if (isFinite(video.duration) && video.duration > 0 && video.videoWidth) {
             start();
         } else {
+            log('видео ещё не готово, ждём loadeddata...');
             video.addEventListener('loadeddata', start, { once: true });
+            setTimeout(function () { if (!started && video.videoWidth) { log('fallback start по таймауту'); start(); } }, 3000);
         }
 
         if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
