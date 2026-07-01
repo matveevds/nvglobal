@@ -2368,6 +2368,11 @@ get_header(); ?>
 </style>
 <script>
 (function () {
+    // Отключаем авто-восстановление позиции скролла браузером: hero с pin должен считаться
+    // от верха страницы. Иначе при обновлении на середине страницы pin создаётся относительно
+    // восстановленной позиции, ломается pin-spacer и сверху появляется пустота.
+    if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+
     document.addEventListener('DOMContentLoaded', function () {
         if (!window.gsap || !window.ScrollTrigger) return;
 
@@ -2498,6 +2503,9 @@ get_header(); ?>
             log('start', { duration: video.duration, readyState: video.readyState,
                            videoW: video.videoWidth, videoH: video.videoHeight });
             try { video.currentTime = 0; } catch (e) {}  // первый кадр видео, без poster/заставки
+            // Прокручиваем к началу перед созданием pin (кроме перехода по якорю #...),
+            // чтобы pin посчитался от верха и не было пустоты сверху после обновления.
+            if (!location.hash) { window.scrollTo(0, 0); }
             render(0);
             buildScroll();
             requestAnimationFrame(animate);   // RAF = execution

@@ -2360,6 +2360,11 @@ get_header(); ?>
 </style>
 <script>
 (function () {
+    // Отключаем авто-восстановление позиции скролла браузером: hero с pin должен считаться
+    // от верха страницы. Иначе при обновлении на середине страницы pin создаётся относительно
+    // восстановленной позиции, ломается pin-spacer и сверху появляется пустота.
+    if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+
     document.addEventListener('DOMContentLoaded', function () {
         if (!window.gsap || !window.ScrollTrigger) return;
 
@@ -2474,6 +2479,9 @@ get_header(); ?>
            СЛОЙ 1 — SCROLL (GSAP ScrollTrigger: ТОЛЬКО progress + pin)
            ===================================================================== */
         function buildScroll() {
+            // Прокручиваем к началу перед созданием pin (кроме перехода по якорю #...),
+            // чтобы pin посчитался от верха и не было пустоты сверху после обновления.
+            if (!location.hash) { window.scrollTo(0, 0); }
             var height = heroSection.offsetHeight;
             ScrollTrigger.create({
                 id: 'hero-lite-images',
