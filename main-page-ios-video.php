@@ -2390,7 +2390,7 @@ get_header(); ?>
         var usePlayback = isIOS || coarsePointer || mobileUA;   // true = телефон/тач => воспроизведение
 
         // Длина закрепления hero ~ длительность видео (общая для обоих режимов)
-        var PX_PER_SEC = 600;
+        var PX_PER_SEC = 300;
         function computeLen() {
             var d = (isFinite(video.duration) && video.duration > 0) ? video.duration : 6;
             return Math.max(heroSection.offsetHeight, Math.round(d * PX_PER_SEC));
@@ -2399,17 +2399,17 @@ get_header(); ?>
             gsap.set(heroWrapper,  { x: -500 * pr, opacity: 1 - pr });
             gsap.set(heroGradient, { x: -500 * pr, opacity: 1 - pr });
         }
-        function pinHero(onUpdate) {
-            ScrollTrigger.create({
+        function pinHero(cbs) {
+            var st = ScrollTrigger.create(Object.assign({
                 id: 'hero-5',
                 trigger: heroSection,
                 start: 'top top',
                 end: function () { return '+=' + computeLen(); },
-                pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true,
-                onUpdate: onUpdate
-            });
+                pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true
+            }, cbs || {}));
             if (!location.hash) { window.scrollTo(0, 0); }
             requestAnimationFrame(function () { ScrollTrigger.refresh(); });
+            return st;
         }
 
         if (usePlayback) { initPlaybackMode(); } else { initDesktopScrub(); }
@@ -2428,31 +2428,123 @@ get_header(); ?>
             lastImg.src = LAST_FRAME;
             function showLastFrame() { lastLayer.style.opacity = '1'; }
             video.addEventListener('timeupdate', function () {
-                if (video.duration && video.currentTime >= video.duration - 0.25) { showLastFrame(); }
+                if (video.duration && video.currentTime >= video.duration - 0.08) { showLastFrame(); }
             });
             video.addEventListener('ended', showLastFrame);
 
-            // Запуск воспроизведения по ПЕРВОМУ жесту прокрутки (требование политики iOS)
-            var playing = false;
-            function startPlayback() {
-                if (playing) return;
+            // ---- Диагностика ----
+            var DEBUG = true;
+            function log() {
+                if (!DEBUG) return;
+                var a = ['%c[hero-5]', 'color:#c60;font-weight:bold'];
+                for (var i = 0; i < arguments.length; i++) a.push(arguments[i]);
+                console.log.apply(console, a);
+            }
+            function sy() { return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0); }
+
+            var GESTURES      = ['touchstart', 'touchmove', 'wheel', 'scroll'];
+            var TOP_THRESHOLD = 2;      // «самый верх» страницы (px)
+            var PAST_BLOCK    = 100;    // на сколько px дальше конца блока уйти для сброса
+            var playing       = false;
+            var armed         = false;
+            var awaitingTop   = false;  // после сброса ждём возврата наверх
+            var st            = null;
+
+            // --- Запуск воспроизведения по жесту (только когда «вооружены») ---
+            function onGesture() {
+                if (playing || !armed) return;
                 var p = video.play();
                 if (p && typeof p.then === 'function') {
-                    p.then(function () { playing = true; detach(); }).catch(function () {});
-                } else { playing = true; detach(); }
+                    p.then(onPlayed).catch(function (e) { log('play() отклонён:', e && e.name); });
+                } else { onPlayed(); }
             }
-            function detach() {
-                ['touchstart', 'touchmove', 'wheel', 'scroll'].forEach(function (ev) {
-                    window.removeEventListener(ev, startPlayback);
-                });
+            function onPlayed() { playing = true; disarm(); log('▶ PLAYBACK START, y =', sy()); }
+            function arm() {
+                if (armed) return;
+                armed = true;
+                GESTURES.forEach(function (ev) { window.addEventListener(ev, onGesture, { passive: true }); });
+                log('ARMED — ждём жест для запуска, y =', sy());
+            }
+            function disarm() {
+                armed = false;
+                GESTURES.forEach(function (ev) { window.removeEventListener(ev, onGesture); });
             }
 
-            pinHero(function (self) { setFades(self.progress); });
+            // Единый onUpdate: пока ждём возврата наверх ИЛИ уже на самом верху — текст в исходном
+            // состоянии; иначе применяем прогресс скролла (обычная анимация при скролле вниз).
+            function heroOnUpdate(self) {
+                var pr = (awaitingTop || sy() <= TOP_THRESHOLD) ? 0 : self.progress;
+                setFades(pr);
+                if (DEBUG && (self.progress <= 0.03 || self.progress >= 0.97)) {
+                    log('onUpdate progress =', +self.progress.toFixed(3), ', применяем =', +pr.toFixed(3),
+                        ', y =', sy(), ', awaitingTop =', awaitingTop);
+                }
+            }
+            // Создать pin (при первом запуске и при возврате наверх для нового цикла)
+            function createPin() {
+                if (st) return;
+                st = pinHero({ onUpdate: heroOnUpdate });
+                log('PIN создан, конец pin ≈', st ? Math.round(st.end) : '?', 'px');
+            }
 
-            // Слушатели вешаем ПОСЛЕ scrollTo(0,0), чтобы программная прокрутка не считалась жестом
-            ['touchstart', 'touchmove', 'wheel', 'scroll'].forEach(function (ev) {
-                window.addEventListener(ev, startPlayback, { passive: true });
-            });
+            // --- Сброс видео в исходное состояние + СНЯТИЕ pin ---
+            function resetVideo(y) {
+                lastLayer.style.opacity = '0';       // убрать последний кадр
+                try { video.pause(); } catch (e) {}
+                try { video.load(); } catch (e) {}   // возврат в исходное: poster (первый кадр) + currentTime 0
+                setFades(0);                         // текст и градиент — в исходное положение
+                playing = false;
+                disarm();
+                awaitingTop = true;                  // до возврата наверх повторно не запускаем
+                // Снимаем pin, чтобы возврат наверх был БЕЗ «залипания». Компенсируем скролл на
+                // высоту убранного pin-spacer, чтобы не было визуального скачка (мы уже ниже блока).
+                if (st) {
+                    var removed = Math.max(0, st.end - st.start);
+                    var before = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    st.kill(true);                   // revert: hero обратно в обычный поток, spacer убран
+                    st = null;
+                    var after = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    // Браузерный scroll-anchoring обычно САМ сдвигает скролл при удалении контента выше.
+                    // Компенсируем вручную ТОЛЬКО если он этого не сделал — иначе двойная коррекция → прыжок наверх.
+                    if (Math.abs(after - (before - removed)) > 50) {
+                        window.scrollTo(0, Math.max(0, before - removed));
+                        log('⟲ RESET. y =', y, '; pin снят, ручная компенсация', Math.round(before), '->', Math.round(Math.max(0, before - removed)));
+                    } else {
+                        log('⟲ RESET. y =', y, '; pin снят, anchoring сам скорректировал', Math.round(before), '->', Math.round(after));
+                    }
+                } else {
+                    log('⟲ RESET. y =', y, '; pin уже снят');
+                }
+            }
+
+            // Низ блока в координатах скролла: конец pin ПЛЮС высота hero (после снятия pin hero
+            // прокручивается ещё на высоту экрана, прежде чем уйти).
+            function blockBottom() {
+                return (st ? st.end : computeLen()) + heroSection.offsetHeight;
+            }
+
+            // --- Монитор скролла: сброс на 100px дальше НИЗА блока; восстановление pin на самом верху ---
+            function onScrollMonitor() {
+                var y = sy();
+                if (y <= TOP_THRESHOLD) { setFades(0); }   // на самом верху текст всегда показан
+                if (!awaitingTop && st && y > blockBottom() + PAST_BLOCK) {
+                    resetVideo(y);
+                } else if (awaitingTop && y <= TOP_THRESHOLD) {
+                    awaitingTop = false;
+                    createPin();                            // восстанавливаем pin на верху (без скачка)
+                    arm();
+                    log('↑ Вернулись наверх (y =', y, ') — pin восстановлен, ждём жест');
+                }
+            }
+
+            createPin();
+            log('init. duration =', video.duration, ', низ блока ≈', Math.round(blockBottom()),
+                'px (порог сброса =', Math.round(blockBottom() + PAST_BLOCK) + ')');
+
+            window.addEventListener('scroll', onScrollMonitor, { passive: true });
+
+            // Стартовое «вооружение» ПОСЛЕ scrollTo(0,0) — программная прокрутка не считается жестом
+            arm();
 
             if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
         }
@@ -2482,7 +2574,7 @@ get_header(); ?>
                 started = true;
                 try { video.currentTime = 0; } catch (e) {}
                 render(0);
-                pinHero(function (self) { targetProgress = self.progress; });
+                pinHero({ onUpdate: function (self) { targetProgress = self.progress; } });
                 requestAnimationFrame(animate);
                 if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
             }
