@@ -1,35 +1,32 @@
 <?php
 /*
-Template Name: Hero Variant 5 — iOS Play On Scroll
+Template Name: Hero Variant 6 — Mobile Play No-Pin
 Template Post Type: page
 */
 
 /* =============================================================================
- * АНИМАЦИЯ ПЕРВОГО БЛОКА (.hero) — ГИБРИД: воспроизведение на телефонах / скраб на десктопе
- * Демо: /main-5/
+ * АНИМАЦИЯ ПЕРВОГО БЛОКА (.hero) — ГИБРИД: телефоны БЕЗ pin / десктоп — скраб
+ * Демо: /main-6/
  * -----------------------------------------------------------------------------
- * Метод определяет устройство и работает в ДВУХ режимах:
+ * Отличие от метода 5: на телефонах НЕ используется pin/pin-spacer вообще —
+ * поэтому нет «залипания» скролла и лишней прокрутки при возврате наверх.
  *
- *   РЕЖИМ ТЕЛЕФОНОВ / ТАЧ-УСТРОЙСТВ (iOS И Android):
- *     Скраб <video> по currentTime на телефонах нестабилен (iOS не перерисовывает
- *     кадр на паузе; Android прыгает кадрами и даёт пустоту сверху). Поэтому видео
- *     ПО-НАСТОЯЩЕМУ проигрывается (video.play()), запуск — по ПЕРВОМУ жесту
- *     прокрутки (touchstart/wheel/scroll), что разрешено политикой автоплея
- *     (muted + playsinline + жест). После окончания показывается точный последний
- *     кадр отдельным слоем (без чёрной вспышки). Видео идёт в реальном времени и
- *     не синхронизировано с точной позицией скролла.
+ *   РЕЖИМ ТЕЛЕФОНОВ / ТАЧ-УСТРОЙСТВ (iOS И Android) — БЕЗ pin:
+ *     hero — обычный блок в 1 экран. По первому ДИСКРЕТНОМУ жесту
+ *     (touchstart/pointerdown/wheel) запускается video.play(), а заголовок и
+ *     градиент уезжают ПО ТАЙМИНГУ (GSAP-твин, не по скроллу). Страница листается
+ *     нормально, hero уходит как обычный блок. При возврате на самый верх (после
+ *     того как ушли вниз) — видео сбрасывается в первый кадр, заголовок
+ *     возвращается (твин обратно). Запуск НЕ на scroll — чтобы инерция при возврате
+ *     наверх не перезапускала видео. После конца видео — точный последний кадр
+ *     отдельным слоем (без чёрной вспышки).
  *
  *   РЕЖИМ ДЕСКТОПА (мышь):
- *     Классический скраб по скроллу, как в методе 2 — ScrollTrigger задаёт только
- *     targetProgress, RAF-цикл со сглаживанием (EASE/MAX_STEP) двигает
- *     video.currentTime (с seek-gate). Точная синхронизация кадра со скроллом.
- *
- * Общее для обоих режимов: pin секции, длина закрепления ~ длительность видео,
- * fade-out заголовка и градиента по прогрессу скролла, сброс позиции скролла
- * на верх (scrollRestoration = manual + scrollTo(0,0)).
+ *     Классический скраб по скроллу с pin (как в методе 2): ScrollTrigger задаёт
+ *     targetProgress, RAF со сглаживанием двигает video.currentTime (seek-gate).
  *
  * Детект «телефон/тач»: matchMedia('(hover:none) and (pointer:coarse)') ЛИБО
- * мобильный userAgent (Android/iPhone/iPad/...) ЛИБО iPadOS (MacIntel+maxTouchPoints).
+ * мобильный userAgent ЛИБО iPadOS (MacIntel+maxTouchPoints).
  *
  * Библиотеки: GSAP + ScrollTrigger. Код — во встроенном <script> в конце файла.
  * ============================================================================= */
@@ -2401,7 +2398,7 @@ get_header(); ?>
         }
         function pinHero(cbs) {
             var st = ScrollTrigger.create(Object.assign({
-                id: 'hero-5',
+                id: 'hero-6',
                 trigger: heroSection,
                 start: 'top top',
                 end: function () { return '+=' + computeLen(); },
@@ -2414,7 +2411,10 @@ get_header(); ?>
 
         if (usePlayback) { initPlaybackMode(); } else { initDesktopScrub(); }
 
-        /* ========= РЕЖИМ ТЕЛЕФОНОВ/ТАЧ: реальное воспроизведение по жесту (iOS + Android) ========= */
+        /* ========= РЕЖИМ ТЕЛЕФОНОВ/ТАЧ: воспроизведение по жесту, БЕЗ pin =========
+         * hero — обычный блок в 1 экран. По жесту: video.play() + заголовок уезжает ПО ТАЙМИНГУ
+         * (GSAP-твин, не по скроллу). Страница листается нормально. При возврате на самый верх —
+         * видео в начало и заголовок возвращается. Никакого pin/pin-spacer => чистая навигация. */
         function initPlaybackMode() {
             // Реальный последний кадр отдельным слоем ПОВЕРХ видео (предзагружен) — без чёрной вспышки
             var LAST_FRAME = '/wp-content/themes/nvglobal/video/main_bg_lastframe.jpg';
@@ -2436,23 +2436,28 @@ get_header(); ?>
             var DEBUG = true;
             function log() {
                 if (!DEBUG) return;
-                var a = ['%c[hero-5]', 'color:#c60;font-weight:bold'];
+                var a = ['%c[hero-6]', 'color:#c60;font-weight:bold'];
                 for (var i = 0; i < arguments.length; i++) a.push(arguments[i]);
                 console.log.apply(console, a);
             }
             function sy() { return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0); }
 
-            var TOP_THRESHOLD = 2;      // «самый верх» страницы (px)
-            var PAST_BLOCK    = 100;    // на сколько px дальше конца блока уйти для сброса
+            var TOP_THRESHOLD = 2;      // «самый верх» (px)
+            var PAST_BLOCK    = 300;    // на сколько px ниже блока уйти, чтобы сбросить видео и вернуть заголовок
             var DOWN_MIN      = 6;      // насколько страница должна уйти вниз, чтобы считать это свайпом вниз
             var playing       = false;
             var armed         = false;
-            var awaitingTop   = false;  // после сброса ждём возврата наверх
-            var st            = null;
-            var lastMY        = 0;      // прошлая позиция скролла (для определения направления)
-            var autoScrolling = false;  // идёт программный доскролл к верху
-            var AUTO_SCROLL_MS = 1035;  // длительность авто-доскролла к верху (больше = медленнее)
-            var APPEAR_PX      = 300;   // сколько px блока должно показаться при свайпе вверх, чтобы включить доскролл
+            var didReset      = false;  // сброс уже сделан (ждём возврата наверх для повторного запуска)
+            var fadeTween     = null;
+
+            function fadeOut() {
+                if (fadeTween) fadeTween.kill();
+                fadeTween = gsap.to([heroWrapper, heroGradient], { x: -500, opacity: 0, duration: 0.8, ease: 'power2.out', overwrite: true });
+            }
+            function fadeIn() {
+                if (fadeTween) fadeTween.kill();
+                fadeTween = gsap.to([heroWrapper, heroGradient], { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true });
+            }
 
             // --- Запуск ТОЛЬКО при свайпе страницы ВНИЗ (не при касании и не при свайпе вверх) ---
             function tryPlay() {
@@ -2472,7 +2477,12 @@ get_header(); ?>
                 if (playing || !armed) return;
                 if (e && e.deltaY > 0) { tryPlay(); }   // колесо/тачпад вниз
             }
-            function onPlayed() { playing = true; disarm(); log('▶ PLAYBACK START (свайп вниз), y =', sy()); }
+            function onPlayed() {
+                playing = true;
+                disarm();
+                fadeOut();                       // заголовок уезжает по таймингу
+                log('▶ PLAYBACK START (свайп вниз) + fadeOut, y =', sy());
+            }
             function arm() {
                 if (armed) return;
                 armed = true;
@@ -2486,85 +2496,40 @@ get_header(); ?>
                 window.removeEventListener('wheel', onWheel);
             }
 
-            // onUpdate заголовка/градиента:
-            //  - на самом верху -> показан (pr = 0);
-            //  - при возврате вверх после проигрывания (awaitingTop) -> СКРЫТ (pr = 1),
-            //    появится только когда доскроллишь до самого верха;
-            //  - иначе -> по прогрессу скролла (обычный fade вниз).
-            function heroOnUpdate(self) {
-                var y = sy();
-                var pr = (y <= TOP_THRESHOLD) ? 0 : (awaitingTop ? 1 : self.progress);
-                setFades(pr);
-                if (DEBUG && (self.progress <= 0.03 || self.progress >= 0.97)) {
-                    log('onUpdate progress =', +self.progress.toFixed(3), ', применяем =', +pr.toFixed(3),
-                        ', y =', y, ', awaitingTop =', awaitingTop);
-                }
-            }
+            // Низ блока (без pin) = высота hero (1 экран)
+            function blockBottom() { return heroSection.offsetHeight; }
 
-            // --- Сброс ВИДЕО в начало. pin НЕ трогаем. Заголовок остаётся СКРЫТЫМ до самого верха. ---
-            function resetVideo(y) {
-                lastLayer.style.opacity = '0';       // убрать последний кадр
+            // Сброс ЗАРАНЕЕ: как только ушли ниже блока на PAST_BLOCK px — видео в первый кадр и
+            // заголовок возвращается (пока они не видны сверху). Так при возврате наверх блок уже в
+            // исходном состоянии. Повторный запуск разблокируется на самом верху.
+            function resetHeroState(y) {
+                lastLayer.style.opacity = '0';
                 try { video.pause(); } catch (e) {}
-                try { video.load(); } catch (e) {}   // видео в начало: poster (первый кадр) + currentTime 0
+                try { video.load(); } catch (e) {}   // poster (первый кадр) + currentTime 0
+                fadeIn();                            // заголовок возвращается
                 playing = false;
-                disarm();
-                awaitingTop = true;                  // до возврата на самый верх повторно не запускаем
-                log('⟲ RESET: видео в начало, заголовок скрыт до верха. y =', y);
+                didReset = true;
+                disarm();                            // до возврата наверх повторно не запускаем
+                log('⟲ RESET (ниже блока на ' + PAST_BLOCK + 'px): видео в начало + заголовок вернулся. y =', y,
+                    ', порог =', Math.round(blockBottom() + PAST_BLOCK));
             }
 
-            // Низ блока в координатах скролла: конец pin ПЛЮС высота hero.
-            function blockBottom() {
-                return (st ? st.end : computeLen()) + heroSection.offsetHeight;
-            }
-
-            // Плавный доскролл к верху со своей (регулируемой) скоростью — чуть медленнее браузерного.
-            function smoothTop() {
-                var startY = sy(), startT = null;
-                function step(t) {
-                    if (!autoScrolling) return;              // отменили / дошли до верха
-                    if (startT === null) startT = t;
-                    var p = Math.min(1, (t - startT) / AUTO_SCROLL_MS);
-                    var e = 1 - Math.pow(1 - p, 3);          // easeOutCubic
-                    window.scrollTo(0, Math.round(startY * (1 - e)));
-                    if (p < 1) requestAnimationFrame(step);
-                }
-                requestAnimationFrame(step);
-            }
-
-            // --- Монитор скролла: сброс на 100px дальше низа блока; на самом верху — показать заголовок;
-            //     авто-доскролл к верху при свайпе ВВЕРХ, когда дошли до первого блока ---
             function onScrollMonitor() {
                 var y = sy();
-                var dir = y - lastMY;                // <0 — скроллим вверх, >0 — вниз
-                lastMY = y;
-
-                if (!awaitingTop && st && y > blockBottom() + PAST_BLOCK) {
-                    resetVideo(y);
-                } else if (awaitingTop && y <= TOP_THRESHOLD) {
-                    awaitingTop = false;
-                    setFades(0);                     // на самом верху заголовок появляется
-                    arm();
-                    log('↑ Вернулись на самый верх (y =', y, ') — заголовок показан, ждём жест');
+                if (playing && !didReset && y > blockBottom() + PAST_BLOCK) {
+                    resetHeroState(y);               // ушли ниже блока на 300px → сброс
+                } else if (didReset && y <= TOP_THRESHOLD) {
+                    didReset = false;
+                    arm();                           // вернулись наверх → снова готовы к запуску
+                    log('↑ Вернулись наверх — готово к повторному запуску, y =', y);
                 }
-
-                // Свайп ВВЕРХ и показалось >= APPEAR_PX блока (y <= низа блока − APPEAR_PX) →
-                // плавно доскроллить страницу к самому верху за нас.
-                if (dir < 0 && !autoScrolling && st && y > TOP_THRESHOLD && y <= (blockBottom() - APPEAR_PX)) {
-                    autoScrolling = true;
-                    log('↑ показалось', APPEAR_PX, 'px блока при скролле вверх — авто-доскролл к верху, y =', y);
-                    smoothTop();
-                }
-                if (y <= TOP_THRESHOLD) { autoScrolling = false; }
             }
 
-            st = pinHero({ onUpdate: heroOnUpdate });   // pin создаётся ОДИН раз и НЕ снимается
-            log('init. duration =', video.duration, ', низ блока ≈', Math.round(blockBottom()),
-                'px (порог сброса =', Math.round(blockBottom() + PAST_BLOCK) + ')');
-
+            if (!location.hash) { window.scrollTo(0, 0); }
             window.addEventListener('scroll', onScrollMonitor, { passive: true });
-
-            // Стартовое «вооружение» ПОСЛЕ scrollTo(0,0) — программная прокрутка не считается жестом
             arm();
+            log('init (без pin). duration =', video.duration, ', низ блока ≈', Math.round(blockBottom()),
+                'px, порог сброса =', Math.round(blockBottom() + PAST_BLOCK), 'px');
 
             if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
         }

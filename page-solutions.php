@@ -225,9 +225,6 @@ get_header(); ?>
                                 <div class="benefits__image benefits__compliance">
                                     <div class="benefits__card benefits__card--top">
                                         <div class="benefits__card-wrapper">
-                                            <div class="benefits__card-image">
-                                                <img src="<?php echo get_template_directory_uri(); ?>/img/benefits__card-image1.png" alt="Document verification">
-                                            </div>
                                             <div class="benefits__card-title">Document verification</div>
                                             <div class="benefits__card-value">99.85%</div>
                                         </div>
@@ -235,27 +232,17 @@ get_header(); ?>
 
                                     <div class="benefits__card benefits__card--bottom">
                                         <div class="benefits__card-wrapper">
-                                            <div class="benefits__card-image">
-                                                <img src="<?php echo get_template_directory_uri(); ?>/img/benefits__card-image2.png" alt="Face matching">
-                                            </div>
                                             <div class="benefits__card-title">Face matching</div>
                                             <div class="benefits__card-value">99.74%</div>
                                         </div>
 
                                         <div class="benefits__card-bottom">
-                                            <div class="benefits__card-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7203 4.6543C8.55879 4.6543 4.375 8.83809 4.375 13.9996C4.375 19.1612 8.55879 23.345 13.7203 23.345C18.8819 23.345 23.0657 19.1612 23.0657 13.9996C23.0657 8.83809 18.8819 4.6543 13.7203 4.6543ZM2.625 13.9996C2.625 7.87159 7.59229 2.9043 13.7203 2.9043C19.8484 2.9043 24.8157 7.87159 24.8157 13.9996C24.8157 20.1277 19.8484 25.095 13.7203 25.095C7.59229 25.095 2.625 20.1277 2.625 13.9996Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M25.2646 5.87382C25.5006 6.29549 25.3501 6.82869 24.9285 7.06475C19.5522 10.0745 16.1904 14.9607 14.5866 17.9737C14.4382 18.2525 14.1511 18.4296 13.8353 18.4372C13.5194 18.4448 13.2242 18.2817 13.0625 18.0103C11.9861 16.2034 10.6209 14.5952 8.95562 13.1889C8.58643 12.8771 8.53991 12.325 8.85171 11.9559C9.16351 11.5866 9.71558 11.5401 10.0848 11.8519C11.5069 13.0529 12.733 14.3942 13.7645 15.8728C15.655 12.7104 19.0146 8.36987 24.0737 5.53773C24.4953 5.30168 25.0286 5.45216 25.2646 5.87382Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-
                                             <div class="benefits__card-nist">
                                                 <div class="benefits__card-nist-text">Verified by</div>
                                                 <div class="benefits__card-nist-image">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="82" height="21" viewBox="0 0 82 21" fill="none">
-                                                        <path d="M6.2623 21H2V4.42331C2 4.42331 2 1.26586 5.12568 0.261209C7.96721 -0.671677 9.81421 1.19409 9.81421 1.19409L23.8087 16.4791C24.5191 16.9097 24.8033 16.4791 24.8033 16.0485V0.261209H29.1366V16.6944C29.1366 18.0578 28 19.8518 26.2951 20.4977C24.5902 21.1435 22.8142 21.1435 20.6831 19.2777L7.54099 4.92564C7.18579 4.56684 6.2623 4.49507 6.2623 5.21268V21Z" fill="#FBFBFB" fill-opacity="0.1"/>
-                                                        <path d="M31.8361 0.261218H36.1694V15.1156C36.1694 16.6944 37.5191 16.6944 38.7268 16.6944H57.765C58.5464 16.6944 59.4699 15.7615 59.4699 14.7568C59.4699 13.7522 58.5464 12.7475 57.694 12.7475H45.3333C43.2022 12.8193 38.7978 10.81 38.7978 6.6479C38.7978 1.5529 42.9891 0.332974 44.9071 0.189453H80V4.56685H71.2623V21H67V4.56685H45.5465C43.4863 4.42333 42.0656 7.93959 45.4044 8.44191H58.6175C60.6066 8.44191 63.8743 10.1642 63.9454 14.4698C63.9454 18.8472 61.388 20.9282 58.6175 20.9282H38.9399C35.7432 20.9282 34.5355 20.1389 33.3989 19.1342C32.3333 18.0578 32.1913 17.4837 31.8361 15.3309V0.261218Z" fill="#FBFBFB" fill-opacity="0.1"/>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="115" height="30" viewBox="0 0 115 30" fill="none">
+                                                        <path d="M6.2375 30H0V6.31901C0 6.31901 -6.86345e-06 1.80837 4.57416 0.373156C8.7325 -0.959539 11.4354 1.70584 11.4354 1.70584L31.9152 23.5416C32.9548 24.1566 33.3707 23.5415 33.3707 22.9265V0.373156H39.7121V23.8491C39.7121 25.7969 38.0488 28.3597 35.5538 29.2824C33.0588 30.205 30.4598 30.205 27.3411 27.5396L8.10876 7.03663C7.58897 6.52406 6.2375 6.42154 6.2375 7.44668V30Z" fill="#FBFBFB" fill-opacity="0.1"/>
+                                                        <path d="M43.6625 0.373169H50.004V21.5938C50.004 23.8491 51.9792 23.8491 53.7465 23.8491H81.6074C82.7509 23.8491 84.1023 22.5164 84.1023 21.0812C84.1023 19.646 82.7509 18.2108 81.5034 18.2108H63.4146C60.2959 18.3133 53.8505 15.4429 53.8505 9.497C53.8505 2.21843 59.984 0.475677 62.7909 0.270647H114.146V6.52407H101.359V30H95.1219V6.52407H63.7265C60.7117 6.31904 58.6325 11.3423 63.5186 12.0599H82.8549C85.7657 12.0599 90.5478 14.5202 90.6517 20.6711C90.6517 26.9245 86.9092 29.8975 82.8549 29.8975H54.0584C49.3802 29.8975 47.6129 28.7698 45.9496 27.3346C44.3902 25.7969 44.1823 24.9768 43.6625 21.9013V0.373169Z" fill="#FBFBFB" fill-opacity="0.1"/>
                                                     </svg>
                                                 </div>
                                             </div>
@@ -295,44 +282,33 @@ get_header(); ?>
                                     </div>
 
                                     <div class="benefits__mobile-image benefits__mobile-image-3 benefits__mobile-image--compliance">
-                                        <div class="benefits__card">
+                                    
+                                        <div class="benefits__card benefits__card--top">
                                             <div class="benefits__card-wrapper">
-                                                <div class="benefits__card-image">
-                                                    <img src="<?php echo get_template_directory_uri(); ?>/img/benefits__card-image1.png" alt="Document verification">
-                                                </div>
                                                 <div class="benefits__card-title">Document verification</div>
                                                 <div class="benefits__card-value">99.85%</div>
                                             </div>
                                         </div>
 
-                                        <div class="benefits__card">
+                                        <div class="benefits__card benefits__card--bottom">
                                             <div class="benefits__card-wrapper">
-                                                <div class="benefits__card-image">
-                                                    <img src="<?php echo get_template_directory_uri(); ?>/img/benefits__card-image2.png" alt="Face matching">
-                                                </div>
                                                 <div class="benefits__card-title">Face matching</div>
                                                 <div class="benefits__card-value">99.74%</div>
                                             </div>
 
                                             <div class="benefits__card-bottom">
-                                                <div class="benefits__card-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7203 4.6543C8.55879 4.6543 4.375 8.83809 4.375 13.9996C4.375 19.1612 8.55879 23.345 13.7203 23.345C18.8819 23.345 23.0657 19.1612 23.0657 13.9996C23.0657 8.83809 18.8819 4.6543 13.7203 4.6543ZM2.625 13.9996C2.625 7.87159 7.59229 2.9043 13.7203 2.9043C19.8484 2.9043 24.8157 7.87159 24.8157 13.9996C24.8157 20.1277 19.8484 25.095 13.7203 25.095C7.59229 25.095 2.625 20.1277 2.625 13.9996Z" fill="#F9AA66"/>
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M25.2646 5.87382C25.5006 6.29549 25.3501 6.82869 24.9285 7.06475C19.5522 10.0745 16.1904 14.9607 14.5866 17.9737C14.4382 18.2525 14.1511 18.4296 13.8353 18.4372C13.5194 18.4448 13.2242 18.2817 13.0625 18.0103C11.9861 16.2034 10.6209 14.5952 8.95562 13.1889C8.58643 12.8771 8.53991 12.325 8.85171 11.9559C9.16351 11.5866 9.71558 11.5401 10.0848 11.8519C11.5069 13.0529 12.733 14.3942 13.7645 15.8728C15.655 12.7104 19.0146 8.36987 24.0737 5.53773C24.4953 5.30168 25.0286 5.45216 25.2646 5.87382Z" fill="#F9AA66"/>
-                                                    </svg>
-                                                </div>
-
                                                 <div class="benefits__card-nist">
                                                     <div class="benefits__card-nist-text">Verified by</div>
                                                     <div class="benefits__card-nist-image">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="82" height="21" viewBox="0 0 82 21" fill="none">
-                                                            <path d="M6.2623 21H2V4.42331C2 4.42331 2 1.26586 5.12568 0.261209C7.96721 -0.671677 9.81421 1.19409 9.81421 1.19409L23.8087 16.4791C24.5191 16.9097 24.8033 16.4791 24.8033 16.0485V0.261209H29.1366V16.6944C29.1366 18.0578 28 19.8518 26.2951 20.4977C24.5902 21.1435 22.8142 21.1435 20.6831 19.2777L7.54099 4.92564C7.18579 4.56684 6.2623 4.49507 6.2623 5.21268V21Z" fill="#FBFBFB" fill-opacity="0.1"/>
-                                                            <path d="M31.8361 0.261218H36.1694V15.1156C36.1694 16.6944 37.5191 16.6944 38.7268 16.6944H57.765C58.5464 16.6944 59.4699 15.7615 59.4699 14.7568C59.4699 13.7522 58.5464 12.7475 57.694 12.7475H45.3333C43.2022 12.8193 38.7978 10.81 38.7978 6.6479C38.7978 1.5529 42.9891 0.332974 44.9071 0.189453H80V4.56685H71.2623V21H67V4.56685H45.5465C43.4863 4.42333 42.0656 7.93959 45.4044 8.44191H58.6175C60.6066 8.44191 63.8743 10.1642 63.9454 14.4698C63.9454 18.8472 61.388 20.9282 58.6175 20.9282H38.9399C35.7432 20.9282 34.5355 20.1389 33.3989 19.1342C32.3333 18.0578 32.1913 17.4837 31.8361 15.3309V0.261218Z" fill="#FBFBFB" fill-opacity="0.1"/>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="30" viewBox="0 0 115 30" fill="none">
+                                                            <path d="M6.2375 30H0V6.31901C0 6.31901 -6.86345e-06 1.80837 4.57416 0.373156C8.7325 -0.959539 11.4354 1.70584 11.4354 1.70584L31.9152 23.5416C32.9548 24.1566 33.3707 23.5415 33.3707 22.9265V0.373156H39.7121V23.8491C39.7121 25.7969 38.0488 28.3597 35.5538 29.2824C33.0588 30.205 30.4598 30.205 27.3411 27.5396L8.10876 7.03663C7.58897 6.52406 6.2375 6.42154 6.2375 7.44668V30Z" fill="#FBFBFB" fill-opacity="0.1"/>
+                                                            <path d="M43.6625 0.373169H50.004V21.5938C50.004 23.8491 51.9792 23.8491 53.7465 23.8491H81.6074C82.7509 23.8491 84.1023 22.5164 84.1023 21.0812C84.1023 19.646 82.7509 18.2108 81.5034 18.2108H63.4146C60.2959 18.3133 53.8505 15.4429 53.8505 9.497C53.8505 2.21843 59.984 0.475677 62.7909 0.270647H114.146V6.52407H101.359V30H95.1219V6.52407H63.7265C60.7117 6.31904 58.6325 11.3423 63.5186 12.0599H82.8549C85.7657 12.0599 90.5478 14.5202 90.6517 20.6711C90.6517 26.9245 86.9092 29.8975 82.8549 29.8975H54.0584C49.3802 29.8975 47.6129 28.7698 45.9496 27.3346C44.3902 25.7969 44.1823 24.9768 43.6625 21.9013V0.373169Z" fill="#FBFBFB" fill-opacity="0.1"/>
                                                         </svg>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -637,7 +613,7 @@ get_header(); ?>
 
                                 <div class="flow__slide flow__slide--center swiper-slide">
                                     <div class="flow__slide-image">
-                                        <?php echo td_image(476, ['loading' => 'eager']); ?>
+                                        <?php echo td_image(973, ['loading' => 'eager']); ?>
                                     </div>
                                     <div class="flow__slide-info">
                                         <div class="flow__slide-title">Instant Verification Score</div>
@@ -678,16 +654,16 @@ get_header(); ?>
                             <div class="nvslider__buttons swiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Banks & Fintech</button>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Crypto Exchanges & Web3</button>
-                                    </div>
-                                    <div class="swiper-slide">
                                         <button type="button" class="nvslider__btn">Insurance & InsurTech</button>
                                     </div>
                                     <div class="swiper-slide">
                                         <button type="button" class="nvslider__btn">E-commerce & Marketplaces</button>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <button type="button" class="nvslider__btn">Banks & Fintech</button>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <button type="button" class="nvslider__btn">Crypto Exchanges & Web3</button>
                                     </div>
                                     <div class="swiper-slide">
                                         <button type="button" class="nvslider__btn">Online Gaming & Gambling</button>
@@ -704,52 +680,6 @@ get_header(); ?>
 
                         <div class="nvslider__main swiper">
                             <div class="nvslider__content swiper-wrapper">
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8916 20.25V12.2539H20.4807C20.8949 12.2539 21.2307 11.9181 21.2307 11.5039C21.2307 11.0897 20.8949 10.7539 20.4807 10.7539H19.8564C19.502 6.9941 16.5097 4.00152 12.7499 3.6468L12.7503 3.00043C12.7505 2.58621 12.4149 2.25024 12.0007 2.25C11.5865 2.24976 11.2505 2.58536 11.2503 2.99957L11.2499 3.64671C7.48971 4.00098 4.49664 6.99373 4.14211 10.7539H3.51904C3.10483 10.7539 2.76904 11.0897 2.76904 11.5039C2.76904 11.9181 3.10483 12.2539 3.51904 12.2539H4.10693V20.25H3.51904C3.10483 20.25 2.76904 20.5858 2.76904 21C2.76904 21.4142 3.10483 21.75 3.51904 21.75H4.85693H8.42952H12.0002H15.5709H19.1416H20.4807C20.8949 21.75 21.2307 21.4142 21.2307 21C21.2307 20.5858 20.8949 20.25 20.4807 20.25H19.8916ZM18.3916 20.25V12.2539H16.3209V20.25H18.3916ZM14.8209 20.25V12.2539H12.7502V20.25H14.8209ZM11.2502 20.25V12.2539H9.17952V20.25H11.2502ZM7.67952 20.25V12.2539H5.60693V20.25H7.67952ZM18.3481 10.7539H15.5709H12.0002H8.42952H5.65048C6.02183 7.57712 8.72297 5.11158 11.9994 5.11158C15.2759 5.11158 17.9768 7.57708 18.3481 10.7539Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Banks & Fintech</div>
-                                                <div class="nvslider__slide-description">Transform compliance from a cost center into a competitive advantage. Our digital banking KYC solution automates identity verification while maintaining the rigorous standards required for AML6, PSD2, and GDPR compliance. By reducing false positives and streamlining document checks, compliance teams can focus on real risks instead of routine verifications. Enable instant account opening, enhance customer experience, and reduce operational costs – all while exceeding regulatory requirements.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Built for traditional banks, neobanks, and fintech innovators who refuse to compromise between security and user experience.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot1">
-                                            <?php echo td_image(447, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.05248 3.80355L11.0079 20.2276C11.0108 20.2343 11.0145 20.2393 11.0145 20.2393C11.0157 20.2409 11.0184 20.2431 11.0184 20.2431C11.0217 20.2456 11.0283 20.2489 11.0377 20.2502C11.0471 20.2514 11.0541 20.2499 11.0577 20.2485L11.0621 20.2461C11.0621 20.2461 11.0666 20.2426 11.0711 20.2369L19.9456 8.94943C19.9574 8.93424 19.956 8.9116 19.9415 8.89798L16.9587 6.13472L4.09293 3.75198C4.08467 3.75044 4.07793 3.75076 4.07793 3.75076L4.0735 3.7518C4.07034 3.75304 4.06398 3.75669 4.05763 3.7646C4.05127 3.77252 4.04888 3.7798 4.04825 3.78375C4.04825 3.78375 4.04793 3.78711 4.04817 3.78916C4.04817 3.78916 4.0492 3.79577 4.05248 3.80355ZM4.36608 2.27706C3.15933 2.05296 2.1951 3.26173 2.67077 4.38741L9.62665 20.8124C10.0823 21.8886 11.5274 22.0841 12.2506 21.1636L21.125 9.87627C21.6189 9.24741 21.5487 8.3436 20.9621 7.79876L17.8187 4.88665C17.7146 4.79017 17.5852 4.72523 17.4456 4.69938L4.36608 2.27706Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.941 2.91039C3.21594 2.60058 3.68998 2.57231 3.99978 2.84725L12.4976 10.3887C12.6758 10.5468 12.7683 10.7802 12.7467 11.0175L11.8331 21.0682C11.7956 21.4807 11.4308 21.7848 11.0183 21.7473C10.6058 21.7098 10.3018 21.345 10.3393 20.9324L11.2186 11.2591L3.00414 3.96917C2.69433 3.69423 2.66606 3.2202 2.941 2.91039Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8287 4.89525C18.1271 5.18254 18.1361 5.65733 17.8488 5.95572L14.3198 9.62123L20.5281 8.13109C20.9309 8.03441 21.3358 8.28255 21.4324 8.68533C21.5291 9.0881 21.281 9.49299 20.8782 9.58966L12.1751 11.6786C11.8511 11.7564 11.5147 11.6111 11.3491 11.322C11.1836 11.0328 11.2286 10.6692 11.4597 10.4291L16.7682 4.91537C17.0555 4.61698 17.5303 4.60797 17.8287 4.89525Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Crypto Exchanges & Web3</div>
-                                                <div class="nvslider__slide-description">Speed meets security in the fast-paced world of digital assets. Our crypto KYC compliance solution enables instant user onboarding while meeting FATF recommendations and regulatory requirements from FINMA, FCA, and other global authorities. With coverage across 200+ countries and territories, we help exchanges verify users worldwide in seconds, not hours.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Our advanced fraud detection prevents multi-account abuse and identifies suspicious actors before they can harm your platform. Because in crypto, every second counts – and so does every verification.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot5">
-                                            <?php echo td_image(451, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="nvslider__slide swiper-slide">
                                     <div class="nvslider__slide-left">
@@ -805,6 +735,52 @@ get_header(); ?>
                                         <div class="nvslider__slide-content">
                                             <div class="nvslider__slide-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8916 20.25V12.2539H20.4807C20.8949 12.2539 21.2307 11.9181 21.2307 11.5039C21.2307 11.0897 20.8949 10.7539 20.4807 10.7539H19.8564C19.502 6.9941 16.5097 4.00152 12.7499 3.6468L12.7503 3.00043C12.7505 2.58621 12.4149 2.25024 12.0007 2.25C11.5865 2.24976 11.2505 2.58536 11.2503 2.99957L11.2499 3.64671C7.48971 4.00098 4.49664 6.99373 4.14211 10.7539H3.51904C3.10483 10.7539 2.76904 11.0897 2.76904 11.5039C2.76904 11.9181 3.10483 12.2539 3.51904 12.2539H4.10693V20.25H3.51904C3.10483 20.25 2.76904 20.5858 2.76904 21C2.76904 21.4142 3.10483 21.75 3.51904 21.75H4.85693H8.42952H12.0002H15.5709H19.1416H20.4807C20.8949 21.75 21.2307 21.4142 21.2307 21C21.2307 20.5858 20.8949 20.25 20.4807 20.25H19.8916ZM18.3916 20.25V12.2539H16.3209V20.25H18.3916ZM14.8209 20.25V12.2539H12.7502V20.25H14.8209ZM11.2502 20.25V12.2539H9.17952V20.25H11.2502ZM7.67952 20.25V12.2539H5.60693V20.25H7.67952ZM18.3481 10.7539H15.5709H12.0002H8.42952H5.65048C6.02183 7.57712 8.72297 5.11158 11.9994 5.11158C15.2759 5.11158 17.9768 7.57708 18.3481 10.7539Z" fill="#F9AA66"/>
+                                                </svg>
+                                            </div>
+                                            <div class="nvslider__slide-info">
+                                                <div class="nvslider__slide-title">Banks & Fintech</div>
+                                                <div class="nvslider__slide-description">Transform compliance from a cost center into a competitive advantage. Our digital banking KYC solution automates identity verification while maintaining the rigorous standards required for AML6, PSD2, and GDPR compliance. By reducing false positives and streamlining document checks, compliance teams can focus on real risks instead of routine verifications. Enable instant account opening, enhance customer experience, and reduce operational costs – all while exceeding regulatory requirements.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nvslider__slide-right">
+                                        <div class="nvslider__slide-subtitle">Built for traditional banks, neobanks, and fintech innovators who refuse to compromise between security and user experience.</div>
+                                        <div class="nvslider__slide-maskot nvslider__slide-maskot1">
+                                            <?php echo td_image(447, ['loading' => 'eager']); ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nvslider__slide swiper-slide">
+                                    <div class="nvslider__slide-left">
+                                        <div class="nvslider__slide-content">
+                                            <div class="nvslider__slide-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.05248 3.80355L11.0079 20.2276C11.0108 20.2343 11.0145 20.2393 11.0145 20.2393C11.0157 20.2409 11.0184 20.2431 11.0184 20.2431C11.0217 20.2456 11.0283 20.2489 11.0377 20.2502C11.0471 20.2514 11.0541 20.2499 11.0577 20.2485L11.0621 20.2461C11.0621 20.2461 11.0666 20.2426 11.0711 20.2369L19.9456 8.94943C19.9574 8.93424 19.956 8.9116 19.9415 8.89798L16.9587 6.13472L4.09293 3.75198C4.08467 3.75044 4.07793 3.75076 4.07793 3.75076L4.0735 3.7518C4.07034 3.75304 4.06398 3.75669 4.05763 3.7646C4.05127 3.77252 4.04888 3.7798 4.04825 3.78375C4.04825 3.78375 4.04793 3.78711 4.04817 3.78916C4.04817 3.78916 4.0492 3.79577 4.05248 3.80355ZM4.36608 2.27706C3.15933 2.05296 2.1951 3.26173 2.67077 4.38741L9.62665 20.8124C10.0823 21.8886 11.5274 22.0841 12.2506 21.1636L21.125 9.87627C21.6189 9.24741 21.5487 8.3436 20.9621 7.79876L17.8187 4.88665C17.7146 4.79017 17.5852 4.72523 17.4456 4.69938L4.36608 2.27706Z" fill="#F9AA66"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.941 2.91039C3.21594 2.60058 3.68998 2.57231 3.99978 2.84725L12.4976 10.3887C12.6758 10.5468 12.7683 10.7802 12.7467 11.0175L11.8331 21.0682C11.7956 21.4807 11.4308 21.7848 11.0183 21.7473C10.6058 21.7098 10.3018 21.345 10.3393 20.9324L11.2186 11.2591L3.00414 3.96917C2.69433 3.69423 2.66606 3.2202 2.941 2.91039Z" fill="#F9AA66"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8287 4.89525C18.1271 5.18254 18.1361 5.65733 17.8488 5.95572L14.3198 9.62123L20.5281 8.13109C20.9309 8.03441 21.3358 8.28255 21.4324 8.68533C21.5291 9.0881 21.281 9.49299 20.8782 9.58966L12.1751 11.6786C11.8511 11.7564 11.5147 11.6111 11.3491 11.322C11.1836 11.0328 11.2286 10.6692 11.4597 10.4291L16.7682 4.91537C17.0555 4.61698 17.5303 4.60797 17.8287 4.89525Z" fill="#F9AA66"/>
+                                                </svg>
+                                            </div>
+                                            <div class="nvslider__slide-info">
+                                                <div class="nvslider__slide-title">Crypto Exchanges & Web3</div>
+                                                <div class="nvslider__slide-description">Speed meets security in the fast-paced world of digital assets. Our crypto KYC compliance solution enables instant user onboarding while meeting FATF recommendations and regulatory requirements from FINMA, FCA, and other global authorities. With coverage across 200+ countries and territories, we help exchanges verify users worldwide in seconds, not hours.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nvslider__slide-right">
+                                        <div class="nvslider__slide-subtitle">Our advanced fraud detection prevents multi-account abuse and identifies suspicious actors before they can harm your platform. Because in crypto, every second counts – and so does every verification.</div>
+                                        <div class="nvslider__slide-maskot nvslider__slide-maskot5">
+                                            <?php echo td_image(451, ['loading' => 'eager']); ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nvslider__slide swiper-slide">
+                                    <div class="nvslider__slide-left">
+                                        <div class="nvslider__slide-content">
+                                            <div class="nvslider__slide-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M5.41896 3.36242C5.55963 3.22167 5.75047 3.14258 5.94946 3.14258H18.0499C18.4641 3.14258 18.7999 3.47837 18.7999 3.89258H18.0499C18.7999 3.89258 18.7999 3.89258 18.7999 3.89258V3.90372L18.7997 3.93022C18.7995 3.95289 18.7991 3.98548 18.7983 4.02733C18.7967 4.11102 18.7936 4.23182 18.7875 4.38445C18.7752 4.68953 18.7508 5.12277 18.7022 5.64169C18.6051 6.67597 18.4103 8.06733 18.016 9.46873C17.6242 10.8612 17.0201 12.3199 16.0718 13.4433C15.2452 14.4225 14.1519 15.1489 12.7466 15.3393V16.5859H15.2399C15.566 16.5859 15.8548 16.7967 15.9542 17.1074L16.6747 19.3589H17.7443C18.1585 19.3589 18.4943 19.6947 18.4943 20.1089C18.4943 20.5231 18.1585 20.8589 17.7443 20.8589H16.1497C16.1346 20.8594 16.1195 20.8594 16.1044 20.8589H8.039C8.02396 20.8594 8.00886 20.8594 7.99371 20.8589H6.39891C5.9847 20.8589 5.64891 20.5231 5.64891 20.1089C5.64891 19.6947 5.9847 19.3589 6.39891 19.3589H7.46876L8.18925 17.1074C8.28865 16.7967 8.57742 16.5859 8.90357 16.5859H11.2466V15.3377C9.84725 15.1447 8.75764 14.4197 7.93303 13.4434C6.98432 12.3202 6.37942 10.8615 5.98681 9.46913C5.59167 8.06776 5.39597 6.67642 5.29832 5.64214C5.24933 5.12323 5.22464 4.69 5.21219 4.38492C5.20596 4.23229 5.20278 4.11149 5.20116 4.02781C5.20035 3.98596 5.19992 3.95336 5.1997 3.93069L5.1995 3.9042L5.19946 3.89438C5.19946 3.89438 5.19946 3.89306 5.94946 3.89258L5.19946 3.89306C5.19934 3.69406 5.2783 3.50318 5.41896 3.36242ZM6.72656 4.64258C6.74023 4.88357 6.76079 5.17391 6.79168 5.50115C6.88426 6.48175 7.06815 7.77692 7.43051 9.06206C7.7954 10.3561 8.32589 11.5839 9.07898 12.4756C9.81323 13.3449 10.749 13.8886 12.0026 13.8886C13.2564 13.8886 14.1919 13.3449 14.9256 12.4757C15.6782 11.5842 16.2079 10.3565 16.572 9.06245C16.9336 7.77735 17.1167 6.4822 17.2087 5.50161C17.2394 5.17417 17.2598 4.88366 17.2733 4.64258H6.72656ZM11.9689 18.0859H9.45103L9.04369 19.3589H15.0997L14.6924 18.0859H12.0243C12.0151 18.0863 12.0059 18.0864 11.9966 18.0864C11.9873 18.0864 11.9781 18.0863 11.9689 18.0859Z" fill="#F9AA66"/>
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M2.27782 5.56955C2.3204 5.19008 2.64129 4.90317 3.02315 4.90317H6.0541C6.46831 4.90317 6.8041 5.23896 6.8041 5.65317C6.8041 6.06739 6.46831 6.40317 6.0541 6.40317H3.75301C3.76279 6.73695 3.79877 7.16528 3.89517 7.63148C4.11666 8.70261 4.63873 9.89808 5.81458 10.6722C6.16055 10.8999 6.25638 11.365 6.02861 11.711C5.80084 12.057 5.33574 12.1528 4.98977 11.925C3.36041 10.8524 2.69297 9.22512 2.42624 7.93523C2.29211 7.28653 2.25466 6.70397 2.25042 6.28312C2.2483 6.07193 2.25452 5.89937 2.26155 5.77699C2.26506 5.71574 2.2688 5.6669 2.27181 5.63189C2.27332 5.61438 2.27465 5.60031 2.27569 5.58987L2.27702 5.57693L2.27767 5.57087L2.27782 5.56955C2.27782 5.56955 2.27782 5.56955 3.02315 5.65317L2.27782 5.56955Z" fill="#F9AA66"/>
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1953 5.65317C17.1953 5.23896 17.5311 4.90317 17.9453 4.90317H20.9763C21.3581 4.90317 21.679 5.19008 21.7216 5.56955L20.9763 5.65317C21.7216 5.56955 21.7216 5.56955 21.7216 5.56955L21.7219 5.57254L21.7224 5.57693L21.7237 5.58987C21.7248 5.60031 21.7261 5.61438 21.7276 5.63189C21.7306 5.6669 21.7343 5.71574 21.7379 5.77699C21.7449 5.89937 21.7511 6.07193 21.749 6.28312C21.7447 6.70397 21.7073 7.28653 21.5732 7.93523C21.3064 9.22512 20.639 10.8524 19.0096 11.925C18.6637 12.1528 18.1986 12.057 17.9708 11.711C17.743 11.365 17.8389 10.8999 18.1848 10.6722C19.3607 9.89808 19.8828 8.70261 20.1042 7.63148C20.2006 7.16528 20.2366 6.73695 20.2464 6.40317H17.9453C17.5311 6.40317 17.1953 6.06739 17.1953 5.65317Z" fill="#F9AA66"/>
@@ -823,8 +799,6 @@ get_header(); ?>
                                         </div>
                                     </div>
                                 </div>
-
-                                
 
                             </div>
                         </div>
@@ -1025,15 +999,15 @@ get_header(); ?>
                                 <div class="security__slide swiper-slide">
                                     <div class="security__slide-title">Certifications & Standards</div>
                                     <div class="security__slide-content">
-                                        <div class="security__slide-text">We don't just talk about security – we prove it. Our platform meets rigorous international standards including ISO 27001 for information security management, SOC 2 Type II compliance, and PCI DSS Level 1 certification for payment data handling. Our liveness detection technology carries iBeta Level 1 and Level 2 PAD certifications, ensuring the highest level of anti-spoofing protection.</div>
-                                        <div class="security__slide-subtitle">These certifications aren't just badges – they're our commitment to maintaining world-class security infrastructure.</div>
+                                        <div class="security__slide-text">We don’t just talk about security — we prove it. Our platform operates in compliance with internationally recognized standards, including ISO/IEC 27001:2022 for information security management and GDPR requirements for data protection. These certifications cover the design, development, and operation of our AI-powered identity verification platforms.</div>
+                                        <div class="security__slide-subtitle">Our approach to security goes beyond compliance — it’s built into every layer of our infrastructure.</div>
                                     </div>
                                 </div>
 
                                 <div class="security__slide swiper-slide">
                                     <div class="security__slide-title">Privacy Compliance</div>
                                     <div class="security__slide-content">
-                                        <div class="security__slide-text">Subsection Content: Privacy isn't an afterthought – it's fundamental to how we operate. EnFace fully complies with GDPR, CCPA, and similar data protection regulations worldwide. Your customers maintain complete control over their personal data, with transparent consent mechanisms and the right to deletion upon request.</div>
+                                        <div class="security__slide-text">Privacy isn’t an afterthought — it’s fundamental to how we operate. NV Global is designed to meet the requirements of GDPR and global data protection standards, ensuring responsible handling of personal data across all systems. Users maintain control over their information, with transparent consent mechanisms and the ability to request data deletion.</div>
                                         <div class="security__slide-subtitle">Our privacy-by-design approach means that compliance is built into every feature, not bolted on afterwards.</div>
                                     </div>
                                 </div>

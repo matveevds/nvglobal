@@ -1,37 +1,22 @@
 <?php
 /*
-Template Name: Hero Variant 5 — iOS Play On Scroll
+Template Name: Hero Variant 7 — Autoplay Background
 Template Post Type: page
 */
 
 /* =============================================================================
- * АНИМАЦИЯ ПЕРВОГО БЛОКА (.hero) — ГИБРИД: воспроизведение на телефонах / скраб на десктопе
- * Демо: /main-5/
+ * АНИМАЦИЯ ПЕРВОГО БЛОКА (.hero) — АВТОПЛЕЙ ФОНОВОГО ВИДЕО
+ * Демо: /main-7/
  * -----------------------------------------------------------------------------
- * Метод определяет устройство и работает в ДВУХ режимах:
+ * Самый простой вариант: при загрузке страницы (и на десктопе, и на телефоне)
+ * фоновое видео main_bg.mp4 СРАЗУ проигрывается (autoplay, muted, playsinline).
+ * Проигрывается ОДИН раз (без loop) и остаётся последний кадр. Блок с текстом
+ * НИКУДА не уезжает — никакой привязки к скроллу, pin, fade-out и ScrollTrigger нет.
  *
- *   РЕЖИМ ТЕЛЕФОНОВ / ТАЧ-УСТРОЙСТВ (iOS И Android):
- *     Скраб <video> по currentTime на телефонах нестабилен (iOS не перерисовывает
- *     кадр на паузе; Android прыгает кадрами и даёт пустоту сверху). Поэтому видео
- *     ПО-НАСТОЯЩЕМУ проигрывается (video.play()), запуск — по ПЕРВОМУ жесту
- *     прокрутки (touchstart/wheel/scroll), что разрешено политикой автоплея
- *     (muted + playsinline + жест). После окончания показывается точный последний
- *     кадр отдельным слоем (без чёрной вспышки). Видео идёт в реальном времени и
- *     не синхронизировано с точной позицией скролла.
- *
- *   РЕЖИМ ДЕСКТОПА (мышь):
- *     Классический скраб по скроллу, как в методе 2 — ScrollTrigger задаёт только
- *     targetProgress, RAF-цикл со сглаживанием (EASE/MAX_STEP) двигает
- *     video.currentTime (с seek-gate). Точная синхронизация кадра со скроллом.
- *
- * Общее для обоих режимов: pin секции, длина закрепления ~ длительность видео,
- * fade-out заголовка и градиента по прогрессу скролла, сброс позиции скролла
- * на верх (scrollRestoration = manual + scrollTo(0,0)).
- *
- * Детект «телефон/тач»: matchMedia('(hover:none) and (pointer:coarse)') ЛИБО
- * мобильный userAgent (Android/iPhone/iPad/...) ЛИБО iPadOS (MacIntel+maxTouchPoints).
- *
- * Библиотеки: GSAP + ScrollTrigger. Код — во встроенном <script> в конце файла.
+ * Автоплей немого инлайн-видео разрешён на iOS/Android. На случай блокировки
+ * (например, режим энергосбережения) есть фолбэк: запуск по первому жесту.
+ * Poster (первый кадр) — до старта; после конца держим точный последний кадр
+ * отдельным слоем (предзагружен), без чёрной вспышки.
  * ============================================================================= */
 
 get_header(); ?>
@@ -44,6 +29,7 @@ get_header(); ?>
         <div class="hero_media">
             <video id="heroVideo"
                    src="/wp-content/themes/nvglobal/video/main_bg.mp4"
+                   autoplay
                    muted
                    playsinline
                    webkit-playsinline
@@ -163,7 +149,7 @@ get_header(); ?>
                             <div class="about__card about__card--long about__card--certfication">
                                 <div class="about__card-title">NeuroVision Global operates in compliance with ISO/IEC 27001:2022 and GDPR standards, covering the design, development, and operation of AI-based identity verification systems</div>
                                 <div class="about__card-actions">
-                                    <a href="https://nvglobal.local/wp-content/uploads/2026/06/neurovision_iso_27001_certificate.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--small btn--gray btn-with-lottie-arrow-orange">
+                                    <a href="/wp-content/uploads/2026/06/neurovision_gdpr_certificate.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--small btn--gray btn-with-lottie-arrow-orange">
                                         <span class="btn__text">ISO/IEC 27001:2022</span>
                                         <span class="btn__icon lottie-container-arrow-orange">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -171,7 +157,7 @@ get_header(); ?>
                                             </svg>
                                         </span>
                                     </a>
-                                    <a href="https://nvglobal.local/wp-content/uploads/2026/06/neurovision_gdpr_certificate.pdf"  target="_blank" rel="noopener noreferrer" class="btn btn--small btn--gray btn-with-lottie-arrow-orange">
+                                    <a href="wp-content/uploads/2026/06/neurovision_iso_27001_certificate.pdf"  target="_blank" rel="noopener noreferrer" class="btn btn--small btn--gray btn-with-lottie-arrow-orange">
                                         <span class="btn__text">GDPR compliance certification</span>
                                         <span class="btn__icon lottie-container-arrow-orange">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -2271,7 +2257,7 @@ get_header(); ?>
                                         <span class="ui-check__box" aria-hidden="true"></span>
                             
                                         <span class="ui-check__text">
-                                            I have read and agree to the <a class="ui-check__link" href="/terms_of_use/" target="_blank" rel="noopener">Terms of Use</a> and <a class="ui-check__link" href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+                                            I have read and agree to the <a class="ui-check__link" href="/terms-of-use/" target="_blank" rel="noopener">Terms of Use</a> and <a class="ui-check__link" href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
                                         </span>
                                     </label>
                                 </div>
@@ -2320,7 +2306,7 @@ get_header(); ?>
 
 </main>
 
-<!-- ===== HERO VARIANT 5: <video> реально проигрывается по началу скролла (iOS-friendly) ===== -->
+<!-- ===== HERO VARIANT 7: автоплей фонового видео, текст статичен ===== -->
 <style>
     .hero_media {
         position: absolute;
@@ -2329,12 +2315,6 @@ get_header(); ?>
         height: 100%;
         z-index: 0;
         overflow: hidden;
-        /* Первый кадр как фон — виден до старта воспроизведения (подстраховка к poster видео) */
-        background-image: url('/wp-content/themes/nvglobal/video/main_bg_poster.jpg');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        background-color: #000;
     }
     .hero_media video {
         position: absolute;
@@ -2348,265 +2328,82 @@ get_header(); ?>
 </style>
 <script>
 (function () {
-    // hero c pin считаем от верха страницы (иначе после обновления на середине — пустота сверху)
-    if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
-
     document.addEventListener('DOMContentLoaded', function () {
-        if (!window.gsap || !window.ScrollTrigger) return;
+        var heroSection = document.querySelector('.hero');
+        var video       = document.getElementById('heroVideo');
+        if (!video) return;
+        var media = heroSection ? heroSection.querySelector('.hero_media') : null;
 
-        var heroSection  = document.querySelector('.hero');
-        var heroWrapper  = document.querySelector('.hero__wrapper');
-        var heroGradient = document.querySelector('.hero_gradient');
-        var video        = document.getElementById('heroVideo');
-
-        if (!heroSection || !heroWrapper || !heroGradient || !video) return;
-
-        var media = heroSection.querySelector('.hero_media');
-
-        gsap.registerPlugin(ScrollTrigger);
-        ScrollTrigger.config({ ignoreMobileResize: true });
-
-        heroWrapper.style.opacity  = 1;
-        heroGradient.style.opacity = 1;
-
-        // Обязательные атрибуты для инлайн-воспроизведения на iOS
+        // Обязательно для инлайн-автоплея
         video.muted = true;
         video.playsInline = true;
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
-        video.pause();
-        try { video.currentTime = 0; } catch (e) {}
 
-        /* --- Детект устройства ---
-         * На ВСЕХ телефонах/тач-устройствах скраб <video> по currentTime нестабилен:
-         * iOS не перерисовывает кадр, Android прыгает кадрами и даёт пустоту сверху.
-         * Поэтому на телефонах — режим реального воспроизведения по жесту (как на iPhone),
-         * а на десктопе с мышью — классический скраб по скроллу (как метод 2). */
-        var ua = navigator.userAgent || '';
-        var isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        var coarsePointer = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
-        var mobileUA = /Android|iPhone|iPad|iPod|Mobile|Windows Phone|BlackBerry|Opera Mini|IEMobile/i.test(ua);
-        var usePlayback = isIOS || coarsePointer || mobileUA;   // true = телефон/тач => воспроизведение
+        // Точный последний кадр отдельным слоем ПОВЕРХ видео (предзагружен) — держим его после
+        // окончания. Показываем чуть раньше конца, чтобы не было чёрной вспышки на iOS.
+        var LAST_FRAME = '/wp-content/themes/nvglobal/video/main_bg_lastframe.jpg';
+        var lastLayer = document.createElement('div');
+        lastLayer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;' +
+            "background-image:url('" + LAST_FRAME + "');background-position:center center;" +
+            'background-size:cover;background-repeat:no-repeat;opacity:0;pointer-events:none;';
+        if (media) { media.appendChild(lastLayer); }
+        var lastImg = new Image();
+        lastImg.onload = function () { if (lastImg.decode) { try { lastImg.decode(); } catch (e) {} } };
+        lastImg.src = LAST_FRAME;
+        function showLastFrame() { lastLayer.style.opacity = '1'; }
+        video.addEventListener('timeupdate', function () {
+            if (video.duration && video.currentTime >= video.duration - 0.08) { showLastFrame(); }
+        });
+        video.addEventListener('ended', showLastFrame);
 
-        // Длина закрепления hero ~ длительность видео (общая для обоих режимов)
-        var PX_PER_SEC = 300;
-        function computeLen() {
-            var d = (isFinite(video.duration) && video.duration > 0) ? video.duration : 6;
-            return Math.max(heroSection.offsetHeight, Math.round(d * PX_PER_SEC));
-        }
-        function setFades(pr) {
-            gsap.set(heroWrapper,  { x: -500 * pr, opacity: 1 - pr });
-            gsap.set(heroGradient, { x: -500 * pr, opacity: 1 - pr });
-        }
-        function pinHero(cbs) {
-            var st = ScrollTrigger.create(Object.assign({
-                id: 'hero-5',
-                trigger: heroSection,
-                start: 'top top',
-                end: function () { return '+=' + computeLen(); },
-                pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true
-            }, cbs || {}));
-            if (!location.hash) { window.scrollTo(0, 0); }
-            requestAnimationFrame(function () { ScrollTrigger.refresh(); });
-            return st;
-        }
-
-        if (usePlayback) { initPlaybackMode(); } else { initDesktopScrub(); }
-
-        /* ========= РЕЖИМ ТЕЛЕФОНОВ/ТАЧ: реальное воспроизведение по жесту (iOS + Android) ========= */
-        function initPlaybackMode() {
-            // Реальный последний кадр отдельным слоем ПОВЕРХ видео (предзагружен) — без чёрной вспышки
-            var LAST_FRAME = '/wp-content/themes/nvglobal/video/main_bg_lastframe.jpg';
-            var lastLayer = document.createElement('div');
-            lastLayer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;' +
-                "background-image:url('" + LAST_FRAME + "');background-position:center center;" +
-                'background-size:cover;background-repeat:no-repeat;opacity:0;pointer-events:none;';
-            if (media) { media.appendChild(lastLayer); }
-            var lastImg = new Image();
-            lastImg.onload = function () { if (lastImg.decode) { try { lastImg.decode(); } catch (e) {} } };
-            lastImg.src = LAST_FRAME;
-            function showLastFrame() { lastLayer.style.opacity = '1'; }
-            video.addEventListener('timeupdate', function () {
-                if (video.duration && video.currentTime >= video.duration - 0.08) { showLastFrame(); }
+        // Пытаемся запустить сразу; если браузер заблокировал (напр. энергосбережение) —
+        // запускаем по первому жесту пользователя. Видео играет ОДИН раз (без loop).
+        var p = video.play();
+        if (p && typeof p.catch === 'function') {
+            p.catch(function () {
+                var kick = function () {
+                    video.play();
+                    window.removeEventListener('touchstart', kick);
+                    window.removeEventListener('click', kick);
+                };
+                window.addEventListener('touchstart', kick, { passive: true });
+                window.addEventListener('click', kick);
             });
-            video.addEventListener('ended', showLastFrame);
-
-            // ---- Диагностика ----
-            var DEBUG = true;
-            function log() {
-                if (!DEBUG) return;
-                var a = ['%c[hero-5]', 'color:#c60;font-weight:bold'];
-                for (var i = 0; i < arguments.length; i++) a.push(arguments[i]);
-                console.log.apply(console, a);
-            }
-            function sy() { return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0); }
-
-            var TOP_THRESHOLD = 2;      // «самый верх» страницы (px)
-            var PAST_BLOCK    = 100;    // на сколько px дальше конца блока уйти для сброса
-            var DOWN_MIN      = 6;      // насколько страница должна уйти вниз, чтобы считать это свайпом вниз
-            var playing       = false;
-            var armed         = false;
-            var awaitingTop   = false;  // после сброса ждём возврата наверх
-            var st            = null;
-            var lastMY        = 0;      // прошлая позиция скролла (для определения направления)
-            var autoScrolling = false;  // идёт программный доскролл к верху
-            var AUTO_SCROLL_MS = 1035;  // длительность авто-доскролла к верху (больше = медленнее)
-            var APPEAR_PX      = 300;   // сколько px блока должно показаться при свайпе вверх, чтобы включить доскролл
-
-            // --- Запуск ТОЛЬКО при свайпе страницы ВНИЗ (не при касании и не при свайпе вверх) ---
-            function tryPlay() {
-                if (playing || !armed) return;
-                var p = video.play();
-                if (p && typeof p.then === 'function') {
-                    p.then(onPlayed).catch(function (e) { log('play() отклонён:', e && e.name); });
-                } else { onPlayed(); }
-            }
-            function onTouchMove() {
-                // На iOS страница скроллится в реальном времени во время touchmove: если ушли вниз
-                // от верха — значит свайп вниз. Просто касание (без прокрутки) сюда не попадает.
-                if (playing || !armed) return;
-                if (sy() > TOP_THRESHOLD + DOWN_MIN) { tryPlay(); }
-            }
-            function onWheel(e) {
-                if (playing || !armed) return;
-                if (e && e.deltaY > 0) { tryPlay(); }   // колесо/тачпад вниз
-            }
-            function onPlayed() { playing = true; disarm(); log('▶ PLAYBACK START (свайп вниз), y =', sy()); }
-            function arm() {
-                if (armed) return;
-                armed = true;
-                window.addEventListener('touchmove', onTouchMove, { passive: true });
-                window.addEventListener('wheel', onWheel, { passive: true });
-                log('ARMED — ждём свайп ВНИЗ, y =', sy());
-            }
-            function disarm() {
-                armed = false;
-                window.removeEventListener('touchmove', onTouchMove);
-                window.removeEventListener('wheel', onWheel);
-            }
-
-            // onUpdate заголовка/градиента:
-            //  - на самом верху -> показан (pr = 0);
-            //  - при возврате вверх после проигрывания (awaitingTop) -> СКРЫТ (pr = 1),
-            //    появится только когда доскроллишь до самого верха;
-            //  - иначе -> по прогрессу скролла (обычный fade вниз).
-            function heroOnUpdate(self) {
-                var y = sy();
-                var pr = (y <= TOP_THRESHOLD) ? 0 : (awaitingTop ? 1 : self.progress);
-                setFades(pr);
-                if (DEBUG && (self.progress <= 0.03 || self.progress >= 0.97)) {
-                    log('onUpdate progress =', +self.progress.toFixed(3), ', применяем =', +pr.toFixed(3),
-                        ', y =', y, ', awaitingTop =', awaitingTop);
-                }
-            }
-
-            // --- Сброс ВИДЕО в начало. pin НЕ трогаем. Заголовок остаётся СКРЫТЫМ до самого верха. ---
-            function resetVideo(y) {
-                lastLayer.style.opacity = '0';       // убрать последний кадр
-                try { video.pause(); } catch (e) {}
-                try { video.load(); } catch (e) {}   // видео в начало: poster (первый кадр) + currentTime 0
-                playing = false;
-                disarm();
-                awaitingTop = true;                  // до возврата на самый верх повторно не запускаем
-                log('⟲ RESET: видео в начало, заголовок скрыт до верха. y =', y);
-            }
-
-            // Низ блока в координатах скролла: конец pin ПЛЮС высота hero.
-            function blockBottom() {
-                return (st ? st.end : computeLen()) + heroSection.offsetHeight;
-            }
-
-            // Плавный доскролл к верху со своей (регулируемой) скоростью — чуть медленнее браузерного.
-            function smoothTop() {
-                var startY = sy(), startT = null;
-                function step(t) {
-                    if (!autoScrolling) return;              // отменили / дошли до верха
-                    if (startT === null) startT = t;
-                    var p = Math.min(1, (t - startT) / AUTO_SCROLL_MS);
-                    var e = 1 - Math.pow(1 - p, 3);          // easeOutCubic
-                    window.scrollTo(0, Math.round(startY * (1 - e)));
-                    if (p < 1) requestAnimationFrame(step);
-                }
-                requestAnimationFrame(step);
-            }
-
-            // --- Монитор скролла: сброс на 100px дальше низа блока; на самом верху — показать заголовок;
-            //     авто-доскролл к верху при свайпе ВВЕРХ, когда дошли до первого блока ---
-            function onScrollMonitor() {
-                var y = sy();
-                var dir = y - lastMY;                // <0 — скроллим вверх, >0 — вниз
-                lastMY = y;
-
-                if (!awaitingTop && st && y > blockBottom() + PAST_BLOCK) {
-                    resetVideo(y);
-                } else if (awaitingTop && y <= TOP_THRESHOLD) {
-                    awaitingTop = false;
-                    setFades(0);                     // на самом верху заголовок появляется
-                    arm();
-                    log('↑ Вернулись на самый верх (y =', y, ') — заголовок показан, ждём жест');
-                }
-
-                // Свайп ВВЕРХ и показалось >= APPEAR_PX блока (y <= низа блока − APPEAR_PX) →
-                // плавно доскроллить страницу к самому верху за нас.
-                if (dir < 0 && !autoScrolling && st && y > TOP_THRESHOLD && y <= (blockBottom() - APPEAR_PX)) {
-                    autoScrolling = true;
-                    log('↑ показалось', APPEAR_PX, 'px блока при скролле вверх — авто-доскролл к верху, y =', y);
-                    smoothTop();
-                }
-                if (y <= TOP_THRESHOLD) { autoScrolling = false; }
-            }
-
-            st = pinHero({ onUpdate: heroOnUpdate });   // pin создаётся ОДИН раз и НЕ снимается
-            log('init. duration =', video.duration, ', низ блока ≈', Math.round(blockBottom()),
-                'px (порог сброса =', Math.round(blockBottom() + PAST_BLOCK) + ')');
-
-            window.addEventListener('scroll', onScrollMonitor, { passive: true });
-
-            // Стартовое «вооружение» ПОСЛЕ scrollTo(0,0) — программная прокрутка не считается жестом
-            arm();
-
-            if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
         }
+        // Текст (.hero__wrapper) и градиент остаются на месте — никакой анимации.
 
-        /* ============ РЕЖИМ ДЕСКТОП/ANDROID: скраб видео по скроллу (как метод 2) ============ */
-        function initDesktopScrub() {
-            var targetProgress = 0, currentProgress = 0, EASE = 0.10, MAX_STEP = 0.05, started = false;
+        // --- Возврат/повтор по скроллу (pin нет, блок = 1 экран) ---
+        var TOP_THRESHOLD = 2;
+        var didReset      = false;
+        function sy() { return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0); }
+        function blockBottom() { return heroSection ? heroSection.offsetHeight : window.innerHeight; }
 
-            function renderVideo(pr) {
-                var d = video.duration;
-                if (!isFinite(d) || d <= 0) return;
-                var t = pr * d; if (t < 0) t = 0; else if (t > d) t = d;
-                // сикаем только когда предыдущий seek завершён (иначе <video> не успевает отрисовать кадр)
-                if (!video.seeking) { try { video.currentTime = t; } catch (e) {} }
-            }
-            function render(pr) { renderVideo(pr); setFades(pr); }
-            function animate() {
-                requestAnimationFrame(animate);
-                var delta = (targetProgress - currentProgress) * EASE;
-                if (delta >  MAX_STEP) delta =  MAX_STEP;
-                if (delta < -MAX_STEP) delta = -MAX_STEP;
-                currentProgress += delta;
-                render(currentProgress);
-            }
-            function start() {
-                if (started) return;
-                started = true;
-                try { video.currentTime = 0; } catch (e) {}
-                render(0);
-                pinHero({ onUpdate: function (self) { targetProgress = self.progress; } });
-                requestAnimationFrame(animate);
-                if (typeof initFadeUpAnimations === 'function') initFadeUpAnimations();
-            }
-
-            if (isFinite(video.duration) && video.duration > 0) {
-                start();
-            } else {
-                video.addEventListener('loadedmetadata', start, { once: true });
-                video.addEventListener('durationchange', function () { if (started) ScrollTrigger.refresh(); });
-                setTimeout(function () { if (!started) start(); }, 3000);
-            }
+        function resetVideo() {
+            try { video.pause(); } catch (e) {}
+            try { video.currentTime = 0; } catch (e) {}   // видео в начало (первый кадр)
+            lastLayer.style.opacity = '0';                 // убрать последний кадр
+            didReset = true;
         }
+        function replayVideo() {
+            lastLayer.style.opacity = '0';
+            try { video.currentTime = 0; } catch (e) {}
+            var pp = video.play();
+            if (pp && typeof pp.catch === 'function') { pp.catch(function () {}); }
+            didReset = false;
+        }
+        window.addEventListener('scroll', function () {
+            var y = sy();
+            if (!didReset && y > blockBottom()) {
+                resetVideo();      // пролистали блок ниже → видео возвращается в начало
+            } else if (didReset && y <= TOP_THRESHOLD) {
+                replayVideo();     // вернулись на самый верх → воспроизводим снова
+            }
+        }, { passive: true });
+
+        // Анимации появления нижних блоков (в оригинале их запускала initHeroCanvasAnimation,
+        // которая тут не работает) — включаем явно, чтобы страница вела себя как раньше.
+        if (typeof initFadeUpAnimations === 'function') { initFadeUpAnimations(); }
     });
 })();
 </script>

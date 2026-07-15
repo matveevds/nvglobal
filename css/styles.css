@@ -7550,10 +7550,11 @@ html.has-scroll-smooth body {
 }
 
 .benefits__card {
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    background: var(--Background-Black, #212121);
+    border-radius: 12px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: transparent;
     box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.15) inset, 0 4px 12px 0 rgba(255, 251, 251, 0.05) inset;
-    padding: 24px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -7562,8 +7563,9 @@ html.has-scroll-smooth body {
 
 .benefits__card-wrapper {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .benefits__card-image {
@@ -7588,11 +7590,11 @@ html.has-scroll-smooth body {
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-    border-radius: 32px;
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    box-shadow: 0 -4px 160px 0 rgba(255, 255, 255, 0.25), 0 12px 40px 0 rgba(17, 17, 17, 0.30);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    padding: 4px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(251, 251, 251, 0.15);
+    background: rgba(251, 251, 251, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 8px 8px 8px 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7619,6 +7621,7 @@ html.has-scroll-smooth body {
 
 .benefits__card-nist {
     display: flex;
+    flex-direction: column;
     gap: 12px;
     justify-content: center;
     align-items: center;

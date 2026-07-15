@@ -2403,6 +2403,23 @@ get_header(); ?>
         video.muted = true;
         video.playsInline = true;
 
+        // iOS-костыль: «пробуждаем» видео-декодер на ПЕРВОМ жесте пользователя (play()->pause()),
+        // иначе iOS Safari не обновляет кадр <video> при перемотке currentTime на паузе.
+        var _primed = false;
+        function primeVideo() {
+            if (_primed) return;
+            _primed = true;
+            var p = video.play();
+            if (p && typeof p.then === 'function') {
+                p.then(function () { video.pause(); }).catch(function () {});
+            } else {
+                try { video.pause(); } catch (e) {}
+            }
+            log('video primed on first gesture');
+        }
+        window.addEventListener('touchstart', primeVideo, { once: true, passive: true });
+        window.addEventListener('click', primeVideo, { once: true });
+
         /* =====================================================================
            СЛОЙ 2 — TIMELINE CONTROLLER (единый animation clock)
            scroll задаёт НАМЕРЕНИЕ (targetProgress), RAF его ИСПОЛНЯЕТ.
@@ -2465,7 +2482,7 @@ get_header(); ?>
            ===================================================================== */
         // Длина прокрутки привязана к длительности видео, чтобы клип успел проиграться
         // целиком по мере скролла (иначе на 1 экране 6-секундное видео не «докручивается»).
-        var PX_PER_SEC = 600;
+        var PX_PER_SEC = 300;
         function computeScrollLen() {
             var height = heroSection.offsetHeight;
             var dur    = (isFinite(video.duration) && video.duration > 0) ? video.duration : 1;

@@ -2234,7 +2234,7 @@ get_header(); ?>
                                         <span class="ui-check__box" aria-hidden="true"></span>
                             
                                         <span class="ui-check__text">
-                                            I have read and agree to the <a class="ui-check__link" href="/terms_of_use/" target="_blank" rel="noopener">Terms of Use</a> and <a class="ui-check__link" href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+                                            I have read and agree to the <a class="ui-check__link" href="/terms-of-use/" target="_blank" rel="noopener">Terms of Use</a> and <a class="ui-check__link" href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
                                         </span>
                                     </label>
                                 </div>

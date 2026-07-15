@@ -2482,12 +2482,12 @@ get_header(); ?>
             // Прокручиваем к началу перед созданием pin (кроме перехода по якорю #...),
             // чтобы pin посчитался от верха и не было пустоты сверху после обновления.
             if (!location.hash) { window.scrollTo(0, 0); }
-            var height = heroSection.offsetHeight;
+            var height = Math.round(heroSection.offsetHeight * 0.5);
             ScrollTrigger.create({
                 id: 'hero-lite-images',
                 trigger: heroSection,
                 start: 'top top',
-                end: '+=' + height,            // длина scroll = высота hero (scroll-lock)
+                end: '+=' + height,            // длина scroll = половина высоты hero (ускорено вдвое)
                 pin: true,
                 pinSpacing: true,
                 anticipatePin: 1,
