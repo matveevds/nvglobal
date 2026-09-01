@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const I18N = Object.assign({
-        documentLabel: 'DOCUMENT — Document Recognition',
+        documentLabel: 'DOCUMENT · Document Recognition',
         livenessLabel: 'LIVENESS',
-        basicLabel: 'BASIC — Document + Selfie / Liveness',
+        basicLabel: 'BASIC · Selfie / Liveness',
         perDocument: 'per document',
         clear: 'Clear',
         selectAll: 'Select All',
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         BASIC: {
             label: I18N.basicLabel,
             name: 'BASIC',
-            description: 'Document + Selfie / Liveness',
+            description: 'Selfie / Liveness',
             USD: readPackageCurve('BASIC', 'basic')
         }
     };
