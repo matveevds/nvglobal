@@ -65,23 +65,37 @@ get_header(); ?>
 </section>
 
 <?php
-$calculator_format_price = function ($value, $fallback) {
-    $value = is_string($value) ? str_replace(',', '.', $value) : $value;
-    $value = is_numeric($value) ? (float) $value : $fallback;
-    $price = rtrim(rtrim(number_format($value, 3, '.', ''), '0'), '.');
+/*
+ * Вся тарифная сетка калькулятора приходит из ACF-полей страницы
+ * (см. inc/calculator-fields.php) и уезжает в JS через data-атрибуты.
+ * Пустое поле означает «взять значение по умолчанию».
+ */
+$calculator_doc_price = nv_calculator_format_price(get_field('doc_price'), 0.13);
+$calculator_international_price = nv_calculator_format_price(get_field('international_price'), 0.4);
 
-    if (strpos($price, '.') !== false && strlen(substr(strrchr($price, '.'), 1)) < 2) {
-        $price .= '0';
-    }
-
-    return $price;
-};
-
-$calculator_doc_price = $calculator_format_price(get_field('doc_price'), 0.13);
-$calculator_international_price = $calculator_format_price(get_field('international_price'), 0.4);
+$calculator_package_prices = [
+    'document' => [
+        '10k'  => nv_calculator_package_price('document', '10k'),
+        '50k'  => nv_calculator_package_price('document', '50k'),
+        '100k' => nv_calculator_package_price('document', '100k'),
+    ],
+    'basic' => [
+        '10k'  => nv_calculator_package_price('basic', '10k'),
+        '50k'  => nv_calculator_package_price('basic', '50k'),
+        '100k' => nv_calculator_package_price('basic', '100k'),
+    ],
+];
 ?>
 
-<section class="section calculator" id="kyc-calculator" data-doc-price="<?php echo esc_attr($calculator_doc_price); ?>" data-international-price="<?php echo esc_attr($calculator_international_price); ?>">
+<section class="section calculator" id="kyc-calculator"
+    data-doc-price="<?php echo esc_attr($calculator_doc_price); ?>"
+    data-international-price="<?php echo esc_attr($calculator_international_price); ?>"
+    data-document-price-10k="<?php echo esc_attr($calculator_package_prices['document']['10k']); ?>"
+    data-document-price-50k="<?php echo esc_attr($calculator_package_prices['document']['50k']); ?>"
+    data-document-price-100k="<?php echo esc_attr($calculator_package_prices['document']['100k']); ?>"
+    data-basic-price-10k="<?php echo esc_attr($calculator_package_prices['basic']['10k']); ?>"
+    data-basic-price-50k="<?php echo esc_attr($calculator_package_prices['basic']['50k']); ?>"
+    data-basic-price-100k="<?php echo esc_attr($calculator_package_prices['basic']['100k']); ?>">
     <div class="container">
         <div class="calculator__wrapper">
             <div class="section__title-block">
@@ -107,11 +121,12 @@ $calculator_international_price = $calculator_format_price(get_field('internatio
                                 <div class="calculator__spoiler-item-title">Base Package</div>
                                 <div class="calculator__spoiler-item-actions" id="calculator-package">
                                     <button class="calculator__spoiler-btn active" type="button" data-pkg="DOCUMENT">DOCUMENT — Document Recognition</button>
+                                    <button class="calculator__spoiler-btn" type="button" data-pkg="LIVENESS">LIVENESS — Selfie / Liveness</button>
                                     <button class="calculator__spoiler-btn" type="button" data-pkg="BASIC">BASIC — Document + Selfie / Liveness</button>
                                 </div>
                             </div>
 
-                            <div class="calculator__spoiler-item">
+                            <div class="calculator__spoiler-item calculator__spoiler-item--document-type">
                                 <div class="calculator__spoiler-item-title">Document Type in Package</div>
                                 <div class="calculator__spoiler-item-subtitle">Multiple types are possible: the client presents one, the price remains the same</div>
 

@@ -42,7 +42,7 @@ get_header(); ?>
                                         <path d="M8.2627 12C8.2627 11.1233 8.3089 10.2712 8.39453 9.45996C7.15285 9.29761 5.93818 9.05974 4.7832 8.74023C4.35264 9.74023 4.11328 10.8421 4.11328 12C4.11328 13.1564 4.35177 14.2569 4.78125 15.2559C5.93672 14.9361 7.15225 14.6985 8.39453 14.5361C8.30916 13.7261 8.2627 12.8754 8.2627 12ZM14.626 15.8652C13.1226 15.7498 11.5973 15.7507 10.0996 15.8662C10.2549 16.7053 10.4581 17.4601 10.6973 18.1025C10.9821 18.8678 11.3034 19.4347 11.6221 19.7969C11.9419 20.1602 12.1943 20.25 12.3633 20.25C12.5323 20.25 12.7847 20.1602 13.1045 19.7969C13.4232 19.4347 13.7445 18.8678 14.0293 18.1025C14.2685 17.4599 14.4707 16.7047 14.626 15.8652ZM8.60254 16.0215C7.54009 16.1599 6.50571 16.356 5.52148 16.6113C6.54818 18.1317 8.0686 19.29 9.85254 19.8594C9.6442 19.4863 9.45674 19.0712 9.29102 18.626C9.00758 17.8645 8.77461 16.9848 8.60254 16.0215ZM16.123 16.0205C15.951 16.9841 15.719 17.8643 15.4355 18.626C15.2698 19.0714 15.0815 19.4862 14.873 19.8594C16.6576 19.2901 18.1782 18.1313 19.2051 16.6104C18.2205 16.3552 17.1858 16.1587 16.123 16.0205ZM12.3633 3.75C12.1943 3.75001 11.9419 3.83976 11.6221 4.20312C11.3034 4.5653 10.9821 5.13222 10.6973 5.89746C10.4585 6.53895 10.2548 7.29226 10.0996 8.12988C11.5971 8.24537 13.1219 8.2462 14.625 8.13086C14.4698 7.29297 14.2681 6.53912 14.0293 5.89746C13.7445 5.1322 13.4232 4.56531 13.1045 4.20312C12.7847 3.83976 12.5323 3.75 12.3633 3.75ZM14.873 4.13965C15.0816 4.51306 15.2697 4.92832 15.4355 5.37402C15.7186 6.13466 15.9501 7.01349 16.1221 7.97559C17.1846 7.83743 18.2187 7.64077 19.2031 7.38574C18.1762 5.86644 16.6564 4.70847 14.873 4.13965ZM9.85254 4.13965C8.0697 4.70855 6.54918 5.86582 5.52246 7.38477C6.50673 7.64004 7.541 7.83624 8.60352 7.97461C8.77552 7.01282 9.00797 6.13445 9.29102 5.37402C9.45685 4.92849 9.64403 4.51295 9.85254 4.13965ZM9.7627 12C9.7627 12.8287 9.80645 13.6266 9.88574 14.3789C11.5249 14.2471 13.1951 14.2473 14.8398 14.3789C14.9191 13.6266 14.9629 12.8287 14.9629 12C14.9629 11.1702 14.9193 10.3713 14.8398 9.61816C13.1951 9.74979 11.525 9.74995 9.88574 9.61816C9.80626 10.3713 9.7627 11.1702 9.7627 12ZM16.4629 12C16.4629 12.875 16.4163 13.7254 16.3311 14.5352C17.5733 14.6973 18.7887 14.9354 19.9443 15.2549C20.3737 14.2561 20.6133 13.1562 20.6133 12C20.6133 10.8424 20.3737 9.74099 19.9434 8.74121C18.788 9.06057 17.5731 9.29878 16.3311 9.46094C16.4166 10.2719 16.4629 11.1236 16.4629 12ZM22.1133 12C22.1133 13.5889 21.7307 15.0877 21.0566 16.4131C21.0377 16.4649 21.011 16.5117 20.9824 16.5566C19.3464 19.645 16.1019 21.75 12.3633 21.75C8.61315 21.75 5.35956 19.6323 3.72852 16.5283C3.71337 16.5019 3.69855 16.475 3.68652 16.4463C3.00189 15.1128 2.61328 13.6021 2.61328 12C2.61328 10.4003 2.99998 8.89151 3.68262 7.55957C3.69697 7.5241 3.71532 7.49108 3.73438 7.45898C5.36756 4.36174 8.61812 2.25001 12.3633 2.25C16.0969 2.25 19.3385 4.34902 20.9766 7.43066C21.0094 7.48046 21.0389 7.53326 21.0596 7.5918C21.7321 8.91592 22.1133 10.4131 22.1133 12Z" fill="#F9AA66"/>
                                     </svg>
                                 </div>
-                                <div class="main__slide-text">Support 200+ countries and territories</div>
+                                <div class="main__slide-text">Support 195+ countries and territories</div>
                             </div>
                             <div class="main__slide">
                                 <div class="main__slide-icon">
@@ -80,7 +80,7 @@ get_header(); ?>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M11.409 12.6681C11.7392 12.6681 12.0305 12.8841 12.1266 13.2C12.2256 13.5258 12.48 13.7803 12.8043 13.8791C13.12 13.9753 13.3356 14.2666 13.3356 14.5965C13.3356 14.9265 13.12 15.2177 12.8043 15.3139C12.48 15.4128 12.2256 15.6672 12.1266 15.9931C12.0305 16.309 11.7392 16.525 11.409 16.525C11.0788 16.525 10.7874 16.309 10.6914 15.9931C10.5923 15.6672 10.3379 15.4128 10.0136 15.3139C9.69797 15.2177 9.4823 14.9265 9.4823 14.5965C9.4823 14.2666 9.69797 13.9754 10.0136 13.8791C10.3379 13.7803 10.5923 13.5259 10.6914 13.2C10.7874 12.8841 11.0788 12.6681 11.409 12.6681Z" fill="#F9AA66"/>
                                     </svg>
                                 </div>
-                                <div class="main__slide-text">Support 200+ countries and territories</div>
+                                <div class="main__slide-text">Support 195+ countries and territories</div>
                             </div>
                             <div class="main__slide">
                                 <div class="main__slide-icon">
@@ -160,7 +160,7 @@ get_header(); ?>
 
                 <div class="section__content benefits__section-content">
                     <div class="section__title-block">
-                        <h2 class="section__title">Why Leading Companies Choose <span>NV Global KYC</span></h2>
+                        <h2 class="section__title">Why Leading Companies Choose <span>NeuroVision Global Systems KYC</span></h2>
                     </div>
 
                     <div class="benefits__content">
@@ -201,7 +201,7 @@ get_header(); ?>
                                 </div>
 
                                 <div class="benefits__info-item">
-                                    <p>Verify customers from anywhere with support for over 10,000 document types across 200+ countries and territories. Our solution recognizes documents in 90 languages and adapts to local regulatory requirements, making global expansion seamless for crypto exchanges, fintech platforms, and international businesses.</p>
+                                    <p>Verify customers from anywhere with support for over 16,000 document types across 195+ countries and territories. Our solution recognizes documents in 90 languages and adapts to local regulatory requirements, making global expansion seamless for crypto exchanges, fintech platforms, and international businesses.</p>
                                 </div>
 
                                 <div class="benefits__info-item">
@@ -269,7 +269,7 @@ get_header(); ?>
 
                                 <div class="benefits__mobile-slide swiper-slide">
                                     <div class="benefits__mobile-info">
-                                        <p>Verify customers from anywhere with support for over 10,000 document types across 200+ countries and territories. Our solution recognizes documents in 90 languages and adapts to local regulatory requirements, making global expansion seamless for crypto exchanges, fintech platforms, and international businesses.</p>
+                                        <p>Verify customers from anywhere with support for over 16,000 document types across 195+ countries and territories. Our solution recognizes documents in 90 languages and adapts to local regulatory requirements, making global expansion seamless for crypto exchanges, fintech platforms, and international businesses.</p>
                                     </div>
                                     <div class="benefits__mobile-image benefits__mobile-image-2">
                                         <img src="<?php echo get_template_directory_uri(); ?>/img/benefits__image2.png" alt="Global Coverage & Localization">
@@ -492,10 +492,10 @@ get_header(); ?>
 
                         <div class="features__panel animate-fade-up">
                             <div class="features__panel-bg">
-                                <img src="<?php echo get_template_directory_uri(); ?>/img/features__panel.webp" alt="Solutions NeuroVision Global">
+                                <img src="<?php echo get_template_directory_uri(); ?>/img/features__panel.webp" alt="Solutions NeuroVision Global Systems">
                             </div>
                             <div class="features__panel-content features__panel-content--active" data-index="0">
-                                <p class="features__panel-text">Instantly verify government-issued documents from over 200 countries and territories. Our AI-powered OCR technology reads and validates passports, national IDs, driver's licenses, and more — supporting over 10,000 document types in 90 languages. The system automatically detects forgeries, photo substitutions, and data tampering by analyzing security features like holograms, watermarks, and microprinting against our extensive template database. Get accurate data extraction and authenticity checks in seconds, ensuring you onboard only legitimate customers.</p>
+                                <p class="features__panel-text">Instantly verify government-issued documents from over 200 countries and territories. Our AI-powered OCR technology reads and validates passports, national IDs, driver's licenses, and more — supporting over 16,000 document types in 90 languages. The system automatically detects forgeries, photo substitutions, and data tampering by analyzing security features like holograms, watermarks, and microprinting against our extensive template database. Get accurate data extraction and authenticity checks in seconds, ensuring you onboard only legitimate customers.</p>
                             </div>
 
                             <div class="features__panel-content" data-index="1">
@@ -764,7 +764,7 @@ get_header(); ?>
                                             </div>
                                             <div class="nvslider__slide-info">
                                                 <div class="nvslider__slide-title">Crypto Exchanges & Web3</div>
-                                                <div class="nvslider__slide-description">Speed meets security in the fast-paced world of digital assets. Our crypto KYC compliance solution enables instant user onboarding while meeting FATF recommendations and regulatory requirements from FINMA, FCA, and other global authorities. With coverage across 200+ countries and territories, we help exchanges verify users worldwide in seconds, not hours.</div>
+                                                <div class="nvslider__slide-description">Speed meets security in the fast-paced world of digital assets. Our crypto KYC compliance solution enables instant user onboarding while meeting FATF recommendations and regulatory requirements from FINMA, FCA, and other global authorities. With coverage across 195+ countries and territories, we help exchanges verify users worldwide in seconds, not hours.</div>
                                             </div>
                                         </div>
                                     </div>
@@ -977,7 +977,7 @@ get_header(); ?>
                     <div class="section__badge">Security</div>
                     <div class="security__title-block">
                         <h2 class="section__title">Security & Compliance: Your Trust is Our Priority</h2>
-                        <p class="security__title-text large-text">At NeuroVision Global we understand that handling identity verification means handling trust. That's why we've built our platform with security, privacy, and compliance at its core. Every piece of data, every verification, every interaction is protected by industry-leading standards and practices.</p>
+                        <p class="security__title-text large-text">At NeuroVision Global Systems we understand that handling identity verification means handling trust. That's why we've built our platform with security, privacy, and compliance at its core. Every piece of data, every verification, every interaction is protected by industry-leading standards and practices.</p>
                     </div>
                 </div>
                 <div class="security__right">
@@ -1007,7 +1007,7 @@ get_header(); ?>
                                 <div class="security__slide swiper-slide">
                                     <div class="security__slide-title">Privacy Compliance</div>
                                     <div class="security__slide-content">
-                                        <div class="security__slide-text">Privacy isn’t an afterthought — it’s fundamental to how we operate. NV Global is designed to meet the requirements of GDPR and global data protection standards, ensuring responsible handling of personal data across all systems. Users maintain control over their information, with transparent consent mechanisms and the ability to request data deletion.</div>
+                                        <div class="security__slide-text">Privacy isn’t an afterthought — it’s fundamental to how we operate. NeuroVision Global Systems is designed to meet the requirements of GDPR and global data protection standards, ensuring responsible handling of personal data across all systems. Users maintain control over their information, with transparent consent mechanisms and the ability to request data deletion.</div>
                                         <div class="security__slide-subtitle">Our privacy-by-design approach means that compliance is built into every feature, not bolted on afterwards.</div>
                                     </div>
                                 </div>
@@ -1072,7 +1072,7 @@ get_header(); ?>
                                     <div class="testimonials__slide-icon">
                                         <img src="<?php echo get_template_directory_uri(); ?>/img/quote.svg" alt="Testimonial">
                                     </div>
-                                    <div class="testimonials__slide-text">NV Global transformed our onboarding process completely. We reduced document verification time from 5 minutes to just 30 seconds, and our conversion rate jumped by 47%. The integration took literally one day – our dev team was amazed.</div>
+                                    <div class="testimonials__slide-text">NeuroVision Global Systems transformed our onboarding process completely. We reduced document verification time from 5 minutes to just 30 seconds, and our conversion rate jumped by 47%. The integration took literally one day – our dev team was amazed.</div>
                                     <div class="testimonials__slide-author">
                                         <div class="testimonials__slide-author-image">
                                             <img src="<?php echo get_template_directory_uri(); ?>/img/clent_image.webp" alt="Author">
@@ -1088,7 +1088,7 @@ get_header(); ?>
                                     <div class="testimonials__slide-icon">
                                         <img src="<?php echo get_template_directory_uri(); ?>/img/quote.svg" alt="Testimonial">
                                     </div>
-                                    <div class="testimonials__slide-text">Security and compliance were our biggest concerns when choosing a KYC provider. NV Global delivered on both fronts – our fraud rate dropped below 0.5%, and we passed all regulatory audits with flying colors. Their GDPR-compliant face matching technology gave us the confidence we needed.</div>
+                                    <div class="testimonials__slide-text">Security and compliance were our biggest concerns when choosing a KYC provider. NeuroVision Global Systems delivered on both fronts – our fraud rate dropped below 0.5%, and we passed all regulatory audits with flying colors. Their GDPR-compliant face matching technology gave us the confidence we needed.</div>
                                     <div class="testimonials__slide-author">
                                         <div class="testimonials__slide-author-image">
                                             <img src="<?php echo get_template_directory_uri(); ?>/img/clent_image.webp" alt="Author">
@@ -1104,7 +1104,7 @@ get_header(); ?>
                                     <div class="testimonials__slide-icon">
                                         <img src="<?php echo get_template_directory_uri(); ?>/img/quote.svg" alt="Testimonial">
                                     </div>
-                                    <div class="testimonials__slide-text">We process millions of applications yearly, and NV Global handles the load effortlessly. Customer satisfaction scores increased by 35% after implementation – people love how fast and smooth the verification is now. Plus, their support team actually responds within hours, not days.</div>
+                                    <div class="testimonials__slide-text">We process millions of applications yearly, and NeuroVision Global Systems handles the load effortlessly. Customer satisfaction scores increased by 35% after implementation – people love how fast and smooth the verification is now. Plus, their support team actually responds within hours, not days.</div>
                                     <div class="testimonials__slide-author">
                                         <div class="testimonials__slide-author-image">
                                             <img src="<?php echo get_template_directory_uri(); ?>/img/clent_image.webp" alt="Author">
@@ -1169,7 +1169,7 @@ get_header(); ?>
                                 </div>
                                 <div class="faq__item-answer">
                                     <div class="faq__item-answer-text">
-                                        <p>We've built our platform to work globally. Our system recognizes and verifies over 10,000 types of government-issued documents from more than 200 countries and territories — from US driver's licenses and EU passports to national ID cards from emerging markets. Whether your customers use documents in Latin script, Cyrillic, Arabic, Chinese characters, or any other alphabet, our technology handles them all with equal precision.</p>
+                                        <p>We've built our platform to work globally. Our system recognizes and verifies over 16,000 types of government-issued documents from more than 200 countries and territories — from US driver's licenses and EU passports to national ID cards from emerging markets. Whether your customers use documents in Latin script, Cyrillic, Arabic, Chinese characters, or any other alphabet, our technology handles them all with equal precision.</p>
                                         <p>Beyond identity documents, we also verify proof of address through utility bills, bank statements, tax documents, and official government correspondence. This comprehensive coverage means you can onboard customers from virtually anywhere — whether they're in New York, Moscow, Dubai, or Tokyo — without worrying about document compatibility. Our global reach ensures your business can scale internationally without technical barriers.</p>
                                     </div>
                                 </div>
@@ -1247,7 +1247,7 @@ get_header(); ?>
                     <div class="cta__card animate-fade-up">
                         <div class="cta__card-info">
                             <h2 class="cta__card-title">Ready for Secure & Seamless KYC?</h2>
-                            <p class="cta__card-text">NeuroVision Global helps your business onboard customers faster, ensures full compliance, and keeps fraud away - so you can focus on growth. </p>
+                            <p class="cta__card-text">NeuroVision Global Systems helps your business onboard customers faster, ensures full compliance, and keeps fraud away - so you can focus on growth. </p>
                         </div>
                         <div class="cta__card-action">
                             <div class="cta__card-action-text">Join 100+ companies already transforming their verification process with us.</div>

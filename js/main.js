@@ -4138,6 +4138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('is-active');
     document.body.classList.add('no-scroll');
     setButtonsState(true);
+    document.dispatchEvent(new CustomEvent('nv:sidebar-opened'));
   };
 
   const closeSidebar = () => {
@@ -4234,6 +4235,61 @@ document.addEventListener('DOMContentLoaded', () => {
       parentItem = parentItem.parentElement.closest('.toc-block__item');
     }
   }
+
+  // Дерево документации глубокое, активный пункт часто оказывается за пределами
+  // видимой части меню. Подкручиваем контейнер так, чтобы он был на виду.
+
+  // Ищем ближайшего предка с собственной прокруткой: на разных брейкпоинтах
+  // скроллится либо .toc-block__list, либо обёртка сайдбара.
+  const getScrollableParent = (element, boundary) => {
+    let node = element.parentElement;
+
+    while (node && node !== boundary.parentElement) {
+      const overflowY = getComputedStyle(node).overflowY;
+
+      if (
+        (overflowY === 'auto' || overflowY === 'scroll') &&
+        node.scrollHeight > node.clientHeight
+      ) {
+        return node;
+      }
+
+      node = node.parentElement;
+    }
+
+    return null;
+  };
+
+  const revealActiveItem = () => {
+    const active = toc.querySelector('a[aria-current="page"]');
+
+    if (!active) return;
+
+    const scroller = getScrollableParent(active, toc);
+
+    if (!scroller) return;
+
+    const activeRect = active.getBoundingClientRect();
+
+    // Сайдбар ещё скрыт — прокрутим, когда его откроют.
+    if (!activeRect.height) return;
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const delta =
+      (activeRect.top - scrollerRect.top) -
+      (scroller.clientHeight - activeRect.height) / 2;
+
+    if (Math.abs(delta) < 4) return;
+
+    scroller.scrollTop += delta;
+  };
+
+  // Ветки раскрываются выше по коду, поэтому ждём пересчёта раскладки.
+  requestAnimationFrame(revealActiveItem);
+
+  document.addEventListener('nv:sidebar-opened', () => {
+    requestAnimationFrame(revealActiveItem);
+  });
 });
 
 

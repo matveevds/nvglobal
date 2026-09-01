@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/img/clients__item--insurance-hover.svg" as="image">
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/img/clients__item--gambling-hover.svg" as="image">
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/img/clients__item--goverment.svg" as="image">
+
     
     <link rel="preload" href="/wp-content/themes/nvglobal/animation/video1/main_bg2_000.jpg" as="image">
     <script>
@@ -68,12 +69,13 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> data-use-captcha="<?php echo (bool) get_field('use_captcha', 'options') ? '1' : '0'; ?>">
+<?php wp_body_open(); ?>
 <div id="site-content">
     <header class="header">
         <div class="container">
             <div class="header__wrapper">
                 <a href="<?php echo home_url(); ?>" class="header__logo">
-                    <img src="<?php echo get_template_directory_uri(); ?>/img/nvglobal_logo.png" alt="NV Global">
+                    <img src="<?php echo get_template_directory_uri(); ?>/img/nvglobal_logo.png" alt="NeuroVision Global Systems">
                 </a>
                 <div class="header__menu">
                     <button class="burger" aria-label="Open menu" aria-expanded="false">

@@ -110,7 +110,7 @@ get_header(); ?>
                         <p class="section__subtitle">all through a single powerful API that integrates in just one business day</p>
                     </div>
                     <div class="about__info">
-                        <div class="about__description">Join hundreds of companies worldwide who trust NV GLobal to handle millions of identity verifications every year.</div>
+                        <div class="about__description">Join hundreds of companies worldwide who trust NeuroVision Global Systems to handle millions of identity verifications every year.</div>
                         <div class="about__cards">
 
                             <div class="about__card about__card--maskot-mobile">
@@ -147,7 +147,7 @@ get_header(); ?>
                             </div>
 
                             <div class="about__card about__card--long about__card--certfication">
-                                <div class="about__card-title">NeuroVision Global operates in compliance with ISO/IEC 27001:2022 and GDPR standards, covering the design, development, and operation of AI-based identity verification systems</div>
+                                <div class="about__card-title">NeuroVision Global Systems operates in compliance with ISO/IEC 27001:2022 and GDPR standards, covering the design, development, and operation of AI-based identity verification systems</div>
                                 <div class="about__card-actions">
                                     <a href="/wp-content/uploads/2026/06/neurovision_gdpr_certificate.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--small btn--gray btn-with-lottie-arrow-orange">
                                         <span class="btn__text">ISO/IEC 27001:2022</span>
@@ -193,14 +193,11 @@ get_header(); ?>
                     <p class="video-intro__subtitle">Our mascot, Nevi, will tell you about NeuroVision Global Systems</p>
                 </header>
                 <?php $vi_uri = get_template_directory_uri(); ?>
-                <div class="video-intro__player">
+                <div class="video-intro__player" data-video-base="<?php echo esc_url( $vi_uri . '/video/' ); ?>">
                     <video class="video-intro__video"
                            preload="none"
                            playsinline
-                           aria-label="Video introduction: our mascot Nevi tells you about NeuroVision Global Systems">
-                        <source src="<?php echo $vi_uri; ?>/video/nvglobal_video.webm" type="video/webm">
-                        <source src="<?php echo $vi_uri; ?>/video/nvglobal_video.mp4" type="video/mp4">
-                    </video>
+                           aria-label="Video introduction: our mascot Nevi tells you about NeuroVision Global Systems"></video>
                     <picture class="video-intro__poster" aria-hidden="true">
                         <source type="image/webp"
                                 srcset="<?php echo $vi_uri; ?>/video/nvglobal_video_poster.webp 1x, <?php echo $vi_uri; ?>/video/nvglobal_video_poster@2x.webp 2x, <?php echo $vi_uri; ?>/video/nvglobal_video_poster@3x.webp 3x">
@@ -225,6 +222,23 @@ get_header(); ?>
             var video = player.querySelector('.video-intro__video');
             var playBtn = player.querySelector('.video-intro__play');
             if (!video || !playBtn) return;
+
+            // Выбор ролика по ширине экрана: ПК — 1080p, телефон — сжатый 540p.
+            // Источники добавляем до загрузки, поэтому <video> изначально пустой.
+            var base = player.getAttribute('data-video-base') || '';
+            var isMobile = window.matchMedia('(max-width: 768px)').matches;
+            var sources = isMobile
+                ? [['nvglobal_video_mobile.webm', 'video/webm'],
+                   ['nvglobal_video_mobile.mp4',  'video/mp4']]
+                : [['nvglobal_video_desktop.mp4', 'video/mp4']];
+
+            sources.forEach(function (s) {
+                var el = document.createElement('source');
+                el.src = base + s[0];
+                el.type = s[1];
+                video.appendChild(el);
+            });
+
             playBtn.addEventListener('click', function () {
                 video.controls = true;
                 player.classList.add('video-intro__player--playing');
@@ -485,7 +499,6 @@ get_header(); ?>
         </div>
     </section>
 
-
     <section class="products section" id="products" data-offset="24">
         <div class="container">
             <div class="products__wrapper">
@@ -499,7 +512,7 @@ get_header(); ?>
 
                 <div class="products__info-bottom">
                     <div class="products__info-description">
-                        Ready to transform your identity verification? <br>Join hundreds of&nbsp;companies processing millions of&nbsp;verifications&nbsp;with NV Global
+                        Ready to transform your identity verification? <br>Join hundreds of&nbsp;companies processing millions of&nbsp;verifications&nbsp;with NeuroVision Global Systems
                     </div>
                     <div class="products__info-actions">
                         <button class="btn-hero open-callForm">
@@ -848,7 +861,7 @@ get_header(); ?>
                 <div class="section__badge">Advantages</div>
                 <div class="section__content">
                     <div class="section__title-block">
-                        <h2 class="section__title">Why Teams Choose <span>NeuroVision Global</span></h2>
+                        <h2 class="section__title">Why Teams Choose <span>NeuroVision Global Systems</span></h2>
                     </div>
                     <div class="advantages__list">
                         <div class="advantages__row advantages__row-3">
@@ -868,7 +881,7 @@ get_header(); ?>
                                     </svg>
                                 </div>
                                 <div class="advantage__item-title">Lightning-Fast Integration</div>
-                                <div class="advantage__item-description">One business day from start to live — seriously. With our REST API and ready-to-use SDKs for Web, iOS, and Android, plus documentation that actually makes sense, your dev team will thank you for choosing NV Global</div>
+                                <div class="advantage__item-description">One business day from start to live — seriously. With our REST API and ready-to-use SDKs for Web, iOS, and Android, plus documentation that actually makes sense, your dev team will thank you for choosing NeuroVision Global Systems</div>
                             </div>
                             <div class="advantage__item animate-fade-up">
                                 <div class="advantage__item-icon">
@@ -945,7 +958,7 @@ get_header(); ?>
                         </div>
 
                         <div class="advantages__image animate-fade-up">
-                            <img src="<?php echo get_template_directory_uri(); ?>/img/advantages__maskot.png" alt="Why Teams Choose NV Global">
+                            <img src="<?php echo get_template_directory_uri(); ?>/img/advantages__maskot.png" alt="Why Teams Choose NeuroVision Global Systems">
                         </div>
                     </div>
                 </div>
@@ -962,12 +975,17 @@ get_header(); ?>
                         <div class="section__content">
                             <div class="section__title-block">
                                 <h2 class="section__title">Trusted by Industry Leaders Worldwide</h2>
-                                <p class="section__subtitle">Leading banks, crypto exchanges, and government agencies choose NV Global</p>
+                                <p class="section__subtitle">Leading banks, crypto exchanges, and government agencies choose NeuroVision Global Systems</p>
                                 <p class="section__description">From fintech startups to Fortune 500 companies, organizations trust our AI-powered identity verification to protect their users and streamline operations</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="clients__hr"></div>
+
+                <?php echo do_shortcode( '[clients]' ); ?>
+
                 <div class="clients__content">
                     <div class="clients__list">
 
@@ -1149,7 +1167,7 @@ get_header(); ?>
                     <div class="cases__title-block">
                         <div class="section__badge">Cases</div>
                         <h2 class="cases__title section__title">Success Stories That Speak for Themselves</h2>
-                        <p class="section__subtitle cases__subtitle">See how leading companies transformed their identity verification with NV Global</p>
+                        <p class="section__subtitle cases__subtitle">See how leading companies transformed their identity verification with NeuroVision Global Systems</p>
                     </div>
                     <div class="cases__arrows">
                         <div class="cases__arrow cases__arrow-prev">
@@ -1178,7 +1196,7 @@ get_header(); ?>
                                     <div class="cases__slide-title">EasyPay Bank: From Days to Minutes</div>
                                     <div class="cases__slide-info">
                                         <p class="cases__slide-subtitle">Solution</p>
-                                        <p class="cases__slide-description">When EasyPay integrated NV Global’s identity verification platform, they completely reimagined their account opening process. What used to take 2 days now happens in just 5 seconds. The result? A 40% reduction in customer drop-offs during registration and happier customers who can start banking immediately. Their KYC automation now handles thousands of verifications daily with 99.74% accuracy, all while maintaining full regulatory compliance.</p>
+                                        <p class="cases__slide-description">When EasyPay integrated NeuroVision Global Systems’s identity verification platform, they completely reimagined their account opening process. What used to take 2 days now happens in just 5 seconds. The result? A 40% reduction in customer drop-offs during registration and happier customers who can start banking immediately. Their KYC automation now handles thousands of verifications daily with 99.74% accuracy, all while maintaining full regulatory compliance.</p>
                                     </div>
                                     <div class="cases__slide-metriks">
                                         <div class="cases__slide-metriks-title">Key Metrics</div>
@@ -1225,7 +1243,7 @@ get_header(); ?>
                                     <div class="cases__slide-title">CryptoX Exchange: Security Meets Speed</div>
                                     <div class="cases__slide-info">
                                         <p class="cases__slide-subtitle">Solution</p>
-                                        <p class="cases__slide-description">In the high-stakes world of cryptocurrency trading, CryptoX needed a solution that could keep pace with their 24/7 operations while meeting strict AML5 requirements. NV Global's platform detected and prevented over 500 fraud attempts in the first month alone. Using our instant face matching technology (just 0.1 seconds per verification), CryptoX built trust with legitimate traders while keeping bad actors out. The platform's GDPR-compliant vectorless comparison technology meant they could expand across Europe without privacy concerns.</p>
+                                        <p class="cases__slide-description">In the high-stakes world of cryptocurrency trading, CryptoX needed a solution that could keep pace with their 24/7 operations while meeting strict AML5 requirements. NeuroVision Global Systems's platform detected and prevented over 500 fraud attempts in the first month alone. Using our instant face matching technology (just 0.1 seconds per verification), CryptoX built trust with legitimate traders while keeping bad actors out. The platform's GDPR-compliant vectorless comparison technology meant they could expand across Europe without privacy concerns.</p>
                                     </div>
                                     <div class="cases__slide-metriks">
                                         <div class="cases__slide-metriks-title">Key Metrics</div>
@@ -1266,7 +1284,7 @@ get_header(); ?>
                                     <div class="cases__slide-title">GovID Project: Securing a Nation's Digital Identity</div>
                                     <div class="cases__slide-info">
                                         <p class="cases__slide-subtitle">Solution</p>
-                                        <p class="cases__slide-description">When a national government needed to verify identities for over 10 million citizens accessing digital services, they turned to NV Global. Our face recognition technology achieved a remarkable 99.87% first-attempt success rate, making government services accessible to citizens while maintaining the highest security standards. The system processes hundreds of thousands of verifications daily, supporting documents from over 200 countries & territories in 90 languages. This wasn't just about technology - it was about creating a seamless experience for millions of people interacting with essential services.</p>
+                                        <p class="cases__slide-description">When a national government needed to verify identities for over 10 million citizens accessing digital services, they turned to NeuroVision Global Systems. Our face recognition technology achieved a remarkable 99.87% first-attempt success rate, making government services accessible to citizens while maintaining the highest security standards. The system processes hundreds of thousands of verifications daily, supporting documents from over 200 countries & territories in 90 languages. This wasn't just about technology - it was about creating a seamless experience for millions of people interacting with essential services.</p>
                                     </div>
                                     <div class="cases__slide-metriks">
                                         <div class="cases__slide-metriks-title"></div>
@@ -1308,7 +1326,7 @@ get_header(); ?>
             <div class="cases__bottom">
                 <div class="cases__bottom-info">
                     <div class="cases__bottom-title">Ready to write your own success story? </div>
-                    <div class="cases__bottom-subtitle">Let's talk about how NeuroVision Global can transform your identity verification process.</div>
+                    <div class="cases__bottom-subtitle">Let's talk about how NeuroVision Global Systems can transform your identity verification process.</div>
                 </div>
                 <div class="cases__bottom-action">
                     <button class="btn-hero open-callForm2">
@@ -1326,11 +1344,11 @@ get_header(); ?>
                 <div class="doc__title-block">
                     <div class="section__badge">Documentation</div>
                     <h2 class="doc__title section__title">Developer Hub</h2>
-                    <p class="doc__subtitle">Getting started with NV Global is refreshingly simple. Connect to our API or SDK and start verifying users today — no complex setup, no hidden complications, just straightforward integration that works.</p>
+                    <p class="doc__subtitle">Getting started with NeuroVision Global Systems is refreshingly simple. Connect to our API or SDK and start verifying users today — no complex setup, no hidden complications, just straightforward integration that works.</p>
                 </div>
 
                 <div class="doc__actions-block">
-                    <div class="doc__actions-text">Ready to build something amazing? Start integrating NV Global today with our free developer account</div>
+                    <div class="doc__actions-text">Ready to build something amazing? Start integrating NeuroVision Global Systems today with our free developer account</div>
                     <div class="doc__actions">
                         <button class="btn-hero open-callForm">
                             <span class="btn__text btn__text-hero">Get Your API Key</span>
@@ -1375,10 +1393,10 @@ get_header(); ?>
                                 </div>
                                 <div class="doc__tab-content-info">
                                     <div class="doc__tab-content-title">API Reference & SDKs</div>
-                                    <div class="doc__tab-content-text">Dive into our comprehensive REST API documentation with clear endpoints, sample requests, and response examples. We've built native SDKs for all major platforms — JavaScript, Python, Java, iOS, and Android — so you can integrate NV Global using the tools you already know and love. Each SDK comes with detailed code samples and best practices to get you up and running fast.</div>
+                                    <div class="doc__tab-content-text">Dive into our comprehensive REST API documentation with clear endpoints, sample requests, and response examples. We've built native SDKs for all major platforms — JavaScript, Python, Java, iOS, and Android — so you can integrate NeuroVision Global Systems using the tools you already know and love. Each SDK comes with detailed code samples and best practices to get you up and running fast.</div>
                                 </div>
                                 <div class="doc__tab-content-action">
-                                    <a href="https://nv-global.gitbook.io/docs" class="btn btn-with-lottie-arrow">
+                                    <a href="/docs/" class="btn btn-with-lottie-arrow">
                                         <span class="btn__text">View API Documentation</span>
                                         <span class="btn__icon lottie-container-arrow">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1395,7 +1413,7 @@ get_header(); ?>
                                 </div>
                                 <div class="doc__tab-content-info">
                                     <div class="doc__tab-content-title">Developer Portal</div>
-                                    <div class="doc__tab-content-text">Your command center for everything NV Global. Generate test API keys instantly, experiment in our sandbox environment, and see exactly how our verification flows work before going live. Track your usage, manage multiple projects, and access real-time analytics — all from one intuitive dashboard.</div>
+                                    <div class="doc__tab-content-text">Your command center for everything NeuroVision Global Systems. Generate test API keys instantly, experiment in our sandbox environment, and see exactly how our verification flows work before going live. Track your usage, manage multiple projects, and access real-time analytics — all from one intuitive dashboard.</div>
                                 </div>
                                 <div class="doc__tab-content-action">
                                     <a href="#" class="btn btn-with-lottie-arrow">
@@ -1805,8 +1823,8 @@ get_header(); ?>
                 <div class="contacts__content">
                     <div class="contacts__title-block">
                         <h2 class="section__title">Ready to Transform Your Identity Verification?</h2>
-                        <p class="section__subtitle">See how NV Global can streamline your onboarding and security in just one demo</p>
-                        <p class="section__description">Whether you're scaling your fintech platform, securing crypto transactions, or modernizing government services, we're here to show you exactly how our AI-powered verification fits your unique needs. Connect with our team and discover why leading companies trust NV Global to verify hundreds of millions of identities every year.</p>
+                        <p class="section__subtitle">See how NeuroVision Global Systems can streamline your onboarding and security in just one demo</p>
+                        <p class="section__description">Whether you're scaling your fintech platform, securing crypto transactions, or modernizing government services, we're here to show you exactly how our AI-powered verification fits your unique needs. Connect with our team and discover why leading companies trust NeuroVision Global Systems to verify hundreds of millions of identities every year.</p>
                     </div>
 
                     <div class="contacts__actions">
@@ -2242,7 +2260,7 @@ get_header(); ?>
                             <div class="contacts__form-line"></div>
                             
                             <div class="input-form-item">
-                                <div class="input-form-label">Your Massage <span>(optional)</span></div>
+                                <div class="input-form-label">Your Message <span>(optional)</span></div>
                                 <div class="input-form-block input-form-block--textarea">
                                     <textarea name="clientMessage" placeholder="What do you want to discuss?"></textarea>
                                 </div>
@@ -2306,7 +2324,6 @@ get_header(); ?>
 
 </main>
 
-<!-- ===== HERO VARIANT 7: автоплей фонового видео, текст статичен ===== -->
 <style>
     .hero_media {
         position: absolute;
@@ -2334,14 +2351,11 @@ get_header(); ?>
         if (!video) return;
         var media = heroSection ? heroSection.querySelector('.hero_media') : null;
 
-        // Обязательно для инлайн-автоплея
         video.muted = true;
         video.playsInline = true;
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
 
-        // Точный последний кадр отдельным слоем ПОВЕРХ видео (предзагружен) — держим его после
-        // окончания. Показываем чуть раньше конца, чтобы не было чёрной вспышки на iOS.
         var LAST_FRAME = '/wp-content/themes/nvglobal/video/main_bg_lastframe.jpg';
         var lastLayer = document.createElement('div');
         lastLayer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;' +
@@ -2357,8 +2371,7 @@ get_header(); ?>
         });
         video.addEventListener('ended', showLastFrame);
 
-        // Пытаемся запустить сразу; если браузер заблокировал (напр. энергосбережение) —
-        // запускаем по первому жесту пользователя. Видео играет ОДИН раз (без loop).
+        
         var p = video.play();
         if (p && typeof p.catch === 'function') {
             p.catch(function () {
@@ -2371,9 +2384,7 @@ get_header(); ?>
                 window.addEventListener('click', kick);
             });
         }
-        // Текст (.hero__wrapper) и градиент остаются на месте — никакой анимации.
-
-        // --- Возврат/повтор по скроллу (pin нет, блок = 1 экран) ---
+       
         var TOP_THRESHOLD = 2;
         var didReset      = false;
         function sy() { return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0); }
@@ -2381,8 +2392,8 @@ get_header(); ?>
 
         function resetVideo() {
             try { video.pause(); } catch (e) {}
-            try { video.currentTime = 0; } catch (e) {}   // видео в начало (первый кадр)
-            lastLayer.style.opacity = '0';                 // убрать последний кадр
+            try { video.currentTime = 0; } catch (e) {}
+            lastLayer.style.opacity = '0';
             didReset = true;
         }
         function replayVideo() {
@@ -2395,14 +2406,12 @@ get_header(); ?>
         window.addEventListener('scroll', function () {
             var y = sy();
             if (!didReset && y > blockBottom()) {
-                resetVideo();      // пролистали блок ниже → видео возвращается в начало
+                resetVideo();
             } else if (didReset && y <= TOP_THRESHOLD) {
-                replayVideo();     // вернулись на самый верх → воспроизводим снова
+                replayVideo();
             }
         }, { passive: true });
 
-        // Анимации появления нижних блоков (в оригинале их запускала initHeroCanvasAnimation,
-        // которая тут не работает) — включаем явно, чтобы страница вела себя как раньше.
         if (typeof initFadeUpAnimations === 'function') { initFadeUpAnimations(); }
     });
 })();

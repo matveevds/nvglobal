@@ -3,7 +3,7 @@
         <div class="teaser__wrapper">
             <div class="teaser__logo">
                 <div class="teaser__logo-image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/img/teaser_logo.svg" alt="NV.Global">
+                    <img src="<?php echo get_template_directory_uri(); ?>/img/teaser_logo.svg" alt="NeuroVision Global Systems">
                 </div>
             </div>
             <div class="teaser__info">

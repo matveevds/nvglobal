@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const I18N = Object.assign({
         documentLabel: 'DOCUMENT — Document Recognition',
+        livenessLabel: 'LIVENESS — Selfie / Liveness',
         basicLabel: 'BASIC — Document + Selfie / Liveness',
         perDocument: 'per document',
         clear: 'Clear',
@@ -37,20 +38,81 @@ document.addEventListener('DOMContentLoaded', function () {
     const EXTRA_DOC_UNIT_PRICE = parseCalculatorPrice(root.dataset.docPrice, 0.13);
     const AML_INTERNATIONAL_PRICE = parseCalculatorPrice(root.dataset.internationalPrice, 0.40);
 
+    /**
+     * Опорные точки тарифной сетки. Цены задаются в ACF-полях страницы и
+     * приезжают в data-атрибутах; числа ниже — только фолбэк на случай,
+     * если поля пустые или атрибут не отрендерился.
+     */
+    const PRICE_POINTS = [
+        { volume: 10000, suffix: '10k' },
+        { volume: 50000, suffix: '50k' },
+        { volume: 100000, suffix: '100k' }
+    ];
+
+    const PACKAGE_FALLBACK_PRICES = {
+        DOCUMENT: { '10k': 0.24, '50k': 0.22, '100k': 0.20 },
+        BASIC: { '10k': 0.44, '50k': 0.41, '100k': 0.39 }
+    };
+
+    /**
+     * Читаем через getAttribute, а не через dataset: в именах вида
+     * data-document-price-10k дефис стоит перед цифрой, и браузер его
+     * не срезает — ключ получается documentPrice-10k, что через dataset
+     * доступно только скобочной нотацией и легко ломается незаметно.
+     */
+    function readPackageCurve(packageName, attributePrefix) {
+        return PRICE_POINTS.map(function (point) {
+            const attribute = 'data-' + attributePrefix + '-price-' + point.suffix;
+            const fallback = PACKAGE_FALLBACK_PRICES[packageName][point.suffix];
+
+            return [point.volume, parseCalculatorPrice(root.getAttribute(attribute), fallback)];
+        });
+    }
+
     const PKG = {
         DOCUMENT: {
             label: I18N.documentLabel,
             name: 'DOCUMENT',
             description: 'Document Recognition',
-            USD: [[10000, 0.24], [50000, 0.22], [100000, 0.20]]
+            USD: readPackageCurve('DOCUMENT', 'document')
         },
         BASIC: {
             label: I18N.basicLabel,
             name: 'BASIC',
             description: 'Document + Selfie / Liveness',
-            USD: [[10000, 0.44], [50000, 0.41], [100000, 0.39]]
+            USD: readPackageCurve('BASIC', 'basic')
         }
     };
+
+    /**
+     * Пакет LIVENESS — только проверка лица, без распознавания документа.
+     *
+     * Своей кривой у него нет: цена выводится как BASIC минус DOCUMENT,
+     * то есть как стоимость самой liveness-части внутри BASIC. Так тариф
+     * остаётся согласованным при любой правке цен двух базовых пакетов.
+     * Опорные объёмы у обеих кривых совпадают, а интерполяция линейная,
+     * поэтому поточечное вычитание даёт тот же результат, что вычитание
+     * интерполированных значений.
+     */
+    PKG.LIVENESS = {
+        label: I18N.livenessLabel,
+        name: 'LIVENESS',
+        description: 'Selfie / Liveness',
+        USD: PKG.BASIC.USD.map(function (point, index) {
+            const volume = point[0];
+            const basicRate = point[1];
+            const documentRate = PKG.DOCUMENT.USD[index][1];
+
+            return [volume, Number((basicRate - documentRate).toFixed(4))];
+        })
+    };
+
+    // Пакет без распознавания документа: выбор типа документа к нему не применяется.
+    const PACKAGES_WITHOUT_DOCUMENTS = ['LIVENESS'];
+
+    function packageHasDocuments() {
+        return PACKAGES_WITHOUT_DOCUMENTS.indexOf(selectedPackage) === -1;
+    }
 
     const EXTRA_DOC_PRICE = {
         USD: [[10000, EXTRA_DOC_UNIT_PRICE], [50000, EXTRA_DOC_UNIT_PRICE], [100000, EXTRA_DOC_UNIT_PRICE]]
@@ -409,10 +471,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function changeVolumeByStep(direction) {
         const step = parseInt(volumeNumber.step, 10) || 1000;
-        const min = parseInt(volumeNumber.min, 10) || 0;
         const currentVolume = getVolume();
-        const currentValue = currentVolume === null ? min : currentVolume;
-        const nextValue = Math.max(min, currentValue + direction * step);
+        const currentValue = currentVolume === null ? MIN_VOLUME : currentVolume;
+        const nextValue = Math.max(MIN_VOLUME, currentValue + direction * step);
 
         volumeNumber.value = formatVolume(nextValue);
         updateCalculator();
@@ -438,8 +499,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const label = checkbox.closest('.calculator__checkbox');
             const text = label ? label.querySelector('.calculator__checkbox-text') : null;
 
-            const isIncludedDriver = value === 'driver_front' && selectedDocumentTypes.has('driver');
-            const isIncludedId = value === 'id_front' && selectedDocumentTypes.has('id');
+            const hasDocuments = packageHasDocuments();
+            const isIncludedDriver = hasDocuments && value === 'driver_front' && selectedDocumentTypes.has('driver');
+            const isIncludedId = hasDocuments && value === 'id_front' && selectedDocumentTypes.has('id');
             const isLocked = isIncludedDriver || isIncludedId;
 
             checkbox.disabled = isLocked;
@@ -501,6 +563,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         root.classList.toggle('calculator--below-min-volume', isBelowMinVolume);
         root.classList.toggle('calculator--above-max-volume', isAboveMaxVolume);
+        root.classList.toggle('calculator--no-documents', !packageHasDocuments());
 
         root.querySelector('#calculator-doc-unit-price').textContent = formatRate(extraDocUnitPrice) + ' ' + I18N.perDocument;
         root.querySelector('#calculator-extra-docs-total').textContent = formatRate(extraDocsPrice);

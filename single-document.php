@@ -92,71 +92,6 @@ if ( ! function_exists( 'nv_render_document_bottom_nav' ) ) {
 	}
 }
 
-if ( ! function_exists( 'nv_render_document_sidebar_menu' ) ) {
-	function nv_render_document_sidebar_menu() {
-		$documents = get_pages(
-			array(
-				'post_type'   => 'document',
-				'post_status' => 'publish',
-				'sort_column' => 'menu_order,post_title',
-				'sort_order'  => 'ASC',
-			)
-		);
-
-		if ( empty( $documents ) ) {
-			return '';
-		}
-
-		$children = array();
-		foreach ( $documents as $document ) {
-			$parent_id = (int) $document->post_parent;
-
-			if ( ! isset( $children[ $parent_id ] ) ) {
-				$children[ $parent_id ] = array();
-			}
-
-			$children[ $parent_id ][] = $document;
-		}
-
-		return '<nav class="toc-block"><ol class="toc-block__list toc-level-2">' . nv_render_document_sidebar_menu_level( 0, $children, array() ) . '</ol></nav>';
-	}
-}
-
-if ( ! function_exists( 'nv_render_document_sidebar_menu_level' ) ) {
-	function nv_render_document_sidebar_menu_level( $parent_id, $children, $number_path ) {
-		if ( empty( $children[ $parent_id ] ) ) {
-			return '';
-		}
-
-		$html  = '';
-		$index = 1;
-
-		foreach ( $children[ $parent_id ] as $document ) {
-			$current_path = array_merge( $number_path, array( $index ) );
-			$level        = count( $current_path ) > 1 ? 3 : 2;
-			$is_current   = ( get_the_ID() === (int) $document->ID ) ? ' aria-current="page"' : '';
-
-			$html .= sprintf(
-				'<li class="toc-block__item toc-block__item--level-%1$d"><div class="toc-block__row"><a href="%2$s"%3$s>%4$s</a></div>',
-				$level,
-				esc_url( get_permalink( $document ) ),
-				$is_current,
-				esc_html( get_the_title( $document ) )
-			);
-
-			if ( ! empty( $children[ $document->ID ] ) ) {
-				$html .= '<ol class="toc-level-3">' . nv_render_document_sidebar_menu_level( (int) $document->ID, $children, $current_path ) . '</ol>';
-			}
-
-			$html .= '</li>';
-
-			$index++;
-		}
-
-		return $html;
-	}
-}
-
 if ( ! function_exists( 'nv_render_document_child_links' ) ) {
 	function nv_render_document_child_links( $parent_id ) {
 		$child_documents = get_pages(
@@ -238,7 +173,7 @@ if ( ! function_exists( 'nv_document_add_heading_ids' ) ) {
 							</svg>
 						</button>
 						<div class="post-sidebar__wrapper">
-							<?php echo nv_render_document_sidebar_menu(); ?>
+							<?php echo nv_docs_menu_render(); ?>
 						</div>
 					</aside>
 

@@ -15,7 +15,7 @@
 
                         <div class="footer__logo">
                             <a href="/" class="footer__logo-image">
-                                <img src="/wp-content/uploads/2026/03/footer_logo_footer2.svg" alt="NV.Global Logo">
+                                <img src="/wp-content/uploads/2026/03/footer_logo_footer2.svg" alt="NeuroVision Global Systems Logo">
                             </a>
                             <div class="footer__logo-text">IFZA Business Park, DDP, PO Box 342001, Dubai, United Arab Emirates</div>
                         </div>
@@ -72,7 +72,7 @@
                             <div class="footer__nav-title">GET STARTED</div>
                             <div class="footer__nav-list">
                                 <a href="#" class="footer__nav-link">Technologies</a>
-                                <a href="#" class="footer__nav-link">Documentation</a>
+                                <a href="/docs/" class="footer__nav-link">Documentation</a>
                                 <a href="#" class="footer__nav-link">For partners</a>
                                 <a href="#" class="footer__nav-link">Contact us</a>
                             </div>
@@ -83,7 +83,7 @@
                     <div class="footer__social">
                         <div class="footer__social-title">SOCIAL</div>
                         <div class="footer__social-list">
-                            <a href="https://www.linkedin.com/company/nvglobal-ai/posts/" class="footer__social-item" aria-label="NeuroVision Global on LinkedIn">
+                            <a href="https://www.linkedin.com/company/nvglobal-ai/posts/" class="footer__social-item" aria-label="NeuroVision Global Systems on LinkedIn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16.976 15.7988C16.976 16.2128 16.64 16.5488 16.226 16.5488C15.812 16.5488 15.476 16.2128 15.476 15.7988V12.3888C15.476 11.3848 14.662 10.5688 13.661 10.5688C12.66 10.5688 11.846 11.3848 11.846 12.3888V15.7988C11.846 16.2128 11.51 16.5488 11.096 16.5488C10.682 16.5488 10.346 16.2128 10.346 15.7988V12.3888C10.346 10.5578 11.833 9.06879 13.661 9.06879C15.489 9.06879 16.976 10.5578 16.976 12.3888V15.7988ZM7.775 10.0088C7.361 10.0088 6.989 9.63279 6.989 9.21879C6.989 8.80479 7.361 8.42879 7.775 8.42879C8.189 8.42879 8.559 8.80479 8.559 9.21879C8.559 9.63279 8.189 10.0088 7.775 10.0088ZM8.524 15.7988C8.524 16.2128 8.188 16.5488 7.774 16.5488C7.36 16.5488 7.024 16.2128 7.024 15.7988V12.0278C7.024 11.6138 7.36 11.2778 7.774 11.2778C8.188 11.2778 8.524 11.6138 8.524 12.0278V15.7988ZM16.217 3.00879H7.783C4.623 3.00879 2.5 5.23179 2.5 8.53879V16.4788C2.5 19.7858 4.623 22.0088 7.783 22.0088H16.216C19.376 22.0088 21.5 19.7858 21.5 16.4788V8.53879C21.5 5.23179 19.377 3.00879 16.217 3.00879Z" fill="#FBFBFB"/>
                                 </svg>
@@ -99,7 +99,7 @@
                         <p>© <script>document.write(new Date().getFullYear())</script>. All rights reserved</p>
                     </div>
                     <div class="footer__bottom-col">
-                        <p>The logo and trademark NV Global® are registered trademarks of LLC “NV Global”</p>
+                        <p>The logo and trademark NeuroVision Global Systems® are registered trademarks of NEUROVISION GLOBAL INTELLIGENCE - FZCO</p>
                     </div>
                     <div class="footer__bottom-col">
                         <div class="footer__bottom-list">
@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="cookie__image">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/cookie-image.png" alt="NV Global">
+            <img src="<?php echo get_template_directory_uri(); ?>/img/cookie-image.png" alt="NeuroVision Global Systems">
         </div>
     </div>
         
@@ -397,7 +397,7 @@
                     <div class="contacts__form-line"></div>
                     
                     <div class="input-form-item">
-                        <div class="input-form-label">Your Massage <span>(optional)</span></div>
+                        <div class="input-form-label">Your Message <span>(optional)</span></div>
                         <div class="input-form-block input-form-block--textarea">
                             <textarea name="clientMessage" placeholder="What do you want to discuss?"></textarea>
                         </div>
@@ -598,7 +598,7 @@
                     <div class="contacts__form-line"></div>
 
                     <div class="input-form-item">
-                        <div class="input-form-label">Your Massage <span>(optional)</span></div>
+                        <div class="input-form-label">Your Message <span>(optional)</span></div>
                         <div class="input-form-block input-form-block--textarea">
                             <textarea name="clientMessage" placeholder="What do you want to discuss?"></textarea>
                         </div>
@@ -725,8 +725,8 @@
             </svg>
         </button>
     </div>
-    
-    
+   
+
     <?php wp_footer(); ?>
 
 </div>

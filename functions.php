@@ -1,4 +1,10 @@
 <?php
+// Боковое меню документации: сборка, файловый кэш, инвалидация
+require_once get_template_directory() . '/inc/docs-menu.php';
+
+// ACF-поля с ценами пакетов для калькулятора на /pricing-matrix/
+require_once get_template_directory() . '/inc/calculator-fields.php';
+
 // Инициализация темы
 add_action('after_setup_theme', 'theme_setup');
 function theme_setup() {
@@ -7,87 +13,191 @@ function theme_setup() {
     add_theme_support('html5', array('search-form', 'navigation-widgets')); // Поддержка HTML5
 }
 
-define('THEME_ASSETS_VER', '1.0.40');
+define('THEME_ASSETS_VER', '1.0.45');
+
 
 /**
- * Подключение стилей
+ * Раннее подключение и инициализация NeVi Widget.
  */
-function my_theme_enqueue_styles() {
-    $uri = get_template_directory_uri();
+function nvglobal_enqueue_nevi_widget() {
+    wp_enqueue_style('nevi-widget-css', 'https://nevi-gateway.erpprog.workers.dev/widget/web-chat-widget.css', [], null);
 
-    wp_enqueue_style('swiper-css', $uri . '/assets/swiper/swiper-bundle.min.css', array(), THEME_ASSETS_VER);
-    wp_enqueue_style('locomotive-css', $uri . '/assets/locomotive-scroll.min.css', array(), THEME_ASSETS_VER);
-    wp_enqueue_style('theme-styles', $uri . '/css/styles.css', array(), THEME_ASSETS_VER);
-    wp_enqueue_style('theme-main-style', $uri . '/style.css', array(), THEME_ASSETS_VER);
-    wp_enqueue_style('post-styles', $uri . '/css/post.css', array(), THEME_ASSETS_VER);
-    wp_enqueue_style('blog-styles', $uri . '/css/blog.css', array(), THEME_ASSETS_VER);
+    wp_enqueue_script('nevi-widget-js', 'https://nevi-gateway.erpprog.workers.dev/widget/web-chat-widget.standalone.js', [], null, [
+        'strategy'  => 'defer',
+        'in_footer' => false,
+    ]);
 
-    if ( is_singular( 'document' ) || is_page_template( 'page-docs.php' ) ) {
-        wp_enqueue_style('document-toc-styles', $uri . '/css/document-toc.css', array('post-styles'), THEME_ASSETS_VER);
+    wp_add_inline_script('nevi-widget-js', <<<'JS'
+(function () {
+    'use strict';
+
+    function initNeviWidget() {
+        var Widget = window.WebChatWidget;
+        var container = document.getElementById('web-chat-widget-root');
+
+        if (!Widget || !container || container.dataset.neviInitialized === 'true') {
+            return;
+        }
+
+        container.dataset.neviInitialized = 'true';
+
+        Widget.ReactDOM.createRoot(container).render(
+            Widget.React.createElement(Widget.WebChatWidget, {
+                httpUrl: 'https://nevi-gateway.erpprog.workers.dev/graphql',
+                wsUrl: 'wss://nevi-gateway.erpprog.workers.dev/graphql',
+                companyPublicId: 'nevi',
+                headerText: 'Nevi',
+                headerSubtitle: 'AI assistant',
+                position: 'bottom-right',
+                locale: 'en',
+                theme: {
+                    preset: 'nevi',
+                    primaryColor: '#F9AA66'
+                }
+            })
+        );
     }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNeviWidget, { once: true });
+    } else {
+        initNeviWidget();
+    }
+})();
+JS, 'after');
 }
-add_action('wp_enqueue_scripts', 'my_theme_enqueue_styles');
+add_action('wp_enqueue_scripts', 'nvglobal_enqueue_nevi_widget', 1);
 
 
 /**
- * Подключение скриптов
+ * Подключение всех стилей и скриптов темы.
  */
-function my_theme_enqueue_scripts() {
+function my_theme_enqueue_assets() {
     $uri = get_template_directory_uri();
 
-    wp_enqueue_script('swiper-js', $uri . '/assets/swiper/swiper-bundle.min.js', array(), THEME_ASSETS_VER, true);
+    /*
+     * Стили.
+     */
+    wp_enqueue_style('swiper-css', $uri . '/assets/swiper/swiper-bundle.min.css', [], THEME_ASSETS_VER);
+    wp_enqueue_style('locomotive-css', $uri . '/assets/locomotive-scroll.min.css', [], THEME_ASSETS_VER);
+    wp_enqueue_style('theme-styles', $uri . '/css/styles.css', ['swiper-css', 'locomotive-css'], THEME_ASSETS_VER);
+    wp_enqueue_style('theme-main-style', $uri . '/style.css', ['theme-styles'], THEME_ASSETS_VER);
+    wp_enqueue_style('post-styles', $uri . '/css/post.css', ['theme-main-style'], THEME_ASSETS_VER);
+    wp_enqueue_style('blog-styles', $uri . '/css/blog.css', ['theme-main-style'], THEME_ASSETS_VER);
+
+    if (is_singular('document') || is_page_template('page-docs.php')) {
+        wp_enqueue_style('document-toc-styles', $uri . '/css/document-toc.css', ['post-styles'], THEME_ASSETS_VER);
+    }
+
+    /*
+     * Библиотеки.
+     */
+    wp_enqueue_script('swiper-js', $uri . '/assets/swiper/swiper-bundle.min.js', [], THEME_ASSETS_VER, true);
     wp_enqueue_script('micromodal-js', $uri . '/assets/micromodal/micromodal.min.js', [], THEME_ASSETS_VER, true);
     wp_enqueue_script('gsap-js', $uri . '/assets/gsap.min.js', [], THEME_ASSETS_VER, true);
-    wp_enqueue_script('scrolltrigger-js', $uri . '/assets/scrolltrigger.min.js', [], THEME_ASSETS_VER, true);
+    wp_enqueue_script('scrolltrigger-js', $uri . '/assets/scrolltrigger.min.js', ['gsap-js'], THEME_ASSETS_VER, true);
     wp_enqueue_script('locomotive-js', $uri . '/assets/locomotive-scroll.min.js', [], THEME_ASSETS_VER, true);
     wp_enqueue_script('lottie-js', $uri . '/assets/lottie.min.js', [], THEME_ASSETS_VER, false);
     wp_enqueue_script('smoothscroll-js', $uri . '/assets/smoothscroll.min.js', [], THEME_ASSETS_VER, false);
-    
+
+    /*
+     * Калькулятор.
+     */
     if (is_page_template('page-price-matrix.php') || is_page_template('page-price-matrix-en.php')) {
         wp_enqueue_script('calculate-js', $uri . '/js/calculate.js', [], THEME_ASSETS_VER, true);
+
         wp_localize_script('calculate-js', 'kycCalculatorI18n', [
-            'documentLabel'                 => 'DOCUMENT — Document Recognition',
-            'basicLabel'                    => 'BASIC — Document + Selfie / Liveness',
-            'perDocument'                   => 'per document',
-            'clear'                          => 'Clear',
-            'selectAll'                      => 'Select All',
-            'minimumVolume'                  => 'Minimum volume — ',
-            'volumeAbove'                    => 'Volume > ',
-            'priceOnRequest'                 => ' — price on request',
-            'priceOnRequestValue'            => 'ON REQUEST',
-            'volumeAbovePriceOnRequest'      => 'For volumes above 100,000 checks, the price is available on request',
-            'hiddenPrice'                    => '$***',
-            'pricePerCheck'                  => 'Price per Check',
-            'documents'                      => 'Documents',
-            'checks'                         => 'Checks',
-            'internationalScreening'          => 'International Screening',
-            'checksUnit'                     => 'checks',
-            'includedInBase'                 => 'included in the basic package',
-            'locale'                         => 'en-US',
-            'currency'                       => '$',
+            'documentLabel'             => 'DOCUMENT — Document Recognition',
+            'livenessLabel'             => 'LIVENESS — Selfie / Liveness',
+            'basicLabel'                => 'BASIC — Document + Selfie / Liveness',
+            'perDocument'               => 'per document',
+            'clear'                     => 'Clear',
+            'selectAll'                 => 'Select All',
+            'minimumVolume'             => 'Minimum volume — ',
+            'volumeAbove'               => 'Volume > ',
+            'priceOnRequest'            => ' — price on request',
+            'priceOnRequestValue'       => 'ON REQUEST',
+            'volumeAbovePriceOnRequest' => 'For volumes above 100,000 checks, the price is available on request',
+            'hiddenPrice'               => '$***',
+            'pricePerCheck'             => 'Price per Check',
+            'documents'                 => 'Documents',
+            'checks'                    => 'Checks',
+            'internationalScreening'    => 'International Screening',
+            'checksUnit'                => 'checks',
+            'includedInBase'            => 'included in the basic package',
+            'locale'                    => 'en-US',
+            'currency'                  => '$',
         ]);
     }
 
-    /**
-     * form.js подключаем раньше main.js,
-     * если main.js использует функции из form.js
+    /*
+     * Скрипты темы.
      */
-    wp_enqueue_script('form-js', $uri . '/js/form.js', array('swiper-js', 'micromodal-js'), THEME_ASSETS_VER, true);
-    wp_enqueue_script('main-js', $uri . '/js/main.js', array('swiper-js', 'micromodal-js', 'gsap-js', 'scrolltrigger-js', 'locomotive-js', 'lottie-js', 'smoothscroll-js', 'form-js'), THEME_ASSETS_VER, true);
+    wp_enqueue_script('form-js', $uri . '/js/form.js', ['swiper-js', 'micromodal-js'], THEME_ASSETS_VER, true);
 
-    /**
-     * Передаём PHP-данные в JS
-     */
-    wp_localize_script('form-js', 'themeFormData', array(
-        'ajax_url'         => admin_url('admin-ajax.php'),
-        'hcaptcha_sitekey' => defined('HCAPTCHA_SITEKEY') ? HCAPTCHA_SITEKEY : '',
-        'nonce'            => wp_create_nonce('send_contacts_form_nonce'),
-        'likes_nonce'      => wp_create_nonce('nv_likes_nonce'),
+    wp_localize_script('form-js', 'themeFormData', [
+        'ajax_url'          => admin_url('admin-ajax.php'),
+        'hcaptcha_sitekey'  => defined('HCAPTCHA_SITEKEY') ? HCAPTCHA_SITEKEY : '',
+        'nonce'             => wp_create_nonce('send_contacts_form_nonce'),
+        'likes_nonce'       => wp_create_nonce('nv_likes_nonce'),
         'blog_search_nonce' => wp_create_nonce('nv_blog_search_nonce'),
-        'load_more_nonce' => wp_create_nonce('nv_load_more_posts_nonce'),
-    ));
+        'load_more_nonce'   => wp_create_nonce('nv_load_more_posts_nonce'),
+    ]);
+
+    wp_enqueue_script('main-js', $uri . '/js/main.js', [
+        'swiper-js',
+        'micromodal-js',
+        'gsap-js',
+        'scrolltrigger-js',
+        'locomotive-js',
+        'lottie-js',
+        'smoothscroll-js',
+        'form-js',
+    ], THEME_ASSETS_VER, true);
 }
-add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets', 10);
+
+
+/**
+ * Контейнер виджета.
+ *
+ * Сначала пытаемся вывести его через wp_body_open,
+ * а wp_footer используем как резервный вариант.
+ */
+function nvglobal_render_nevi_widget_root() {
+    static $rendered = false;
+
+    if ($rendered) {
+        return;
+    }
+
+    $rendered = true;
+    echo '<div id="web-chat-widget-root"></div>';
+}
+add_action('wp_body_open', 'nvglobal_render_nevi_widget_root', 1);
+add_action('wp_footer', 'nvglobal_render_nevi_widget_root', 1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Отключение админбара

@@ -1,1 +1,10 @@
 .DS_Store
+**/.DS_Store
+
+# Локальная копия чат-виджета: в продакшене он грузится с nevi-gateway,
+# см. nvglobal_enqueue_nevi_widget() в functions.php
+/widget/
+
+# Кэш бокового меню документации живёт в wp-content/uploads, но на случай
+# запуска из каталога темы:
+/nv-docs-cache/

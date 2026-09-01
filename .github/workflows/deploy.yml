@@ -1,0 +1,85 @@
+name: Deploy theme to hosting
+
+# Автодеплой темы nvglobal на Beget по SSH (rsync).
+#
+# ВНИМАНИЕ: пока включён только ручной запуск. Автоматический деплой при пуше
+# в main включается снятием комментария в блоке `push` ниже — сделать это
+# стоит после первого успешного прогона с dry_run: true, потому что rsync
+# работает с --delete и приводит каталог темы на сервере в точное
+# соответствие с репозиторием.
+on:
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Пробный прогон: только показать изменения, ничего не менять"
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via rsync over SSH
+        env:
+          SSH_KEY:  ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          SSH_PORT: ${{ secrets.DEPLOY_PORT }}
+          SSH_PATH: ${{ secrets.DEPLOY_PATH }}
+          DRY_RUN:  ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+
+          for var in SSH_KEY SSH_HOST SSH_USER SSH_PORT SSH_PATH; do
+            if [ -z "${!var}" ]; then
+              echo "::error::Секрет DEPLOY_${var#SSH_} не задан"
+              exit 1
+            fi
+          done
+
+          install -m 700 -d ~/.ssh
+          install -m 600 /dev/null ~/.ssh/id_deploy
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          RSYNC_MODE=""
+          if [ "${DRY_RUN:-false}" = "true" ]; then
+            RSYNC_MODE="--dry-run"
+            echo "::notice::Пробный прогон — файлы на сервере не меняются"
+          fi
+
+          # Репозиторий = каталог темы, поэтому заливаем его содержимое
+          # в каталог темы на сервере. --delete держит их в точном
+          # соответствии; всё, что перечислено в --exclude, на сервере
+          # остаётся нетронутым.
+          rsync -rltz --delete --itemize-changes ${RSYNC_MODE} \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            --exclude='.gitignore' \
+            --exclude='.DS_Store' \
+            --exclude='**/.DS_Store' \
+            --exclude='widget/' \
+            --exclude='screenshot.png' \
+            --exclude='functions_*.php' \
+            --exclude='header_*.php' \
+            --exclude='main-page-video-autoplay_*.php' \
+            --exclude='css/styles_*.css' \
+            --exclude='css/post_*.css' \
+            --exclude='js/main_*.js' \
+            --exclude='js/calculate_*.js' \
+            --exclude='template-parts/teaser_*.php' \
+            -e "ssh -i ~/.ssh/id_deploy -p ${SSH_PORT} -o StrictHostKeyChecking=yes" \
+            ./ "${SSH_USER}@${SSH_HOST}:${SSH_PATH%/}/"

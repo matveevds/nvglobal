@@ -379,7 +379,7 @@ echo esc_url(get_author_posts_url($author_id));
                             <div class="contacts__form-line"></div>
                             
                             <div class="input-form-item">
-                                <div class="input-form-label">Your Massage <span>(optional)</span></div>
+                                <div class="input-form-label">Your Message <span>(optional)</span></div>
                                 <div class="input-form-block input-form-block--textarea">
                                     <textarea name="clientMessage" placeholder="What do you want to discuss?"></textarea>
                                 </div>

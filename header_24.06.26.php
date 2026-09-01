@@ -107,7 +107,7 @@ body.preload {
         <div class="container">
             <div class="header__wrapper">
                 <a href="<?php echo home_url(); ?>" class="header__logo">
-                    <img src="<?php echo get_template_directory_uri(); ?>/img/nvglobal_logo.png" alt="NV Global">
+                    <img src="<?php echo get_template_directory_uri(); ?>/img/nvglobal_logo.png" alt="NeuroVision Global Systems">
                 </a>
                 <div class="header__menu">
                     <button class="burger" aria-label="Open menu" aria-expanded="false">
