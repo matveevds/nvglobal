@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const I18N = Object.assign({
         documentLabel: 'DOCUMENT — Document Recognition',
-        livenessLabel: 'LIVENESS — Selfie / Liveness',
+        livenessLabel: 'LIVENESS',
         basicLabel: 'BASIC — Document + Selfie / Liveness',
         perDocument: 'per document',
         clear: 'Clear',

@@ -13,7 +13,7 @@ function theme_setup() {
     add_theme_support('html5', array('search-form', 'navigation-widgets')); // Поддержка HTML5
 }
 
-define('THEME_ASSETS_VER', '1.0.45');
+define('THEME_ASSETS_VER', '1.0.46');
 
 
 /**
@@ -108,7 +108,7 @@ function my_theme_enqueue_assets() {
 
         wp_localize_script('calculate-js', 'kycCalculatorI18n', [
             'documentLabel'             => 'DOCUMENT — Document Recognition',
-            'livenessLabel'             => 'LIVENESS — Selfie / Liveness',
+            'livenessLabel'             => 'LIVENESS',
             'basicLabel'                => 'BASIC — Document + Selfie / Liveness',
             'perDocument'               => 'per document',
             'clear'                     => 'Clear',

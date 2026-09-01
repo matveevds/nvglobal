@@ -121,7 +121,7 @@ $calculator_package_prices = [
                                 <div class="calculator__spoiler-item-title">Base Package</div>
                                 <div class="calculator__spoiler-item-actions" id="calculator-package">
                                     <button class="calculator__spoiler-btn active" type="button" data-pkg="DOCUMENT">DOCUMENT — Document Recognition</button>
-                                    <button class="calculator__spoiler-btn" type="button" data-pkg="LIVENESS">LIVENESS — Selfie / Liveness</button>
+                                    <button class="calculator__spoiler-btn" type="button" data-pkg="LIVENESS">LIVENESS</button>
                                     <button class="calculator__spoiler-btn" type="button" data-pkg="BASIC">BASIC — Document + Selfie / Liveness</button>
                                 </div>
                             </div>
