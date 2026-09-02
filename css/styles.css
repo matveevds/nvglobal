@@ -12305,8 +12305,12 @@ html.has-scroll-smooth body {
     display: flex;
 }
 
-/* Пакет LIVENESS идёт без распознавания документа, выбор его типа не нужен */
-.calculator--no-documents .calculator__spoiler-item--document-type {
+/* Пакет LIVENESS идёт без распознавания документа. Прячем всё, что к
+   документам относится: выбор типа в пакете, блок доплаты за
+   дополнительные документы и строку «Documents» в карточке результата. */
+.calculator--no-documents .calculator__spoiler-item--document-type,
+.calculator--no-documents .calculator__spoiler-section--documents,
+.calculator--no-documents .calculator__result-item--docs {
     display: none;
 }
 

@@ -147,10 +147,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getSpoilerExpandedHeight(spoiler, content) {
-        // const visualOverflow = spoiler.classList.contains('calculator__spoiler--base') ? 8 : 0;
+        // scrollHeight не бывает меньше уже выставленной height, поэтому
+        // при скрытии части блоков (например, документов у пакета LIVENESS)
+        // высота не уменьшалась и снизу оставалась пустота. Меряем на auto.
+        const previousHeight = content.style.height;
 
-        // return Math.max(0, content.scrollHeight - visualOverflow);
-        return content.scrollHeight;
+        content.style.height = 'auto';
+        const height = content.scrollHeight;
+        content.style.height = previousHeight;
+
+        return height;
     }
 
     function setSpoilerState(spoiler, isOpen, animate) {
@@ -484,6 +490,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getSelectedExtraDocuments() {
+        // У пакета без распознавания документа доплата за дополнительные
+        // документы неприменима: блок скрыт, а отметки, оставшиеся от
+        // прежнего выбора, в расчёт не идут.
+        if (!packageHasDocuments()) {
+            return [];
+        }
+
         return Array.from(extraDocumentCheckboxes).filter(function (checkbox) {
             return checkbox.checked && !checkbox.disabled;
         });

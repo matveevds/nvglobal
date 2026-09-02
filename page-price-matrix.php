@@ -194,7 +194,7 @@ $calculator_package_prices = [
                         
                         
                         <div class="calculator__spoiler-content">
-                            <div class="calculator__spoiler-section">
+                            <div class="calculator__spoiler-section calculator__spoiler-section--documents">
                                 <div class="calculator__spoiler-content-subtitle">
                                     <p>Additional Documents</p>
                                     <span id="calculator-doc-unit-price">$<?php echo esc_html($calculator_doc_price); ?> per document</span>
@@ -299,7 +299,7 @@ $calculator_package_prices = [
                                     <div class="calculator__result-value" id="calculator-result-package-price">$0.24</div>
                                 </div>
 
-                                <div class="calculator__result-item">
+                                <div class="calculator__result-item calculator__result-item--docs">
                                     <div class="calculator__result-name" id="calculator-result-docs-label">Documents</div>
                                     <div class="calculator__result-value" id="calculator-result-docs-price">+$0.00</div>
                                 </div>
