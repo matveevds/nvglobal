@@ -12305,12 +12305,17 @@ html.has-scroll-smooth body {
     display: flex;
 }
 
-/* Пакет LIVENESS идёт без распознавания документа. Прячем всё, что к
-   документам относится: выбор типа в пакете, блок доплаты за
-   дополнительные документы и строку «Documents» в карточке результата. */
+/* Пакет LIVENESS проверяет только живость лица и не даёт персональных
+   данных. Поэтому к нему неприменимы ни распознавание документов, ни
+   скрининг по санкционным спискам и базам PEP: последнему нужны ФИО,
+   дата рождения и номер документа, которые извлекает шаг AI-OCR.
+   Прячем выбор типа документа, а вместе с ним и весь спойлер
+   дополнительных модулей — после скрытия обеих его секций он пуст. */
 .calculator--no-documents .calculator__spoiler-item--document-type,
+.calculator--no-documents .calculator__spoiler--additional,
 .calculator--no-documents .calculator__spoiler-section--documents,
-.calculator--no-documents .calculator__result-item--docs {
+.calculator--no-documents .calculator__result-item--docs,
+.calculator--no-documents .calculator__result-item--aml {
     display: none;
 }
 

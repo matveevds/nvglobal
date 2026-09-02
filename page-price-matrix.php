@@ -304,7 +304,7 @@ $calculator_package_prices = [
                                     <div class="calculator__result-value" id="calculator-result-docs-price">+$0.00</div>
                                 </div>
 
-                                <div class="calculator__result-item">
+                                <div class="calculator__result-item calculator__result-item--aml">
                                     <div class="calculator__result-name" id="calculator-result-aml-label">International Screening</div>
                                     <div class="calculator__result-value" id="calculator-result-aml-price">+$0.40</div>
                                 </div>

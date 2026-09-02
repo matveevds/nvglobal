@@ -503,6 +503,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getInternationalScreeningPrice() {
+        // Скрининг ищет совпадения по ФИО, дате рождения и номеру документа.
+        // У пакета без распознавания документа этих данных нет, поэтому
+        // опция скрыта, а прежняя отметка в расчёт не идёт.
+        if (!packageHasDocuments()) {
+            return 0;
+        }
+
         return internationalCheckbox && internationalCheckbox.checked ? AML_INTERNATIONAL_PRICE : 0;
     }
 
