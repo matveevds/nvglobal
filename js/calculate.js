@@ -223,7 +223,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function initSpoilers() {
         if (!spoilers.length) return;
 
-        const firstOpenSpoiler = root.querySelector('.calculator__spoiler--open') || spoilers[0];
+        // Спойлеры независимы друг от друга. Изначально открыты те, что помечены
+        // классом --open в разметке; если не помечен ни один — первый.
+        const hasPresetOpen = root.querySelector('.calculator__spoiler--open') !== null;
 
         spoilers.forEach(function (spoiler, index) {
             const header = spoiler.querySelector('.calculator__spoiler-header');
@@ -239,14 +241,18 @@ document.addEventListener('DOMContentLoaded', function () {
             header.setAttribute('tabindex', '0');
             header.setAttribute('aria-controls', content.id);
 
-            setSpoilerState(spoiler, spoiler === firstOpenSpoiler, false);
+            const openInitially = hasPresetOpen
+                ? spoiler.classList.contains('calculator__spoiler--open')
+                : index === 0;
+
+            setSpoilerState(spoiler, openInitially, false);
 
             header.addEventListener('click', function () {
-                if (spoiler.classList.contains('calculator__spoiler--open')) return;
+                // Переключаем только свой блок: остальные сохраняют состояние,
+                // так что можно держать открытыми оба сразу.
+                const isOpen = spoiler.classList.contains('calculator__spoiler--open');
 
-                spoilers.forEach(function (currentSpoiler) {
-                    setSpoilerState(currentSpoiler, currentSpoiler === spoiler, true);
-                });
+                setSpoilerState(spoiler, !isOpen, true);
             });
 
             header.addEventListener('keydown', function (event) {

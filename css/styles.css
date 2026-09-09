@@ -13433,5 +13433,9 @@ html.has-scroll-smooth body {
 /* OVERVIEW END */
 
 /* CALC PAGE END */
-
-
+@media (max-width: 575.98px) {
+    .wp-singular .web-chat-widget .wc-right-4 {
+        right: unset!important;
+        left: 1rem!important;
+    }
+}
