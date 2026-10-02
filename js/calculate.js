@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
         checks: 'Checks',
         internationalScreening: 'International Screening',
         checksUnit: 'checks',
-        includedInBase: 'included in the basic package',
         locale: 'en-US',
         currency: '$'
     }, window.kycCalculatorI18n || {});
@@ -381,12 +380,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return element ? element.textContent.replace(/\s+/g, ' ').trim() : '';
     }
 
-    function getCheckboxText(text) {
-        if (!text) return '';
-
-        return text.dataset.originalText || getCleanText(text);
-    }
-
     function getCheckboxItems(checkboxes) {
         return Array.from(checkboxes).map(function (checkbox) {
             const label = checkbox.closest('.calculator__checkbox');
@@ -394,10 +387,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             return {
                 value: checkbox.value,
-                label: text ? getCheckboxText(text) : checkbox.value,
+                label: text ? getCleanText(text) : checkbox.value,
                 checked: checkbox.checked,
-                disabled: checkbox.disabled,
-                included_in_base: checkbox.disabled && !!(label && label.classList.contains('calculator__checkbox--disabled'))
+                disabled: checkbox.disabled
             };
         });
     }
@@ -508,6 +500,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    /**
+     * Первый тип документа входит в базовую цену пакета, каждый следующий
+     * стоит столько же, сколько дополнительный документ.
+     */
+    function getExtraDocumentTypesCount() {
+        if (!packageHasDocuments()) {
+            return 0;
+        }
+
+        return Math.max(0, selectedDocumentTypes.size - 1);
+    }
+
     function getInternationalScreeningPrice() {
         // Скрининг ищет совпадения по ФИО, дате рождения и номеру документа.
         // У пакета без распознавания документа этих данных нет, поэтому
@@ -517,42 +521,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         return internationalCheckbox && internationalCheckbox.checked ? AML_INTERNATIONAL_PRICE : 0;
-    }
-
-    function lockIncludedDocuments() {
-        extraDocumentCheckboxes.forEach(function (checkbox) {
-            const value = checkbox.value;
-            const label = checkbox.closest('.calculator__checkbox');
-            const text = label ? label.querySelector('.calculator__checkbox-text') : null;
-
-            const hasDocuments = packageHasDocuments();
-            const isIncludedDriver = hasDocuments && value === 'driver_front' && selectedDocumentTypes.has('driver');
-            const isIncludedId = hasDocuments && value === 'id_front' && selectedDocumentTypes.has('id');
-            const isLocked = isIncludedDriver || isIncludedId;
-
-            checkbox.disabled = isLocked;
-
-            if (isLocked) {
-                checkbox.checked = false;
-            }
-
-            if (label) {
-                label.classList.toggle('calculator__checkbox--disabled', isLocked);
-            }
-
-            if (text) {
-                text.dataset.originalText = text.dataset.originalText || text.textContent.trim();
-
-                text.textContent = text.dataset.originalText;
-
-                if (isLocked) {
-                    const includedText = document.createElement('span');
-                    includedText.className = 'calculator__checkbox-included-text';
-                    includedText.textContent = I18N.includedInBase;
-                    text.appendChild(includedText);
-                }
-            }
-        });
     }
 
     function updateCalculator() {
@@ -576,12 +544,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         updateRangeProgress();
-        lockIncludedDocuments();
 
         const packagePrice = rateAt(PKG[selectedPackage].USD, volume);
         const extraDocUnitPrice = getExtraDocumentUnitPrice(volume);
         const selectedExtraDocs = getSelectedExtraDocuments();
-        const extraDocsPrice = selectedExtraDocs.length * extraDocUnitPrice;
+        const extraDocsCount = getExtraDocumentTypesCount() + selectedExtraDocs.length;
+        const extraDocsPrice = extraDocsCount * extraDocUnitPrice;
         const internationalScreeningPrice = getInternationalScreeningPrice();
 
         const pricePerCheck = packagePrice + extraDocsPrice + internationalScreeningPrice;
@@ -627,8 +595,8 @@ document.addEventListener('DOMContentLoaded', function () {
         root.querySelector('#calculator-result-package-description').textContent = PKG[selectedPackage].description;
         root.querySelector('#calculator-result-package-price').textContent = formatRate(packagePrice);
 
-        root.querySelector('#calculator-result-docs-label').textContent = selectedExtraDocs.length
-            ? I18N.documents + ' (' + selectedExtraDocs.length + ' × ' + formatRate(extraDocUnitPrice) + ')'
+        root.querySelector('#calculator-result-docs-label').textContent = extraDocsCount
+            ? I18N.documents + ' (' + extraDocsCount + ' × ' + formatRate(extraDocUnitPrice) + ')'
             : I18N.documents;
 
         root.querySelector('#calculator-result-docs-price').textContent = '+' + formatRate(extraDocsPrice);

@@ -124,7 +124,6 @@ function my_theme_enqueue_assets() {
             'checks'                    => 'Checks',
             'internationalScreening'    => 'International Screening',
             'checksUnit'                => 'checks',
-            'includedInBase'            => 'included in the basic package',
             'locale'                    => 'en-US',
             'currency'                  => '$',
         ]);

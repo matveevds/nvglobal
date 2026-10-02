@@ -136,7 +136,7 @@ $calculator_package_prices = [
 
                             <div class="calculator__spoiler-item calculator__spoiler-item--document-type">
                                 <div class="calculator__spoiler-item-title">Document Type in Package</div>
-                                <div class="calculator__spoiler-item-subtitle">Multiple types are possible: the client presents one, the price remains the same</div>
+                                <div class="calculator__spoiler-item-subtitle">Multiple types are possible: the first one is included in the package, each additional one is priced as an extra document</div>
 
                                 <div class="calculator__spoiler-item-actions" id="calculator-document-type">
                                     <button class="calculator__spoiler-btn small active" type="button" data-dt="passport">Passport</button>
@@ -208,33 +208,21 @@ $calculator_package_prices = [
                                     <div class="calculator__spoiler-content-col">
 
                                         <label class="calculator__checkbox">
-                                            <input type="checkbox" name="extra_documents[]" value="id_front" data-extra-doc="id_front">
-                                            <span class="calculator__checkbox-mark"></span>
-                                            <span class="calculator__checkbox-text">ID Card</span>
-                                        </label>
-
-                                        <label class="calculator__checkbox">
-                                            <input type="checkbox" name="extra_documents[]" value="driver_front" data-extra-doc="driver_front">
-                                            <span class="calculator__checkbox-mark"></span>
-                                            <span class="calculator__checkbox-text">Driver’s License</span>
-                                        </label>
-
-                                        <label class="calculator__checkbox">
                                             <input type="checkbox" name="extra_documents[]" value="residence_permit" data-extra-doc="residence_permit">
                                             <span class="calculator__checkbox-mark"></span>
                                             <span class="calculator__checkbox-text">Residence</span>
-                                        </label>                                       
+                                        </label>
 
-                                    </div>
-
-                                    <div class="calculator__spoiler-content-col">
-                                        
                                         <label class="calculator__checkbox">
                                             <input type="checkbox" name="extra_documents[]" value="visa" data-extra-doc="visa">
                                             <span class="calculator__checkbox-mark"></span>
                                             <span class="calculator__checkbox-text">Visa</span>
                                         </label>
 
+                                    </div>
+
+                                    <div class="calculator__spoiler-content-col">
+                                        
                                         <div class="calculator__checkbox-row">
                                             <label class="calculator__checkbox">
                                                 <input type="checkbox" name="extra_documents[]" value="address_proof" data-extra-doc="address_proof">
