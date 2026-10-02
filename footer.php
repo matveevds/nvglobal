@@ -29,16 +29,6 @@
                                     </svg>
                                 </span>
                             </a>
-                            <!--
-                            <a href="tel:+15551234567" class="btn btn--gray">
-                                <span class="btn__text">+1 (555) 123-4567</span>
-                                <span class="btn__icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"></path>
-                                    </svg>
-                                </span>
-                            </a>
-                            -->
                         </div>
 
                     </div>
@@ -48,33 +38,22 @@
                         <div class="footer__nav">
                             <div class="footer__nav-title">COMPANY</div>
                             <div class="footer__nav-list">
-                                <a href="#" class="footer__nav-link">About us</a>
-                                <a href="#" class="footer__nav-link">Careers</a>
-                                <a href="#" class="footer__nav-link">Blog</a>
                                 <a href="/pricing-matrix/" class="footer__nav-link">Prices</a>
                                 <a href="/solutions/" class="footer__nav-link">Solutions</a>
                             </div>
                         </div>
 
                         <div class="footer__nav">
-                            <div class="footer__nav-title">SOLUTIONS</div>
+                            <div class="footer__nav-title"></div>
                             <div class="footer__nav-list">
-                                <a href="#" class="footer__nav-link">KYC</a>
-                                <a href="#" class="footer__nav-link">KYT</a>
-                                <a href="#" class="footer__nav-link">AML</a>
-                                <a href="#" class="footer__nav-link">KYB</a>
-                                <a href="#" class="footer__nav-link">Liveness</a>
-                                <a href="#" class="footer__nav-link">NeuroPay</a>
+
                             </div>
                         </div>
 
                         <div class="footer__nav">
                             <div class="footer__nav-title">GET STARTED</div>
                             <div class="footer__nav-list">
-                                <a href="#" class="footer__nav-link">Technologies</a>
                                 <a href="/docs/" class="footer__nav-link">Documentation</a>
-                                <a href="#" class="footer__nav-link">For partners</a>
-                                <a href="#" class="footer__nav-link">Contact us</a>
                             </div>
                         </div>
 
@@ -83,7 +62,7 @@
                     <div class="footer__social">
                         <div class="footer__social-title">SOCIAL</div>
                         <div class="footer__social-list">
-                            <a href="https://www.linkedin.com/company/nvglobal-ai/posts/" class="footer__social-item" aria-label="NeuroVision Global Systems on LinkedIn">
+                            <a href="https://www.linkedin.com/company/nvglobal-ai/posts/" class="footer__social-item" aria-label="NeuroVision Global Systems on LinkedIn" target="_blank" rel="noopener noreferrer">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16.976 15.7988C16.976 16.2128 16.64 16.5488 16.226 16.5488C15.812 16.5488 15.476 16.2128 15.476 15.7988V12.3888C15.476 11.3848 14.662 10.5688 13.661 10.5688C12.66 10.5688 11.846 11.3848 11.846 12.3888V15.7988C11.846 16.2128 11.51 16.5488 11.096 16.5488C10.682 16.5488 10.346 16.2128 10.346 15.7988V12.3888C10.346 10.5578 11.833 9.06879 13.661 9.06879C15.489 9.06879 16.976 10.5578 16.976 12.3888V15.7988ZM7.775 10.0088C7.361 10.0088 6.989 9.63279 6.989 9.21879C6.989 8.80479 7.361 8.42879 7.775 8.42879C8.189 8.42879 8.559 8.80479 8.559 9.21879C8.559 9.63279 8.189 10.0088 7.775 10.0088ZM8.524 15.7988C8.524 16.2128 8.188 16.5488 7.774 16.5488C7.36 16.5488 7.024 16.2128 7.024 15.7988V12.0278C7.024 11.6138 7.36 11.2778 7.774 11.2778C8.188 11.2778 8.524 11.6138 8.524 12.0278V15.7988ZM16.217 3.00879H7.783C4.623 3.00879 2.5 5.23179 2.5 8.53879V16.4788C2.5 19.7858 4.623 22.0088 7.783 22.0088H16.216C19.376 22.0088 21.5 19.7858 21.5 16.4788V8.53879C21.5 5.23179 19.377 3.00879 16.217 3.00879Z" fill="#FBFBFB"/>
                                 </svg>
