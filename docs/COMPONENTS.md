@@ -271,3 +271,64 @@ Liveness & Face Authentication, NeuroPay — тот же список, что в
 (`aria-haspopup="listbox"`, `role="listbox"`, `role="option"`, `aria-expanded`).
 Варианты (менять запрещено, п. 8.2 задания): Schedule a demo, Discuss integration,
 Get pricing information, Technical questions.
+
+
+---
+
+## 10. Состояние редизайна
+
+| # | Секция Figma | Статус | Коммит |
+|---|---|---|---|
+| — | Основа: палитра `--nv-*`, сетка | ✅ сделано | группа 1 |
+| 1 | Header | ⚠️ только палитра (Р-10) | группа 1 |
+| 1 | Hero | ✅ сделано | группа 1 |
+| 2 | About | — | |
+| 3 | Results | — новая секция | |
+| 4 | Industry Solutions | — | |
+| 5 | Products (слайдер) | — | |
+| 6 | How it works | — новая секция | |
+| 7 | Why us | — | |
+| 8 | Clients / Trusted | — | |
+| 9 | Pricing | — новая секция | |
+| 10 | Developers | — | |
+| 11 | Blog | — | |
+| 12 | FAQ | — перенос компонента | |
+| 13 | Contacts | — | |
+| 14 | Teaser + Footer | — | |
+
+Скрыты по Р-11 (`if (false)`, разметка и CSS на месте): `page-nav`, `video-intro`,
+`cases`, `promo`. Ранее была скрыта `testimonials`.
+
+### Новые классы первого экрана
+
+| Класс | Назначение |
+|---|---|
+| `.hero__card` | карточка со скруглением 32 и фотофоном |
+| `.hero__media` | обёртка фотографии, `object-fit: cover` |
+| `.hero__logo` | логотип в левом верхнем углу карточки |
+| `.hero__title-accent` | «in seconds» оранжевым внутри H1 |
+
+Сохранены и продолжают работать: `.hero__wrapper`, `.hero__content`, `.hero__title`,
+`.verify`, `.hero__actions`, `.btn-hero` (`open-callForm2` → модалка `#callForm2`),
+`.btn.btn--gray` (ссылка на `/pricing-matrix/`).
+
+### Токены светлой темы
+
+Объявлены на `body.home` с префиксом `--nv-`. Старое семейство
+`--island-*` / `--text-white-*` / `--stroke-white-*` **не объявлено и не трогается**.
+
+| Токен | Значение | Figma |
+|---|---|---|
+| `--nv-primary` | #FD6B01 | Primary_1 |
+| `--nv-primary-2` | #FF4601 | Orange/800 |
+| `--nv-primary-soft` | #FFF0E6 | Orange/400 |
+| `--nv-object-1` | #212121 | Object_1 |
+| `--nv-object-2` | #5A5A5A | Object_2 |
+| `--nv-object-3` | #898989 | Object_3 |
+| `--nv-surface-1` | #F8F8F8 | Surface_1 |
+| `--nv-surface-2` | #F2F2F2 | Surface_2 |
+| `--nv-surface-3` | #E4E4E4 | Surface_3 |
+| `--nv-surface-4` | #D2D2D2 | Surface_4 |
+| `--nv-constant-1` | #F8F8F8 | Text/Constant/Text 1 |
+| `--nv-constant-85` | rgba(248,248,248,.85) | Opacity_85% |
+| `--nv-gradient` | linear-gradient(167deg, #FD6B01 15%, #FF4601 100%) | Island/Gradient |

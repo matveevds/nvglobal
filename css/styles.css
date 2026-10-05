@@ -647,6 +647,97 @@ h1,h2,h3,h4,h5 {
 
 
 
+/* HOME THEME START */
+
+/*
+ * Светлая тема главной страницы по макету Figma NV-Global.
+ * Ограничена `body.home`, чтобы не затронуть /solutions/, /pricing-matrix/ и /docs/
+ * (решение Р-9 в docs/DECISIONS.md).
+ *
+ * Токены названы с префиксом --nv-, чтобы не пересекаться с семейством
+ * --island-* / --text-white-* / --stroke-white-*: те 384 раза используются
+ * с fallback-значениями и нигде не объявлены, объявлять их нельзя
+ * (docs/THEME-TODO.md, раздел 1).
+ */
+
+body.home {
+    --nv-primary: #FD6B01;
+    --nv-primary-2: #FF4601;
+    --nv-primary-soft: #FFF0E6;
+
+    --nv-object-1: #212121;
+    --nv-object-2: #5A5A5A;
+    --nv-object-3: #898989;
+
+    --nv-surface-1: #F8F8F8;
+    --nv-surface-2: #F2F2F2;
+    --nv-surface-3: #E4E4E4;
+    --nv-surface-4: #D2D2D2;
+
+    --nv-white: #FFFFFF;
+    --nv-constant-1: #F8F8F8;
+    --nv-constant-85: rgba(248, 248, 248, 0.85);
+
+    --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
+
+    --nv-radius-card: 24px;
+    --nv-radius-hero: 32px;
+    --nv-gutter: 32px;
+
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/*
+ * Сетка макета: контент = ширина экрана − 64, боковое поле 32px на всех трёх фреймах
+ * (1920 → 1856, 1440 → 1376, 840 → 776). Потолок 1920 повторяет самый широкий фрейм.
+ * Специфичность `body.html .container` выше, чем у лесенки `.container` в media-запросах,
+ * поэтому общие правила переопределять не нужно.
+ */
+body.home .container {
+    max-width: 1920px;
+    padding-left: var(--nv-gutter);
+    padding-right: var(--nv-gutter);
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+
+}
+
+@media (max-width: 767.98px) {
+    /* Макета мобильной версии нет — сохраняем поля темы (docs/DECISIONS.md, Р-1 / BACKLOG R-01). */
+    body.home .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* HOME THEME END */
+
 /* MENU =========================================== START */
 
 .header {
@@ -927,24 +1018,134 @@ h1,h2,h3,h4,h5 {
 }
 
 
+
+/*
+ * Светлая шапка главной страницы (docs/DECISIONS.md, Р-10: меняем только палитру,
+ * состав навигации остаётся прежним). Ограничено `body.home` — на остальных
+ * страницах шапка остаётся тёмной.
+ */
+body.home .header {
+    position: relative;
+    top: 0;
+    padding-top: 32px;
+}
+
+body.home .header__logo {
+    display: none;
+}
+
+body.home .header__menu {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: none;
+}
+
+body.home .header__nav-link {
+    color: var(--nv-object-1);
+}
+
+body.home .burger svg path {
+    fill: var(--nv-object-1);
+}
+
+body.home .btn--header {
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    transition: filter .2s ease;
+}
+
+body.home .btn--header .btn__text {
+    color: var(--nv-constant-1);
+}
+
+body.home .btn--header:hover,
+body.home .btn--header:focus-visible {
+    background: var(--nv-primary);
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+
+}
+
+@media (max-width: 767.98px) {
+
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
 /* HEADER MENU =========================================== END */
 
 .hero {
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
-    background-image: url('/wp-content/themes/nvglobal/animation/video1/main_bg2_000.jpg');
-    padding: 146px 0;
-    min-height: 720px;
-    background: #000;
-    top: 0;
-    z-index: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100svh;
     position: relative;
-    will-change: transform;
-    backface-visibility: hidden;
+    width: 100%;
+    padding: 32px 0;
+    background: var(--nv-surface-1);
+}
+
+/* Карточка первого экрана: фото на всю площадь, контент по нижнему краю. */
+.hero__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    width: 100%;
+    min-height: 872px;
+    padding: 32px;
+    border-radius: var(--nv-radius-hero);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+}
+
+.hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/*
+ * В макете логотип лежит внутри карточки, а шапка идёт без него.
+ * Поэтому на главной логотип шапки скрыт (см. секцию MENU), а здесь выведен свой.
+ */
+.hero__logo {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    width: 206px;
+    height: 39px;
+    display: block;
 }
 
 .pin-spacer {
@@ -1000,15 +1201,11 @@ html.has-scroll-smooth body {
     z-index: 2;
 }
 
-.hero_gradient {
-    width: 800px;
-    height: 100%;
-    position: absolute;
-    left:0;
-    top:0;
-    background: linear-gradient(90deg, #000 0%, rgba(17, 17, 17, 0.00) 90%);
-    z-index: 2;
-}
+/*
+ * В макете отдельного затемняющего слоя нет: сверка рендера Figma с экспортом
+ * фотографии дала расхождение 0.00 по всем контрольным точкам. Читаемость текста
+ * обеспечивает сама фотография (слева тёмный диван и стена в тени).
+ */
 
 .hero.hero--hide {
     display: none;
@@ -1032,58 +1229,53 @@ html.has-scroll-smooth body {
     );
 }
 
-.hero .container {
-    height: 100%;
-}
+
 
 .hero__wrapper {
     display: flex;
-    max-width: 580px;
     width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
+    justify-content: space-between;
     gap: 32px;
-    height: 100%;
-    justify-content: flex-end;
 }
 
-.hero__content  {
+.hero__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
-    align-self: stretch;
-    max-width: 580px;
+    max-width: 496px;
     width: 100%;
-    position: relative;
-    /* z-index: 2; */
-    margin-top: auto;
 }
 
 .hero__title {
-    font-size: 48px;
-    line-height: 114.286%;
     margin: 0;
+    font-size: 52px;
+    line-height: 123.077%;
+    font-weight: 700;
+    color: var(--nv-constant-1);
+}
+
+.hero__title-accent {
+    color: var(--nv-primary);
 }
 
 .hero__actions {
     display: flex;
+    flex-direction: column;
     align-items: flex-end;
+    justify-content: flex-end;
     gap: 16px;
+    flex-shrink: 0;
 }
 
-.hero__actions-sep {
-    width: 2px;
-    height: 100%;
-    background: rgba(251, 251, 251, 0.15);
-}
+
 
 .verify {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: 24px;
-    line-height: 150%;
+    color: var(--nv-constant-85);
+    font-size: 18px;
+    line-height: 133.333%;
     font-weight: 700;
-    max-width: 480px;
 }
 
 .companies {
@@ -1092,20 +1284,38 @@ html.has-scroll-smooth body {
 }
 
 .btn-hero {
-    padding: 16px;
-    gap: 17px;
-    border-radius: 16px;
-    background-color: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    flex-direction: row-reverse;
-    height: 64px;
-    position: relative;
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
     backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: filter .2s ease;
+}
+
+.btn-hero .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
 }
 
+.btn-hero .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
 .btn__text-hero {
-    color: var(--Text-White, #FBFBFB);
+    color: var(--nv-constant-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
 }
 
 .btn__icon-arrow {
@@ -1132,21 +1342,19 @@ html.has-scroll-smooth body {
     background-repeat: no-repeat;
 }
 
-.btn-hero:hover .btn__icon-arrow::after {
-    background-image: url('../img/big_arrow_white.svg');
+/*
+ * Hover замерен по фрейму 2386:28441: градиент снимается, остаётся сплошной #FD6B01.
+ * Цвет текста и иконки не меняется.
+ */
+.btn-hero:hover,
+.btn-hero:focus-visible,
+.btn-hero.is-active {
+    background: var(--nv-primary);
 }
 
-.btn-hero:hover, .btn-hero.is-active {
-    /* background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%)); */
-}
-
-.btn-hero:hover .btn__icon-arrow, .btn-hero.is-active .btn__icon-arrow {
-    background: var(--Island-Dark-blue, #2B323B);
-}
-
-.btn-hero:hover .btn__text-hero,
-.btn-hero.is-active .btn__text-hero {
-    color: var(--Text-Dark-blue, #2B323B);
+.btn-hero:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
 }
 
 /* .btn-hero:hover .btn__icon-arrow svg path, .btn-hero.is-active .btn__icon-arrow svg path {
@@ -1299,39 +1507,6 @@ html.has-scroll-smooth body {
 }
 
 @media (max-width: 767.98px) {
-    .hero {
-        /* padding: 220px 0 100px; */
-        background-position: right 0px top -30px;
-        background-size:auto;
-    }
-    
-    .hero_gradient {
-        width: 300px;
-    }
-
-    .hero::after {
-        height: 300px;
-        display: block;
-    }
-
-    .hero__wrapper {
-        max-width: 616px;
-        width: 100%;
-    }
-
-    .hero__content {
-        max-width: 616px;
-    }
-
-    .hero__title {
-        font-size: 48px;
-        line-height: 133.333%;
-    }
-
-    .verify {
-        font-size: 20px;
-        line-height: 140%;
-    }
 
     .companies {
         font-size: 16px;
@@ -1496,6 +1671,137 @@ html.has-scroll-smooth body {
     .hero__content {
         padding-top: 60px;
     }
+}
+
+
+/*
+ * Кнопка «View our prices» в первом экране. `.btn` и `.btn--gray` — общие классы,
+ * используются на /solutions/, /pricing-matrix/ и в блоге, поэтому правило ограничено
+ * `.hero__actions`, чтобы не задеть другие страницы.
+ */
+.hero__actions .btn--gray {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    color: var(--nv-object-1);
+    transition: background-color .2s ease;
+}
+
+.hero__actions .btn--gray .btn__text {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.hero__actions .btn--gray .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.hero__actions .btn--gray .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Hover замерен по фрейму 2386:28441: подложка #F2F2F2 -> #E4E4E4, рамка не меняется. */
+.hero__actions .btn--gray:hover,
+.hero__actions .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.hero__actions .btn--gray:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+
+@media (max-width: 1599.98px) {
+    /* Desktop-фрейм Figma 1440: карточка 1376x732. */
+    .hero__card {
+        min-height: 732px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet-фрейм Figma 840: карточка 776x872, раскладка та же. */
+    .hero__card {
+        min-height: 872px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Макета мобильной версии нет (BACKLOG R-01). Раскладку собираем так, чтобы
+     * композиция макета не ломалась: карточка ниже, контент и кнопки в колонку.
+     */
+    .hero__card {
+        min-height: 560px;
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .hero__wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .hero__content {
+        max-width: 100%;
+    }
+
+    .hero__actions {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .hero__title {
+        font-size: 36px;
+        line-height: 122.222%;
+    }
+
+    .verify {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+    /*
+     * Сохраняем прежний мобильный размер заголовка темы: до правок он задавался
+     * в унаследованном блоке 460px, который стоит выше по файлу и теперь
+     * перекрывался бы правилом 767.98 из этой лесенки.
+     */
+    .hero__title {
+        font-size: 32px;
+        line-height: 120%;
+    }
+}
+
+@media (max-width: 419.98px) {
+
 }
 
 /* HERO END */
