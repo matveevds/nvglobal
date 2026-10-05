@@ -176,3 +176,98 @@
 > `wp-content/themes/neurovision`). При этом `js/main.js:804` в `initLightboxAndForms()`
 > делает `if (typeof GLightbox === 'undefined') return;` — то есть функция молча выходит,
 > и лайтбокс на сайте не работает. Ошибок в консоли нет. Решение — в `docs/BACKLOG.md`.
+
+---
+
+## 9. Карта редизайна главной — Figma ↔ тема
+
+Составлена 2026-10-05 по макетам Full HD / Desktop / Tablet (`docs/FIGMA.md`).
+Номера строк — на момент анализа.
+
+### Что совпало само собой
+
+Сверено замерами в браузере на `/` при 1440:
+
+| Параметр | Тема сейчас | Figma | Итог |
+|---|---|---|---|
+| Шрифт | Satoshi | Satoshi | ✅ менять не нужно |
+| H2 (`.section__title`) | 40px / 52px / 700 | 40 / 52 / 700 | ✅ совпадает точно |
+| Контент при 1440 | 1376px | 1376px | ✅ совпадает точно |
+| Брейкпоинты | 8 штук | — | ✅ сохраняем |
+| `line-height` в px | 0 вхождений | требование | ✅ |
+
+**Главное изменение — инверсия палитры:**
+
+| | Тема сейчас | Figma |
+|---|---|---|
+| Фон страницы | `#212121` | `#F8F8F8` |
+| Основной текст | `#FBFBFB` | `#212121` |
+| Акцент | `#F9AA66` (132 исп.) | `#FD6B01` |
+| Второй акцент | `#FF7759` (29 исп.) | `#FF4601` |
+| Градиент | `linear-gradient(142deg,#F9AA66,#FF7759)` — 27 исп. | уточняется по секциям |
+
+### Таблица секций
+
+| # | Секция Figma | PHP-блок | CSS-секция | JS | Тип изменений |
+|---|---|---|---|---|---|
+| 1 | Header + Hero | `header.php`, `.hero` (`main-page.php:26`) | `MENU` 650–930, hero 930–1501 | `initHeaderMenu`, `initHeroCanvasAnimation` | **структура + навигация + палитра** |
+| 2 | About | `.about` `:102` | `ABOUT` 1744–2080 | — | палитра + перекомпоновка карточек |
+| 3 | Results | **нет** | — | — | **новая секция** |
+| 4 | Industry Solutions | `.solutions` `:251` | `SOLUTIONS` 2214–2405 | — | палитра + 6 карточек |
+| 5 | Products (слайдер) | `.products` `:501` | `PRODUCTS` 2408–2928 | `initProductsSlider` | палитра + контент 7→6 слайдов |
+| 6 | How it works | **нет** | — | — | **новая секция** |
+| 7 | Why us | `.advantages` `:857` | `advantages` 2932–3301 | — | палитра, заголовок совпадает |
+| 8 | Clients / Trusted | `.clients` `:968` | `CLIENTS` 3304–3824 | `initClientsHover` | **только палитра** |
+| 9 | Pricing | **нет** | — | — | **новая секция** |
+| 10 | Developers | `.doc` `:1342` | `DOC` 4488–4929 | `initDocTabs` | палитра + смена раскладки |
+| 11 | Blog | `.news` `:1471` | `NEWS` 4932–5312 | `initNewsSlider` | палитра + карточки |
+| 12 | **FAQ** | **нет на главной** | `FAQ` 10302–10492 | `initFaq` | **перенос готового компонента** |
+| 13 | Contacts | `.contacts` `:1812` | `CONTACTS` 5577–6375 | `initCustomFormUi`, `form.js` | палитра + состояния полей |
+| 14 | Teaser + Footer | `footer.php` | `teaser` 6378–6574, `FOOTER` 6577–6869 | — | **глобально** — палитра + колонки ссылок |
+
+### Секции темы без пары в Figma
+
+| Секция | Заголовок | Статус |
+|---|---|---|
+| `.page-nav` `:60` | липкая навигация по якорям | в макетах не нарисована |
+| `.video-intro` `:187` | «Let's get to know each other!» | пары нет |
+| `.testimonials` `:1049` | «What Our Clients Say» | уже выключена `if (false)` |
+| `.cases` `:1164` | «Success Stories That Speak for Themselves» | пары нет; ближе всего Figma «Results» |
+| `.promo` `:1755` | промо-блок | пары нет |
+
+Решение по ним — за пользователем, самостоятельно не удаляем.
+
+### Компоненты, готовые к переиспользованию
+
+**FAQ** (`page-solutions.php:1126`) переносится на главную без правок JS:
+`initFaq()` работает по глобальному `document.querySelectorAll('.faq__item')`
+и безопасно выходит, если элементов нет. Структура:
+`.faq` → `.faq__left` (badge, `.section__title`, кнопка) + `.faq__right` → `.faq__list` →
+`.faq__item` → `.faq__item-question` / `.faq__item-answer`.
+
+**Clients tooltip** (`.clients__item`) — менять нечего, кроме цветов:
+подписи в теме **дословно совпадают** с фреймом `2328:21867`, порядок тот же.
+
+| # | Заголовок | Подпись |
+|---|---|---|
+| 1 | Banks | Powering secure digital onboarding |
+| 2 | Crypto Exchanges | Enabling compliant KYC verification |
+| 3 | Government | Securing citizen identity services |
+| 4 | Insurance | Accelerating claim processing |
+| 5 | Gambling | Verifying age and identity instantly |
+
+`initClientsHover` уже поддерживает и `mouseenter`, и `click` — требования п. 6.3 задания выполнены.
+
+**Слайдер Products** — структура подходит целиком:
+`.products__slider-tabs` → `.products__slider-tab(--active)`,
+`.products__slider-content-swiper.swiper` → `.products__slider-list.swiper-wrapper` → `.products__slide`,
+`.products__slider-arrows` → `.products__slider-arrow--prev/--next(--disabled)`.
+Меняются контент (7 → 6 слайдов) и оформление; Swiper и `initProductsSlider` остаются.
+
+Новые названия слайдов из Figma: KYC / eKYC, AML & Sanctions, KYB, KYT,
+Liveness & Face Authentication, NeuroPay — тот же список, что в колонке PRODUCTS футера.
+
+**Селект формы** — `help-select`, кастомный listbox с полным ARIA
+(`aria-haspopup="listbox"`, `role="listbox"`, `role="option"`, `aria-expanded`).
+Варианты (менять запрещено, п. 8.2 задания): Schedule a demo, Discuss integration,
+Get pricing information, Technical questions.
