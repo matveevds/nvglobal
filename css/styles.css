@@ -1344,12 +1344,33 @@ html.has-scroll-smooth body {
     line-height: 155.556%;
 }
 
+/* Исходный вид кнопки — используется на /pricing-matrix/, /404/, /blog/, в архивах. */
 .btn-hero {
+    padding: 16px;
+    gap: 17px;
+    border-radius: 16px;
+    background-color: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    flex-direction: row-reverse;
+    height: 64px;
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.btn__text-hero {
+    color: var(--Text-White, #FBFBFB);
+}
+
+/* Светлая тема главной: кнопка перерисована по макету. */
+body.home .btn-hero {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
     gap: 8px;
     padding: 8px 8px 8px 16px;
+    height: auto;
     min-height: 40px;
     border: 0;
     border-radius: 8px;
@@ -1360,19 +1381,19 @@ html.has-scroll-smooth body {
     transition: filter .2s ease;
 }
 
-.btn-hero .btn__icon {
+body.home .btn-hero .btn__icon {
     display: flex;
     width: 24px;
     height: 24px;
     flex-shrink: 0;
 }
 
-.btn-hero .btn__icon svg {
+body.home .btn-hero .btn__icon svg {
     width: 100%;
     height: 100%;
 }
 
-.btn__text-hero {
+body.home .btn__text-hero {
     color: var(--nv-constant-1);
     font-size: 18px;
     line-height: 133.333%;
@@ -1403,17 +1424,32 @@ html.has-scroll-smooth body {
     background-repeat: no-repeat;
 }
 
+/* Исходное поведение hover на остальных страницах. */
+.btn-hero:hover .btn__icon-arrow::after {
+    background-image: url('../img/big_arrow_white.svg');
+}
+
+.btn-hero:hover .btn__icon-arrow,
+.btn-hero.is-active .btn__icon-arrow {
+    background: var(--Island-Dark-blue, #2B323B);
+}
+
+.btn-hero:hover .btn__text-hero,
+.btn-hero.is-active .btn__text-hero {
+    color: var(--Text-Dark-blue, #2B323B);
+}
+
 /*
- * Hover замерен по фрейму 2386:28441: градиент снимается, остаётся сплошной #FD6B01.
+ * Hover главной замерен по фрейму 2386:28441: градиент снимается, остаётся сплошной #FD6B01.
  * Цвет текста и иконки не меняется.
  */
-.btn-hero:hover,
-.btn-hero:focus-visible,
-.btn-hero.is-active {
+body.home .btn-hero:hover,
+body.home .btn-hero:focus-visible,
+body.home .btn-hero.is-active {
     background: var(--nv-primary);
 }
 
-.btn-hero:focus-visible {
+body.home .btn-hero:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
@@ -2410,6 +2446,13 @@ html.has-scroll-smooth body {
 }
 
 @media (max-width: 1199.98px) {
+    /* Маскот используется шаблоном main-page-video-autoplay.php */
+    .teaser__maskot.teaser__maskot--about {
+        right: 40px;
+        left: unset;
+        transform: none;
+    }
+
     .about__card--long {
         align-items: flex-end;
     }
