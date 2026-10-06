@@ -533,6 +533,23 @@ h1,h2,h3,h4,h5 {
     box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.40);
 }
 
+/* Светлая тема главной: старая палитра виджета на ней выбивается. */
+body.home .top__widget-btn {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    box-shadow: 0 12px 28px 0 rgba(33, 33, 33, 0.18);
+}
+
+body.home .top__widget-btn:hover {
+    background: var(--nv-primary);
+}
+
+body.home .top__widget-btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
 .top__widget-btn svg {
 
 }
@@ -605,6 +622,18 @@ h1,h2,h3,h4,h5 {
 }
 
 @media (max-width: 575.98px) {
+    /*
+     * На этих ширинах тема переносит чат-виджет NeVi влево
+     * (.wp-singular .web-chat-widget .wc-right-4 ниже по файлу), и кнопка
+     * «наверх» оказывалась целиком под ним: чат 72x72 с z-index 9998 против
+     * 44x44 с z-index 7 — кнопка переставала нажиматься. Разводим их
+     * по разным сторонам, z-index не трогаем.
+     */
+    .top__widget {
+        left: auto;
+        right: 16px;
+    }
+
     .section {
         padding: 32px 0;
     }
