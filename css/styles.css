@@ -3098,522 +3098,470 @@ html.has-scroll-smooth body {
 
 /* PRODUCTS START */
 
+/*
+ * Макет Figma 291:7228. Секция оформлена как скруглённая «страница»: компонент
+ * Page edge сверху и снизу — это просто рамка с радиусом 32, отдельная разметка
+ * для него не нужна. Внутренние поля 128 = 64 (поле Page edge) + 64 (поле контента).
+ */
 .products {
-    margin-top: -32px;
-    padding-top: 96px;
-    padding-bottom: 96px;
     position: relative;
     z-index: 0;
-    background:
-        radial-gradient(circle, rgba(249,170,102,0.04) 1.4px, transparent 1.4px),
-        radial-gradient(circle, rgba(249,170,102,0.04) 1.4px, transparent 1.4px),
-        radial-gradient(68.27% 54.14% at 0% 50%, rgba(249,170,102,0.30) 10.3%, rgba(33,33,33,0.00) 100%),
-        #212121;
-    background-size:
-        16px 16px,
-        16px 16px,
-        100% 100%,
-        auto;
-    background-position:
-        0 0,
-        8px 8px,
-        0 0,
-        0 0;
+    padding: 128px 0;
+    background: var(--nv-surface-1);
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 32px;
 }
 
 .products__wrapper {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 48px;
+}
+
+.products__content {
+    display: flex;
+    gap: 96px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.products__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    width: 540px;
+    flex-shrink: 0;
 }
 
 .products__info-top {
     display: flex;
     flex-direction: column;
-    gap: 88px;
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.products__title-block {
-    display: flex;
-    flex-direction: column;
     gap: 12px;
 }
 
+.products__title {
+    margin: 0;
+}
+
 .products__info-bottom {
-    grid-column: 1;
-    grid-row: 3;
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
 .products__info-description {
-    color: var(--Text-White, #FBFBFB);
-    font-weight: 500;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
 }
 
 .products__info-actions {
     display: flex;
-    flex-direction: column;
+    align-items: flex-end;
     gap: 8px;
 }
 
+/* Карточка слайдера */
 .products__slider {
-    grid-column: 2;
-    grid-row: 1 / 4;
-    display: flex;
-    gap: 48px;
-    align-items: stretch;
-    min-width: 0;
-    max-width: 100%;
-}
-
-.products__slider-media {
-    width: 360px;
-    max-width: 360px;
-    min-width: 0;
-    flex-shrink: 0;
-}
-
-.products__slider-image {
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    line-height: 1;
-    padding: 8px;
-    overflow: hidden;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-}
-
-.products__slider-image img,
-.products__slider-image-mobile img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-    border: 2px solid var(--Universal-Black, #212121);
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30);
-    max-width: 100%;
-}
-
-.products__slider-image--desktop {
-    display: block;
-    height: 100%;
-}
-
-.products__slider-image-mobile {
-    display: none;
-}
-
-.products__slider-image-slide {
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-}
-
-.products__slider-content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
     justify-content: space-between;
-    min-width: 0;
-    max-width: 100%;
+    gap: 48px;
     flex: 1 1 auto;
+    min-width: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.products__slider-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    width: 100%;
 }
 
 .products__slider-tabs {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+    flex: 1 1 auto;
     min-width: 0;
-    max-width: 100%;
 }
 
 .products__slider-tab {
     display: flex;
-    padding: 4px 24px;
+    padding: 4px 16px;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    background-color: #2d2d2c;
-    border: none;
-    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+    border: 1px solid transparent;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
     text-align: center;
+    white-space: nowrap;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, color .2s ease;
     flex: 0 0 auto;
 }
 
+/* Hover замерен по фрейму 2386:28499: фон плашки темнеет #E4E4E4 -> #D2D2D2. */
 .products__slider-tab:hover {
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+    background: var(--nv-surface-4);
 }
 
-.products__slider-tab--active {
-    color: var(--Text-Dark-blue, #2B323B);
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+.products__slider-tab--active,
+.products__slider-tab--active:hover {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
     cursor: default;
 }
 
-.products__slider-tab--active:hover {
-    color: var(--Text-Dark-blue, #2B323B);
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+.products__slider-tab:focus-visible,
+.products__slider-arrow:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
 }
 
-.products__slider-wrapper {
-    position: relative;
-    min-width: 0;
-    max-width: 100%;
-    width: 100%;
+.products__slider-arrows {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.products__slider-arrow {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, opacity .2s ease;
+}
+
+.products__slider-arrow svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.products__slider-arrow:hover {
+    background: var(--nv-surface-3);
+}
+
+/* В макете неактивная стрелка — без заливки и с прозрачностью 50%. */
+.products__slider-arrow--disabled,
+.products__slider-arrow--disabled:hover {
+    background: transparent;
+    opacity: .5;
+    cursor: default;
 }
 
 .products__slider-content-swiper {
-    min-width: 0;
-    max-width: 100%;
     width: 100%;
+    min-width: 0;
 }
 
 .products__slider-list {
-    min-width: 0;
-    max-width: 100%;
+    align-items: stretch;
 }
 
 .products__slide {
     display: flex;
-    padding: var(--Frame-Card-Padding-Outside, 24px);
-    flex-direction: column;
-    justify-content: space-between;
     align-items: flex-end;
-    flex-shrink: 0;
-    align-self: stretch;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    height: 400px;
-    gap: 12px;
-    backdrop-filter: blur(10px);
-    min-width: 0;
-    max-width: 100%;
-}
-
-.products__slide-icon {
-    align-self: flex-start;
-    display: flex;
-    padding: 4px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 6px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    gap: 32px;
+    padding-left: 8px;
 }
 
 .products__slide-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1 1 auto;
     min-width: 0;
-    max-width: 100%;
 }
 
 .products__slide-title {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H4, 24px);
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
     font-weight: 700;
+    line-height: 150%;
+}
+
+.products__slide-subtitle {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
 }
 
 .products__slidedescription {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
 }
 
 .products__slide-action {
-    margin-top: 24px;
-    align-self: flex-end;
+    flex-shrink: 0;
 }
 
-.products__slider-arrows {
+/*
+ * Кнопки секции. `.btn`, `.btn--small`, `.btn--gray` — общие классы,
+ * поэтому новый вид ограничен секцией, чтобы не задеть другие страницы.
+ */
+.products .btn--primary,
+.products .btn--gray {
     display: flex;
-    gap: 8px;
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    z-index: 3;
-}
-
-.products__slider-arrow {
-    display: flex;
-    padding: 8px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    cursor: pointer;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: filter .2s ease, background-color .2s ease;
 }
 
-.products__slider-arrow:hover {
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+.products .btn--primary {
+    background: var(--nv-gradient);
 }
 
-.products__slider-arrow--disabled {
-    cursor: default;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.1));
-    opacity: 0.4;
-    pointer-events: none;
+.products .btn--gray {
+    background: var(--nv-surface-2);
 }
 
-.products__slider-arrow--disabled svg path {
-    opacity: 0.5;
+.products .btn--primary .btn__text {
+    color: var(--nv-constant-1);
 }
 
-.products__slider-arrow--disabled:hover {
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+.products .btn--gray .btn__text {
+    color: var(--nv-object-1);
 }
 
-/* DESKTOP: текущая логика с активным слайдом */
+.products .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.products .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.products .btn__icon {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.products .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Крупные кнопки левой колонки: 18/24, иконка по высоте строки. */
+.products__info-actions .btn {
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+}
+
+.products__info-actions .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.products__info-actions .btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Кнопка внутри слайда: 14/20, иконка 20. */
+.products__slide-action .btn {
+    gap: 4px;
+    padding: 6px 6px 6px 12px;
+    min-height: 32px;
+}
+
+.products__slide-action .btn__text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+}
+
+.products__slide-action .btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.products .btn--primary:hover,
+.products .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.products .btn--gray:hover,
+.products .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.products .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
 @media (min-width: 768px) {
-    .products__slider-image-mobile {
-        display: none !important;
-    }
-
+    /* На десктопе Swiper выключен: слайды показываются по активному классу. */
     .products__slider-content-swiper {
         overflow: visible;
     }
 
     .products__slider-list {
-        position: relative;
+        display: block;
+        transform: none !important;
     }
 
     .products__slide {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity 300ms ease, visibility 300ms ease;
+        display: none;
     }
 
     .products__slide--active {
-        position: relative;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
+        display: flex;
     }
 }
 
-/* TABLET/LAPTOP */
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+    .products__content {
+        gap: 48px;
+    }
+}
+
 @media (max-width: 1199.98px) {
-    .products__slide {
-        height: 430px;
+    /*
+     * Ниже 1200 двухколоночная раскладка становится тесной: карточке остаётся
+     * меньше 550px, и вкладка «Liveness & Face Authentication» (250px) начинает
+     * занимать строку целиком. Переходим к схеме планшетного фрейма 2376:16797:
+     * заголовок, под ним карточка, описание и кнопки — отдельной строкой внизу.
+     */
+    .products__content {
+        flex-direction: column;
         gap: 24px;
     }
 
-    .products__slider {
-        gap: 16px;
+    .products__info {
+        display: contents;
     }
 
-    .products__slider-media {
-        width: 240px;
-        max-width: 240px;
+    .products__info-top {
+        order: 1;
+    }
+
+    .products__slider {
+        order: 2;
+    }
+
+    .products__info-bottom {
+        order: 3;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .products__info-description {
+        max-width: 356px;
+    }
+
+    .products__slider-head {
+        gap: 24px;
     }
 }
 
 @media (max-width: 991.98px) {
-    .products__wrapper {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-
-    .products__info-top {
-        grid-column: 1;
-        grid-row: 1;
-        gap: 48px;
-    }
-
-    .products__wrapper {
-        gap: 24px;
-    }
-
+    /* Планшетный фрейм 2376:16797: поле карточки 16. */
     .products__slider {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .products__info-bottom {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .products__slide {
-        height: 380px;
+        padding: 16px;
     }
 }
 
-/* MOBILE */
 @media (max-width: 767.98px) {
-    .products__slider,
-    .products__slider-media,
-    .products__slider-content,
-    .products__slider-wrapper,
-    .products__slider-content-swiper,
-    .products__slider-image-mobile,
-    .products__slider-list {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
+    .products {
+        padding: 96px 0;
+        border-radius: 24px;
     }
 
     .products__slider {
-        flex-direction: column-reverse;
         gap: 24px;
     }
 
-    .products__slider-media {
-        flex: 0 1 auto;
-    }
-
-    .products__slider-image--desktop {
-        display: none;
-    }
-
-    .products__slider-image-mobile {
-        display: block;
-        overflow: hidden;
-
-
-    }
-
-    .products__slider-image-slide {
-        border-radius: var(--Frame-Card-Padding-Corner, 24px);
-        border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-        background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-        line-height: 1;
-        padding: 8px;
-        overflow: hidden;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
-    .products__slider-image-mobile .swiper-wrapper {
-        align-items: stretch;
-        width: 100%;
-    }
-
-    .products__slider-content-swiper {
-        overflow: hidden;
-    }
-
-    .products__slider-content-swiper .swiper-wrapper,
-    .products__slider-image-mobile .swiper-wrapper {
-        width: 100%;
-    }
-
-    .products__slider-content-swiper .swiper-slide,
-    .products__slider-image-mobile .swiper-slide {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        flex-shrink: 0;
-    }
-
-    .products__slider-image-slide {
-        height: auto;
-        width: 100%;
-    }
-
-    .products__slider-image-mobile img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 17 / 28;
-    }
-
-    .products__slider-tabs {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: 4px;
-    }
-
-    .products__slider-tabs::-webkit-scrollbar {
-        display: none;
-    }
-
-    .products__slider-arrows {
-        display: none;
-    }
-
-    .products__slider-list {
-        position: static;
-    }
-
     .products__slide {
-        position: relative;
-        inset: auto;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transition: none;
-        height: 330px;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        align-self: auto;
-        flex-shrink: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding-left: 0;
     }
 
-    .products__slide-icon {
-        width: 32px;
-        height: 32px;
-        padding: 2px;
+    .products__info-bottom {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .products__slide-icon svg {
-        flex-shrink: 0;
-    }
-
-    .products__info-actions {
-        flex-direction: row;
-    }
-
-    .products__info-actions .btn--transparent {
-        align-self: flex-end;
+    .products__info-description {
+        max-width: none;
     }
 }
 
 @media (max-width: 575.98px) {
-    .products__slider-image-slide {
-        height: 400px;
+    .products__slider-head {
+        flex-direction: column;
+        gap: 16px;
     }
-    .products__slider-image-mobile img {
-        height: 384px;
+
+    .products__slider-arrows {
+        align-self: flex-end;
     }
-    .products__slide {
-        padding: 12px;
-        border-radius: 12px;
+
+    .products__slide-title {
+        font-size: 24px;
     }
-    .products__slider-image-slide {
-        border-radius: 12px;
+
+    .products__info-actions {
+        flex-direction: column;
+        align-items: stretch;
     }
-    .products__slide {
-        height: 280px;
+
+    /* Базовый `.btn` ограничен `max-width: fit-content` — в колонке снимаем, иначе кнопки разной ширины. */
+    .products__info-actions .btn {
+        max-width: none;
+        justify-content: space-between;
     }
 }
 
 @media (max-width: 478.98px) {
-    .products__slide-title {
-        font-size: 20px;
-    }
 
-    .products__slidedescription {
-        font-size: 14px;
-        line-height: 142.857%;
-    }
+}
+
+@media (max-width: 419.98px) {
+
 }
 
 /* PRODUCTS END */

@@ -285,7 +285,7 @@ Get pricing information, Technical questions.
 | 2 | About | ✅ сделано | группа 2 |
 | 3 | Results | ✅ сделано, новая секция | группа 2 |
 | 4 | Industry Solutions | ✅ сделано | группа 2 |
-| 5 | Products (слайдер) | — | |
+| 5 | Products (слайдер) | ✅ сделано | группа 3 |
 | 6 | How it works | — новая секция | |
 | 7 | Why us | — | |
 | 8 | Clients / Trusted | — | |
@@ -392,3 +392,81 @@ Get pricing information, Technical questions.
 Иконки: пять из шести уже были в теме из того же экспорта Figma — переиспользованы,
 `fill` заменён на `currentColor`, id фильтров уникализированы. Новая только иконка
 Crypto Exchanges. Исходные кадры SVG сохранены, `viewBox` не пересчитывался.
+
+
+---
+
+## 13. Слайдер Products — состав и управление
+
+Редизайн группы 3 по макетам Figma `291:7228` (Desktop), `2376:16797` (Tablet)
+и пяти фреймам отдельных слайдов.
+
+### Шесть слайдов
+
+| # | Вкладка | Заголовок | Подзаголовок | Кнопка |
+|---|---|---|---|---|
+| 1 | KYC / eKYC | Know Your Customer | A real person with a real document — verified in seconds | есть |
+| 2 | AML & Sanctions | AML & Sanctions | 1,700+ databases, one API call. | нет |
+| 3 | KYB | Know Your Business | Find out who you are signing with | есть |
+| 4 | KYT | Know Your Transaction | On-chain, in real time | нет |
+| 5 | Liveness & Face Authentication | Liveness & Face Authentication | A live person, not a photo, video or mask | нет |
+| 6 | NeuroPay | NeuroPay | Pay by face or palm | нет |
+
+Кнопка «Learn more» есть только на слайдах 1 и 3 — на остальных её слой
+в макете помечен `hidden="true"`. Обе ведут на `/solutions/#solutions`
+(Figma назначение ссылок не задаёт, цель сохранена из прежней версии).
+
+### Управление
+
+JS не переписывался — `initProductsSlider` уже обеспечивал всё нужное:
+
+| Возможность | Реализация |
+|---|---|
+| вкладка → слайд | `tabs.forEach(click)` → `setDesktopActive` |
+| синхронизация вкладок и стрелок | `updateTabs` + `setDisabled` |
+| края без зацикливания | `--disabled` и `disabled` на prev при 0, next при `total − 1` |
+| клавиатура | `keydown` на `.products__slider` (`tabindex="0"`), ←/→ |
+| телефоны | Swiper на `.products__slider-content-swiper` при `≤767.98` |
+| без повторной инициализации | `destroyMobileSwipers()` перед `initMobileSwipers()` |
+| число слайдов | `total = Math.min(tabs.length, slides.length)` |
+
+Внесены две правки:
+1. Слайдер картинок сделан **опциональным** — в новом макете изображений нет,
+   а прежний код выходил из `initMobileSwipers`, если блока картинок не было,
+   и мобильный свайп контента не поднимался.
+2. В `updateTabs` добавлена синхронизация `aria-selected` и roving `tabindex`
+   (вкладки получили `role="tab"`).
+
+### Разметка и доступность
+
+`.products__slider-tabs` → `role="tablist"`; вкладки → `role="tab"` с
+`aria-controls`; слайды → `role="tabpanel"` с `aria-labelledby`. Стрелки получили
+`aria-label`. Это закрывает B-13 для данной секции.
+
+Блок изображений (`.products__slider-image--desktop`, `.products__slider-image-mobile`)
+и атрибуты `data-image` убраны из разметки — в макете изображений нет.
+Файлы `img/products-image*.jpg` **не удалялись**.
+
+### Оформление
+
+Секция оформлена как скруглённая «страница»: компонент Figma Page edge сверху
+и снизу — это рамка `1px #D2D2D2` с радиусом 32; отдельная разметка не нужна,
+поля `128px = 64 (Page edge) + 64 (контент)`.
+
+| Элемент | Значение |
+|---|---|
+| карточка слайдера | `#F2F2F2`, рамка `#D2D2D2`, радиус 24, поле 24 (планшет — 16) |
+| вкладка активная | градиент `#FD6B01 → #FF4601`, текст `#F8F8F8`, рамка `#D2D2D2` |
+| вкладка обычная | `#E4E4E4`, текст `#898989`, без рамки |
+| вкладка hover | фон `#D2D2D2` |
+| стрелка | 40×40, `#F2F2F2`, рамка `#D2D2D2`, радиус 8 |
+| стрелка hover | `#E4E4E4` |
+| стрелка disabled | без заливки, `opacity: .5` |
+| заголовок слайда | 32/150% `#FD6B01` |
+| подзаголовок | 18/133.333% `#212121` |
+| описание | 18/155.556% `#5A5A5A` |
+
+Ниже 1200px раскладка переходит на схему планшетного фрейма: заголовок,
+под ним карточка, описание и кнопки — отдельной строкой внизу.
+Переключение сделано через `display: contents` на `.products__info` и `order`
+у трёх блоков, без дублирования разметки.

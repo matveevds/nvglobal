@@ -252,6 +252,13 @@ function initProductsSlider() {
     }
 
     function updateTabs(index) {
+        // Вкладки размечены как role="tab": состояние и фокус держим в синхроне.
+        tabs.forEach((tab, i) => {
+            if (tab.getAttribute('role') !== 'tab') return;
+            tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+            tab.setAttribute('tabindex', i === index ? '0' : '-1');
+        });
+
         tabs.forEach((tab, i) => {
             tab.classList.toggle('products__slider-tab--active', i === index);
         });
@@ -324,17 +331,20 @@ function initProductsSlider() {
     }
 
     function initMobileSwipers() {
-        if (!mobileImageSwiperEl || !mobileContentSwiperEl) return;
+        if (!mobileContentSwiperEl) return;
         if (mobileImageSwiper || mobileContentSwiper) return;
 
-        mobileImageSwiper = new Swiper(mobileImageSwiperEl, {
-            slidesPerView: 1,
-            spaceBetween: 16,
-            speed: 450,
-            allowTouchMove: true,
-            simulateTouch: true,
-            watchSlidesProgress: true
-        });
+        // Слайдер картинок есть не во всех версиях секции — он опционален.
+        if (mobileImageSwiperEl) {
+            mobileImageSwiper = new Swiper(mobileImageSwiperEl, {
+                slidesPerView: 1,
+                spaceBetween: 16,
+                speed: 450,
+                allowTouchMove: true,
+                simulateTouch: true,
+                watchSlidesProgress: true
+            });
+        }
 
         mobileContentSwiper = new Swiper(mobileContentSwiperEl, {
             slidesPerView: 1,
@@ -356,10 +366,12 @@ function initProductsSlider() {
             }
         });
 
-        mobileImageSwiper.controller.control = mobileContentSwiper;
-        mobileContentSwiper.controller.control = mobileImageSwiper;
+        if (mobileImageSwiper) {
+            mobileImageSwiper.controller.control = mobileContentSwiper;
+            mobileContentSwiper.controller.control = mobileImageSwiper;
+            mobileImageSwiper.slideTo(current, 0);
+        }
 
-        mobileImageSwiper.slideTo(current, 0);
         mobileContentSwiper.slideTo(current, 0);
     }
 
