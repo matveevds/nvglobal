@@ -4070,11 +4070,9 @@ body.home .clients__top-info .section__title-block {
 }
 
 /*
- * Полоса карты. Фоновая карта мира пока не выставлена: в Figma она собрана
- * из 406 отдельных векторов и одним файлом через MCP не отдаётся, а ассет
- * темы `clients_background.png` — другая графика (тёмный глобус), не эта карта.
- * Нужен экспорт карты из макета, см. BACKLOG R-14. Геометрия полосы и позиции
- * пинов уже по макету, добавление фона ничего не сместит.
+ * Полоса карты, 293px по всем трём макетам (FullHD 2380:23177,
+ * Desktop 297:8268, Tablet 2376:17005). Карта и затухание выходят за полосу,
+ * поэтому полоса обрезает.
  */
 .clients__content {
     position: relative;
@@ -4082,9 +4080,64 @@ body.home .clients__top-info .section__title-block {
     width: 100%;
 }
 
+/*
+ * Карта мира. Собрана из тех же 406 векторов, что и в Figma (фрейм Map),
+ * и отрисована в растр с прозрачностью; цвета оригинальные #F2F2F2/#F8F8F8.
+ * В макете карта выше полосы — файл обрезан по верхним 340px из 679
+ * (50.07% высоты), этого хватает всем трём макетам. Поэтому высота слоя
+ * здесь — высота карты из Figma, умноженная на 0.5007.
+ *
+ * FullHD (2380:23178): x 100.3 / 1856 = 5.4042%, ширина 1655.4 / 1856 = 89.1918%,
+ * высота 605.386 x 0.5007 = 303.12px.
+ */
+.clients__map {
+    position: absolute;
+    top: 0.6265px;
+    left: 5.4042%;
+    width: 89.1918%;
+    height: 303.12px;
+    object-fit: fill;
+    /*
+     * Обрезаем карту по нижнему краю полосы. Полосе `overflow: hidden` давать
+     * нельзя: подсказки пинов по макету выходят выше полосы и были бы срезаны.
+     * Видимая высота = 293 - 0.6265 отступа сверху.
+     */
+    clip-path: inset(0 0 calc(100% - 292.3735px) 0);
+    pointer-events: none;
+    user-select: none;
+}
+
+/*
+ * Затухание карты к низу полосы. В макете это растровый прямоугольник
+ * Rectangle 3922 (y 208.28, высота 149) с градиентом от прозрачного
+ * к #F8F8F8 — воспроизводим средствами CSS, отдельный файл не нужен.
+ */
+.clients__content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 208px;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(248, 248, 248, 0) 0, var(--nv-surface-1) 149px);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/*
+ * Пины. В макете это блок шириной 1376 — на FullHD он не растягивается,
+ * а центрируется (x каждого пина ровно +240 = (1856 - 1376) / 2,
+ * y совпадают). Поэтому список ограничен 1376 и центрируется, а проценты
+ * внутри считаются от 1376.
+ */
 .clients__list {
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1376px;
 }
 
 /*
@@ -4180,30 +4233,34 @@ body.home .clients__top-info .section__title-block {
     outline-offset: 2px;
 }
 
-/* Позиции пинов по Desktop-фрейму (карта 1376x293) */
+/*
+ * Позиции пинов по Desktop-фрейму 297:8268 (блок 1376x293).
+ * В макете координата — это бокс иконки 60x60; наш элемент — капля 68x83
+ * с отступом 4, поэтому left/top = координата из Figma минус 4.
+ */
 .clients__item--bank {
-    left: 11.555%;
-    top: 69.625%;
+    left: 11.5552%;
+    top: 45.0512%;
 }
 
 .clients__item--crypto {
-    left: 27.253%;
-    top: 34.471%;
+    left: 27.2529%;
+    top: 9.8976%;
 }
 
 .clients__item--goverment {
-    left: 47.820%;
-    top: 53.925%;
+    left: 47.8198%;
+    top: 29.3515%;
 }
 
 .clients__item--insurance {
-    left: 67.442%;
-    top: 53.242%;
+    left: 67.4419%;
+    top: 28.6689%;
 }
 
 .clients__item--gambling {
-    left: 82.413%;
-    top: 44.710%;
+    left: 82.4128%;
+    top: 20.1365%;
 }
 
 /*
@@ -4280,7 +4337,15 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 1599.98px) {
-
+    /*
+     * Desktop 297:8268 и Tablet 2376:17005: карта занимает всю ширину полосы.
+     * Высота карты в Figma 678.747 -> слой 678.747 x 0.5007 = 339.86px.
+     */
+    .clients__map {
+        left: 0;
+        width: 100%;
+        height: 339.86px;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -4376,8 +4441,15 @@ body.home .clients__top-info .section__title-block {
         padding-top: 0;
     }
 
+    .clients__map,
+    .clients__content::after {
+        display: none;
+    }
+
     .clients__list {
         position: static;
+        transform: none;
+        max-width: none;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;

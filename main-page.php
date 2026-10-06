@@ -592,6 +592,10 @@ get_header(); ?>
                     </div>
                 </div>
                 <div class="clients__content">
+                    <img class="clients__map"
+                         src="<?php echo esc_url(get_template_directory_uri() . '/img/clients-map.webp'); ?>"
+                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/clients-map.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/clients-map@2x.webp'); ?> 2x"
+                         width="1376" height="340" alt="" aria-hidden="true" loading="lazy" decoding="async">
                     <div class="clients__list">
                         <div class="clients__item clients__item--bank" tabindex="0" role="button"
                              aria-label="Banks. Powering secure digital onboarding">
