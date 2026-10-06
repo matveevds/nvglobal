@@ -1819,9 +1819,20 @@ function initFaq() {
         return content.scrollHeight + paddingTop + paddingBottom + borderTop + extra;
     }
 
+    // Разметка FAQ главной использует <button aria-expanded>; на /solutions/
+    // атрибута нет, и тогда функция ничего не делает.
+    function syncExpanded(item, isOpen) {
+        const question = item.querySelector('.faq__item-question');
+        if (!question || !question.hasAttribute('aria-expanded')) return;
+
+        question.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
     function closeItem(item) {
         const answer = item.querySelector('.faq__item-answer');
         if (!answer) return;
+
+        syncExpanded(item, false);
 
         answer.style.height = `${answer.offsetHeight}px`;
 
@@ -1835,6 +1846,7 @@ function initFaq() {
         const answer = item.querySelector('.faq__item-answer');
         if (!answer) return;
 
+        syncExpanded(item, true);
         item.classList.add('faq__item--open');
 
         requestAnimationFrame(() => {
@@ -1848,8 +1860,16 @@ function initFaq() {
 
         if (!question || !answer) return;
 
-        answer.style.height = '0px';
         answer.style.overflow = 'hidden';
+
+        // Элемент может быть открыт сразу в разметке — не схлопываем его.
+        if (item.classList.contains('faq__item--open')) {
+            syncExpanded(item, true);
+            answer.style.height = `${getOpenHeight(item)}px`;
+        } else {
+            syncExpanded(item, false);
+            answer.style.height = '0px';
+        }
 
         question.addEventListener('click', () => {
             const isOpen = item.classList.contains('faq__item--open');

@@ -2,7 +2,7 @@
 const { chromium } = await import(process.env.PW || 'playwright');
 import fs from 'fs';
 const out = process.argv[2];
-const SECTIONS = ['hero','about','results','solutions','products','clients','pricing','doc'];
+const SECTIONS = ['hero','about','results','solutions','products','how','advantages','clients','pricing','doc','news','faq','contacts'];
 const WIDTHS = [1920,1440,992,840,768,576,375];
 const b = await chromium.launch({args:['--host-resolver-rules=MAP nvglobal.local 127.0.0.1,MAP www.nvglobal.local 127.0.0.1']});
 const res = {};

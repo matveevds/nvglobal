@@ -11858,6 +11858,276 @@ body.home .clients__top-info .section__title-block {
     margin: 24px 0;
 }
 
+/*
+ * FAQ главной. Макеты: Full HD 2380:23774, Desktop 2363:32515, Tablet 2376:17599,
+ * спойлер 2363:32526 (открыт) / 2363:32527 (закрыт), ховер 2386:37430.
+ *
+ * Вся секция ограничена `body.home`: те же классы `.faq__*` формируют FAQ
+ * на /solutions/, его оформление менять нельзя.
+ *
+ * Структура разметки и механика раскрытия взяты у существующего аккордеона
+ * (`initFaq`), новых обработчиков не добавлялось.
+ */
+body.home .faq {
+    padding: 64px 0;
+}
+
+body.home .faq__wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+/* Левая колонка фиксированной ширины 440 и на Full HD, и на Desktop. */
+body.home .faq__left {
+    flex: 0 0 440px;
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: flex-start;
+}
+
+body.home .faq__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+body.home .faq__title-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+body.home .faq__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+body.home .faq__description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .faq__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+body.home .faq__cta-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+body.home .faq__cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    max-width: none;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+body.home .faq__cta-btn .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+body.home .faq__cta-btn .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+body.home .faq__cta-btn .btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+body.home .faq__cta-btn:hover {
+    background: var(--nv-surface-3);
+}
+
+body.home .faq__cta-btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+body.home .faq__right {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}
+
+body.home .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/*
+ * Паддинги уменьшены на толщину рамки: в Figma обводка рисуется внутрь
+ * габарита, поэтому расстояние от внешнего края до вложенного блока
+ * в макете — 16, а не 16 + рамка. Так закрытая строка выходит ровно 88px.
+ */
+body.home .faq__item {
+    padding: 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+body.home .faq__item-wrapper {
+    border: 1px dashed var(--nv-surface-4);
+    border-radius: 12px;
+}
+
+body.home .faq__item-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+    width: 100%;
+    margin: 0;
+    padding: 11px 11px 11px 23px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+/*
+ * Вопрос без ответа — обычная строка: курсор не обманывает, а высота
+ * держится такой же, как у строки с шевроном (12 + 32 + 12).
+ */
+body.home .faq__item--static .faq__item-question {
+    min-height: 54px;
+    cursor: default;
+}
+
+body.home .faq__item-question:hover {
+    background: var(--nv-surface-3);
+}
+
+body.home .faq__item--static .faq__item-question:hover {
+    background: transparent;
+}
+
+body.home .faq__item-question:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: -2px;
+}
+
+body.home .faq__item--open .faq__item-question {
+    border-radius: 12px 12px 0 0;
+}
+
+body.home .faq__item-question-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+/* В макете кнопка ровно 32x32, обводка внутри — поэтому фиксируем размер. */
+body.home .faq__item-question-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    color: var(--nv-object-1);
+    line-height: 0;
+}
+
+body.home .faq__item-question-icon svg {
+    display: block;
+    transition: transform .35s ease;
+    transform-origin: center;
+}
+
+body.home .faq__item--open .faq__item-question-icon svg {
+    transform: scaleY(-1);
+}
+
+/*
+ * Высоту панели считает `initFaq` по содержимому и вертикальным полям текста:
+ * поэтому отступы ответа заданы через margin текста (48 = 24 + 24), а не
+ * через padding панели — иначе расчёт разъедется.
+ */
+body.home .faq__item-answer {
+    box-sizing: border-box;
+    height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    border-top: 0 dashed var(--nv-surface-4);
+    border-radius: 0 0 12px 12px;
+    transition: height .35s ease, border-top-width .35s ease;
+}
+
+body.home .faq__item--open .faq__item-answer {
+    border-top: 1px dashed var(--nv-surface-4);
+}
+
+body.home .faq__item-answer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+body.home .faq__item-answer-text p {
+    margin: 0;
+}
+
+/* Анимация раскрытия отключается, если пользователь её не хочет. */
+@media (prefers-reduced-motion: reduce) {
+    body.home .faq__item-answer,
+    body.home .faq__item-question-icon svg {
+        transition: none;
+    }
+}
+
 @media (max-width: 1599.98px) {
 
 }
@@ -11871,6 +12141,46 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 991.98px) {
+    /*
+     * Tablet 2376:17599: колонки складываются. Бейдж на своей строке,
+     * под ним текст и блок «Didn't find your answer?» в ряд (496 + 64 + 216),
+     * спойлеры ниже на всю ширину. `display: contents` у заголовочного блока
+     * отдаёт бейдж и текст сетке — без правок разметки.
+     */
+    body.home .faq__wrapper {
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    body.home .faq__left,
+    body.home .faq__right {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    body.home .faq__left {
+        display: grid;
+        grid-template-columns: 1fr 216px;
+        column-gap: 64px;
+        row-gap: 48px;
+    }
+
+    body.home .faq__title-block {
+        display: contents;
+    }
+
+    body.home .faq__left .section__badge {
+        grid-column: 1 / -1;
+    }
+
+    body.home .faq__title-text {
+        grid-column: 1;
+    }
+
+    body.home .faq__cta {
+        grid-column: 2;
+        align-self: end;
+    }
     .faq__wrapper {
         flex-direction: column;
         gap: 32px;
@@ -11885,12 +12195,59 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 767.98px) {
+    /* Мобильного макета нет: раскладываем в одну колонку. */
+    body.home .faq__left {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
+    }
+
+    body.home .faq__title-text,
+    body.home .faq__cta {
+        grid-column: 1;
+    }
+
+    body.home .faq__item-question {
+        gap: 16px;
+        padding: 11px 11px 11px 15px;
+    }
+
+    /*
+     * initFaq ниже 768 прибавляет к высоте 32px вместо 48 — поля текста
+     * должны совпадать с этим числом, иначе ответ обрежется.
+     */
+    body.home .faq__item-answer {
+        padding: 0 16px;
+    }
+
+    body.home .faq__item-answer-text {
+        margin: 16px 0;
+    }
     .faq__item-question {
         gap: 16px;
     }
 }
 
 @media (max-width: 575.98px) {
+    body.home .faq__title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 125%;
+    }
+
+    body.home .faq__item {
+        padding: 7px;
+        border-radius: 20px;
+    }
+
+    body.home .faq__item-question-text {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+
+    body.home .faq__description,
+    body.home .faq__item-answer-text {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
 
 }
 
