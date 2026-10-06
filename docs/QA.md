@@ -464,6 +464,72 @@ Figma рисует обводку внутрь габарита. Меняя па
 
 ---
 
+## 7.4. Contacts: как проверять форму, не отправляя заявок
+
+### Что нельзя сломать
+
+Классы формы общие с модалкой из `footer.php` — она есть на **каждой**
+странице, включая главную. Все правила главной обязаны идти от
+`body.home .contacts`, одного `body.home` недостаточно.
+
+Проверка:
+
+```bash
+/usr/bin/python3 -c "
+import io,re
+L=io.open('css/styles.css',encoding='utf-8').read().split('\n')
+st=L.index('/* CONTACTS START */'); en=L.index('/* CONTACTS END */')
+print([l.strip() for l in L[st:en] if re.match(r'^\s*body\.home (?!\.contacts)',l)])"
+```
+
+Должен быть пустой список. Плюс прямое сравнение модалки: открыть главную
+до и после правок и сверить вычисленные стили
+`#callForm .contacts__form .input-form-block` — они обязаны совпадать.
+
+### Безопасное тестирование
+
+Реальные заявки не отправляем. В Playwright перехватываем запросы:
+
+```js
+await p.route('**/wp-admin/admin-ajax.php', async route => {
+  const post = route.request().postData() || '';
+  if (post.includes('send_contacts_form')) {
+    return route.fulfill({status:200, contentType:'application/json',
+      body: JSON.stringify({success:true, data:{message:'MOCK OK'}})});
+  }
+  return route.continue();
+});
+await p.route(/api\.telegram\.org|api\.hubapi\.com|hookdeck/, r => r.abort());
+```
+
+### Что проверять
+
+Поля и их `name`/`type`; пустая отправка (должны появиться блоки
+`.is-error` и **ни одного** запроса); варианты `Select your option...`
+и запись значения в `clientOption`; список стран (должен открываться,
+не обрезаться родительским `overflow`, менять код); согласие; отсутствие
+ошибок JS.
+
+Две ловушки:
+
+1. Чекбокс визуально перекрыт `.ui-check__box` — кликать нужно по боксу
+   или по подписи, но не в центр подписи: там ссылка на документы.
+2. Включена **hCaptcha** (`window.__USE_CAPTCHA__ === true`). После
+   успешной валидации форма ждёт токен и только потом шлёт AJAX. Решать
+   настоящую капчу нельзя, поэтому серверный путь остаётся непроверенным —
+   это зафиксировано как ограничение (BACKLOG R-21), а не как дефект.
+
+### Измерения
+
+Анимация появления секции сдвигает элементы трансформом. Перед замерами
+координат отключать:
+
+```js
+await p.addStyleTag({content:'.contacts *,.contacts{transform:none!important;opacity:1!important;animation:none!important;transition:none!important}'});
+```
+
+---
+
 ## 8. Отчёт
 
 После работы:

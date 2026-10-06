@@ -293,7 +293,7 @@ Get pricing information, Technical questions.
 | 10 | Developers | ✅ сделано | группа 4 |
 | 11 | Blog | ✅ сделано, вывод из WP_Query | группа 6 |
 | 12 | FAQ | ⚠️ сделано, нет 7 ответов (R-18) | группа 7 |
-| 13 | Contacts | — | |
+| 13 | Contacts | ✅ сделано, оформление | группа 8 |
 | 14 | Teaser + Footer | — | |
 
 Скрыты по Р-11 (`if (false)`, разметка и CSS на месте): `page-nav`, `video-intro`,
@@ -830,3 +830,85 @@ Enter и Space работают без дублирующей обработки
 Вопрос **без** ответа выводится обычным `<div>` с классом
 `faq__item--static`: кнопки нет, курсор обычный, пустая панель не выводится.
 Высота строки держится такой же, как у строки с шевроном (`min-height: 56px`).
+
+---
+
+## 18. Группа 8 — Contacts
+
+### Карта зависимостей формы
+
+| Элемент | Разметка | JS | Сервер | Где ещё используется |
+|---|---|---|---|---|
+| Имя | `input[name=clientName]` | `js/form.js` → `validateForm`, `sanitizeName` | `handle_contacts_form_submission` | `footer.php` (модалка, все страницы), `single.php`, `index.php`, `main-page-video-autoplay.php` |
+| Компания | `input[name=clientCompany]` | то же | то же | то же |
+| E-mail | `input[type=email][name=clientEmail]` | `sanitizeEmail`, `emailPattern` | то же | то же |
+| Телефон | `input[name=clientPhone]` + `[data-phone-field]` | `initPhoneFields` в `form.js` | то же | то же |
+| Код страны | `[data-phone-field-code]`, `input[name=clientPhoneCode]` | `initPhoneFields`; код дописывается в `FormData` при отправке | то же | то же |
+| Select your option | `[data-help-select-button]`, `input[type=hidden][name=clientOption]` | `initHelpSelect`, `setHelpSelectValue` | то же | то же |
+| Сообщение | `textarea[name=clientMessage]` | — | то же | то же |
+| Согласие | `input[type=checkbox][name=privacyConsent]` | `validateForm` | то же | то же |
+| Отправка | `button[type=submit].btn-form` | `submitForm`, `startButtonLoading` | AJAX `send_contacts_form` | то же |
+
+Внешние интеграции в обработчике: `wp_mail`, Telegram (через Hookdeck),
+HubSpot (`HUBSPOT_ACCESS_TOKEN`), hCaptcha. Ключи — в константах, в
+документацию не выносятся.
+
+### Почему всё ограничено `body.home .contacts`
+
+Классы формы общие с модалкой из `footer.php`, которая выводится на
+**каждой** странице, включая главную. Ограничения одним `body.home` было бы
+недостаточно: модалка на главной получила бы светлое оформление, а на
+остальных страницах осталась бы тёмной.
+
+Поэтому все 142 добавленных селектора идут от `body.home .contacts`.
+Проверка: вычисленные стили `#callForm .contacts__form` на главной до и
+после правок совпадают полностью.
+
+### Геометрия
+
+| Макет | Левая колонка | Зазор | Карточка формы | Поле |
+|---|---|---|---|---|
+| Full HD `2380:23792` | 459 (текст 427) | 48 | 1349 | 638.5 |
+| Desktop `322:9869` | 427 | 48 | 901 | 414.5 |
+| Tablet `2376:17617` | 776 | — | 776 | 360 |
+
+Оранжевая карточка на Desktop уходит за левый край экрана. Вылет считается
+от контейнера: `--nv-bleed: calc((100vw - min(100vw, 1920px) + 64px) / 2)`.
+На Full HD вылета нет — так в макете. На планшете карточка уходит под форму.
+
+⚠️ Старое правило `.contacts__card` — `position: absolute; width: 840px;
+padding-left: 420px` (так тот же вылет делался в тёмной теме). Новые правила
+возвращают карточку в поток, поэтому `position`, `right`, `bottom` и ширина
+переопределены явно.
+
+⚠️ `.contacts__form-item` имел `width: calc(25% - 12px)` — в сетке это ломает
+колонку, переопределено на `width: auto`.
+
+⚠️ `[data-phone-field-code]` наследовал белый цвет тёмной темы.
+
+### Раскладка формы
+
+| Макет | Раскладка |
+|---|---|
+| Full HD `2380:23807` | две колонки 638.5 с зазором 24: слева Name, Company, E-mail, Phone (зазор 12), справа селект и текстовое поле (192, начало на y = 84). Разделитель один — перед согласием |
+| Desktop и ниже | поток: поля по два в ряд, три разделителя между группами |
+
+Full HD сделан на `grid`: разметка одна, позиции заданы существующими
+классами (`.input-form-item--50`, `.help-select`, `:has(.input-form-block--textarea)`).
+Абсолютного позиционирования нет, высота текстового поля набирается из
+трёх строк сетки — появление текста ошибки раскладку не ломает.
+
+⚠️ `.input-form-item--50` имеет унаследованное `width: calc(50% - 12px)` —
+в колонке сетки оно переопределено на `width: auto`.
+
+### Что в макете есть, а в коде намеренно нет
+
+- Опечатка макета «Your Massage» не переносилась — в теме «Your Message».
+- Текст согласия взят из темы, а не из макета: менять его нельзя.
+
+### Иконки
+
+`template-parts/contacts-icons.php`, функция `nv_contacts_icon($name, $size)`.
+15 иконок из Figma. У `user`, `work`, `check` в макете осталась тень из
+тёмной темы — фильтр снят, `viewBox` пересчитан на артборд 24×24
+(`dx = (W - 24) / 2`), заливка через `currentColor`.
