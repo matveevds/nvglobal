@@ -55,6 +55,10 @@
 - Следствие: `single.php`, `category.php`, `author.php`, `search.php`, `blog-page.php`,
   `template-parts/article-card.php`, `css/blog.css`, `css/post.css` — инфраструктура на будущее,
   сейчас на сайте не видна. **Удалять нельзя**, это готовый блог.
+- С группы 6 секция Blog на главной тоже работает от `WP_Query`
+  (`template-parts/news-card.php`). Пока записей нет — секция не выводится.
+  До группы 6 она была статической и скрыта правилом `.news { display: none }`.
+  Что нужно, чтобы она заработала, — в `BACKLOG.md`, R-17.
 
 ---
 

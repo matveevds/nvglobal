@@ -743,17 +743,12 @@ function initNewsSlider() {
     const initSwiper = () => {
         if (swiperInstance) return;
 
+        // Ширина карточек задана в CSS по макету (360 / 288), поэтому slidesPerView: 'auto'.
         swiperInstance = new Swiper(sliderEl, {
-            slidesPerView: 1,
+            slidesPerView: 'auto',
             spaceBetween: 16,
             speed: 500,
             watchOverflow: true,
-            breakpoints: {
-                0: { slidesPerView: 1 },
-                576: { slidesPerView: 1.2 },
-                768: { slidesPerView: 1.6 },
-                992: { slidesPerView: 2.2 }
-            },
             on: {
                 init(sw) {
                     setArrowsDisabled(sw.isBeginning, sw.isEnd);

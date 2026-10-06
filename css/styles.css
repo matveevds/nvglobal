@@ -6300,33 +6300,43 @@ body.home .clients__top-info .section__title-block {
 
 /* NEWS START */
 
-
+/*
+ * Blog. Макеты: Full HD 2380:23753, Desktop 318:9382, Tablet 2376:17578,
+ * карточка 830:11701, ховер карточки 2386:37293.
+ *
+ * Карточка фиксированной высоты 580 на всех трёх фреймах, ширина меняется:
+ * 452 / 332 / 360, зазор 16. На Full HD и Desktop четыре карточки ровно
+ * заполняют контейнер, прокрутка не нужна; на планшете они шире контейнера —
+ * там работает слайдер. Стрелок навигации в макете нет ни на одном фрейме.
+ */
 .news {
-    display: none;
+    position: relative;
+    z-index: 2;
 }
 
+/* Пустые правила ниже достались от прежней вёрстки, оставлены как были. */
 .section {
-    
+
 }
 
 .container {
-    
+
+}
+
+.section__badge {
+
 }
 
 .news__wrapper {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 24px;
 }
 
 .news__top {
     display: flex;
     flex-direction: column;
     gap: 48px;
-}
-
-.section__badge {
-    
 }
 
 .news__top-info {
@@ -6336,186 +6346,274 @@ body.home .clients__top-info .section__title-block {
 }
 
 .news__title-block {
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .news__title {
-    
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
 }
 
-.news__descriptioin {
-    
+.news__description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
 }
 
 .news__top-action {
-    
+    flex: 0 0 auto;
 }
 
+.news .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.news .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.news .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+.news .btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.news .btn:hover {
+    background: var(--nv-surface-3);
+}
+
+.news .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Четыре карточки ровно заполняют контейнер, Swiper здесь не инициализируется. */
 .news__content {
-    
+    width: 100%;
 }
 
 .news__list {
     display: flex;
     gap: 16px;
+    align-items: stretch;
 }
 
+/*
+ * Ширина по сетке из четырёх карточек: (100% - 3 зазора) / 4. Так карточка
+ * сохраняет размер макета и когда записей меньше четырёх — иначе одна запись
+ * растягивалась бы на всю ширину контейнера.
+ */
 .news__item {
-    padding: 8px 8px 24px 8px;
-    width: calc(25% - 12px);
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    flex: 0 1 calc((100% - 48px) / 4);
+    min-width: 0;
+    height: 580px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 32px;
-}
-
-.news__list > .news__item:nth-of-type(n + 5) {
-    display: none;
+    padding: 8px 8px var(--Frame-Card-Padding-Outside, 24px);
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(4px);
+    transition: background-color .2s ease;
 }
 
 .news__item-image {
-    line-height: 1;
-    padding: 0;
-    margin: 0;
-    height: 320px;
-    border-radius: 16px;
-    border: 2px solid var(--Universal-Black, #212121);
-    /* background: url(<path-to-image>) lightgray 50% / cover no-repeat; */
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30);
+    flex: 1 1 0;
+    min-height: 0;
     overflow: hidden;
+    border: 2px solid var(--nv-surface-3);
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30);
 }
 
 .news__item-image img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .news__item-info {
-    padding: 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 32px;
+    padding: 0 16px;
 }
 
 .news__item-meta {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 16px;
+    gap: 8px;
 }
 
 .news__item-meta-left {
     display: flex;
-    gap: 8px;
-    justify-content: flex-start;
-}
-
-.news__item-meta-views {
-    display: flex;
-    gap: 4px;
-    padding: 5px 11px 5px 5px;
-    justify-content: center;
     align-items: center;
+    gap: 8px;
+}
+
+.news__item-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 12px 6px 6px;
+    border: 1px solid var(--nv-surface-4);
     border-radius: 6px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
 }
 
-.news__item-meta-icon {
-    width: 20px;
-    height: 20px;
+.news__item-chip-icon,
+.news__item-time-icon {
+    display: flex;
     flex-shrink: 0;
+    color: var(--nv-object-1);
 }
 
-.news__item-meta-count {
-    font-size: 14px;
+.news__item-chip-icon svg,
+.news__item-time-icon svg {
+    display: block;
+}
+
+.news__item-chip-value {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
     font-weight: 700;
     line-height: 142.857%;
     white-space: nowrap;
 }
 
-.news__item-meta-likes {
+.news__item-time {
     display: flex;
-    gap: 4px;
-    padding: 5px 11px 5px 5px;
-    justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-}
-
-.news__item-meta-times {
-    display: flex;
+    justify-content: center;
+    gap: 4px;
     padding: 4px 8px;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
     border-radius: 8px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
-    height: 28px;
+    background: var(--nv-primary-soft);
+    backdrop-filter: blur(10px);
 }
 
-.news__item-meta-times-icon {
-    width: 13.333px;
-    height: 13.333px;
-    flex-shrink: 0;
-    line-height: 1;
-}
-.news__item-meta-times-icon svg {
-    width: 100%;
-    height: 100%;
+.news__item-time-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--nv-primary);
 }
 
-.news__item-meta-times-text {
-    color: var(--Text-Orange, #F9AA66);
+.news__item-time-text {
+    color: var(--nv-primary);
     font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
     line-height: 142.857%;
+    white-space: nowrap;
 }
 
+.news__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/*
+ * Заголовок и анонс занимают ровно три строки — столько в макете. Высота
+ * карточки фиксированная, а длина реальных заголовков произвольная: без
+ * жёсткой высоты текстового блока картинки в соседних карточках получали бы
+ * разную высоту и блоки автора не выстраивались бы в одну линию.
+ * min-height держит нижнюю границу, line-clamp — верхнюю.
+ */
 .news__item-title {
-    color: #FFF;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 133.333%;
-}
-
-.news__item-description {
-    overflow: hidden;
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
-    text-overflow: ellipsis;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 155.556%;
-    overflow: hidden;
+    min-height: 72px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.news__item-title:hover,
+.news__item-title:focus-visible {
+    color: var(--nv-primary);
+}
+
+.news__item-description {
+    margin: 0;
+    min-height: 72px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
 }
 
 .news__item-author {
-    margin: 0 16px;
     display: flex;
-    padding: 12px;
     align-items: center;
     gap: 17px;
-    align-self: stretch;
+    padding: 12px;
     border-radius: 16px;
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    background: var(--nv-surface-3);
+    text-decoration: none;
+    transition: background-color .2s ease;
 }
 
 .news__item-author-image {
-    width: 64px;
-    height: 64px;
-    overflow: hidden;
-    border-radius: 50%;
+    display: flex;
+    flex-shrink: 0;
+    width: 49px;
+    height: 49px;
 }
 
 .news__item-author-image img {
+    display: block;
     width: 100%;
     height: 100%;
+    border-radius: 32px;
     object-fit: cover;
 }
 
@@ -6523,149 +6621,122 @@ body.home .clients__top-info .section__title-block {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    min-width: 0;
 }
 
 .news__item-author-name {
     overflow: hidden;
-    color: var(--Text-White, #FBFBFB);
-    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
     font-weight: 500;
-    line-height: 155.556%;
+    line-height: 150%;
 }
 
 .news__item-author-job {
     overflow: hidden;
-    color: var(--Text-White, #FBFBFB);
-    font-size: var(--Text-Body-Text-Size-Regular, 16px);
-    line-height: 150%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
 }
 
-.news__arrows {
-    display: none;
-    gap: 8px;
+/* Ховер по фрейму 2386:37293: фон карточки и блока автора меняются местами. */
+.news__item:hover {
+    background: var(--nv-surface-3);
 }
 
-.news__arrow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    backdrop-filter: blur(10px);
-    cursor: pointer;
+.news__item:hover .news__item-author {
+    background: var(--nv-surface-2);
 }
 
-
-
-.news__arrow:hover, 
-.news__arrow:active, 
-.news__arrow:focus {
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+.news__item:focus-within {
+    background: var(--nv-surface-3);
 }
 
-.news__arrow.news__arrow--disabled {
-    opacity: 0.4;
-    cursor: default;
+.news__item:focus-within .news__item-author {
+    background: var(--nv-surface-2);
 }
 
-.news__arrow.news__arrow--disabled:hover, 
-.news__arrow.news__arrow--disabled:active, 
-.news__arrow.news__arrow--disabled:focus {
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+.news__item-title:focus-visible,
+.news__item-author:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
 }
-
-.news__list > .news__item:nth-child(n+5) {
-    display: none;
-  }
-
 
 @media (max-width: 1599.98px) {
 
 }
 
 @media (max-width: 1399.98px) {
-    .news__list {
-        gap: 16px;
-    }
-    .news__item {
-        width: calc(33.33% - 10.67px);
-    }
-    .news__list > .news__item:nth-of-type(n + 4) {
-        display: none;
-    }
+
 }
 
+/*
+ * Ниже 1200 включается Swiper (initNewsSlider), слайды получают ширину
+ * из макета, зазор задаёт сам Swiper.
+ */
 @media (max-width: 1199.98px) {
-    .news__content.swiper {
-        width: 100%;
-        max-width: 100%;
+    .news__content {
         overflow: visible;
     }
 
-    .news__list.swiper-wrapper {
+    .news__list {
         display: flex;
-        flex-wrap: nowrap;
-        gap: 0 !important; /* gap ломает Swiper */
+        gap: 0;
     }
 
-    .news__item.swiper-slide {
-        flex: 0 0 auto !important;
-    }
-    .news__list > .news__item:nth-child(n+4) {
-        display: flex;
-    }
-    .news__top-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 48px;
-    }
-    .news__top-action {
-        width: 100%;
-        display: flex;
-        gap: 48px;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .news__arrows {
-        display: flex;
+    .news__item {
+        flex: 0 0 auto;
+        width: 360px;
+        height: 580px;
     }
 }
 
 @media (max-width: 991.98px) {
-    .news__item {
-        width: 100%;
-    }
-    .news__top-info {
-        flex-direction: column;
-    }
-    .news__title-block {
-        width: 100%;
-    }
-    .news__top-action {
-        align-self: flex-start;
+    .news__wrapper {
+        gap: 48px;
     }
 }
 
 @media (max-width: 767.98px) {
-   
+    .news__top-info {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .news__top-action .btn {
+        max-width: fit-content;
+    }
 }
 
 @media (max-width: 575.98px) {
-    .news__item-title {
-        font-size: 20px;
+    .news__title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 125%;
     }
-    .news__item-description,
-    .news__item-meta-count,
-    .news__item-author-name {
-        font-size: 16px;
+
+    .news__item {
+        width: 288px;
+        height: 540px;
     }
-    .news__item-author-job {
-        font-size: 14px;
-    }
+
     .news__item-info {
-        padding: 0;
+        gap: 24px;
+    }
+
+    .news__item-title,
+    .news__item-description {
+        min-height: 0;
+    }
+
+    .news__item-title {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
     }
 }
 
@@ -6676,7 +6747,6 @@ body.home .clients__top-info .section__title-block {
 @media (max-width: 419.98px) {
 
 }
-
 
 /* NEWS END */
 
