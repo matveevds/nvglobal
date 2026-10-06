@@ -282,9 +282,9 @@ Get pricing information, Technical questions.
 | — | Основа: палитра `--nv-*`, сетка | ✅ сделано | группа 1 |
 | 1 | Header | ⚠️ только палитра (Р-10) | группа 1 |
 | 1 | Hero | ✅ сделано | группа 1 |
-| 2 | About | — | |
-| 3 | Results | — новая секция | |
-| 4 | Industry Solutions | — | |
+| 2 | About | ✅ сделано | группа 2 |
+| 3 | Results | ✅ сделано, новая секция | группа 2 |
+| 4 | Industry Solutions | ✅ сделано | группа 2 |
 | 5 | Products (слайдер) | — | |
 | 6 | How it works | — новая секция | |
 | 7 | Why us | — | |
@@ -332,3 +332,63 @@ Get pricing information, Technical questions.
 | `--nv-constant-1` | #F8F8F8 | Text/Constant/Text 1 |
 | `--nv-constant-85` | rgba(248,248,248,.85) | Opacity_85% |
 | `--nv-gradient` | linear-gradient(167deg, #FD6B01 15%, #FF4601 100%) | Island/Gradient |
+
+
+---
+
+## 11. Секция Results — новый компонент
+
+Добавлена в группе 2 по макету Figma `2363:33982`. Расположена между About
+и Industry Solutions, как в макете.
+
+| Класс | Назначение |
+|---|---|
+| `.results` | секция, использует общий `.section` |
+| `.results__content` | строка: слева интро, справа карточки статистики |
+| `.results__intro` | колонка 560px: заголовок + карточка кейса |
+| `.results__case` | карточка кейса, `overflow: hidden` для выходящей иллюстрации |
+| `.results__case-name` | «A major retail bank», 32/150% оранжевым |
+| `.results__case-problem` | подзаголовок кейса, 20/140% |
+| `.results__case-label` | «After automated KYC…», 14/142.857% |
+| `.results__tokens` / `.results__token` | список плашек-результатов |
+| `.results__case-image` | 3D-иллюстрация, absolute, выходит за правый нижний угол |
+| `.results__stats` / `.results__stat` | сетка 2×2 на Flexbox (`flex: 0 0 calc(50% - 8px)`) |
+| `.results__stat-value` | число, 52/123.077% оранжевым |
+| `.results__stat-title` | 24/150% |
+| `.results__stat-description` | 16/150% |
+
+> В макете карточки статистики собраны на CSS Grid. Здесь это `flex-wrap`
+> с `calc(50% - 8px)` — регламент требует отдавать предпочтение Flexbox,
+> и для равных 2×2 разницы в поведении нет.
+
+Ассеты: `img/results-bank.webp` (276×276, 44 KB) и `img/results-bank@2x.webp`
+(552×552, 118 KB), lossless WebP из PNG с альфой 2000×2000 (1.1 MB).
+
+---
+
+## 12. Что изменилось в About и Industry Solutions
+
+### About
+Структура и классы сохранены. Убраны из разметки: `.about__description`
+(в макете такого блока нет), `.about__card-image` с подписью «verified by»,
+маскот `.teaser__maskot--about`. CSS этих классов оставлен на месте.
+
+Добавлены: `.about__card-stats`, `.about__card-stat`, `.about__card-divider`
+(вторая колонка статистики с разделителем), `.about__card--statement`
+и `.about__card-statement` (карточка с крупной формулировкой).
+
+Логотипы сертификатов остались вложениями WordPress (`td_image(960|961|962)`) —
+это те же три значка, что в макете, с теми же пропорциями (360×360, 282×360,
+360×360 против 120×120, 94×120, 120×120). Статикой не подменялись.
+
+### Industry Solutions
+`.solutions__item` структурно уже совпадал с макетом (`min-width: 340`,
+`padding: 24`, `flex: 1 0 0`, `align-items: flex-end`, `gap: 24`, радиус 24) —
+изменены только цвета.
+
+`.solutions__content` переведён с CSS Grid (`1fr 2fr`, три ряда под маскота)
+на колонку Flexbox: маскота в макете нет, раскладка стала линейной.
+
+Иконки: пять из шести уже были в теме из того же экспорта Figma — переиспользованы,
+`fill` заменён на `currentColor`, id фильтров уникализированы. Новая только иконка
+Crypto Exchanges. Исходные кадры SVG сохранены, `viewBox` не пересчитывался.

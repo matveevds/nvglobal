@@ -689,9 +689,41 @@ body.home {
 }
 
 /*
+ * Общие компоненты секций в светлой теме. `.section`, `.section__badge`,
+ * `.section__title`, `.section__subtitle` используются ещё на /solutions/,
+ * /pricing-matrix/ и 404 — поэтому только через `body.home`.
+ */
+body.home .section {
+    background: var(--nv-surface-1);
+}
+
+body.home .section__badge {
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+body.home .section__title {
+    color: var(--nv-object-1);
+}
+
+body.home .section__title span {
+    color: var(--nv-primary);
+}
+
+body.home .section__subtitle {
+    color: var(--nv-primary);
+}
+
+body.home .section__title-block {
+    gap: 16px;
+}
+
+/*
  * Сетка макета: контент = ширина экрана − 64, боковое поле 32px на всех трёх фреймах
  * (1920 → 1856, 1440 → 1376, 840 → 776). Потолок 1920 повторяет самый широкий фрейм.
- * Специфичность `body.html .container` выше, чем у лесенки `.container` в media-запросах,
+ * Специфичность `body.home .container` выше, чем у лесенки `.container` в media-запросах,
  * поэтому общие правила переопределять не нужно.
  */
 body.home .container {
@@ -2051,15 +2083,9 @@ html.has-scroll-smooth body {
 
 .about {
     padding: 64px 0;
-    /* border-radius: 32px 32px 0 0; */
     border: none;
-    /* border-top: 1px solid rgba(251, 251, 251, 0.15); */
-    background: var(--Background-Black, #212121);
-    /* margin-top: -32px;
-    margin-bottom: -32px; */
     position: relative;
     z-index: 2;
-    /* margin-top: 830px; */
 }
 
 .about__wrapper {
@@ -2068,11 +2094,25 @@ html.has-scroll-smooth body {
     gap: 48px;
 }
 
+/*
+ * Раскладка по макету Figma 291:5892: секция — колонка с gap 48,
+ * внутри блок заголовка (1048px) и карточки, между ними 24.
+ */
+.about .section__content {
+    gap: 24px;
+}
+
+.about .section__title-block {
+    max-width: 1048px;
+}
+
 .about__info {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
+
+/* Блок «Join hundreds of companies…» в новом макете отсутствует, разметка убрана. */
 .about__description {
     font-size: var(--Text-Body-Text-Size-Medium, 18px);
     font-weight: 500;
@@ -2088,15 +2128,57 @@ html.has-scroll-smooth body {
 
 .about__card {
     width: calc(50% - 8px);
+    min-width: 340px;
     display: flex;
-    padding: 24px;
+    flex-direction: column;
     gap: 24px;
+    padding: 24px;
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    border: 1px solid var(--nv-surface-4);
     backdrop-filter: blur(10px);
     position: relative;
     z-index: 5;
-    background-color: #212121;
+    background-color: transparent;
+}
+
+/* Карточка со статистикой: две колонки с вертикальным разделителем. */
+.about__card-stats {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.about__card-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.about__card-divider {
+    width: 1px;
+    align-self: stretch;
+    background: var(--nv-surface-4);
+    flex-shrink: 0;
+}
+
+/* Карточка с крупной формулировкой: вторая в верхнем ряду. */
+.about__card--statement {
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+}
+
+.about__card-statement {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.about__card-statement span {
+    color: var(--nv-primary);
 }
 .about__card--maskot {
     
@@ -2109,19 +2191,23 @@ html.has-scroll-smooth body {
     gap: 8px;
 }
 .about__card-text {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
 }
 .about__card-percent {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H1, 56px);
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H2, 40px);
     font-weight: 700;
-    line-height: 114.286%;
+    line-height: 130%;
+    white-space: nowrap;
 }
 .about__card-description {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H5, 20px);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
     font-weight: 700;
-    line-height: 140%;
+    line-height: 133.333%;
 }
 
 .about__card-image {
@@ -2191,15 +2277,15 @@ html.has-scroll-smooth body {
 
 .about__card--long {
     width: 100%;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 190px;
+    gap: 24px;
+    height: auto;
 }
 
 .about__card-title {
-    max-width: 850px;
-    color: var(--Text-White, #FBFBFB);
+    color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
     line-height: 140%;
@@ -2207,23 +2293,82 @@ html.has-scroll-smooth body {
 
 .about__card-logos {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 24px;
+    flex-shrink: 0;
 }
 
 .about__card-logo {
     line-height: 0;
 }
 
+/* Высота 120 по макету; ширина по пропорции исходника (360x360, 282x360, 360x360). */
+.about__card-logo img {
+    height: 120px;
+    width: auto;
+    display: block;
+}
+
 .about__card-content {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .about__card-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+}
+
+/*
+ * Кнопки сертификатов. `.btn--small` и `.btn--gray` — общие классы, поэтому
+ * светлый вид ограничен карточкой, чтобы не задеть /solutions/ и /pricing-matrix/.
+ */
+.about__card-actions .btn--gray {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 6px 6px 12px;
+    min-height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.about__card-actions .btn--gray .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+}
+
+/*
+ * В макете иконка задана как h-full внутри строки кнопки: она тянется по высоте
+ * текста (14/20), а не по своим 24px. Отсюда 20x20 и общая высота 6+20+6 = 32.
+ */
+.about__card-actions .btn--gray .btn__icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+.about__card-actions .btn--gray .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.about__card-actions .btn--gray:hover,
+.about__card-actions .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
 }
 
 
@@ -2232,29 +2377,12 @@ html.has-scroll-smooth body {
 }
 
 @media (max-width: 1399.98px) {
-    .about__card-title {
-        max-width: 650px;
-    }
+
 }
 
 @media (max-width: 1199.98px) {
-    .teaser__maskot.teaser__maskot--about {
-        right: 40px;
-        left: unset;
-        transform: none;
-    }
     .about__card--long {
-        flex-direction: row;
         align-items: flex-end;
-    }
-    .about__card--long {
-        height: auto;
-    }
-    .about__card-title {
-        max-width: unset;
-    }
-    .about__card-actions {
-        flex-direction: column;
     }
 }
 
@@ -2262,22 +2390,26 @@ html.has-scroll-smooth body {
     .about {
         /* margin-top: 870px; */
     }
+    /* Планшетный фрейм Figma 2376:16731: карточки на всю ширину, в столбик. */
     .about__cards {
         flex-direction: column;
     }
     .about__card {
         width: 100%;
-        border-radius: 16px;
+        min-width: 0;
         padding: 16px;
+    }
+    .about__card--statement {
+        padding: 16px 24px;
     }
     .about__card--maskot::after {
         display: none;
     }
     .about__card-logo img {
-        width: 80px;
-        height: 80px;
+        height: 72px;
+        width: auto;
         object-fit: contain;
-    }   
+    }
 }
 
 @media (max-width: 767.98px) {
@@ -2299,10 +2431,26 @@ html.has-scroll-smooth body {
     }
     .about__card {
         flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        padding: 12px;
-        border-radius: 12px;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+    }
+    .about__card-stats {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .about__card-divider {
+        width: 100%;
+        height: 1px;
+        align-self: auto;
+    }
+    .about__card--long {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .about__card-logos {
+        justify-content: flex-start;
     }
     .about__card-info {
         width: 100%;
@@ -2356,11 +2504,20 @@ html.has-scroll-smooth body {
         width: 100%;
         align-items: flex-start;
     }
+    /*
+     * Три значка фиксированной ширины не помещались в карточку на 375px
+     * (348px против 309px доступных). Высота уменьшена, ширина — по пропорции,
+     * плюс перенос на случай совсем узких экранов.
+     */
+    .about__card-logos {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
     .about__card-logo img {
-        width: 100px;
-        height: 100px;
+        height: 72px;
+        width: auto;
         object-fit: contain;
-    }  
+    }
 }
 
 @media (max-width: 478.98px) {
@@ -2384,6 +2541,247 @@ html.has-scroll-smooth body {
 }
 
 /* ABOUT END */
+
+/* RESULTS START */
+
+/*
+ * Новая секция по макету Figma 2363:33982.
+ * Сетка карточек в макете — grid 2x2, здесь собрана на Flexbox
+ * (flex-wrap + 50% − половина gap), как требует регламент.
+ */
+.results__content {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.results__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    width: 560px;
+    flex-shrink: 0;
+}
+
+.results__title {
+    margin: 0;
+}
+
+/* Карточка кейса: иллюстрация выходит за правый нижний угол и подрезается карточкой. */
+.results__case {
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+}
+
+.results__case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 310px;
+    max-width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.results__case-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.results__case-name {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.results__case-problem {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.results__case-outcome {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.results__case-label {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+.results__tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.results__token {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-3);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+/* Смещение из макета: bottom -46, right -66 при размере 276. */
+.results__case-image {
+    position: absolute;
+    right: -66px;
+    bottom: -46px;
+    width: 276px;
+    height: 276px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.results__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.results__stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    flex: 0 0 calc(50% - 8px);
+    padding: 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.results__stat-value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    font-weight: 700;
+    line-height: 123.077%;
+}
+
+.results__stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.results__stat-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.results__stat-description {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+    .results__intro {
+        width: 460px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Планшетный фрейм 2376:16763: колонка, карточки статистики по две в ряд. */
+    .results__content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .results__intro {
+        width: 100%;
+    }
+
+    .results__stats {
+        align-self: auto;
+    }
+
+    .results__case {
+        padding: 16px;
+    }
+
+    .results__case-info {
+        width: 560px;
+    }
+
+    .results__case-image {
+        right: -50px;
+        top: -31px;
+        bottom: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Макета для телефонов нет. Карточка кейса сужается, и декоративная
+     * иллюстрация начинает перекрывать заголовок и плашки — на этих ширинах
+     * убираем её вместо того, чтобы жертвовать читаемостью.
+     */
+    .results__case-image {
+        display: none;
+    }
+
+    .results__case-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .results__content,
+    .results__intro {
+        gap: 24px;
+    }
+
+    .results__stat {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* RESULTS END */
 
 /* VIDEO INTRO START */
 
@@ -2520,40 +2918,38 @@ html.has-scroll-smooth body {
 /* SOLUTIONS START */
 
 .solutions {
-    border-radius: 0 0 32px 32px;
-    border: none;
-    border-bottom: 1px solid rgba(251, 251, 251, 0.15);
     position: relative;
     z-index: 2;
+    /* В макете у секции нет нижнего поля: отступ даёт следующая секция. */
+    padding-bottom: 0;
 }
 
+/*
+ * Раньше здесь был grid 1fr/2fr под маскота слева. Маскота в макете нет,
+ * раскладка стала линейной — колонка на Flexbox, как требует регламент.
+ */
 .solutions__content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto 1fr auto;
-    gap: 16px;
-}
-
-.solutions__title-block {
-    grid-column: 1;
-    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .solutions__title {
-    max-width: 440px;
-}
-
-.solutions__maskot {
-    grid-column: 1;
-    grid-row: 3;
+    margin: 0;
+    min-width: 300px;
 }
 
 .solutions__list {
-    grid-column: 2;
-    grid-row: 1 / 4;
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    /*
+     * В макете карточки — компоненты фиксированной высоты, и в ряду они равны.
+     * Здесь высота задаётся контентом, поэтому stretch: иначе карточка с тремя
+     * строками описания оказывается выше соседней с двумя.
+     */
+    align-items: stretch;
+    padding-bottom: 2px;
 }
 
 .solutions__item {
@@ -2565,8 +2961,9 @@ html.has-scroll-smooth body {
     gap: 24px;
     flex: 1 0 0;
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    /* backdrop-filter: blur(10px); */
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
 .solutions__item-icon {
@@ -2574,9 +2971,16 @@ html.has-scroll-smooth body {
     padding: 4px;
     justify-content: center;
     align-items: center;
-    gap: 8px;
     border-radius: 6px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.solutions__item-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
 }
 
 .solutions__item-info {
@@ -2584,16 +2988,21 @@ html.has-scroll-smooth body {
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
+    width: 100%;
 }
 
 .solutions__item-title {
-    color: var(--Text-Orange, #F9AA66);
+    color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H4, 24px);
     font-weight: 700;
+    line-height: 150%;
 }
 
 .solutions__item-description {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
 }
 
 .solutions__item-action {
@@ -2614,33 +3023,13 @@ html.has-scroll-smooth body {
 }
 
 @media (max-width: 991.98px) {
+    /* Планшетный фрейм 2376:16780: шаг между заголовком и карточками 48, поле карточки 16. */
     .solutions__content {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
+        gap: 48px;
     }
 
-    .solutions__title-block {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .solutions__list {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .solutions__maskot {
-        grid-column: 1;
-        grid-row: 3;
-        display: flex;
-        justify-content: center;
-        margin-top: -45px;
-        z-index: 3;
-        padding-left: 40px;
-    }
-
-    .solutions__maskot img {
-        width: 330px;
+    .solutions__item {
+        padding: 16px;
     }
 }
 
@@ -2648,12 +3037,8 @@ html.has-scroll-smooth body {
     .solutions {
         padding-top: 32px;
     }
-    .solutions__maskot {
-        margin-top: 24px;
-        padding-left: 0;
-    }
     .solutions__content {
-        gap: 32px;
+        gap: 24px;
     }
 }
 
