@@ -259,6 +259,75 @@ getComputedStyle(document.documentElement).getPropertyValue('--island-white-5')
 
 ---
 
+## 7.1. Переписали секцию — проверь, что не унесли чужие правила
+
+**Обязательный шаг после любого переписывания блока `/* X START */ … /* X END */`.**
+
+Разбор должен заходить **внутрь `@media`**. Просмотр правил верхнего уровня
+пропускает ровно тот случай, который уже ломал `/solutions/` (R-15).
+
+```bash
+# селекторы старой секции, которых больше нет в файле
+/usr/bin/python3 docs/qa-scripts/lost2.py     # «ЧУЖИХ» должно быть 0
+
+# новые селекторы без body.home, которые могут задеть другие страницы
+/usr/bin/python3 docs/qa-scripts/unscoped.py
+
+# изменённые правила общих классов
+/usr/bin/python3 docs/qa-scripts/mod.py
+```
+
+`mod.py` ищет по подстроке и даёт известные ложные срабатывания:
+`.about`, `.products`, `.solutions`, `.verify` — на других страницах таких
+классов нет (совпадает `main--solutions`, `btn-hero` и подобное).
+`.top__widget` — осознанная правка R-13. Всё остальное в выводе нужно разбирать.
+
+Прежде чем объявлять селектор «ничейным», проверь его по шаблонам:
+
+```bash
+grep -rn 'имя-класса' --include='*.php' .
+```
+
+Учитывай альтернативные шаблоны главной — `index.php` и
+`main-page-video-autoplay.php` тоже используют эти классы.
+
+### Эталонное сравнение страниц
+
+Самая надёжная проверка: отрендерить страницы с CSS **до редизайна**
+и с текущим, затем сравнить каждый видимый элемент.
+
+```bash
+export PW=/Users/dmitriy/.npm/_npx/e41f203b7505f1fb/node_modules/playwright/index.mjs
+cp css/styles.css /tmp/nv-current.css
+git show 3851075:css/styles.css > css/styles.css
+node docs/qa-scripts/snap.mjs /tmp/nv-base.json
+cp /tmp/nv-current.css css/styles.css      # вернуть ОБЯЗАТЕЛЬНО
+node docs/qa-scripts/snap.mjs /tmp/nv-now.json
+```
+
+Сверяются координаты, размеры, `color`, `background-color` и `font-size`
+каждого элемента на `/solutions/`, `/pricing-matrix/`, `/docs/`,
+`/privacy-policy/`, `/blog/` и 404 при 1920 / 1440 / 840 / 375.
+
+Ожидание — **0 расхождений**. Допустимое исключение одно: равномерный сдвиг
+бегущей строки `.main__slider-track` на `/solutions/` (фаза анимации,
+размеры и цвета совпадают).
+
+### Ловушка с переменными
+
+`--nv-*` объявлены только в `body.home`. Любое глобальное правило вида
+`background: var(--nv-…)` вне главной **невалидно** и даёт прозрачный фон —
+именно так группа 1 обнулила `.btn-hero` на четырёх страницах.
+
+Быстрая проверка в браузере на не-главной:
+
+```js
+getComputedStyle(document.querySelector('.btn-hero')).backgroundColor
+// не должно быть rgba(0, 0, 0, 0), если фон задумывался
+```
+
+---
+
 ## 8. Отчёт
 
 После работы:

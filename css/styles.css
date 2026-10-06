@@ -4014,291 +4014,203 @@ body.home .btn-hero:focus-visible {
 
 /* CLIENTS START */
 
+/*
+ * Макет Figma 297:8202. Шапка секции по центру, ниже полоса карты 293px
+ * с пятью пинами на абсолютных позициях. Подсказка показывается только
+ * у активного пина — поведение обеспечивает initClientsHover.
+ */
 .clients {
-    border-radius: 0 0 32px 32px;
-    border: none;
-    border-bottom: 1px solid rgba(251, 251, 251, 0.15);
     position: relative;
     z-index: 2;
 }
 
-
-.clients__wrapper {}
+.clients__wrapper {
+    gap: 64px;
+}
 
 .clients__top {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 40px;
-    z-index: 2;
+    justify-content: center;
+    width: 100%;
 }
 
 .clients__top-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 48px;
+    width: 100%;
 }
 
-.clients__top-info .section__title-block {
-    max-width: 800px;
-}
-
-
-.clients__top-card {
-    display: flex;
-    width: 332px;
-    min-width: 332px;
-    padding: var(--Frame-Card-Padding-Outside, 24px);
-    flex-direction: column;
-    align-items: flex-end;
+.clients__top-info .section__content {
     gap: 24px;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    height: fit-content;
-    align-items: flex-end;
-}
-
-.clients__top-card-icon {
-    display: flex;
-    padding: 4px;
-    justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
-}
-
-.clients__top-card-content {
-    width: 100%;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.clients__top-card-title {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H1, 56px);
-    font-weight: 700;
-    line-height: 114.286%;
-    text-align: left;
-}
-
-.clients__top-card-subtitle {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Body-Text-Size-Medium, 18px);
-    font-weight: 500;
-    line-height: 155.556%;
-    text-align: left;
-}
-
-.clients__content {
-    background-image: url('../img/clients_background.png');
-    background-position: center center;
-    background-size: cover;
-    background-blend-mode: screen;
-    mix-blend-mode: screen;
-    filter: blur(0px);
-    position: relative;
-    z-index: 1;
-    height: 640px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -200px;
-    z-index: 1;
-}
-.clients__content::after {
-    content: '';
-    display: block;
     width: 100%;
-    height: 120px;
-    background: linear-gradient(180deg, rgba(33, 33, 33, 0.00) 0%, #000000 100%);
-    position: absolute;
-    bottom: 0;
-    left:0;
-    z-index: 2;
+}
+
+/* Специфичность выше, чем у общего `body.home .section__title-block` (gap 16). */
+body.home .clients__top-info .section__title-block {
+    gap: 12px;
+    max-width: none;
+    width: 100%;
+}
+
+/*
+ * В макете описание разбито на две строки. Вместо принудительного <br>
+ * ограничиваем ширину — перенос получается тот же, а на узких экранах
+ * текст продолжает течь нормально.
+ */
+.clients__top-info .section__description {
+    max-width: 760px;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+/*
+ * Полоса карты. Фоновая карта мира пока не выставлена: в Figma она собрана
+ * из 406 отдельных векторов и одним файлом через MCP не отдаётся, а ассет
+ * темы `clients_background.png` — другая графика (тёмный глобус), не эта карта.
+ * Нужен экспорт карты из макета, см. BACKLOG R-14. Геометрия полосы и позиции
+ * пинов уже по макету, добавление фона ничего не сместит.
+ */
+.clients__content {
+    position: relative;
+    height: 293px;
+    width: 100%;
 }
 
 .clients__list {
-    display: flex;
-    justify-content: center;
-    gap: 130px;
-    width: 100%;
+    position: absolute;
+    inset: 0;
 }
 
+/*
+ * Пин: подложка-капля 68x83 из макета, внутри бокс 60x60 со смещением 4.
+ * Подложка одна для обоих состояний, меняется только бокс и цвет иконки.
+ */
 .clients__item {
+    position: absolute;
     width: 68px;
     height: 83px;
-    background-image: url('../img/clients__item-bg.svg');
-    position: relative;
-    padding-top: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 4px 4px 0;
+    background-image: url('../img/clients__pin.svg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    cursor: pointer;
     z-index: 4;
 }
 
+.clients__item-icon {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-3);
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.clients__item-icon svg {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+/* Подсказка: 76px над нижним краем пина, по центру. */
 .clients__item-info {
-    display: none;
-    opacity: 0;
-    
-    width: 160px;
-    padding: 12px 8px;
+    position: absolute;
+    bottom: 95px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 8px;
+    width: 160px;
+    padding: 12px 8px;
     border-radius: 16px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: #000000;
-    position: absolute;
-    bottom: calc(100% + 20px);
-    left:50%;
-    transform: translateX(-50%);
-    transition: all ease-in-out 0.3s;
-    z-index: 5;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-1);
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
 }
 
-
 .clients__item-title {
-    color: var(--Text-White, #FBFBFB);
-    text-align: center;
+    color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
     line-height: 140%;
 }
 
 .clients__item-description {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
-    text-align: center;
+    color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Small, 14px);
     font-weight: 500;
     line-height: 142.857%;
 }
 
-.clients__item-icon {
-    padding: 14px;
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
-    border-radius: 12px;
-    background: #000000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-repeat: no-repeat;
-    background-position: center center;
-}
-
-.clients__item--bank .clients__item-icon {
-    background-image: url('../img/clients__item--bank.svg');
-}
-.clients__item--crypto .clients__item-icon {
-    background-image: url('../img/clients__item--crypto.svg');
-}
-.clients__item--goverment .clients__item-icon {
-    background-image: url('../img/clients__item--goverment.svg');
-}
-.clients__item--insurance .clients__item-icon {
-    background-image: url('../img/clients__item--insurance.svg');
-}
-.clients__item--gambling .clients__item-icon {
-    background-image: url('../img/clients__item--gambling.svg');
-}
-
-.clients__item.clients__item--active {
-    background-image: url('../img/clients__item-bg-hover.png');
+.clients__item--active,
+.clients__item:focus-visible {
     z-index: 5;
 }
 
-.clients__item.clients__item--active .clients__item-info{
+.clients__item--active .clients__item-info,
+.clients__item:focus-visible .clients__item-info {
     opacity: 1;
-    z-index: 5;
-    display: flex;
+    visibility: visible;
 }
 
-.clients__item.clients__item--active .clients__item-icon {
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-}
-.clients__item.clients__item--active .clients__item-icon svg path{
-    fill:#000000;
-}
-
-.clients__item--bank.clients__item--active .clients__item-icon{
-  background-image:
-    url('../img/clients__item--bank-hover.svg'),
-    var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
+.clients__item--active .clients__item-icon,
+.clients__item:focus-visible .clients__item-icon {
+    background: linear-gradient(135deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+    color: var(--nv-constant-1);
 }
 
-.clients__item--crypto.clients__item--active .clients__item-icon{
-  background-image:
-    url('../img/clients__item--crypto-hover.svg'),
-    var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
+.clients__item:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
 }
 
-.clients__item--goverment.clients__item--active .clients__item-icon{
-  background-image:
-    url('../img/clients__item--goverment-hover.svg'),
-    var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-}
-
-.clients__item--insurance.clients__item--active .clients__item-icon{
-  background-image:
-    url('../img/clients__item--insurance-hover.svg'),
-    var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-}
-
-.clients__item--gambling.clients__item--active .clients__item-icon{
-  background-image:
-    url('../img/clients__item--gambling-hover.svg'),
-    var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-}
-
+/* Позиции пинов по Desktop-фрейму (карта 1376x293) */
 .clients__item--bank {
-    transform: translateY(160px);
+    left: 11.555%;
+    top: 69.625%;
 }
+
 .clients__item--crypto {
-    transform: translate(-36px, 90px)
+    left: 27.253%;
+    top: 34.471%;
 }
+
 .clients__item--goverment {
-    transform: translate(-30px, 70px)
+    left: 47.820%;
+    top: 53.925%;
 }
+
 .clients__item--insurance {
-    transform: translate(-40px, 95px)
+    left: 67.442%;
+    top: 53.242%;
 }
+
 .clients__item--gambling {
-    transform: translate(-20px, 85px)
+    left: 82.413%;
+    top: 44.710%;
 }
 
-
-.clients__hr {
-    background: rgba(251, 251, 251, 0.15);
-    width: 100%;
-    height: 2px;
-    border-radius: 1px;
-}
-
-.clients__company {
-
-}
-
-.clients__company-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-}
-
+/*
+ * Правила ниже исторически лежали в этой секции, хотя к ней не относятся.
+ * Восстановлены при переписывании секции без изменений, чтобы не трогать
+ * поведение. Перенос в подходящую секцию — отдельная задача (BACKLOG R-15).
+ */
 .company__item {
     width: calc(20% - 12.8px);
     padding: 24px;
@@ -4367,7 +4279,6 @@ body.home .btn-hero:focus-visible {
     line-height: 150%;
 }
 
-
 @media (max-width: 1599.98px) {
 
 }
@@ -4381,151 +4292,177 @@ body.home .btn-hero:focus-visible {
 }
 
 @media (max-width: 991.98px) {
-    .clients__top {
-        flex-direction: column;
-        align-items: center;
-        gap: 48px;
-    }
-    .clients__top-info {
-        width: 100%;
-    }
-    .clients__content {
-        margin-left: -30px;
-        margin-right: -30px;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    .clients__list {
-        gap: 80px;
-    }
-    .clients__item--bank {
-        transform: translate(0px, 70px);
-    }
-    .clients__item--crypto {
-        transform: translate(0px, 180px);
-    }
-    .clients__item--goverment {
-        transform: translate(0px, 40px);
-    }
-    .clients__item--insurance {
-        transform: translate(0px, 180px);
-    }
-    .clients__item--gambling {
-        transform: translate(0px, 70px);
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .company__item {
-        width: calc(33.33% - 10.67px);
-        padding: 16px;
-        border-radius: 16px;
-        min-width: 230px;
+    width: calc(33.33% - 10.67px);
+    padding: 16px;
+    border-radius: 16px;
+    min-width: 230px;
     }
+
     .company__item-title p {
-        font-size: 22px;
+    font-size: 22px;
     }
+
     .company__item-text {
-        font-size: 15px;
+    font-size: 15px;
+    }
+
+    /* Планшетный фрейм 2376:16958: карта 776x293, пины расставлены иначе. */
+    .clients__item--bank {
+        left: 9.278%;
+        top: 45.051%;
+    }
+
+    .clients__item--crypto {
+        left: 23.711%;
+        top: 9.898%;
+    }
+
+    .clients__item--goverment {
+        left: 44.201%;
+        top: 25.939%;
+    }
+
+    .clients__item--insurance {
+        left: 66.881%;
+        top: 39.249%;
+    }
+
+    .clients__item--gambling {
+        left: 86.340%;
+        top: 13.311%;
     }
 }
 
 @media (max-width: 767.98px) {
-    .clients__list {
-        gap: 40px;
-    }
-    .clients__item.clients__item--goverment {
-        z-index: 4;
-    }
-    .clients__item--crypto .clients__item-info {
-        z-index: 7;
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .company__item {
-        width: calc(50% - 8px);
-        max-width: 260px;
+    width: calc(50% - 8px);
+    max-width: 260px;
     }
+
     .company__item:nth-child(odd):last-child {
-        width: 100%;
-        max-width: 536px;
-        flex-direction: row-reverse;
-        gap: 16px;
+    width: 100%;
+    max-width: 536px;
+    flex-direction: row-reverse;
+    gap: 16px;
     }
+
     .company__item:nth-child(odd):last-child .company__item-title p {
-        font-size: 24px;
+    font-size: 24px;
     }
+
     .company__item:nth-child(odd):last-child .company__item-text {
-        font-size: 16px;
+    font-size: 16px;
     }
+
     .company__item:nth-child(odd):last-child .company__item-icon {
-        align-self: flex-start;
+    align-self: flex-start;
     }
+
     .company__item-info {
-        justify-content: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    }
+
+    /*
+     * Макета для телефонов нет. Пины на карте перестают читаться и
+     * налезают друг на друга, поэтому переходим к простому списку.
+     */
+    .clients__content {
+        height: auto;
+        background-image: none;
+        padding-top: 0;
+    }
+
+    .clients__list {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .clients__item {
+        position: static;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        height: auto;
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--nv-surface-4);
+        background: var(--nv-surface-2);
+        background-image: none;
+    }
+
+    .clients__item-icon {
+        /* В разметке иконка идёт после подсказки — в списке ставим её первой. */
+        order: -1;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+        color: var(--nv-constant-1);
+    }
+
+    .clients__item-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .clients__item-info {
+        position: static;
+        transform: none;
+        width: auto;
+        padding: 0;
+        border: 0;
+        background: none;
         text-align: left;
+        align-items: flex-start;
+        gap: 4px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .clients__item-title {
+        font-size: 18px;
+        line-height: 133.333%;
     }
 }
 
 @media (max-width: 575.98px) {
-    .clients__list {
-        gap: 30px;
-    }
-    .clients__item--bank {
-        transform: translate(0px, 220px);
-    }
-    .clients__item--crypto {
-        transform: translate(-40px, 40px);
-    }
-    .clients__item--goverment {
-        transform: translate(0px, 120px);
-    }
-    .clients__item--insurance {
-        transform: translate(40px, 60px);
-    }
-    .clients__item--gambling {
-        transform: translate(-20px, 230px);
-    }
-    .clients__company-list {
-        gap: 8px;
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .company__item {
-        width: calc(50% - 4px);
-        padding: 12px;
-        border-radius: 12px;
-        min-width: unset;
-        max-width: unset;
-        height: 140px;
+    width: calc(50% - 4px);
+    padding: 12px;
+    border-radius: 12px;
+    min-width: unset;
+    max-width: unset;
+    height: 140px;
     }
+
     .company__item:nth-child(odd):last-child  {
-        height: 100px;
+    height: 100px;
     }
+
     .company__item:nth-child(odd):last-child .company__item-info {
-        align-self: flex-end;
+    align-self: flex-end;
     }
+
+
 }
 
 @media (max-width: 478.98px) {
-    .clients__list {
-        gap: 10px;
-    }
-    .clients__item--bank {
-        transform: translate(40px, 220px);
-    }
-    .clients__item--crypto {
-        transform: translate(-40px, 40px);
-        z-index: 3;
-    }
-    .clients__item--goverment {
-        transform: translate(0px, 120px);
-    }
-    .clients__item--insurance {
-        transform: translate(40px, 60px);
-    }
-    .clients__item--gambling {
-        transform: translate(-40px, 230px);
-    }
-    .clients__item--bank .clients__item-info {
-        z-index: 4;
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .company__item {
-        height: 100px;
+    height: 100px;
     }
+
+
 }
 
 @media (max-width: 419.98px) {
@@ -5196,222 +5133,579 @@ body.home .btn-hero:focus-visible {
 
 /* CASES END */
 
-/* DOC START */
+/* PRICING START */
 
-.doc {}
-
-.doc__wrapper {
-    display: grid; 
-    grid-template-columns: 1fr 2fr; 
-    grid-template-rows: 1fr 1fr; 
-    gap: 48px 48px; 
-    grid-template-areas: 
-        "doc__title-block doc__content"
-        "doc__actions-block doc__content"; 
-    height: 100%;
-}
-
-.doc__title-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.doc__title-block {
+/* Новая секция по макету Figma 2363:30854. */
+.pricing__content {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    grid-area: doc__title-block;
-    align-self: start;
+    width: 100%;
+}
+
+.pricing__title {
+    margin: 0;
+}
+
+.pricing__cards {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Карточка с ценой */
+.pricing__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    width: 360px;
+    flex-shrink: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+}
+
+.pricing__price-icon {
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.pricing__price-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.pricing__price-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.pricing__price-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.pricing__price-value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    font-weight: 700;
+    line-height: 123.077%;
+}
+
+.pricing__price-unit {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.pricing__price-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--nv-surface-4);
+}
+
+.pricing__price-note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.pricing__price-note span {
+    color: var(--nv-primary);
+    font-weight: 700;
+}
+
+/* Карточка с преимуществами и кнопками */
+.pricing__offer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 1 1 auto;
+    min-width: 304px;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.pricing__benefits {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+}
+
+.pricing__benefit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 180px;
+    padding: 16px 16px 16px 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.pricing__benefit-icon {
+    display: block;
+    color: var(--nv-primary);
+}
+
+.pricing__benefit-icon svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.pricing__benefit-text {
+    width: 100%;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.pricing__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    width: 100%;
+}
+
+/* `.btn` и модификаторы общие, поэтому оформление ограничено секцией. */
+.pricing .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.pricing .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.pricing .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.pricing .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.pricing .btn--primary {
+    background: var(--nv-gradient);
+}
+
+.pricing .btn--primary .btn__text,
+.pricing .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.pricing .btn--gray {
+    background: var(--nv-surface-2);
+}
+
+.pricing .btn--gray .btn__text,
+.pricing .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.pricing .btn--primary:hover,
+.pricing .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.pricing .btn--gray:hover,
+.pricing .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.pricing .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+    .pricing__cards {
+        flex-direction: column;
+    }
+
+    .pricing__price {
+        width: 100%;
+    }
+
+    .pricing__offer {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+
+}
+
+@media (max-width: 767.98px) {
+    .pricing__benefits {
+        flex-wrap: wrap;
+    }
+
+    .pricing__benefit {
+        flex: 1 1 100%;
+        min-height: 0;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .pricing__price,
+    .pricing__offer {
+        padding: 16px;
+    }
+
+    .pricing__price-value {
+        font-size: 40px;
+        line-height: 130%;
+    }
+
+    .pricing__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pricing__actions .btn {
+        max-width: none;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* PRICING END */
+
+/* DOC START */
+
+/* Макет Figma 2363:32425. Слева колонка 440, справа две карточки и блок поддержки. */
+.doc__wrapper {
+    display: flex;
+    align-items: stretch;
+    gap: 48px;
+    width: 100%;
+}
+
+.doc__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    width: 440px;
+    flex-shrink: 0;
+    padding-right: 20px;
+}
+
+.doc__info-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+.doc__info-head {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .doc__title {
-    margin-top: 24px;
+    margin: 0;
 }
 
-.doc__subtitle {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+.doc__description {
+    margin: 0;
+    color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Regular, 16px);
     font-weight: 500;
     line-height: 150%;
 }
 
-.doc__actions-block {
+.doc__info-bottom {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    grid-area: doc__actions-block;
-    align-self: end;
 }
 
-.doc__actions-text {
-    color: var(--Text-Orange, #F9AA66);
+.doc__lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
     font-weight: 500;
+    line-height: 150%;
 }
 
 .doc__actions {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 12px;
 }
 
 .doc__content {
     display: flex;
     flex-direction: column;
-    padding: 24px;
-    gap: 32px;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    grid-area: doc__content;
+    gap: 24px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-.doc__tabs {
+.doc__cards {
     display: flex;
-    flex-direction: column;
-    gap: 32px;
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
 }
 
-
-.doc__tab-list {
+.doc__card {
     display: flex;
-    gap: 8px;
-    border-radius: 12px;
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    padding: 4px;
-}
-
-.doc__tab-item {
-    width: calc(33.33% - 5.33px);
-    padding: 4px 20px;
-    text-align: center;
-    border-radius: 8px;
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    border:none;
-    box-sizing: unset;
-    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
-    font-size: 16px;
-    line-height: 150%;
-    cursor: pointer;
-}
-
-.doc__tab-item:hover,
-.doc__tab-item:active,
-.doc__tab-item:focus {
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
-}
-
-.doc__tab-item--active {
-    cursor: default;
-    color:#2B323B;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-}
-
-.doc__tab-item--active:hover,
-.doc__tab-item--active:active,
-.doc__tab-item--active:focus {
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-}
-
-.doc__tab-content-list {
-    touch-action: pan-y;
-    min-height: 320px;
-}
-
-
-.doc__tab-content-item {
-    display: flex;
-    padding: var(--Frame-Card-Padding-Outside, 24px);
     flex-direction: column;
     align-items: flex-end;
     gap: 24px;
-    align-self: stretch;
+    flex: 1 1 0;
+    min-width: 340px;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    height: 100%;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
-
-.doc__tab-content-item--active {}
-
-
-.doc__tab-content-icon {
-    width: 32px;
-    height: 32px;
+.doc__card-icon {
     display: flex;
     padding: 4px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     border-radius: 6px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
 }
 
-.doc__tab-content-info {
+.doc__card-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.doc__card-body {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.doc__tab-content-title {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H4, 24px);
-    font-weight: 700;
-}
-
-.doc__tab-content-text {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
-}
-
-
-.doc__tab-content-action {
-    height: 100%;
-    align-content: flex-end;
-}
-
-
-.doc__content-line {
+    align-items: flex-end;
+    gap: 32px;
     width: 100%;
-    height: 1px;
-    background: rgba(251, 251, 251, 0.10);
 }
 
-
-.doc__bottom {
+.doc__card-text {
     display: flex;
     flex-direction: column;
-    padding: 24px;
-    gap: 28px;
     align-items: flex-start;
-    align-self: stretch;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-    padding-right: 350px;
-    position: relative;
+    gap: 8px;
+    width: 100%;
 }
 
-.doc__bottom-info {
+.doc__card-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.doc__card-description {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* Блок поддержки на оранжевом градиенте */
+.doc__support {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 48px;
+    width: 100%;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: linear-gradient(171deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+}
+
+.doc__support-text {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-.doc__bottom-title {
-    color: var(--Text-Dark-blue, #2B323B);
+.doc__support-title {
+    color: var(--nv-constant-1);
     font-size: var(--Text-Title-Size-H4, 24px);
     font-weight: 700;
+    line-height: 150%;
 }
 
-.doc__bottom-description {
-    color: var(--Text-Dark-blue, #2B323B);
-    font-size: var(--Text-Body-Text-Size-Small, 14px);
+.doc__support-description {
+    margin: 0;
+    color: var(--nv-constant-85);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
     font-weight: 500;
-    line-height: 142.857%;
+    line-height: 155.556%;
 }
 
-.doc__bottom-action {}
+/*
+ * Кнопки секции. `.btn` и его модификаторы — общие классы, поэтому
+ * оформление ограничено секцией.
+ */
+.doc .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
 
+/* Иконка в разметке уже идёт первой — меняем только поля. */
+.doc .btn--icon-first {
+    padding: 8px 16px 8px 8px;
+}
+
+.doc .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.doc .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.doc .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.doc .btn--primary {
+    background: var(--nv-gradient);
+}
+
+.doc .btn--primary .btn__text,
+.doc .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.doc .btn--gray {
+    background: var(--nv-surface-2);
+}
+
+.doc .btn--gray .btn__text,
+.doc .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.doc .btn--dark {
+    border-color: transparent;
+    background: var(--nv-object-1);
+}
+
+.doc .btn--dark .btn__text,
+.doc .btn--dark .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.doc .btn--primary:hover,
+.doc .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.doc .btn--gray:hover,
+.doc .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.doc .btn--dark:hover,
+.doc .btn--dark:focus-visible {
+    background: #000;
+}
+
+.doc .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * `.btn--black` — общий модификатор кнопки, используется на /solutions/
+ * и в секции контактов главной. Исторически лежал в этой секции; восстановлен
+ * без изменений (BACKLOG R-15).
+ */
 .btn--black {
     border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
     background: var(--Island-Black, #212121);
@@ -5436,59 +5730,6 @@ body.home .btn-hero:focus-visible {
     fill: #F9AA66;
 }
 
-.doc__bottom::after {
-    content: '';
-    display: block;
-    width: 270px;
-    height: 250px;
-    background-image: image-set(
-        url("/wp-content/themes/nvglobal/img/doc__bottom-image.png") 1x,
-        url("/wp-content/themes/nvglobal/img/img/doc__bottom-image@2x.png") 2x,
-        url("/wp-content/themes/nvglobal/img/img/doc__bottom-image@3x.png") 3x
-    );
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    position: absolute;
-    bottom: 0;
-    right: 40px;
-}
-
-
-/* Скрываем все панели по умолчанию */
-.doc__tab-content-item {
-  display: none;
-}
-
-/* Показываем активную */
-.doc__tab-content-item--active {
-  display: flex; /* если у вас внутри флекс-верстка; иначе можно block */
-}
-
-/* Минимальная визуализация активного таба */
-.doc__tab-item {
-  cursor: pointer;
-}
-
-.doc__tab-item--active {
-  font-weight: 600;
-}
-
-.doc__tab-arrow {
-    border-radius: 6px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    display: none;
-    padding: 6px;
-    justify-content: center;
-    align-items: center;
-}
-
-.doc__tab-arrow:hover,
-.doc__tab-arrow:active
-.doc__tab-arrow:focus {
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
-}
-
 @media (max-width: 1599.98px) {
 
 }
@@ -5498,143 +5739,83 @@ body.home .btn-hero:focus-visible {
 }
 
 @media (max-width: 1199.98px) {
-    .doc__bottom {
-        padding-right: 300px;
+    .doc__wrapper {
+        flex-direction: column;
+        gap: 32px;
     }
-    .doc__tab-content-list {
-        min-height: 360px;
+
+    .doc__info {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .doc__info-top,
+    .doc__info {
+        gap: 24px;
+    }
+
+    .doc__cards {
+        flex-wrap: wrap;
+    }
+
+    .doc__card {
+        min-width: 300px;
     }
 }
 
 @media (max-width: 991.98px) {
-    .doc__wrapper {
-        display: grid; 
-        grid-template-columns: 1fr; 
-        grid-template-rows: 1fr; 
-        gap: 48px; 
-        grid-template-areas: 
-            "doc__title-block"
-            "doc__content"
-            "doc__actions-block"; 
-        height: 100%;
-    }
-    .doc__actions {
-        flex-direction: row;
-        align-items: flex-end;
-    }
-    .doc__bottom {
-        flex-direction: column;
-        padding-right: 24px;
-        align-items: flex-end;
-    }
-    .doc__bottom {
-        padding-right: 270px;
-    }
-    .doc__bottom::after {
-        width: 240px;
-        height: 222px;
-        right: 20px;
-    }
-    .doc__bottom-action {
-        align-self: flex-start;
-    }
-    .doc__tab-content-list {
-        min-height: 330px;
+    .doc__card {
+        flex: 1 1 100%;
+        min-width: 0;
     }
 }
 
 @media (max-width: 767.98px) {
-    .doc__subtitle {
-        font-size: 14px;
-    }
-    .doc__content,
-    .doc__tabs {
-        gap: 16px;
-    }
-    .doc__content,
-    .doc__tab-content-item,
-    .doc__bottom {
-        padding: 12px;
-    }
-    .doc__bottom {
-        padding-right: 270px;
-    }
-    .doc__tab-list {
-        justify-content: center;
-    }
-    .doc__tab-item {
-        display: none;
-    }
-    .doc__tab-item--active {
-        display: block;
-        width: calc(100% - 134px);
-    }
-    .doc__tab-arrow {
-        display: flex;
-    }
-    .doc__tab-arrow--disabled svg{
-        opacity: 0.5;
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .btn--black span {
-        font-size: 16px;
+    font-size: 16px;
     }
-    .doc__tab-content-list {
-        min-height: 330px;
+
+    .doc__support {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
     }
 }
 
 @media (max-width: 575.98px) {
-    .doc__tab-content-title,
-    .doc__bottom-title {
-        font-size: 20px;
-    }
-    .doc__tab-content-text {
-        font-size: 14px;
-    }
-    .doc__bottom-description {
-        font-size: 12px;
-    }
-    .doc__bottom {
-        gap: 24px;
-        padding: 12px 12px 180px 12px;
-    }
-    .doc__tab-content-action .btn .btn__text {
-        font-size: 12px;
-    }
-    .doc__tab-content-action .btn {
-        padding: 6px 6px 6px 12px;
-        gap: 4px;
-    }
-    .doc__actions {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
     .btn--black svg {
-        width: 20px;
-        height: 20px;
+    width: 20px;
+    height: 20px;
     }
-    .doc__tab-content-list {
-        min-height: 340px;
+
+    .doc__card,
+    .doc__support {
+        padding: 16px;
+    }
+
+    .doc__actions {
+        align-items: stretch;
+    }
+
+    .doc .btn {
+        max-width: none;
+        justify-content: space-between;
+    }
+
+    .doc .btn--icon-first {
+        justify-content: flex-start;
+        gap: 12px;
     }
 }
 
 @media (max-width: 478.98px) {
-    .doc__bottom::after {
-        width: 200px;
-        height: 185px;
-    }
-    .doc__bottom {
-        padding-bottom: 140px;
-    }
-    .doc__tab-content-list {
-        min-height: 360px;
-    }
+
 }
 
 @media (max-width: 419.98px) {
-    .doc__tab-content-list {
-        min-height: 390px;
-    }
+
 }
 
 /* DOC END */

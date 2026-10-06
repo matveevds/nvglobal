@@ -288,9 +288,9 @@ Get pricing information, Technical questions.
 | 5 | Products (слайдер) | ✅ сделано | группа 3 |
 | 6 | How it works | — новая секция | |
 | 7 | Why us | — | |
-| 8 | Clients / Trusted | — | |
-| 9 | Pricing | — новая секция | |
-| 10 | Developers | — | |
+| 8 | Clients / Trusted | ✅ сделано, без фона карты (R-14) | группа 4 |
+| 9 | Pricing | ✅ сделано, новая секция | группа 4 |
+| 10 | Developers | ✅ сделано | группа 4 |
 | 11 | Blog | — | |
 | 12 | FAQ | — перенос компонента | |
 | 13 | Contacts | — | |
@@ -470,3 +470,85 @@ JS не переписывался — `initProductsSlider` уже обеспе�
 под ним карточка, описание и кнопки — отдельной строкой внизу.
 Переключение сделано через `display: contents` на `.products__info` и `order`
 у трёх блоков, без дублирования разметки.
+
+---
+
+## 14. Группа 4 — Trusted, Pricing, Developers
+
+### Trusted by Industry Leaders Worldwide — `.clients`
+
+Полоса карты `1376×293`, пины позиционируются в процентах от неё,
+поэтому при любой ширине остаются на своих местах макета.
+
+| Пин | `left` | `top` |
+|---|---|---|
+| `.clients__item--bank` | 11.555% | 69.625% |
+| `.clients__item--crypto` | 27.253% | 34.471% |
+| `.clients__item--goverment` | 47.820% | 53.925% |
+| `.clients__item--insurance` | 67.442% | 53.242% |
+| `.clients__item--gambling` | 82.413% | 44.710% |
+
+Иконка пина — `img/clients__pin.svg` (427 B, `#D2D2D2`), inline `currentColor`
+не используется: цвет один и тот же во всех состояниях.
+
+Тултип `.clients__tooltip`: `bottom: 95px`, `left: 50%`,
+`transform: translateX(-50%)`, ширина 160, паддинг `12px 8px`, радиус 16,
+фон `--nv-surface-1`, рамка `1px solid --nv-surface-4`.
+
+На `≤575.98` карта и пины скрываются, отрасли выводятся вертикальным
+списком карточек с оранжевой иконкой слева.
+
+**Фона карты нет** — см. BACKLOG R-14.
+
+### Pricing — `.pricing`
+
+Секция новая. Слева карточка с ценой (`from $0.24`, подпись, разделитель,
+строка про дополнительный документ), справа сетка из трёх преимуществ
+с иконкой-галочкой в правом верхнем углу карточки.
+
+Ниже — две кнопки: `Talk to sales` (`.btn--gray`) и `Calculate your price`
+(`.btn--primary`).
+
+⚠️ Кнопкам нужен собственный блок `.pricing .btn` — иначе они наследуют
+прежний `#F9AA66` из тёмной темы.
+
+На `≤575.98` колонки складываются в одну, карточки преимуществ идут
+вертикально, кнопки — на всю ширину (`max-width: none`, иначе базовый
+`.btn { max-width: fit-content }` даёт разную ширину).
+
+### Developers — `.doc`
+
+Левая колонка: бейдж, заголовок, описание, оранжевая строка призыва,
+`Get Your API Key` (`.btn--primary`) и `Schedule an integration call`
+(`.btn--gray`, иконка телефона слева — разметка уже в нужном порядке,
+`row-reverse` не нужен).
+
+Правая колонка: две карточки документации (`API Reference & SDKs`,
+`Integration Guide`) с иконкой-звездой и кнопкой внизу, под ними —
+оранжевый блок `Developer Support` с кнопкой `Book a call` (`.btn--dark`).
+
+На `≤840` колонки складываются: сначала текст и кнопки, затем карточки
+в столбик, затем блок поддержки.
+
+Данные берутся из `get_field()` — подстановок статикой нет.
+
+### Кнопка `.btn-hero` — важное ограничение
+
+`.btn-hero` живёт **не только на главной**: `/pricing-matrix/`, `/404/`,
+`/blog/`, `category`, `search`, `author`, `single`.
+
+Поэтому новый вид кнопки описан **только** в `body.home .btn-hero`,
+а глобальные правила оставлены прежними:
+
+```
+.btn-hero            { padding: 16px; gap: 17px; border-radius: 16px;
+                       flex-direction: row-reverse; height: 64px; … }
+.btn__text-hero      { color: var(--Text-White, #FBFBFB); }
+.btn-hero:hover .btn__icon-arrow, .btn-hero.is-active .btn__icon-arrow { … }
+.btn-hero:hover .btn__text-hero, .btn-hero.is-active .btn__text-hero  { … }
+.btn-hero:hover .btn__icon-arrow::after                               { … }
+```
+
+Причина жёсткая: `--nv-gradient` объявлена только в `body.home`.
+Глобальное `background: var(--nv-gradient)` вне главной невалидно,
+и кнопка получает прозрачный фон.
