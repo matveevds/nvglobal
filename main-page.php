@@ -465,110 +465,137 @@ get_header(); ?>
         </div>
     </section>
 
+    <section class="how section" id="how-it-works">
+        <div class="container">
+            <div class="section__wrapper how__wrapper">
+                <div class="section__badge">How it works</div>
+                <div class="section__content how__content">
+                    <div class="section__title-block">
+                        <h2 class="section__title">Five checks, one pass <span>&mdash; in seconds</span></h2>
+                    </div>
+                    <div class="how__layout">
+                        <ol class="how__steps">
+                            <li class="how__step">
+                                <span class="how__step-number" aria-hidden="true">01</span>
+                                <div class="how__step-info">
+                                    <h3 class="how__step-title">Document capture</h3>
+                                    <p class="how__step-description">16,000+ document types from 195+ countries and territories</p>
+                                </div>
+                            </li>
+                            <li class="how__step">
+                                <span class="how__step-number" aria-hidden="true">02</span>
+                                <div class="how__step-info">
+                                    <h3 class="how__step-title">Face match</h3>
+                                    <p class="how__step-description">Selfie against the document photo, age verified from the document</p>
+                                </div>
+                            </li>
+                            <li class="how__step">
+                                <span class="how__step-number" aria-hidden="true">03</span>
+                                <div class="how__step-info">
+                                    <h3 class="how__step-title">Liveness</h3>
+                                    <p class="how__step-description">a real, present person; deepfake-resistant</p>
+                                </div>
+                            </li>
+                            <li class="how__step">
+                                <span class="how__step-number" aria-hidden="true">04</span>
+                                <div class="how__step-info">
+                                    <h3 class="how__step-title">Anti-fraud &amp; 1:N deduplication</h3>
+                                    <p class="how__step-description">40+ algorithms; one person, one account</p>
+                                </div>
+                            </li>
+                            <li class="how__step">
+                                <span class="how__step-number" aria-hidden="true">05</span>
+                                <div class="how__step-info">
+                                    <h3 class="how__step-title">AML screening</h3>
+                                    <p class="how__step-description">sanctions, PEP, watchlists and self-exclusion lists</p>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <div class="how__highlight">
+                            <span class="how__highlight-icon">
+                                <svg aria-hidden="true" focusable="false" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.5206 7.9794C14.6722 7.9794 7.5 15.1516 7.5 24C7.5 32.8484 14.6722 40.0206 23.5206 40.0206C32.369 40.0206 39.5412 32.8484 39.5412 24C39.5412 15.1516 32.369 7.9794 23.5206 7.9794ZM4.5 24C4.5 13.4948 13.0154 4.9794 23.5206 4.9794C34.0258 4.9794 42.5412 13.4948 42.5412 24C42.5412 34.5052 34.0258 43.0206 23.5206 43.0206C13.0154 43.0206 4.5 34.5052 4.5 24Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M43.3108 10.07C43.7154 10.7929 43.4574 11.7069 42.7346 12.1116C33.518 17.2711 27.755 25.6476 25.0056 30.8126C24.7512 31.2906 24.259 31.5942 23.7176 31.6072C23.1762 31.6202 22.67 31.3406 22.3928 30.8754C20.5476 27.7778 18.2072 25.021 15.3525 22.6102C14.7196 22.0756 14.6398 21.1292 15.1744 20.4964C15.7089 19.8634 16.6553 19.7836 17.2882 20.3182C19.726 22.377 21.828 24.6764 23.5962 27.2112C26.8372 21.7898 32.5964 14.349 41.2692 9.49386C41.992 9.0892 42.9062 9.34716 43.3108 10.07Z" fill="currentColor"/></svg>
+                            </span>
+                            <div class="how__highlight-info">
+                                <h3 class="how__highlight-title">Every check in under a second</h3>
+                                <p class="how__highlight-description">auto-approve, decline or route to manual review, by your scenario.</p>
+                            </div>
+                        </div>
+
+                        <div class="how__deploy">
+                            <article class="how__deploy-card">
+                                <div class="how__deploy-info">
+                                    <h3 class="how__deploy-title">Cloud</h3>
+                                    <p class="how__deploy-description">fault-tolerant cluster, sandbox first, production next</p>
+                                </div>
+                                <span class="how__deploy-image how__deploy-image--cloud">
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/img/how-cloud.webp'); ?>"
+                                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/how-cloud.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/how-cloud@2x.webp'); ?> 2x"
+                                         width="239" height="239" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                </span>
+                            </article>
+                            <article class="how__deploy-card">
+                                <div class="how__deploy-info">
+                                    <h3 class="how__deploy-title">On-premises or hybrid</h3>
+                                    <p class="how__deploy-description">in your data centres; templates and personal data never leave your jurisdiction.</p>
+                                </div>
+                                <span class="how__deploy-image how__deploy-image--onprem">
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/img/how-onprem.webp'); ?>"
+                                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/how-onprem.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/how-onprem@2x.webp'); ?> 2x"
+                                         width="217" height="217" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                                </span>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="advantages section" id="advantages">
         <div class="container">
             <div class="section__wrapper advantages__wrapper">
-                <div class="section__badge">Advantages</div>
-                <div class="section__content">
+                <div class="section__badge">Why us</div>
+                <div class="section__content advantages__content">
                     <div class="section__title-block">
                         <h2 class="section__title">Why Teams Choose <span>NeuroVision Global Systems</span></h2>
                     </div>
-                    <div class="advantages__list">
-                        <div class="advantages__row advantages__row-3">
-                            <div class="advantage__item animate-fade-up">
-                                <div class="advantage__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                        <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                    </svg>
-                                </div>
-                                <div class="advantage__item-title">Top-Tier Accuracy</div>
-                                <div class="advantage__item-description">99.74% face recognition accuracy — that's not marketing fluff, it's our NIST-verified score that puts us in the global <span>Top-24</span>. When every verification matters, you need technology that gets it right almost every single time</div>
-                            </div>
-                            <div class="advantage__item animate-fade-up">
-                                <div class="advantage__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                        <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                    </svg>
-                                </div>
-                                <div class="advantage__item-title">Lightning-Fast Integration</div>
-                                <div class="advantage__item-description">One business day from start to live — seriously. With our REST API and ready-to-use SDKs for Web, iOS, and Android, plus documentation that actually makes sense, your dev team will thank you for choosing NeuroVision Global Systems</div>
-                            </div>
-                            <div class="advantage__item animate-fade-up">
-                                <div class="advantage__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                        <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                    </svg>
-                                </div>
-                                <div class="advantage__item-title">Rich Recognition Features</div>
-                                <div class="advantage__item-description">We analyze 10+ facial parameters beyond basic verification: age, gender, emotions, eye openness, masks, glasses — giving you deeper insights and more flexible verification options than any competitor.</div>
-                            </div>
+                    <div class="advantages__layout">
+                        <div class="advantages__col">
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">Accuracy you can audit</h3>
+                                <p class="advantage__item-description">16,000+ document types from 195+ countries and territories</p>
+                            </article>
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">Live in under an hour</h3>
+                                <p class="advantage__item-description">REST API, Web SDK, iOS and Android SDK, WebView; sandbox first.</p>
+                            </article>
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">Global coverage</h3>
+                                <p class="advantage__item-description">195+ countries and territories, 16,000+ document types, 90+ languages.</p>
+                            </article>
                         </div>
 
-                        <div class="advantages__row advantages__row-2">
-                            <div class="advantage__item advantage__item--image-hover animate-fade-up">
-                                <div class="advantage__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                        <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                    </svg>
-                                </div>
-                                <div class="advantage__item-title">Global Coverage</div>
-                                <div class="advantage__item-description">Support for 10,000+ document types from 195+ countries and territories. Whether it's a passport from Paraguay or a driver's license from Denmark, our system recognizes them all — making global expansion actually global.</div>
-                                <img src="<?php echo get_template_directory_uri(); ?>/img/case_image_folder.png" alt="Global Coverage">
-                            </div>
-                            <div class="advantage__item advantage__item--image-hover animate-fade-up">
-                                <div class="advantage__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                        <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                    </svg>
-                                </div>
-                                <div class="advantage__item-title">Battle-Tested Anti-Fraud</div>
-                                <div class="advantage__item-description">Our liveness detection and anti-spoofing algorithms stop fraudsters cold. Masks, photos, videos, deepfakes — we catch them all with iBeta Level 1-2 certified technology and advanced eye movement analysis.</div>
-                                <img src="<?php echo get_template_directory_uri(); ?>/img/case_image_shield.png" alt="Global Coverage">
-                            </div>
+                        <div class="advantages__image">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/img/why-us-phones.webp'); ?>"
+                                 srcset="<?php echo esc_url(get_template_directory_uri() . '/img/why-us-phones.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/why-us-phones@2x.webp'); ?> 2x"
+                                 width="434" height="525"
+                                 alt="Экраны приложения NeuroVision Global Systems: съёмка документа и селфи с паспортом"
+                                 loading="lazy" decoding="async">
                         </div>
 
-                        <div class="advantages__row-2-1">
-                            <div class="advantages__col-2">
-                                <div class="advantages__row-2">
-                                    <div class="advantage__item animate-fade-up">
-                                        <div class="advantage__item-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                                <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="advantage__item-title">Proven ROI Impact </div>
-                                        <div class="advantage__item-description">Speed up customer onboarding by 5x while cutting verification costs by up to 70%. These aren't projections — they're real results our clients see every day. Better experience, lower costs, happier customers.</div>
-                                    </div>
-                                    <div class="advantage__item animate-fade-up">
-                                        <div class="advantage__item-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                                <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="advantage__item-title">Privacy-First Compliance</div>
-                                        <div class="advantage__item-description">Full GDPR compliance with our unique instant vectorless face comparison technology. ISO 27001 certified data storage, end-to-end encryption — the security standards banks and governments trust. Your users' data stays protected, always.</div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="advantages__col-1">
-                                <div class="advantages__row">
-                                    <div class="advantage__item advantage__item--image-hover animate-fade-up">
-                                        <div class="advantage__item-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                                <path d="M26.0781 10.6914C26.4712 9.96221 27.3821 9.68901 28.1113 10.0821H28.1133L28.1152 10.084C28.1172 10.0851 28.1199 10.0862 28.123 10.0879C28.13 10.0917 28.1399 10.0987 28.1523 10.1055C28.1776 10.1193 28.2151 10.1383 28.2617 10.1641C28.3558 10.2162 28.4926 10.2926 28.6641 10.3907C29.0069 10.5867 29.4935 10.8721 30.0762 11.2305C31.2386 11.9455 32.7976 12.9628 34.3633 14.1641C35.92 15.3586 37.5321 16.7728 38.7695 18.2872C39.9781 19.7662 41 21.5475 41 23.4493L40.9883 23.8028C40.872 25.5718 39.9048 27.2257 38.7715 28.6133C37.5341 30.1285 35.92 31.5414 34.3633 32.7364C32.7975 33.9383 31.2387 34.9566 30.0762 35.6719C29.4935 36.0304 29.0069 36.3157 28.6641 36.5118C28.4926 36.6098 28.3557 36.6862 28.2617 36.7383C28.2157 36.7638 28.1795 36.7831 28.1543 36.7969C28.1416 36.8039 28.1301 36.8107 28.123 36.8145C28.1199 36.8162 28.1172 36.8174 28.1152 36.8184L28.1133 36.8204H28.1113C27.3822 37.2135 26.4713 36.942 26.0781 36.2129C25.685 35.4837 25.9583 34.5729 26.6875 34.1797C26.6883 34.1793 26.6911 34.179 26.6934 34.1778C26.6979 34.1753 26.7051 34.1714 26.7148 34.1661C26.7352 34.1549 26.767 34.1364 26.8086 34.1133C26.8917 34.0672 27.0151 33.9971 27.1738 33.9063C27.4926 33.724 27.9523 33.4567 28.5039 33.1172C29.61 32.4366 31.0762 31.4773 32.5352 30.3575C34.0032 29.2306 35.4161 27.9775 36.4473 26.7149C36.9664 26.0793 37.3478 25.4888 37.6035 24.9512H9.5C8.67157 24.9512 8 24.2796 8 23.4512C8.00005 22.6228 8.6716 21.9512 9.5 21.9512H37.6055C37.3499 21.4132 36.9675 20.8223 36.4473 20.1856C35.4162 18.9237 34.0052 17.6694 32.5371 16.543C31.0779 15.4234 29.6102 14.4657 28.5039 13.7852C27.9528 13.4462 27.4945 13.1784 27.1758 12.9961C27.0167 12.9052 26.8918 12.8352 26.8086 12.7891C26.7672 12.7661 26.7352 12.7494 26.7148 12.7383C26.7047 12.7328 26.6979 12.7271 26.6934 12.7247C26.6911 12.7234 26.6883 12.7232 26.6875 12.7227C25.9587 12.3298 25.6859 11.4205 26.0781 10.6914Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="advantage__item-title">Always-On Support</div>
-                                        <div class="advantage__item-description">Round-the-clock quality monitoring with expert review available in just 3 minutes. Enterprise clients get dedicated account managers who actually know your business. Real people, real support, really there when you need us</div>
-                                        <img src="<?php echo get_template_directory_uri(); ?>/img/case_image_sound.png" alt="Always-On Support">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="advantages__image animate-fade-up">
-                            <img src="<?php echo get_template_directory_uri(); ?>/img/advantages__maskot.png" alt="Why Teams Choose NeuroVision Global Systems">
+                        <div class="advantages__col">
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">Anti-fraud built on real attacks</h3>
+                                <p class="advantage__item-description">40+ document checks, 1:N face search, blacklist screening, 30 more layers</p>
+                            </article>
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">Privacy by design</h3>
+                                <p class="advantage__item-description">ISO/IEC 27001:2022, GDPR-ready; on-premises, cloud or hybrid.</p>
+                            </article>
+                            <article class="advantage__item">
+                                <h3 class="advantage__item-title">In-house engines only</h3>
+                                <p class="advantage__item-description">OCR, face, liveness and anti-fraud are ours: one vendor, one SLA, no third-party licences</p>
+                            </article>
                         </div>
                     </div>
                 </div>

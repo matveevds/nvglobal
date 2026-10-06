@@ -4,7 +4,7 @@ import fs from 'fs';
 const out = process.argv[2];
 const SECTIONS = ['hero','about','results','solutions','products','clients','pricing','doc'];
 const WIDTHS = [1920,1440,992,840,768,576,375];
-const b = await chromium.launch();
+const b = await chromium.launch({args:['--host-resolver-rules=MAP nvglobal.local 127.0.0.1,MAP www.nvglobal.local 127.0.0.1']});
 const res = {};
 for (const w of WIDTHS){
   const ctx = await b.newContext({ ignoreHTTPSErrors:true, viewport:{width:w,height:900} });

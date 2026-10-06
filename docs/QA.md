@@ -313,6 +313,27 @@ node docs/qa-scripts/snap.mjs /tmp/nv-now.json
 бегущей строки `.main__slider-track` на `/solutions/` (фаза анимации,
 размеры и цвета совпадают).
 
+### Playwright зависает на `nvglobal.local`
+
+macOS резолвит имена в зоне `.local` через mDNS и тратит ровно 5 секунд
+на каждый запрос, несмотря на запись в `/etc/hosts`. На странице с полусотней
+ресурсов это кладёт весь прогон в таймаут, а воркеры Apache копятся
+и сервер перестаёт отвечать.
+
+Проверка:
+
+```bash
+curl -sk -o /dev/null -w "dns:%{time_namelookup}s total:%{time_total}s\n" https://nvglobal.local/
+```
+
+`dns:5.0s` — это оно. Лечится на стороне браузера, система не трогается:
+
+```js
+chromium.launch({args:['--host-resolver-rules=MAP nvglobal.local 127.0.0.1,MAP www.nvglobal.local 127.0.0.1']})
+```
+
+Во всех скриптах `docs/qa-scripts/` этот аргумент уже прописан.
+
 ### Ловушка с переменными
 
 `--nv-*` объявлены только в `body.home`. Любое глобальное правило вида

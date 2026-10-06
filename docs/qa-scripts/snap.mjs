@@ -4,7 +4,7 @@ import fs from 'fs';
 const outFile = process.argv[2];
 const pages = [['solutions','https://nvglobal.local/solutions/'],['pricing','https://nvglobal.local/pricing-matrix/'],['docs','https://nvglobal.local/docs/'],['privacy','https://nvglobal.local/privacy-policy/'],['blog','https://nvglobal.local/blog/'],['404','https://nvglobal.local/no-such-page-xyz/']];
 const widths = [1920,1440,840,375];
-const b = await chromium.launch();
+const b = await chromium.launch({args:['--host-resolver-rules=MAP nvglobal.local 127.0.0.1,MAP www.nvglobal.local 127.0.0.1']});
 const res = {};
 for (const w of widths){
   const ctx = await b.newContext({ ignoreHTTPSErrors:true, viewport:{width:w,height:900} });
