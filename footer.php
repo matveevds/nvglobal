@@ -1,3 +1,14 @@
+<?php
+/**
+ * Футер темы.
+ *
+ * Главная страница переведена на светлый макет Figma (группа 9) и выводит
+ * `template-parts/footer-home.php`. Остальные страницы продолжают использовать
+ * прежнюю тёмную разметку ниже — она не менялась.
+ */
+if (is_front_page()) :
+    get_template_part('template-parts/footer', 'home');
+else : ?>
     <footer class="footer">
         <div class="container">
             <div class="teaser__maskot">
@@ -94,6 +105,7 @@
             </div>
         </div>
     </footer>
+<?php endif; ?>
 
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie__info">

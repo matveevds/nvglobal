@@ -8873,6 +8873,134 @@ body.home .contacts .help-select__dropdown {
 
 /* teaser END */
 
+/* TEASER HOME START */
+
+/*
+ * Светлый тизер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
+ * `2380:23846`, Tablet 840 — `2376:17671`.
+ *
+ * `template-parts/teaser.php` подключается на всех шаблонах темы, поэтому все
+ * правила ниже — только под `body.home`; тёмная версия остальных страниц
+ * остаётся на прежних правилах блока `teaser`.
+ *
+ * Вертикаль макета: Page edge 64 + отступ секции 64 + логотип 100 + 32 + текст,
+ * снизу 64 до карточки футера.
+ */
+
+body.home .teaser {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: var(--nv-surface-2);
+}
+
+/* «Page edge» из макета — скруглённый низ контентной области страницы. */
+body.home .teaser::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+    border: 1px solid var(--nv-surface-4);
+    border-top: 0;
+    border-radius: 0 0 var(--nv-radius-hero) var(--nv-radius-hero);
+    background: var(--nv-surface-1);
+}
+
+/* Тёплое свечение тёмной темы в светлом макете не используется. */
+body.home .teaser::after {
+    display: none;
+}
+
+body.home .teaser__wrapper {
+    gap: 32px;
+    padding-bottom: 64px;
+    padding-top: 128px;
+}
+
+body.home .teaser__logo {
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-3);
+}
+
+body.home .teaser__logo-image {
+    background: var(--nv-surface-2);
+}
+
+body.home .teaser__info {
+    width: 100%;
+    gap: 16px;
+}
+
+body.home .teaser__title {
+    max-width: none;
+    color: var(--nv-object-1);
+}
+
+/* Full HD — заголовок в одну строку. */
+body.home .teaser__title br {
+    display: none;
+}
+
+body.home .teaser__subtitle {
+    color: var(--nv-primary);
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 1440 — перенос после «Platform» из макета. */
+    body.home .teaser__title br {
+        display: inline;
+    }
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+    /* Маскота в светлом футере нет — запас под него не нужен. */
+    body.home .teaser__wrapper {
+        padding-bottom: 64px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 840 — перенос по ширине контейнера. */
+    body.home .teaser__title br {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.home .teaser__wrapper {
+        padding-top: 96px;
+    }
+    body.home .teaser__title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.home .teaser__title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* TEASER HOME END */
+
+
+
 
 /* FOOTER START */
 
@@ -9167,6 +9295,482 @@ body.home .contacts .help-select__dropdown {
 }
 
 /* FOOTER END */
+
+/* FOOTER HOME START */
+
+/*
+ * Светлый футер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
+ * `2380:23846`, Tablet 840 — `2376:17671`, ховеры — `2386:37529`.
+ *
+ * Разметка — `template-parts/footer-home.php`, выводится только на главной.
+ * Футер глобальный, поэтому каждый селектор начинается с `body.home .footer`:
+ * тёмная версия на остальных страницах остаётся на правилах блока FOOTER выше.
+ *
+ * Базовый уровень — Full HD. Desktop — в `max-width: 1599.98px`, Tablet — в
+ * `max-width: 991.98px`. Ниже 768 макета нет, раскладка подобрана по логике темы.
+ */
+
+body.home .footer {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: var(--nv-surface-2);
+}
+
+/* Карточка футера. Обводка в Figma внутренняя, поэтому паддинг минус её ширина. */
+body.home .footer__wrapper {
+    gap: 32px;
+    padding: 63px 31px 32px;
+    border-width: 1px 1px 0;
+    border-style: solid;
+    border-color: var(--nv-surface-4);
+    border-radius: var(--nv-radius-hero) var(--nv-radius-hero) 0 0;
+    background: var(--nv-surface-1);
+}
+
+body.home .footer__top {
+    align-items: flex-start;
+    gap: 0;
+}
+
+/* --- Левая колонка: логотип, слоган, реквизиты, сертификаты --- */
+
+body.home .footer__info {
+    flex: 1 0 0;
+    max-width: none;
+    justify-content: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+body.home .footer__logo-image {
+    display: block;
+    width: 302px;
+    line-height: 0;
+}
+
+body.home .footer__logo-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+body.home .footer__tagline {
+    color: var(--nv-primary);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+body.home .footer__details {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.home .footer__legal-name {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__legal-address {
+    color: var(--nv-object-2);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* В Full HD значки стоят слева от реквизитов, ниже — под ними. */
+body.home .footer__badges {
+    display: flex;
+    align-items: center;
+    order: -1;
+    gap: 12px;
+}
+
+body.home .footer__badge {
+    display: block;
+    line-height: 0;
+}
+
+body.home .footer__badge img {
+    display: block;
+    width: auto;
+    height: 64px;
+}
+
+/* Круглый значок в макете обрезан по окружности с небольшим зумом. */
+body.home .footer__badge--round {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+body.home .footer__badge--round img {
+    position: absolute;
+    top: -4.75%;
+    left: -9.54%;
+    width: 116.02%;
+    height: 111.05%;
+}
+
+/* --- Навигация --- */
+
+body.home .footer__navigation {
+    flex: 1 0 0;
+    justify-content: flex-start;
+    gap: 96px;
+}
+
+body.home .footer__nav {
+    gap: 32px;
+}
+
+body.home .footer__nav-title {
+    color: var(--nv-primary);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__nav-list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+/* Шесть продуктов в макете разложены в две колонки по три. */
+body.home .footer__nav--products .footer__nav-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    justify-items: start;
+    column-gap: 64px;
+    row-gap: 16px;
+}
+
+body.home .footer__nav-link {
+    width: auto;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 133.333%;
+    opacity: 0.7;
+    transition: color 0.2s ease;
+}
+
+body.home .footer__nav-link:hover,
+body.home .footer__nav-link:focus-visible {
+    color: var(--nv-primary);
+}
+
+/* --- Правая колонка: почта и соцсети --- */
+
+body.home .footer__aside {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 32px;
+    gap: 48px;
+}
+
+body.home .footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+body.home .footer__contacts-title,
+body.home .footer__social-title {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__contacts-list {
+    display: flex;
+    align-items: flex-start;
+}
+
+body.home .footer__mail {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 142.857%;
+    text-decoration: none;
+    gap: 4px;
+    backdrop-filter: blur(10px);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.home .footer__mail:hover,
+body.home .footer__mail:focus-visible {
+    background: var(--nv-surface-3);
+    color: var(--nv-primary);
+}
+
+body.home .footer__mail-icon {
+    display: flex;
+    line-height: 0;
+}
+
+body.home .footer__social {
+    max-width: none;
+    gap: 24px;
+}
+
+body.home .footer__social-list {
+    padding-right: 0;
+    gap: 8px;
+}
+
+body.home .footer__social-item {
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    opacity: 0.7;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.home .footer__social-item:hover,
+body.home .footer__social-item:focus-visible {
+    background: var(--nv-surface-3);
+    color: var(--nv-primary);
+}
+
+/* --- Нижняя строка --- */
+
+body.home .footer__line {
+    background: var(--nv-surface-4);
+}
+
+body.home .footer__bottom {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__bottom-col--copy,
+body.home .footer__bottom-col--links {
+    flex: 0 0 auto;
+}
+
+body.home .footer__bottom-col--trademark {
+    flex: 1 1 auto;
+}
+
+body.home .footer__bottom p {
+    color: var(--nv-object-3);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+body.home .footer__bottom-list {
+    align-items: center;
+    gap: 16px;
+}
+
+body.home .footer__bottom-link {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+    transition: color 0.2s ease;
+}
+
+body.home .footer__bottom-link:hover,
+body.home .footer__bottom-link:focus-visible {
+    color: var(--nv-primary);
+}
+
+body.home .footer__bottom-line {
+    width: 1px;
+    height: 20px;
+    background: var(--nv-surface-4);
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 1440. */
+    body.home .footer__navigation {
+        gap: 80px;
+    }
+    body.home .footer__nav--products .footer__nav-list {
+        grid-auto-flow: row;
+        grid-template-rows: none;
+        column-gap: 0;
+    }
+    body.home .footer__nav-link {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+    body.home .footer__details {
+        flex-direction: column;
+        gap: 32px;
+    }
+    body.home .footer__badges {
+        order: 0;
+    }
+    body.home .footer__badge img {
+        height: 48px;
+    }
+    body.home .footer__badge--round {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+    body.home .footer__navigation {
+        gap: 32px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 840: три ряда — реквизиты, навигация, контакты. */
+    body.home .footer__top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 64px;
+    }
+    body.home .footer__info {
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0;
+    }
+    body.home .footer__brand {
+        flex: 0 0 44%;
+    }
+    body.home .footer__logo-image {
+        width: 207px;
+    }
+    body.home .footer__details {
+        flex: 1 1 auto;
+        gap: 24px;
+    }
+    /* В макете у ряда навигации справа 64px запаса — отсюда равные промежутки. */
+    body.home .footer__navigation {
+        flex: 0 0 auto;
+        justify-content: space-between;
+        padding-right: 64px;
+        gap: 32px;
+    }
+    body.home .footer__nav--products .footer__nav-list {
+        grid-auto-flow: column;
+        grid-template-rows: repeat(3, auto);
+        column-gap: 48px;
+    }
+    body.home .footer__aside {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding-right: 0;
+        gap: 96px;
+    }
+    body.home .footer__contacts,
+    body.home .footer__social {
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+    }
+    body.home .footer__bottom {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    body.home .footer__bottom-col--trademark {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Макета нет — сохраняем логику темы: колонки распрямляются. */
+    body.home .footer__wrapper {
+        padding: 31px 15px 32px;
+    }
+    body.home .footer__info {
+        flex-direction: column;
+        gap: 32px;
+    }
+    body.home .footer__brand {
+        flex: 0 0 auto;
+    }
+    body.home .footer__aside {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+    }
+    body.home .footer__contacts,
+    body.home .footer__social {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    body.home .footer__navigation {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.home .footer__navigation {
+        flex-direction: column;
+        gap: 32px;
+    }
+    body.home .footer__nav {
+        gap: 16px;
+    }
+    body.home .footer__nav--products .footer__nav-list {
+        column-gap: 32px;
+    }
+    body.home .footer__logo-image {
+        width: 240px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    body.home .footer__logo-image {
+        width: 100%;
+        max-width: 240px;
+    }
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* FOOTER HOME END */
+
+
 
 /* COOCKIE START */
 

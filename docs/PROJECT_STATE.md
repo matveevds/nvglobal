@@ -76,7 +76,8 @@
 | `single-document.php` | 208 | — | CPT `document` |
 | `page-privacy.php` | 37 | Шаблон страницы PRIVACY POLICY | 3 юр. страницы |
 | `header.php` | 128 | — | шапка |
-| `footer.php` | 714 | — | футер + teaser + cookie + 4 модалки |
+| `footer.php` | 726 | — | футер (ветвление по `is_front_page()`) + cookie + 4 модалки |
+| `template-parts/footer-home.php` | 181 | — | светлый футер главной (группа 9) |
 | `functions.php` | 2464 | — | вся логика темы |
 | `404.php` | 32 | — | 404 |
 | `inc/docs-menu.php` | 188 | — | меню документации + файловый кэш |
@@ -85,7 +86,7 @@
 
 ### Заготовки блога (сейчас не видны)
 `single.php` (436), `category.php` (181), `author.php` (308), `search.php` (194),
-`blog-page.php` (125), `template-parts/article-card.php` (120), `template-parts/teaser.php` (14).
+`blog-page.php` (125), `template-parts/article-card.php` (120), `template-parts/teaser.php` (28).
 
 ### Дубли и устаревшее — **трогать только по согласованию**
 | Файл | Строк | Отличий от оригинала | Статус |
