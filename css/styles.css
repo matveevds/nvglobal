@@ -1375,6 +1375,12 @@ body.home .btn-hero {
     border: 0;
     border-radius: 8px;
     background: var(--nv-gradient);
+    /*
+     * Иконка берёт цвет через `currentColor`. У `<button>` цвет не наследуется
+     * от body — без этой строки браузер подставляет свой чёрный, и стрелка
+     * на оранжевом градиенте чернеет.
+     */
+    color: var(--nv-constant-1);
     backdrop-filter: blur(10px);
     flex-shrink: 0;
     cursor: pointer;
@@ -1440,6 +1446,15 @@ body.home .btn__text-hero {
 }
 
 /*
+ * Расширяющийся круг тёмной темы (`.btn-hero::before`, #F9AA66 → #FF7759)
+ * лежит поверх заливки и на ховере забеливал оранжевую кнопку.
+ * В светлой кнопке его нет.
+ */
+body.home .btn-hero::before {
+    content: none;
+}
+
+/*
  * Hover главной замерен по фрейму 2386:28441: градиент снимается, остаётся сплошной #FD6B01.
  * Цвет текста и иконки не меняется.
  */
@@ -1447,6 +1462,17 @@ body.home .btn-hero:hover,
 body.home .btn-hero:focus-visible,
 body.home .btn-hero.is-active {
     background: var(--nv-primary);
+}
+
+/*
+ * Унаследованное от тёмной темы `.btn-hero:hover .btn__text-hero` (0,3,0)
+ * перебивает `body.home .btn__text-hero` (0,2,1) и красит подпись в #2B323B.
+ * В макете цвет на ховере не меняется — возвращаем его явно.
+ */
+body.home .btn-hero:hover .btn__text-hero,
+body.home .btn-hero:focus-visible .btn__text-hero,
+body.home .btn-hero.is-active .btn__text-hero {
+    color: var(--nv-constant-1);
 }
 
 body.home .btn-hero:focus-visible {
