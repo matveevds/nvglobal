@@ -8998,11 +8998,17 @@ body.home .teaser__subtitle {
     body.home .teaser__title br {
         display: none;
     }
+    /* В планшетном макете до карточки футера 128px, а не 64 (2376:17671). */
+    body.home .teaser__wrapper {
+        padding-bottom: 128px;
+    }
 }
 
 @media (max-width: 767.98px) {
+    /* Ниже 768 макета нет — возвращаем отступ темы. */
     body.home .teaser__wrapper {
         padding-top: 96px;
+        padding-bottom: 64px;
     }
     body.home .teaser__title {
         font-size: 32px;
