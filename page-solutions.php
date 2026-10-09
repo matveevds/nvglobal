@@ -335,8 +335,7 @@ get_header(); ?>
      * Цвет карточки задаётся её номером, а не активностью: первая всегда
      * оранжевая (DECISIONS.md, Р-53).
      *
-     * `id="solutions"` остаётся здесь временно — ссылки с главной ведут на
-     * /solutions/#solutions. В группе Products якорь переедет на новый блок
+     * Якорь `#solutions` в группе Products переехал отсюда на блок
      * «One platform. Lots of products. One API» (DECISIONS.md, Р-46).
      */
     $nv_solution_benefits = array(
@@ -362,7 +361,7 @@ get_header(); ?>
         ),
     );
     ?>
-    <section class="section solutions-why" id="solutions">
+    <section class="section solutions-why">
         <div class="container">
             <div class="solutions-why__head">
                 <div class="section__badge">Key Benefits</div>
@@ -569,101 +568,103 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="section flow" id="products">
-        <div class="container">
-            <div class="flow__wrapper section__wrapper">
-                <div class="flow__wrapper">
-                    <div class="flow__col flow__col--left">
-                        <div class="section__badge">Products</div>
-
-                        <div class="section__title-block">
-                            <h2 class="section__title">How KYC Verification Works</h2>
-                            <p class="section__subtitle">Four simple steps to verify your customers in seconds</p>
-                        </div>
-
-                        <div class="flow__steps section__tabs">
-                            <button type="button" class="flow__step section__tab section__tab--active">
-                                <span>Step 1</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z"></path>
-                                </svg>
-                            </button>
-                            <button type="button" class="flow__step section__tab">
-                                <span>Step 2</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z"></path>
-                                </svg>
-                            </button>
-                            <button type="button" class="flow__step section__tab">
-                                <span>Step 3</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z"></path>
-                                </svg>
-                            </button>
-                            <button type="button" class="flow__step section__tab">
-                                <span>Step 4</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z"></path>
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div class="flow__col-content">
-                            <p>Getting started with identity verification shouldn't be complicated. We've designed our KYC process to be intuitive for your users while maintaining the highest security standards. Here's how your customers complete verification in under a minute.</p>
-                        </div>
-
-                    </div>
-                    <div class="flow__col flow__col--right">
-                        <div class="flow__slider swiper">
-                            <div class="flow__slider-wrapper swiper-wrapper">
-
-                                <div class="flow__slide swiper-slide">
-                                    <div class="flow__slide-image">
-                                        <?php echo td_image(473, ['loading' => 'eager']); ?>
-                                    </div>
-                                    <div class="flow__slide-info">
-                                        <div class="flow__slide-title">Upload Document</div>
-                                        <p class="flow__slide-subtitle">Your customer takes a live photo of their passport or ID document</p>
-                                        <p class="flow__slide-description">Guided capture checks framing, glare, covered fields, and image quality before the verification starts. No uploads allowed - only live capture to prevent fraud deepfakes, and Al-generated images.</p>
-                                    </div>
-                                </div>
-
-                                <div class="flow__slide swiper-slide">
-                                    <div class="flow__slide-image">
-                                        <?php echo td_image(474, ['loading' => 'eager']); ?>
-                                    </div>
-                                    <div class="flow__slide-info">
-                                        <div class="flow__slide-title">Selfie with Passport</div>
-                                        <p class="flow__slide-subtitle">Your customer takes a live selfie with their passport visible in the same frame</p>
-                                        <p class="flow__slide-description">The system detects the face in the passport, detects the face in the selfie, compares them, and checks for fraud signals such as photo of a screen, face swap, deepfake manipulation, and fully Al-generated faces.</p>
-                                    </div>
-                                </div>
-
-                                <div class="flow__slide swiper-slide">
-                                    <div class="flow__slide-image">
-                                        <?php echo td_image(475, ['loading' => 'eager']); ?>
-                                    </div>
-                                    <div class="flow__slide-info">
-                                        <div class="flow__slide-title">Liveness Check</div>
-                                        <p class="flow__slide-subtitle">Your customer completes a short liveness session in front of the camera</p>
-                                        <p class="flow__slide-description">Depending on the scenario, the system asks for head turns or circular head movement and checks for photo attacks, video attacks, masks, deepfakes, virtual cameras, fully Al-generated faces, and extra faces in the frame.</p>
-                                    </div>
-                                </div>
-
-                                <div class="flow__slide flow__slide--center swiper-slide">
-                                    <div class="flow__slide-image">
-                                        <?php echo td_image(973, ['loading' => 'eager']); ?>
-                                    </div>
-                                    <div class="flow__slide-info">
-                                        <div class="flow__slide-title">Instant Verification Score</div>
-                                        <p class="flow__slide-subtitle">The platform analyzes the document, face match, liveness results, and anti-fraud signals in real time. Within seconds, your team receives a confidence score, biometric match result, liveness result, and fraud flags with reasons for review.</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+    <?php
+    /*
+     * One platform. Lots of products. One API — новый блок вместо прежней
+     * секции `.flow`. Figma: Full HD 2456:16577, Desktop 2398:21666,
+     * Tablet 2457:17288, Mobile 2467:17972.
+     *
+     * Шесть карточек из одного массива. Кнопка «Learn more» стоит только там,
+     * где она есть в макете и где в проекте существует реальный адрес:
+     * у KYC это `/docs/products/kyc/`. Для KYB кнопка в макете есть, но
+     * страницы в проекте нет — ссылку не выдумываем (BACKLOG A-29).
+     *
+     * Здесь же финальное место якоря `#solutions`: на него ведут ссылки
+     * «Learn more» со слайдера Products на главной (DECISIONS.md, Р-46).
+     */
+    $nv_products = array(
+        array(
+            'number'      => '01',
+            'title'       => 'KYC / eKYC',
+            'description' => 'A real person with a real document: document capture, face match, liveness, anti-fraud in one flow.',
+            'link'        => '/docs/products/kyc/',
+            'cta'         => 'Learn more',
+            'modifier'    => 'accent',
+        ),
+        array(
+            'number'      => '02',
+            'title'       => 'KYB',
+            'description' => 'Corporate structure down to the UBO, registry checks and signatory verification.',
+            'link'        => '',
+            'cta'         => 'Learn more',
+            'modifier'    => '',
+        ),
+        array(
+            'number'      => '03',
+            'title'       => 'AML &amp; Sanctions',
+            'description' => 'Screening against 1,700+ databases: OFAC, EU, UK, UN, PEP lists and adverse media; daily re-screening.',
+            'link'        => '',
+            'cta'         => '',
+            'modifier'    => '',
+        ),
+        array(
+            'number'      => '04',
+            'title'       => 'KYT',
+            'description' => 'Real-time risk scoring of crypto transactions, wallets and addresses.',
+            'link'        => '',
+            'cta'         => '',
+            'modifier'    => '',
+        ),
+        array(
+            'number'      => '05',
+            'title'       => 'Liveness &amp; Face Authentication',
+            'description' => 'A live person, not a photo, video or mask&nbsp;— deepfake-resistant; password-free login by face.',
+            'link'        => '',
+            'cta'         => '',
+            'modifier'    => '',
+        ),
+        array(
+            'number'      => '06',
+            'title'       => 'NeuroPay',
+            'description' => 'Pay by face at checkout, branch, ATM or kiosk; palm as a second factor.',
+            'link'        => '',
+            'cta'         => '',
+            'modifier'    => '',
+        ),
+    );
+    ?>
+    <section class="section solutions-products" id="solutions">
+        <?php /* 2456:16578 — секция оформлена панелью со скруглением 32 и рамкой по краю экрана. */ ?>
+        <div class="solutions-products__panel">
+            <div class="container">
+                <div class="solutions-products__head">
+                    <div class="section__badge">Products</div>
+                    <div class="solutions-products__title-block">
+                        <h2 class="section__title solutions-products__title">One platform. Lots of&nbsp;products. One&nbsp;API</h2>
+                        <p class="solutions-products__subtitle">Start with one module, add the rest as you grow&nbsp;— same API, same credentials, same dashboard</p>
                     </div>
                 </div>
+
+                <ul class="solutions-products__grid">
+                    <?php foreach ($nv_products as $nv_product) : ?>
+                    <li class="solutions-products__card<?php echo $nv_product['modifier'] ? ' solutions-products__card--' . esc_attr($nv_product['modifier']) : ''; ?>">
+                        <span class="solutions-products__number" aria-hidden="true"><?php echo esc_html($nv_product['number']); ?></span>
+                        <div class="solutions-products__body">
+                            <div class="solutions-products__text">
+                                <h3 class="solutions-products__name"><?php echo $nv_product['title']; ?></h3>
+                                <p class="solutions-products__description"><?php echo $nv_product['description']; ?></p>
+                            </div>
+                            <?php if ($nv_product['cta'] && $nv_product['link']) : ?>
+                            <a class="solutions-products__link" href="<?php echo esc_url(home_url($nv_product['link'])); ?>"
+                               aria-label="<?php echo esc_attr($nv_product['cta'] . ' about ' . wp_strip_all_tags(html_entity_decode($nv_product['title']))); ?>">
+                                <span class="solutions-products__link-text"><?php echo esc_html($nv_product['cta']); ?></span>
+                                <span class="solutions-products__link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </section>

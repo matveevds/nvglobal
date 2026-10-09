@@ -42,20 +42,25 @@
 | 1 | 18 | `.main.main--solutions` | `MAIN` (11050–11511) | — | **новый дизайн** |
 | 2 | 106 | `.page-nav` | `PAGE-NAV` (общая с главной) | — | **скрыта `if (false)`** |
 | 3 | 150 | `.benefits` | `BENEFITS` (11513–11991) | `#benefits` | **скрыта `if (false)`** |
-| 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11993–12499) | `#solutions` (временно) | **новый дизайн** |
-| — | — | ~~`.features`~~ | `FEATURES` (12501–13156) | — | разметки нет, CSS legacy |
-| 5 | 497 | `.industries` | `INDUSTRIES` (13470–14065) | `#industries` | **новый дизайн** |
-| 6 | 572 | `.flow` | `FLOW` (13158–13468) | `#products` | старый |
-| 7 | 672 | `.integration` | `INTEGRATION` (14067–14735) | `#integration` | старый |
-| 8 | 834 | `.security` | `SECURITY` (14737–14971) | `#security` | старый |
-| 9 | 905 | `.testimonials` | общая с главной | `#testimonials` | старый |
-| 10 | 987 | `.faq` | `FAQ` (14973–15520) | `#faq` | старый |
-| 11 | 1103 | `.cta` | `CTA` (15522–15757) | `#cta` | старый |
+| 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11996–12502) | — | **новый дизайн** |
+| — | — | ~~`.features`~~ | `FEATURES` (12504–13159) | — | разметки нет, CSS legacy |
+| 5 | 497 | `.industries` | `INDUSTRIES` (13835–14430) | `#industries` | **новый дизайн** |
+| 6 | 637 | `.solutions-products` | `SOLUTIONS PRODUCTS` (13161–13521) | `#solutions` | **новый дизайн** |
+| — | — | ~~`.flow`~~ | `FLOW` (13523–13833) | — | разметки нет, CSS legacy |
+| 7 | 674 | `.integration` | `INTEGRATION` (14432–15100) | `#integration` | старый |
+| 8 | 836 | `.security` | `SECURITY` (15102–15336) | `#security` | старый |
+| 9 | 907 | `.testimonials` | общая с главной | `#testimonials` | старый |
+| 10 | 989 | `.faq` | `FAQ` (15338–15885) | `#faq` | старый |
+| 11 | 1105 | `.cta` | `CTA` (15887–16122) | `#cta` | старый |
 
-Порядок секций в разметке изменён: `.industries` поднят выше `.flow` — так
-идут блоки в новом макете. Регионы CSS при этом остались на своих местах.
+Порядок секций в разметке приведён к макету: Why → Industries → Products.
+Регионы CSS при этом остались на своих местах в файле.
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10874) … `END` (15760).
+Якорь `#solutions` стоит на блоке Products — это его финальное место,
+туда ведут ссылки «Learn more» со слайдера Products на главной.
+Якоря `#products` на этой странице больше нет (был на старой `.flow`).
+
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16125).
 Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10876–11048): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
 
@@ -195,6 +200,46 @@ JS — `initSolutionsWhy()` в `js/main.js`. Обработчики вешают
 
 Ассеты: `img/sol-ind-{banks,fintech,crypto,telecom,gambling,government}.webp`
 480×480 + `@2x`. Старые `img/industries_maskot1…4.*` остались на диске.
+
+### Блок «One platform. Lots of products. One API» — `.solutions-products`
+
+Шесть продуктовых карточек из массива `$nv_products` в `page-solutions.php`
+(`number`, `title`, `description`, `link`, `cta`, `modifier`).
+
+```
+.section.solutions-products #solutions
+  .solutions-products__panel        панель: радиус 32, рамка, подложка surface-2
+    .container
+      .solutions-products__head     бейдж + H2 + подзаголовок, по центру
+      ul.solutions-products__grid
+        li.solutions-products__card[.solutions-products__card--accent]
+          span.solutions-products__number
+          .solutions-products__body
+            .solutions-products__text   h3 + p
+            a.solutions-products__link  «Learn more» + стрелка
+```
+
+| Параметр | Full HD 1920 | Desktop 1440 | Tablet 840 | Mobile 392 |
+|---|---|---|---|---|
+| Колонок | 3 | 3 | 2 | 1 |
+| Карточка | 608×211 | 448×263 | 380×249 | 360, по содержимому |
+| Текст и кнопка | в строку, зазор 52 | в столбик, зазор 24 | в столбик | в столбик |
+| Заголовок карточки | H4 24/36 | H5 20/28 | H5 20/28 | 16/20 |
+| Описание | 16/24 | 16/24 | 16/24 | 14/20 |
+| Номер | H1 52/64 | 52/64 | 44/56 | 30/36 |
+| Поле карточки | 24 | 24 | 16 | 12 |
+| Радиус | 24 | 24 | 16 | 12 |
+| Кнопка | 117×32 | 117×32 | 117×32 | 102×28 |
+
+Ряды сетки равной высоты (`grid-auto-rows: 1fr`), внутри карточки
+`space-between` с зазором 8 — остаток высоты уходит между номером и текстом.
+На мобильной ряды по содержимому: карточки без кнопки ниже.
+
+Первая карточка оранжевая — это её постоянное оформление, а не состояние.
+Кнопка «Learn more» выводится только там, где в проекте есть реальный адрес:
+сейчас это KYC → `/docs/products/kyc/`. Для KYB цели нет (BACKLOG A-29).
+
+JS у блока нет.
 
 ---
 

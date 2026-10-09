@@ -710,6 +710,9 @@ body.page-template-page-solutions {
     --nv-constant-85: rgba(248, 248, 248, 0.85);
     --nv-constant-50: rgba(248, 248, 248, 0.5);
 
+    /* Приглушённый оранжевый: номер на акцентной карточке Products. */
+    --nv-primary-tint: #FEB580;
+
     --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
 
     --nv-radius-card: 24px;
@@ -13154,6 +13157,368 @@ body.page-template-page-solutions .btn--header:focus-visible {
     }
 }
 /* FEATURES END */
+
+/* SOLUTIONS PRODUCTS START */
+
+/*
+ * One platform. Lots of products. One API — новый блок вместо прежней `.flow`.
+ * Figma: Full HD 2456:16577, Desktop 2398:21666, Tablet 2457:17288,
+ * Mobile 2467:17972.
+ *
+ * Шесть карточек в сетке 3x2 (планшет 2x3, мобильная — колонка). Классы
+ * уникальны для /solutions/, общие `.section__badge` и `.section__title`
+ * переопределяются только внутри блока.
+ */
+.solutions-products {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+/*
+ * 2456:16578 — секция нарисована панелью во всю ширину экрана: скругление 32,
+ * рамка по краю, подложка на уровень темнее фона страницы.
+ */
+.solutions-products__panel {
+    padding: 64px 0;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 32px;
+    background: var(--nv-surface-2);
+}
+
+/* Та же сетка, что у остальных блоков страницы. */
+.solutions-products .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.solutions-products__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+/* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+.solutions-products .section__badge {
+    align-self: center;
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+.solutions-products__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+    text-align: center;
+}
+
+/* Title/H2 40/52. */
+.solutions-products__title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+}
+
+/* Title/H5 20/28. */
+.solutions-products__subtitle {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+/* 2456:16584 — три колонки по 608, зазоры 16 по обеим осям. */
+.solutions-products__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Ряды равной высоты — в макете карточки обоих рядов одинаковые. */
+    grid-auto-rows: 1fr;
+    gap: 16px;
+    margin: 48px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Поле 24 с обводкой внутрь. */
+.solutions-products__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    /*
+     * Зазор между номером и текстом — минимальный: высоту карточки задаёт
+     * ряд сетки, остаток распределяет `space-between`, как в Auto Layout.
+     */
+    gap: 8px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Первая карточка — акцентная, как в макете; это её собственный стиль. */
+.solutions-products__card--accent {
+    background: linear-gradient(161deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+}
+
+/* Title/H1 52/64, приглушённый тон номера. */
+.solutions-products__number {
+    color: var(--nv-surface-3);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.solutions-products__card--accent .solutions-products__number {
+    color: var(--nv-primary-tint);
+}
+
+/* Full HD: текст и кнопка в строку; ниже 1600 кнопка уходит под текст. */
+.solutions-products__body {
+    display: flex;
+    align-items: flex-end;
+    gap: 52px;
+    width: 100%;
+}
+
+.solutions-products__text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Title/H4 24/36. */
+.solutions-products__name {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+/* Body text/Regular Regular 16/24. */
+.solutions-products__description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.solutions-products__card--accent .solutions-products__name,
+.solutions-products__card--accent .solutions-products__description {
+    color: var(--nv-constant-1);
+}
+
+/* Поле 6/12 с обводкой внутрь: 5 + 1 + 20 + 1 + 5 = 32. */
+.solutions-products__link {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+/* На акцентной карточке подложка кнопки на уровень темнее. */
+.solutions-products__card--accent .solutions-products__link {
+    background: var(--nv-surface-3);
+}
+
+.solutions-products__link:hover {
+    background: var(--nv-surface-3);
+}
+
+.solutions-products__card--accent .solutions-products__link:hover {
+    background: var(--nv-surface-4);
+}
+
+.solutions-products__link:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Button/Small 14/20. */
+.solutions-products__link-text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.solutions-products__link-icon {
+    display: flex;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.solutions-products__link-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 1599.98px) {
+    /*
+     * Desktop 2398:24429: карточка уже, поэтому кнопка встаёт под текст,
+     * а заголовок берёт Title/H5 20/28.
+     */
+    .solutions-products__body {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 24px;
+    }
+
+    .solutions-products__text {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .solutions-products__name {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 2457:17295 — две колонки, поле карточки 16, радиус 16. */
+    .solutions-products__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .solutions-products__card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    /* Title/H1 44/56. */
+    .solutions-products__number {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 2467:17979 — одна колонка. Карточки по содержимому: номер и текст
+     * идут подряд, без растяжки по высоте, поэтому карточки без кнопки ниже.
+     */
+    .solutions-products {
+        padding: 32px 0;
+    }
+
+    .solutions-products__panel {
+        padding: 32px 0;
+        border-radius: 24px;
+    }
+
+    .solutions-products .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Бейдж 87x24: Body text/Regular 14/20. */
+    .solutions-products .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Title/H2 32/44. */
+    .solutions-products__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    /* Title/H5 16/20. */
+    .solutions-products__subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    /* Карточки по содержимому: без кнопки они ниже — так в макете. */
+    .solutions-products__grid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-auto-rows: auto;
+    }
+
+    .solutions-products__card {
+        justify-content: flex-start;
+        gap: 0;
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    /* Title/H1 30/36. */
+    .solutions-products__number {
+        font-size: 30px;
+        line-height: 120%;
+    }
+
+    .solutions-products__name {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    /* Body text/Regular Regular 14/20. */
+    .solutions-products__description {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Button/Small 12/16: 5 + 1 + 16 + 1 + 5 = 28. */
+    .solutions-products__link-text {
+        font-size: 12px;
+        line-height: 133.333%;
+    }
+
+    .solutions-products__link-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* SOLUTIONS PRODUCTS END */
 
 /* FLOW START */
 
