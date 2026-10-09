@@ -31,9 +31,9 @@
 
 ## 2. Solutions — `page-solutions.php` → `/solutions/`
 
-Редизайн по новому макету идёт по группам. Выполнены **группы 1–7** (2026-10-09):
+Редизайн по новому макету идёт по группам. Выполнены **группы 1–8** (2026-10-09):
 светлая тема и шапка, первый экран, Why, Industries, Products, Integration,
-Security & compliance, FAQ. Секция CTA — прежний тёмный дизайн, ждёт своей группы.
+Security & compliance, FAQ, Contacts. Осталась группа 9 — тизер и подвал.
 
 **Полностью статический файл: ни одного `get_field` / `WP_Query`.**
 
@@ -52,7 +52,8 @@ Security & compliance, FAQ. Секция CTA — прежний тёмный д�
 | — | — | ~~`.security`~~ | `SECURITY` (15525–15759) | — | разметки нет, CSS legacy |
 | 9 | 866 | `.testimonials` | общая с главной | `#testimonials` | **скрыта `if (false)`** |
 | 10 | 978 | `.faq` | `FAQ` (15761–16502), общая с главной | `#faq` | **новый дизайн** |
-| 11 | 1047 | `.cta` | `CTA` (16504–16739) | `#cta` | старый |
+| 11 | 1078 | `.contacts` | `CONTACTS` (7629–9720), общая с главной | `#cta` | **новый дизайн** |
+| — | — | ~~`.cta`~~ | `CTA` (16894–17129) | — | разметки нет, CSS legacy |
 
 Порядок секций в разметке приведён к макету: Why → Industries → Products.
 Регионы CSS при этом остались на своих местах в файле.
@@ -287,6 +288,44 @@ ArrowLeft / ArrowRight работают, когда фокус внутри бл
 как legacy (BACKLOG A-31).
 
 ---
+
+### Contacts — один компонент и одна форма на две страницы
+
+`.contacts` выводится на главной (`main-page.php:1313`) и на Solutions
+(`page-solutions.php:1078`). Разметка секции у страниц своя, а **форма общая**:
+
+```
+template-parts/contacts-form.php      ← <form class="contacts__form">
+    get_template_part('template-parts/contacts-form')                        ← главная
+    get_template_part('template-parts/contacts-form', null, ['show_select' => false])  ← Solutions
+```
+
+Параметр один: `show_select`. Он управляет блоком «How can we help you?»,
+которого нет в макетах Solutions. Поле `clientOption` на сервере проверяется
+только при наличии в запросе, поэтому без него отправка работает как обычно.
+Больше в форме ничего не ветвится: `name`, `id`, `data-*`, тексты ошибок,
+список 235 стран, четыре варианта select, чекбокс согласия, капча и
+`send_contacts_form` — общие.
+
+Перед подключением формы шаблон обязан подключить
+`template-parts/contacts-icons.php` — оттуда берутся иконки полей.
+
+Структура секции на Solutions (2456:16687):
+
+```
+.contacts.section#cta .container .contacts__wrapper
+  .section__badge                      Contacts
+  .contacts__content                   сетка 580 + 48 + остаток
+    .contacts__title-block             H2 + оранжевый подзаголовок
+    .contacts__actions .contacts__card оранжевая карточка: заголовок,
+                                       «Email us» и «Message us» в ряд
+    .contacts__form-block              карточка формы, внутри template-part
+```
+
+Отличия от главной: нет блока «Here's what you'll get», нет кнопки и
+разделителя в оранжевой карточке, нет select. CSS — общий регион `CONTACTS`
+(7629–9720): базовые правила перечисляют оба контекста, ниже подблок
+отличий Solutions и правила в media-запросах.
 
 ### FAQ — один компонент на две страницы
 
