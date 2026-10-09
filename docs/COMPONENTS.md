@@ -31,9 +31,9 @@
 
 ## 2. Solutions — `page-solutions.php` → `/solutions/`
 
-Редизайн по новому макету идёт по группам. Выполнены **группы 1–6** (2026-10-09):
+Редизайн по новому макету идёт по группам. Выполнены **группы 1–7** (2026-10-09):
 светлая тема и шапка, первый экран, Why, Industries, Products, Integration,
-Security & compliance. Секции FAQ и CTA — прежний тёмный дизайн, ждут своих групп.
+Security & compliance, FAQ. Секция CTA — прежний тёмный дизайн, ждёт своей группы.
 
 **Полностью статический файл: ни одного `get_field` / `WP_Query`.**
 
@@ -51,8 +51,8 @@ Security & compliance. Секции FAQ и CTA — прежний тёмный �
 | 8 | 837 | `.solutions-security` | `SOLUTIONS SECURITY` (15241–15523) | `#security` | **новый дизайн** |
 | — | — | ~~`.security`~~ | `SECURITY` (15525–15759) | — | разметки нет, CSS legacy |
 | 9 | 866 | `.testimonials` | общая с главной | `#testimonials` | **скрыта `if (false)`** |
-| 10 | 950 | `.faq` | `FAQ` (15761–16308) | `#faq` | старый |
-| 11 | 1066 | `.cta` | `CTA` (16310–16545) | `#cta` | старый |
+| 10 | 978 | `.faq` | `FAQ` (15761–16502), общая с главной | `#faq` | **новый дизайн** |
+| 11 | 1047 | `.cta` | `CTA` (16504–16739) | `#cta` | старый |
 
 Порядок секций в разметке приведён к макету: Why → Industries → Products.
 Регионы CSS при этом остались на своих местах в файле.
@@ -61,7 +61,7 @@ Security & compliance. Секции FAQ и CTA — прежний тёмный �
 туда ведут ссылки «Learn more» со слайдера Products на главной.
 Якоря `#products` на этой странице больше нет (был на старой `.flow`).
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16548).
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16742).
 Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10879–11051): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
 
@@ -287,6 +287,38 @@ ArrowLeft / ArrowRight работают, когда фокус внутри бл
 как legacy (BACKLOG A-31).
 
 ---
+
+### FAQ — один компонент на две страницы
+
+`.faq` живёт и на главной (`main-page.php`), и на Solutions
+(`page-solutions.php`). Разметка одинаковая, данные разные:
+
+```
+.faq .container .faq__wrapper
+  .faq__left
+    .faq__title-block   .section__badge + .faq__title-text (h2 + p)
+    .faq__cta           текст + кнопка .open-callForm2
+  .faq__right .faq__list
+    .faq__item[--open|--static]
+      .faq__item-wrapper
+        button.faq__item-question[aria-expanded][aria-controls]
+          span.faq__item-question-text + span.faq__item-question-icon (шеврон)
+        .faq__item-answer[role=region][aria-labelledby] > .faq__item-answer-text
+```
+
+- Вопрос **с ответом** — `<button>` с `aria-expanded` и `aria-controls`;
+  id панели `faq-answer-N`, id кнопки `faq-question-N`.
+- Вопрос **без ответа** (`faq__item--static`) — `div`, не в фокусе, без шеврона.
+  Так сделано потому, что в макетах ответ есть только у первого вопроса.
+- Данные: `$nv_faq_items` на главной (8 вопросов), `$nv_solutions_faq`
+  на Solutions (5 вопросов, поля `question` / `answer` / `initial_open`).
+- JS — общий `initFaq()` в `js/main.js`: одновременно открыт один элемент,
+  высота панели считается по содержимому, второго обработчика нет.
+- CSS — регион `FAQ` (15761–16502). Базовые правила перечисляют оба контекста
+  (`body.home` и `body.page-template-page-solutions`), ниже идёт подблок
+  отличий Solutions: ширина левой колонки 600 на Full HD, планшетная
+  раскладка в столбик и мобильная типографика из фрейма 392.
+  Прежние тёмные `.faq*` без скоупа остались для других шаблонов.
 
 ## 3. Pricing Matrix — `page-price-matrix.php` → `/pricing-matrix/`
 

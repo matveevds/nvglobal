@@ -70,7 +70,7 @@
 | Файл | Строк | Template Name | Роль |
 |---|---|---|---|
 | `main-page.php` | 2406 | Шаблон главной страницы | **главная** |
-| `page-solutions.php` | 1138 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (Why), 3 (Industries), 4 (Products), 5 (Integration), 6 (Security; секция отзывов скрыта) |
+| `page-solutions.php` | 1119 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (Why), 3 (Industries), 4 (Products), 5 (Integration), 6 (Security; секция отзывов скрыта), 7 (FAQ) |
 | `page-price-matrix.php` | 715 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |
