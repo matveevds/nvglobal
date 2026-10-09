@@ -39,21 +39,26 @@
 
 | # | Строка | Разметка | CSS-секция | Якорь | Состояние |
 |---|---|---|---|---|---|
-| 1 | 18 | `.main.main--solutions` | `MAIN` (11038–11499) | — | **новый дизайн** |
+| 1 | 18 | `.main.main--solutions` | `MAIN` (11050–11511) | — | **новый дизайн** |
 | 2 | 106 | `.page-nav` | `PAGE-NAV` (общая с главной) | — | **скрыта `if (false)`** |
-| 3 | 149 | `.benefits` | `BENEFITS` (11501–11979) | `#benefits` | старый |
-| 4 | 324 | `.features` | `FEATURES` (11981–12636) | `#solutions` | старый |
-| 5 | 526 | `.flow` | `FLOW` (12638–12948) | `#products` | старый |
-| 6 | 625 | `.industries` | `INDUSTRIES` (12950–13326) | `#industries` | старый |
-| 7 | 804 | `.integration` | `INTEGRATION` (13328–13996) | `#integration` | старый |
-| 8 | 966 | `.security` | `SECURITY` (13998–14232) | `#security` | старый |
-| 9 | 1037 | `.testimonials` | общая с главной | `#testimonials` | старый |
-| 10 | 1119 | `.faq` | `FAQ` (14234–14781) | `#faq` | старый |
-| 11 | 1235 | `.cta` | `CTA` (14783–15018) | `#cta` | старый |
+| 3 | 150 | `.benefits` | `BENEFITS` (11513–11991) | `#benefits` | **скрыта `if (false)`** |
+| 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11993–12499) | `#solutions` (временно) | **новый дизайн** |
+| — | — | ~~`.features`~~ | `FEATURES` (12501–13156) | — | разметки нет, CSS legacy |
+| 5 | 420 | `.flow` | `FLOW` (13158–13468) | `#products` | старый |
+| 6 | 519 | `.industries` | `INDUSTRIES` (13470–13846) | `#industries` | старый |
+| 7 | 698 | `.integration` | `INTEGRATION` (13848–14516) | `#integration` | старый |
+| 8 | 860 | `.security` | `SECURITY` (14518–14752) | `#security` | старый |
+| 9 | 931 | `.testimonials` | общая с главной | `#testimonials` | старый |
+| 10 | 1013 | `.faq` | `FAQ` (14754–15301) | `#faq` | старый |
+| 11 | 1129 | `.cta` | `CTA` (15303–15538) | `#cta` | старый |
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10873) … `END` (15021).
-Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10875–11036): светлая шапка
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10874) … `END` (15541).
+Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10876–11048): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
+
+⚠️ `id="solutions"` временно стоит на блоке Why: с главной на него ведут ссылки
+`/solutions/#solutions`. В группе Products якорь переедет на новый блок
+«One platform. Lots of products. One API» (DECISIONS.md, Р-46).
 
 ### Первый экран `.main--solutions` — новый компонент
 
@@ -96,6 +101,52 @@
 Ассеты: `img/sol-hero-{fhd,desktop,tablet,mobile}.webp` (+`@2x`),
 `img/logo-hero.svg` (уже был), `img/logo-header-light.svg` (новый, тёмный
 логотип 168×32 — его подставляет `header.php` на Solutions).
+
+### Блок «Why Leading Companies Choose ...» — `.solutions-why`
+
+Данные одни на все макеты: массив `$nv_solution_benefits` в `page-solutions.php`
+(`number`, `title`, `description`). Разметка тоже одна, разницу делает CSS.
+
+```
+.section.solutions-why #solutions
+  .container
+    .solutions-why__head        бейдж + H2 по центру
+    .solutions-why__board       рамка, радиус, overflow: hidden
+      .solutions-why__cards     role="group"
+        .solutions-why__card.solutions-why__card--level-N[.is-open]
+          .solutions-why__card-body
+            h3.solutions-why__card-heading > button.solutions-why__card-button
+            p.solutions-why__card-text
+          span.solutions-why__card-number
+      .solutions-why__media     <picture>, 4 кропа
+      .solutions-why__nav       две .solutions-why__arrow
+```
+
+| Параметр | Full HD 1920 | Desktop 1440 | Tablet 840 | Mobile 392 |
+|---|---|---|---|---|
+| Раскладка | карточки слева, фото справа | то же | фото сверху, карточки под ним | то же |
+| Раскрыта | одна | одна | все четыре | все четыре |
+| Раскрытая / свёрнутая | 516 / 116 | 516 / 116 | — | — |
+| Нахлёст | 24 по горизонтали | 24 | 64 по вертикали | 64 |
+| Поле карточки | 24 | 24 | 16 | 12 |
+| Радиус | 24 | 24 | 16 | 12 |
+| Заголовок карточки | H3 32/48 | H3 32/48 | H4 24/36 | H4 20/32 |
+| Описание | 18/28 | 18/28 | 18/28 | 16/24 |
+| Номер | H1 52/64 | H1 52/64 | 44/56 | 30/36 |
+| Стрелки | есть | есть | нет | нет |
+
+Цвет карточки — по её номеру: 01 оранжевая, 02 `--nv-surface-3`,
+03 `--nv-surface-2`, 04 `--nv-surface-1`. Признак раскрытия — только ширина.
+
+Ширины карточек задаются переменными `--swhy-card`, `--swhy-card-open`,
+`--swhy-tuck` на `.solutions-why__board` и переопределяются на 1399.98 и
+1199.98 — отдельных макетов там нет, но фотография иначе вырождается.
+
+JS — `initSolutionsWhy()` в `js/main.js`. Обработчики вешаются один раз,
+режим «десктоп / статика» переключается по `change` у `matchMedia`.
+
+Ассеты: `img/sol-why-{fhd,desktop,tablet,mobile}.webp` (+`@2x`). Фотография
+одна на все состояния — в макете она при переключении карточек не меняется.
 
 ---
 

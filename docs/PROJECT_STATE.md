@@ -70,7 +70,7 @@
 | Файл | Строк | Template Name | Роль |
 |---|---|---|---|
 | `main-page.php` | 2406 | Шаблон главной страницы | **главная** |
-| `page-solutions.php` | 1307 | Шаблон страницы Solutions | `/solutions/`; редизайн идёт по группам, выполнена группа 1 — первый экран и шапка |
+| `page-solutions.php` | 1201 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран) и 2 (блок Why) |
 | `page-price-matrix.php` | 715 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |
@@ -175,15 +175,16 @@
 
 | Файл | Строк | Подключение |
 |---|---|---|
-| `css/styles.css` | **17 730** | глобально |
+| `css/styles.css` | **18 250** | глобально |
 | `css/post.css` | 902 | глобально (нужен только статьям) |
 | `css/blog.css` | 586 | глобально (нужен только блогу) |
 | `css/document-toc.css` | 539 | условно: `is_singular('document')` или `page-docs.php` |
 | `style.css` | 17 | заголовок темы; `Theme Name: NVGlobal` — **менять нельзя** |
 
 ### Архитектура — совпадает с регламентом NeuroVision
-`styles.css` разбит маркерами `/* SECTION START */ … /* SECTION END */`, **41 секция**
-(2026-10-09: добавлен подрегион `SOLUTIONS THEME` внутри `SOLUTIONS-PAGE`).
+`styles.css` разбит маркерами `/* SECTION START */ … /* SECTION END */`, **42 секции**
+(2026-10-09: внутри `SOLUTIONS-PAGE` добавлены подрегионы `SOLUTIONS THEME`
+и `SOLUTIONS WHY`).
 Внутри каждой секции — своя лесенка media-запросов по убыванию. В конец файла они **не вынесены**.
 Это ровно то, чего требует исходный регламент, — переучивать ничего не нужно.
 

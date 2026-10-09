@@ -708,6 +708,7 @@ body.page-template-page-solutions {
     --nv-white: #FFFFFF;
     --nv-constant-1: #F8F8F8;
     --nv-constant-85: rgba(248, 248, 248, 0.85);
+    --nv-constant-50: rgba(248, 248, 248, 0.5);
 
     --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
 
@@ -11988,6 +11989,514 @@ body.page-template-page-solutions .btn--header:focus-visible {
 }
 
 /* BENEFITS END */
+
+/* SOLUTIONS WHY START */
+
+/*
+ * «Why Leading Companies Choose ...» — Figma: Full HD 2456:16527 (карточки
+ * 2456:16531), Desktop 499:6143 (2431:14232), Tablet 2457:17238 (2457:17242),
+ * Mobile 2467:17925 (2467:17929); состояния 2431:14300 / 14440 / 14478.
+ *
+ * С 992px — горизонтальный аккордеон: раскрыта одна карточка, остальные
+ * сведены до номера; ниже — статичный список, где раскрыты все четыре.
+ * Классы блока уникальны для /solutions/, поэтому дополнительная привязка
+ * к шаблону страницы не нужна.
+ */
+.solutions-why {
+    background: var(--nv-surface-1);
+}
+
+/* Та же сетка, что и у первого экрана: поле 32, контент = ширина экрана − 64. */
+.solutions-why .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.solutions-why__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+/* Бейдж и заголовок — светлая тема, только в пределах этого блока. */
+.solutions-why .section__badge {
+    align-self: center;
+    /* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* Title/H2 40/52. */
+.solutions-why__title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    text-align: center;
+}
+
+.solutions-why__title span {
+    color: var(--nv-primary);
+}
+
+/*
+ * Доска: слева карточки, справа фотография. Высота фиксирована макетом —
+ * раскрытие карточки меняет только ширину, поэтому блок не дёргается.
+ */
+.solutions-why__board {
+    --swhy-card: 116px;
+    --swhy-card-open: 516px;
+    --swhy-tuck: 24px;
+
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 620px;
+    margin-top: 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-1);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/*
+ * Фотография прижата к правому краю: в макете она выходит за правую границу
+ * области карточек, а при сужении экрана подрезается слева.
+ */
+.solutions-why__media {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.solutions-why__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+}
+
+.solutions-why__cards {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: stretch;
+}
+
+/*
+ * Карточки лежат внахлёст на 24: соседняя слева всегда выше по стопке,
+ * поэтому её скруглённый край перекрывает следующую.
+ */
+.solutions-why__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    /*
+     * Контент прижат к правому краю: когда карточка сужается, заголовок
+     * и описание уезжают влево за границу, а номер остаётся на месте.
+     * Текст при этом не переносится заново — его ширина фиксирована.
+     */
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    width: calc(var(--swhy-card) + var(--swhy-tuck));
+    margin-left: calc(var(--swhy-tuck) * -1);
+    /* Обводка Figma рисуется внутрь рамки, поэтому поле 24 − 1px. */
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: width .45s cubic-bezier(.4, 0, .2, 1);
+}
+
+.solutions-why__card:first-child {
+    width: var(--swhy-card);
+    margin-left: 0;
+}
+
+.solutions-why__card.is-open {
+    width: calc(var(--swhy-card-open) + var(--swhy-tuck));
+}
+
+.solutions-why__card:first-child.is-open {
+    width: var(--swhy-card-open);
+}
+
+/* Левая карточка всегда поверх правой — так устроен нахлёст в макете. */
+.solutions-why__card--level-1 { z-index: 4; background: var(--nv-primary); }
+.solutions-why__card--level-2 { z-index: 3; background: var(--nv-surface-3); }
+.solutions-why__card--level-3 { z-index: 2; background: var(--nv-surface-2); }
+.solutions-why__card--level-4 { z-index: 1; background: var(--nv-surface-1); }
+
+.solutions-why__card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: stretch;
+    flex: 0 0 388px;
+    width: 388px;
+    padding-right: 48px;
+}
+
+.solutions-why__card-heading {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+/*
+ * Кнопка несёт только заголовок — это и есть её доступное имя. Кликабельной
+ * делается вся карточка: псевдоэлемент растянут по её площади.
+ */
+.solutions-why__card-button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nv-object-1);
+    font-family: inherit;
+    /* Title/H3 32/48. */
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.solutions-why__card-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 24px;
+}
+
+.solutions-why__card-button:focus-visible {
+    outline: none;
+}
+
+.solutions-why__card-button:focus-visible::after {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: -4px;
+}
+
+/* Body text/Medium Regular 18/28. */
+.solutions-why__card-text {
+    margin: 0;
+    width: 332px;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Size-Medium, 18px);
+    line-height: 155.556%;
+    font-weight: 400;
+}
+
+/* Title/H1 52/64 в поле 80 по правому краю. */
+.solutions-why__card-number {
+    flex: 0 0 80px;
+    width: 80px;
+    color: var(--nv-surface-3);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* Первая карточка оранжевая — на ней светлый текст. */
+.solutions-why__card--level-1 .solutions-why__card-button {
+    color: var(--nv-constant-1);
+}
+
+.solutions-why__card--level-1 .solutions-why__card-text {
+    color: var(--nv-constant-85);
+}
+
+.solutions-why__card--level-1 .solutions-why__card-button:focus-visible::after {
+    outline-color: var(--nv-constant-1);
+}
+
+/* На оранжевой и на тёмно-серой подложке номер светлый, на двух светлых — серый. */
+.solutions-why__card--level-1 .solutions-why__card-number,
+.solutions-why__card--level-2 .solutions-why__card-number {
+    color: var(--nv-constant-50);
+}
+
+.solutions-why__nav {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+}
+
+/* Поле 8 с обводкой внутрь: 7 + 1 + иконка 24 + 1 + 7 = 40. */
+.solutions-why__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: background-color .2s ease, opacity .2s ease;
+}
+
+.solutions-why__arrow svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.solutions-why__arrow:hover:not(:disabled) {
+    background: var(--nv-surface-3);
+}
+
+.solutions-why__arrow:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Зацикливания в макете нет: на крайних карточках кнопка выключается. */
+.solutions-why__arrow:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+/* Пользователь просил меньше движения — раскрываем карточку без анимации. */
+@media (prefers-reduced-motion: reduce) {
+    .solutions-why__card,
+    .solutions-why__arrow {
+        transition: none;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2431:14232 — размеры карточек те же, что на Full HD. */
+}
+
+@media (max-width: 1399.98px) {
+    /*
+     * Отдельного макета между 1440 и 992 нет. Чтобы фотография не исчезала,
+     * карточки сужаются пропорционально, а текст внутри сохраняет свою
+     * фиксированную ширину — переноса на лету по-прежнему нет.
+     */
+    .solutions-why__board {
+        --swhy-card: 100px;
+        --swhy-card-open: 436px;
+    }
+
+    .solutions-why__card-body {
+        flex-basis: 308px;
+        width: 308px;
+        padding-right: 32px;
+    }
+
+    .solutions-why__card-text {
+        width: 276px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .solutions-why__board {
+        --swhy-card: 92px;
+        --swhy-card-open: 400px;
+    }
+
+    .solutions-why__card-body {
+        flex-basis: 280px;
+        width: 280px;
+        padding-right: 24px;
+    }
+
+    .solutions-why__card-text {
+        width: 256px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Tablet 2457:17242: фотография сверху, под ней четыре раскрытые карточки
+     * внахлёст по вертикали на 64. Интерактива нет — JS снимает обработчики
+     * и ARIA, стрелки спрятаны.
+     */
+    .solutions-why__head {
+        gap: 48px;
+    }
+
+    .solutions-why__board {
+        flex-direction: column;
+        height: auto;
+        border-radius: 16px;
+    }
+
+    /* В разметке карточки идут первыми — здесь фотография поднимается над ними. */
+    .solutions-why__media {
+        order: -1;
+        flex: 0 0 auto;
+        height: 489px;
+    }
+
+    .solutions-why__media img {
+        object-position: center top;
+    }
+
+    .solutions-why__cards {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .solutions-why__card,
+    .solutions-why__card:first-child,
+    .solutions-why__card.is-open,
+    .solutions-why__card:first-child.is-open {
+        width: auto;
+    }
+
+    .solutions-why__card {
+        align-items: flex-end;
+        justify-content: flex-start;
+        /* Поле 16 с обводкой внутрь; верхнее 72 — нахлёст 64 плюс 8. */
+        padding: 71px 15px 15px;
+        margin-left: 0;
+        margin-top: -64px;
+        border-radius: 16px;
+    }
+
+    .solutions-why__card:first-child {
+        margin-top: 0;
+        padding-top: 15px;
+    }
+
+    .solutions-why__card-body {
+        flex: 1 1 auto;
+        width: auto;
+        min-width: 0;
+        justify-content: flex-start;
+        gap: 8px;
+        padding-right: 48px;
+    }
+
+    /* Title/H4 24/36. */
+    .solutions-why__card-button {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .solutions-why__card-button::after {
+        content: none;
+    }
+
+    .solutions-why__card-text {
+        width: auto;
+    }
+
+    /* Title/H1 44/56. */
+    .solutions-why__card-number {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+
+    .solutions-why__nav {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2467:17929: поле карточки 12, радиус 12, фотография 308. */
+    .solutions-why .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .solutions-why {
+        padding: 32px 0;
+    }
+
+    .solutions-why__head {
+        gap: 48px;
+    }
+
+    /* Бейдж 107x24: Body text/Regular 14/20. */
+    .solutions-why .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Title/H2 32/44. */
+    .solutions-why__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .solutions-why__board {
+        border-radius: 12px;
+    }
+
+    .solutions-why__media {
+        height: 301px;
+    }
+
+    .solutions-why__card {
+        padding: 71px 11px 11px;
+        border-radius: 12px;
+    }
+
+    .solutions-why__card:first-child {
+        padding-top: 11px;
+    }
+
+    .solutions-why__card-body {
+        padding-right: 0;
+    }
+
+    /* Title/H4 20/32. */
+    .solutions-why__card-button {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* Body text/Medium Regular 16/24. */
+    .solutions-why__card-text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    /* Title/H1 30/36. */
+    .solutions-why__card-number {
+        font-size: 30px;
+        line-height: 120%;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+/* SOLUTIONS WHY END */
 
 /* FEATURES START */
 .features {

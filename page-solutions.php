@@ -146,6 +146,7 @@ get_header(); ?>
     </section>
     <?php endif; ?>
 
+    <?php if (false) : /* Секция Key Benefits скрыта: в новом макете Solutions её нет, бейдж переехал в блок Why (DECISIONS.md, Р-11). */ ?>
     <section class="section benefits" id="benefits" data-offset="-1">
         <div class="container">
             <div class="section__wrapper benefits__wrapper">
@@ -320,204 +321,97 @@ get_header(); ?>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
-    <section class="section features" id="solutions">
+    <?php
+    /*
+     * Why Leading Companies Choose ... — новый блок вместо прежней секции `.features`.
+     * Figma: Full HD 2456:16527 (карточки 2456:16531), Desktop 499:6143 (2431:14232),
+     * Tablet 2457:17238 (2457:17242), Mobile 2467:17925 (2467:17929);
+     * состояния карточек 2431:14300 / 2431:14440 / 2431:14478.
+     *
+     * Одни данные на все четыре макета: с 992px — горизонтальный аккордеон
+     * (раскрыта одна карточка), ниже — статичный список, где раскрыты все.
+     * Цвет карточки задаётся её номером, а не активностью: первая всегда
+     * оранжевая (DECISIONS.md, Р-53).
+     *
+     * `id="solutions"` остаётся здесь временно — ссылки с главной ведут на
+     * /solutions/#solutions. В группе Products якорь переедет на новый блок
+     * «One platform. Lots of products. One API» (DECISIONS.md, Р-46).
+     */
+    $nv_solution_benefits = array(
+        array(
+            'number'      => '01',
+            'title'       => 'Higher conversion',
+            'description' => 'Decisions in seconds, not days: fewer drop-offs during onboarding and more approved customers.',
+        ),
+        array(
+            'number'      => '02',
+            'title'       => 'Global coverage',
+            'description' => '16,000+ document types from 195+ countries and territories, in 90+ languages.',
+        ),
+        array(
+            'number'      => '03',
+            'title'       => 'Compliance &amp; fraud prevention',
+            'description' => '99.74% face match and 99.85% document recognition, 1,700+ AML databases, 40+ anti-fraud checks.',
+        ),
+        array(
+            'number'      => '04',
+            'title'       => 'Seamless integration',
+            'description' => 'REST API, Web and mobile SDKs; integration under an&nbsp;hour, sandbox first.',
+        ),
+    );
+    ?>
+    <section class="section solutions-why" id="solutions">
         <div class="container">
-            <div class="features__wrapper section__wrapper">
-                <div class="section__badge">Solutions</div>
-                <div class="section__content">
-                    <div class="section__title-block features__title-block">
-                        <h2 class="section__title text-center">Our AI-Powered Identity Solutions</h2>
-                        <p class="section__subtitle text-center">Everything you need for secure and compliant customer onboarding in one powerful solution.</p>
-                        <p class="section__description text-center">Our AI-driven platform combines advanced document verification, face recognition, and compliance checks to create a seamless verification experience that protects your business while delighting your users.</p>
-                    </div>
-                    <div class="features__layout">
-                        <div class="features__tabs features__tabs--desktop">
-                            <button type="button" class="features__tab animate-fade-up features__tab--active" data-index="0">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.38397 7.04851C4.76033 7.71838 4.375 8.70762 4.375 9.95162V13.794C4.375 14.2774 3.98324 14.669 3.5 14.669C3.01675 14.669 2.625 14.2774 2.625 13.794V9.95162C2.625 8.34644 3.12677 6.90479 4.10312 5.85606C5.08604 4.80028 6.48381 4.21484 8.12567 4.21484H19.8743C21.5128 4.21484 22.9101 4.80062 23.8936 5.85568C24.8706 6.90391 25.375 8.34542 25.375 9.95162V17.6365C25.375 19.2416 24.8732 20.6833 23.8968 21.732C22.9139 22.7878 21.5161 23.3733 19.8743 23.3733H13.5596C13.0764 23.3733 12.6846 22.9815 12.6846 22.4983C12.6846 22.015 13.0764 21.6233 13.5596 21.6233H19.8743C21.0839 21.6233 21.999 21.2025 22.6161 20.5396C23.2397 19.8698 23.625 18.8805 23.625 17.6365V9.95162C23.625 8.70865 23.2382 7.71928 22.6134 7.04891C21.9949 6.38537 21.0795 5.96484 19.8743 5.96484H8.12567C6.91608 5.96484 6.00102 6.38571 5.38397 7.04851Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.625 11.2665C2.625 10.7833 3.01675 10.3915 3.5 10.3915H24.5C24.9832 10.3915 25.375 10.7833 25.375 11.2665C25.375 11.7498 24.9832 12.1416 24.5 12.1416H3.5C3.01675 12.1416 2.625 11.7498 2.625 11.2665Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.52827 15.5578C6.89455 15.5578 7.22206 15.786 7.34902 16.1296L7.46688 16.4484C7.82283 17.4118 8.58104 18.1709 9.54213 18.5271L9.86063 18.645C10.2038 18.7722 10.4316 19.0996 10.4316 19.4655C10.4316 19.8315 10.2038 20.1589 9.86063 20.286L9.54216 20.404C8.58106 20.7602 7.82283 21.5192 7.46689 22.4825L7.34903 22.8015C7.22209 23.1451 6.89456 23.3733 6.52827 23.3733C6.16197 23.3733 5.83444 23.1451 5.7075 22.8015L5.58965 22.4825C5.2337 21.5192 4.47549 20.7602 3.51439 20.404L3.19591 20.2859C2.85276 20.1588 2.625 19.8315 2.625 19.4655C2.625 19.0996 2.85276 18.7723 3.19591 18.645L3.51433 18.5271C4.47544 18.1709 5.2337 17.4118 5.58965 16.4485L5.70751 16.1296C5.83446 15.786 6.16198 15.5578 6.52827 15.5578ZM6.52827 20.5733C6.83993 20.1509 7.21306 19.7775 7.63504 19.4655C7.21306 19.1536 6.83993 18.7801 6.52827 18.3578C6.2166 18.7801 5.84347 19.1536 5.4215 19.4655C5.84347 19.7775 6.2166 20.1509 6.52827 20.5733Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3105 14.7788C13.6957 14.7788 14.0356 15.0308 14.1477 15.3993C14.2632 15.7794 14.56 16.0764 14.9383 16.1916C15.3067 16.3039 15.5582 16.6437 15.5582 17.0286C15.5582 17.4136 15.3067 17.7533 14.9383 17.8656C14.56 17.9809 14.2632 18.2778 14.1477 18.658C14.0356 19.0265 13.6957 19.2785 13.3105 19.2785C12.9253 19.2785 12.5853 19.0265 12.4733 18.658C12.3577 18.2778 12.0609 17.9809 11.6825 17.8656C11.3143 17.7533 11.0627 17.4136 11.0627 17.0286C11.0627 16.6437 11.3143 16.304 11.6825 16.1916C12.0609 16.0764 12.3577 15.7796 12.4733 15.3993C12.5853 15.0308 12.9253 14.7788 13.3105 14.7788Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Document Verification</span>
-                                        <span class="features__tab-subtitle">ID &amp; Passport Checks</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
+            <div class="solutions-why__head">
+                <div class="section__badge">Key Benefits</div>
+                <h2 class="section__title solutions-why__title">Why Leading Companies Choose <span>NeuroVision Global Systems KYC</span></h2>
+            </div>
 
-                            <button type="button" class="features__tab animate-fade-up" data-index="1">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6162 3.5C17.6162 3.01675 18.008 2.625 18.4912 2.625H19.9578C22.9497 2.625 25.3744 5.04978 25.3744 8.04167V9.88172C25.3744 10.365 24.9828 10.7567 24.4994 10.7567C24.0162 10.7567 23.6244 10.365 23.6244 9.88172V8.04167C23.6244 6.01628 21.9832 4.375 19.9578 4.375H18.4912C18.008 4.375 17.6162 3.98324 17.6162 3.5Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.04167 4.375C6.01628 4.375 4.375 6.01628 4.375 8.04167V9.88172C4.375 10.365 3.98324 10.7567 3.5 10.7567C3.01675 10.7567 2.625 10.365 2.625 9.88172V8.04167C2.625 5.04978 5.04978 2.625 8.04167 2.625H9.54572C10.029 2.625 10.4207 3.01675 10.4207 3.5C10.4207 3.98324 10.029 4.375 9.54572 4.375H8.04167Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 17.2447C3.98324 17.2447 4.375 17.6365 4.375 18.1197V19.9598C4.375 21.984 6.01613 23.6253 8.04167 23.6253H9.50826C9.99151 23.6253 10.3833 24.0171 10.3833 24.5003C10.3833 24.9836 9.99151 25.3753 9.50826 25.3753H8.04167C5.04992 25.3753 2.625 22.9508 2.625 19.9598V18.1197C2.625 17.6365 3.01675 17.2447 3.5 17.2447Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.5005 17.2447C24.9837 17.2447 25.3755 17.6365 25.3755 18.1197V19.9598C25.3755 22.9508 22.9505 25.3753 19.9587 25.3753H18.4548C17.9714 25.3753 17.5798 24.9836 17.5798 24.5003C17.5798 24.0171 17.9714 23.6253 18.4548 23.6253H19.9587C21.9843 23.6253 23.6255 21.984 23.6255 19.9598V18.1197C23.6255 17.6365 24.0172 17.2447 24.5005 17.2447Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14 10.5365C12.0884 10.5365 10.5387 12.0867 10.5387 13.9988C10.5387 15.911 12.0884 17.4611 14 17.4611C15.9118 17.4611 17.4623 15.9106 17.4623 13.9988C17.4623 12.0869 15.9118 10.5365 14 10.5365ZM8.78873 13.9988C8.78873 11.1207 11.1213 8.78646 14 8.78646C16.8783 8.78646 19.2123 11.1204 19.2123 13.9988C19.2123 16.8772 16.8783 19.2111 14 19.2111C11.1213 19.2111 8.78873 16.8769 8.78873 13.9988Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Face Verification</span>
-                                        <span class="features__tab-subtitle">Selfie Check</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
-
-                            <button type="button" class="features__tab animate-fade-up features__tab--maskot" data-index="2">
-                                <div class="features__tab-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/img/features__tab--maskot.webp" alt="AML Screening">
-                                </div>
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path d="M23.625 15.127C23.6248 13.3656 22.5611 11.5233 20.7505 10.0854C18.9519 8.65722 16.5165 7.7168 14 7.7168C11.4841 7.7168 9.04831 8.65715 7.24951 10.0854C5.43878 11.5233 4.37519 13.3657 4.375 15.127C4.375 16.891 5.42999 18.7345 7.23356 20.1707C9.02543 21.5976 11.4609 22.5382 14 22.5382C16.5397 22.5382 18.9748 21.5975 20.7664 20.1707C22.5699 18.7345 23.625 16.8911 23.625 15.127ZM16.7173 15.1258C16.7173 13.6269 15.5011 12.4109 14.0023 12.4108C12.5047 12.4108 11.2884 13.6267 11.2884 15.1258C11.2885 16.6235 12.5046 17.8397 14.0023 17.8397C15.5013 17.8396 16.7172 16.6233 16.7173 15.1258ZM25.375 15.127C25.375 17.5883 23.9289 19.8888 21.8568 21.5391C19.7728 23.1987 16.9576 24.2882 14 24.2882C11.043 24.2882 8.22844 23.1985 6.14437 21.5391C4.07205 19.8889 2.625 17.5885 2.625 15.127C2.62519 12.663 4.08558 10.3632 6.16146 8.71484C8.2497 7.05673 11.0641 5.9668 14 5.9668C16.9364 5.9668 19.7504 7.0568 21.8385 8.71484C23.9143 10.3632 25.3748 12.663 25.375 15.127ZM18.4673 15.1258C18.4672 17.5901 16.4674 19.5896 14.0023 19.5897C11.5381 19.5897 9.53848 17.59 9.53841 15.1258C9.53841 12.6606 11.5378 10.6608 14.0023 10.6608C16.4676 10.6609 18.4673 12.6605 18.4673 15.1258Z" fill="#F9AA66"></path>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">AML Screening</span>
-                                        <span class="features__tab-subtitle">Sanctions &amp; PEP Checks</span>
-                                    </span>
-                                   <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
-
-                            <button type="button" class="features__tab animate-fade-up" data-index="3">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path d="M23.625 15.127C23.6248 13.3656 22.5611 11.5233 20.7505 10.0854C18.9519 8.65722 16.5165 7.7168 14 7.7168C11.4841 7.7168 9.04831 8.65715 7.24951 10.0854C5.43878 11.5233 4.37519 13.3657 4.375 15.127C4.375 16.891 5.42999 18.7345 7.23356 20.1707C9.02543 21.5976 11.4609 22.5382 14 22.5382C16.5397 22.5382 18.9748 21.5975 20.7664 20.1707C22.5699 18.7345 23.625 16.8911 23.625 15.127ZM16.7173 15.1258C16.7173 13.6269 15.5011 12.4109 14.0023 12.4108C12.5047 12.4108 11.2884 13.6267 11.2884 15.1258C11.2885 16.6235 12.5046 17.8397 14.0023 17.8397C15.5013 17.8396 16.7172 16.6233 16.7173 15.1258ZM25.375 15.127C25.375 17.5883 23.9289 19.8888 21.8568 21.5391C19.7728 23.1987 16.9576 24.2882 14 24.2882C11.043 24.2882 8.22844 23.1985 6.14437 21.5391C4.07205 19.8889 2.625 17.5885 2.625 15.127C2.62519 12.663 4.08558 10.3632 6.16146 8.71484C8.2497 7.05673 11.0641 5.9668 14 5.9668C16.9364 5.9668 19.7504 7.0568 21.8385 8.71484C23.9143 10.3632 25.3748 12.663 25.375 15.127ZM18.4673 15.1258C18.4672 17.5901 16.4674 19.5896 14.0023 19.5897C11.5381 19.5897 9.53848 17.59 9.53841 15.1258C9.53841 12.6606 11.5378 10.6608 14.0023 10.6608C16.4676 10.6609 18.4673 12.6605 18.4673 15.1258Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Video KYC</span>
-                                        <span class="features__tab-subtitle">Video Verification</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
-
-                            <button type="button" class="features__tab animate-fade-up" data-index="4">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.8181 17.1916C25.2999 17.2278 25.6604 17.6489 25.6242 18.1308L25.4026 21.0579C25.2194 23.4729 23.1812 25.3641 20.7604 25.3641H7.22707C4.80624 25.3641 2.76807 23.4729 2.5849 21.0579L2.36324 18.1308C2.32707 17.6489 2.68874 17.2278 3.17057 17.1916C3.65474 17.1741 4.0724 17.5159 4.10974 17.9989L4.33024 20.9249C4.44457 22.4323 5.71624 23.6141 7.22707 23.6141H20.7604C22.2712 23.6141 23.5441 22.4323 23.6572 20.9249L23.8789 17.9989C23.9162 17.5159 24.3444 17.1729 24.8181 17.1916ZM15.499 2.33398C17.2524 2.33398 18.705 3.64796 18.9238 5.34285L21.2216 5.34387C23.6669 5.34387 25.6549 7.3377 25.6549 9.79003V13.8022C25.6549 14.1137 25.4893 14.4007 25.2221 14.557C22.3424 16.2434 18.6945 17.2271 14.8685 17.3583L14.869 19.4567C14.869 19.9397 14.477 20.3317 13.994 20.3317C13.511 20.3317 13.119 19.9397 13.119 19.4567L13.1182 17.3586C9.29613 17.2286 5.64793 16.2447 2.76609 14.557C2.49775 14.4007 2.33325 14.1137 2.33325 13.8022V9.77837C2.33325 7.33303 4.32709 5.34387 6.77825 5.34387L9.06411 5.34285C9.2829 3.64796 10.7355 2.33398 12.489 2.33398H15.499ZM21.2216 7.09387H6.77825C5.29192 7.09387 4.08325 8.29787 4.08325 9.77837V13.2924C6.85258 14.7971 10.3439 15.6218 13.9777 15.6234L13.994 15.6219L14.0069 15.6223L14.5624 15.6165C17.9992 15.5347 21.2777 14.7193 23.9049 13.2924V9.79003C23.9049 8.30253 22.7021 7.09387 21.2216 7.09387ZM15.499 4.08398H12.489C11.7034 4.08398 11.0403 4.61864 10.8444 5.34314H17.1436C16.9477 4.61864 16.2845 4.08398 15.499 4.08398Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Case Management &amp; Analytics Dashboard</span>
-                                        <span class="features__tab-subtitle">Monitoring &amp; Review</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
-
-                            <button type="button" class="features__tab animate-fade-up features__tab--small" data-index="5">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 18.051C16.7112 17.9586 17.1707 18.2682 17.2631 18.7426L17.2653 18.7543C17.3577 19.2286 17.0481 19.6881 16.5737 19.7804C16.0994 19.8728 15.64 19.5631 15.5476 19.0888L15.5454 19.0771C15.453 18.6029 15.7626 18.1434 16.237 18.051ZM11.4238 18.051C11.8982 17.9587 12.3576 18.2684 12.4499 18.7427L12.4521 18.7544C12.5445 19.2288 12.2347 19.6881 11.7604 19.7805C11.286 19.8728 10.8267 19.563 10.7344 19.0886L10.7321 19.077C10.6398 18.6026 10.9495 18.1433 11.4238 18.051Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 13.4903C16.7112 13.398 17.1707 13.7076 17.2631 14.182L17.2653 14.1937C17.3577 14.6679 17.0481 15.1273 16.5737 15.2197C16.0994 15.3121 15.64 15.0025 15.5476 14.5281L15.5454 14.5165C15.453 14.0421 15.7626 13.5827 16.237 13.4903ZM11.4238 13.4903C11.8982 13.398 12.3576 13.7077 12.4499 14.1821L12.4521 14.1938C12.5445 14.668 12.2347 15.1275 11.7604 15.2197C11.286 15.312 10.8267 15.0024 10.7344 14.528L10.7321 14.5164C10.6398 14.042 10.9495 13.5826 11.4238 13.4903Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 8.82822C16.7112 8.73585 17.1707 9.04549 17.2631 9.51984L17.2653 9.5315C17.3577 10.0058 17.0481 10.4653 16.5737 10.5576C16.0994 10.65 15.64 10.3404 15.5476 9.86601L15.5454 9.85434C15.453 9.38001 15.7626 8.9206 16.237 8.82822ZM11.4238 8.8282C11.8982 8.73589 12.3576 9.0456 12.4499 9.51995L12.4521 9.53162C12.5445 10.006 12.2347 10.4653 11.7604 10.5576C11.286 10.65 10.8267 10.3402 10.7344 9.86589L10.7321 9.85423C10.6398 9.37988 10.9495 8.92051 11.4238 8.8282Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.09717 24.5C3.09717 24.0168 3.48891 23.625 3.97217 23.625H24.0278C24.511 23.625 24.9028 24.0168 24.9028 24.5C24.9028 24.9832 24.511 25.375 24.0278 25.375H3.97217C3.48891 25.375 3.09717 24.9832 3.09717 24.5Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.73323 6.02908C4.73323 4.14935 6.2581 2.625 8.13845 2.625H19.8621C21.7425 2.625 23.2673 4.14935 23.2673 6.02908V24.5C23.2673 24.9832 22.8756 25.375 22.3923 25.375C21.9091 25.375 21.5173 24.9832 21.5173 24.5V6.02908C21.5173 5.11637 20.7765 4.375 19.8621 4.375H8.13845C7.22409 4.375 6.48323 5.11637 6.48323 6.02908V24.5C6.48323 24.9832 6.09148 25.375 5.60823 25.375C5.12499 25.375 4.73323 24.9832 4.73323 24.5V6.02908Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Liveness Detection</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
-
-                            <button type="button" class="features__tab animate-fade-up" data-index="6">
-                                <span class="features__tab-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 18.051C16.7112 17.9586 17.1707 18.2682 17.2631 18.7426L17.2653 18.7543C17.3577 19.2286 17.0481 19.6881 16.5737 19.7804C16.0994 19.8728 15.64 19.5631 15.5476 19.0888L15.5454 19.0771C15.453 18.6029 15.7626 18.1434 16.237 18.051ZM11.4238 18.051C11.8982 17.9587 12.3576 18.2684 12.4499 18.7427L12.4521 18.7544C12.5445 19.2288 12.2347 19.6881 11.7604 19.7805C11.286 19.8728 10.8267 19.563 10.7344 19.0886L10.7321 19.077C10.6398 18.6026 10.9495 18.1433 11.4238 18.051Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 13.4903C16.7112 13.398 17.1707 13.7076 17.2631 14.182L17.2653 14.1937C17.3577 14.6679 17.0481 15.1273 16.5737 15.2197C16.0994 15.3121 15.64 15.0025 15.5476 14.5281L15.5454 14.5165C15.453 14.0421 15.7626 13.5827 16.237 13.4903ZM11.4238 13.4903C11.8982 13.398 12.3576 13.7077 12.4499 14.1821L12.4521 14.1938C12.5445 14.668 12.2347 15.1275 11.7604 15.2197C11.286 15.312 10.8267 15.0024 10.7344 14.528L10.7321 14.5164C10.6398 14.042 10.9495 13.5826 11.4238 13.4903Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.237 8.82822C16.7112 8.73585 17.1707 9.04549 17.2631 9.51984L17.2653 9.5315C17.3577 10.0058 17.0481 10.4653 16.5737 10.5576C16.0994 10.65 15.64 10.3404 15.5476 9.86601L15.5454 9.85434C15.453 9.38001 15.7626 8.9206 16.237 8.82822ZM11.4238 8.8282C11.8982 8.73589 12.3576 9.0456 12.4499 9.51995L12.4521 9.53162C12.5445 10.006 12.2347 10.4653 11.7604 10.5576C11.286 10.65 10.8267 10.3402 10.7344 9.86589L10.7321 9.85423C10.6398 9.37988 10.9495 8.92051 11.4238 8.8282Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.09717 24.5C3.09717 24.0168 3.48891 23.625 3.97217 23.625H24.0278C24.511 23.625 24.9028 24.0168 24.9028 24.5C24.9028 24.9832 24.511 25.375 24.0278 25.375H3.97217C3.48891 25.375 3.09717 24.9832 3.09717 24.5Z" fill="#F9AA66"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.73323 6.02908C4.73323 4.14935 6.2581 2.625 8.13845 2.625H19.8621C21.7425 2.625 23.2673 4.14935 23.2673 6.02908V24.5C23.2673 24.9832 22.8756 25.375 22.3923 25.375C21.9091 25.375 21.5173 24.9832 21.5173 24.5V6.02908C21.5173 5.11637 20.7765 4.375 19.8621 4.375H8.13845C7.22409 4.375 6.48323 5.11637 6.48323 6.02908V24.5C6.48323 24.9832 6.09148 25.375 5.60823 25.375C5.12499 25.375 4.73323 24.9832 4.73323 24.5V6.02908Z" fill="#F9AA66"/>
-                                    </svg>
-                                </span>
-                                <div class="features__tab-content">
-                                    <span class="features__tab-body">
-                                        <span class="features__tab-title">Proof of Address &amp; Additional Documents</span>
-                                    </span>
-                                    <span class="features__tab-action">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 12.9993L20.4854 12.9993C21.0384 12.9993 21.4852 12.5524 21.4852 11.9995C21.4852 11.4465 21.0384 10.9996 20.4854 10.9996L13 10.9996L13 3.51418C13 2.96122 12.5531 2.51433 12.0001 2.51433C11.4472 2.51433 11.0003 2.96122 11.0003 3.51418L11.0003 10.9996L3.51481 10.9996C2.96192 10.9996 2.51503 11.4465 2.51503 11.9994C2.51503 12.2752 2.62675 12.5255 2.80777 12.7065C2.98879 12.8875 3.23911 12.9993 3.51488 12.9993L11.0002 12.9993L11.0003 20.4847C11.0003 20.7605 11.112 21.0108 11.293 21.1918C11.4741 21.3728 11.7244 21.4845 12.0002 21.4845C12.5531 21.4845 13 21.0377 12.9999 20.4848L13 12.9993Z"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </button>
+            <div class="solutions-why__board" data-solutions-why>
+                <div class="solutions-why__cards" role="group" aria-label="Why leading companies choose NeuroVision Global Systems KYC">
+                    <?php foreach ($nv_solution_benefits as $nv_i => $nv_benefit) :
+                        $nv_level  = $nv_i + 1;
+                        $nv_open   = (0 === $nv_i);
+                        $nv_panel  = 'solutions-why-panel-' . $nv_benefit['number'];
+                        $nv_button = 'solutions-why-button-' . $nv_benefit['number'];
+                        ?>
+                        <div class="solutions-why__card solutions-why__card--level-<?php echo (int) $nv_level; ?><?php echo $nv_open ? ' is-open' : ''; ?>" data-why-card>
+                            <div class="solutions-why__card-body">
+                                <h3 class="solutions-why__card-heading">
+                                    <button type="button"
+                                            class="solutions-why__card-button"
+                                            id="<?php echo esc_attr($nv_button); ?>"
+                                            aria-expanded="<?php echo $nv_open ? 'true' : 'false'; ?>"
+                                            aria-controls="<?php echo esc_attr($nv_panel); ?>"><?php echo $nv_benefit['title']; ?></button>
+                                </h3>
+                                <p class="solutions-why__card-text" id="<?php echo esc_attr($nv_panel); ?>"><?php echo $nv_benefit['description']; ?></p>
+                            </div>
+                            <span class="solutions-why__card-number" aria-hidden="true"><?php echo esc_html($nv_benefit['number']); ?></span>
                         </div>
+                    <?php endforeach; ?>
+                </div>
 
-                        <div class="features__panel animate-fade-up">
-                            <div class="features__panel-bg">
-                                <img src="<?php echo get_template_directory_uri(); ?>/img/features__panel.webp" alt="Solutions NeuroVision Global Systems">
-                            </div>
-                            <div class="features__panel-content features__panel-content--active" data-index="0">
-                                <p class="features__panel-text">Instantly verify government-issued documents from over 200 countries and territories. Our AI-powered OCR technology reads and validates passports, national IDs, driver's licenses, and more — supporting over 16,000 document types in 90 languages. The system automatically detects forgeries, photo substitutions, and data tampering by analyzing security features like holograms, watermarks, and microprinting against our extensive template database. Get accurate data extraction and authenticity checks in seconds, ensuring you onboard only legitimate customers.</p>
-                            </div>
+                <?php /* Фотография одна на все состояния: в макете она не меняется при переключении карточек. */ ?>
+                <picture class="solutions-why__media">
+                    <source media="(min-width: 1600px)"
+                            srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-why-fhd.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-why-fhd@2x.webp'); ?> 2x"
+                            width="992" height="620">
+                    <source media="(min-width: 992px)"
+                            srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-why-desktop.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-why-desktop@2x.webp'); ?> 2x"
+                            width="658" height="620">
+                    <source media="(min-width: 768px)"
+                            srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-why-tablet.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-why-tablet@2x.webp'); ?> 2x"
+                            width="776" height="489">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/img/sol-why-mobile.webp'); ?>"
+                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-why-mobile.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-why-mobile@2x.webp'); ?> 2x"
+                         width="360" height="301" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                </picture>
 
-                            <div class="features__panel-content" data-index="1">
-                                <p class="features__panel-text">Match your customer's selfie with their ID photo using our neural network technology that achieves 99.74% accuracy (NIST certified, March 2023). The process is simple — users take a quick selfie with their phone or webcam, and our system instantly compares it with the photo on their document. Our unique vectorless face comparison technology ensures full GDPR compliance while processing each match in just 0.1 seconds. No templates are stored, no personal data is retained — just instant, secure verification results.</p>
-                            </div>
-
-                            <div class="features__panel-content" data-index="2">
-                                <p class="features__panel-text"> Automatically screen customers against global sanctions lists, PEP databases, and adverse media in real-time. Our system checks against constantly updated databases including OFAC, UN, EU, and other international watchlists, helping you identify high-risk individuals instantly. Beyond basic list matching, we also scan for negative news coverage and risk indicators, giving you a complete picture of potential compliance risks. Stay ahead of regulatory requirements while streamlining your customer onboarding process.</p>
-                            </div>
-
-                            <div class="features__panel-content" data-index="3">
-                                <p class="features__panel-text">Meet the strictest regulatory requirements with our flexible video verification options. Whether you need recorded video submissions or live agent-assisted sessions, our platform handles both seamlessly. Perfect for jurisdictions like Germany and India where video verification is mandatory, or for high-risk customers requiring enhanced due diligence. The entire process takes just 3-5 minutes and is available 24/7, allowing customers to complete verification on their schedule while you maintain full compliance.</p>
-                            </div>
-
-                            <div class="features__panel-content" data-index="4">
-                                <p class="features__panel-text">Empower your compliance team with a comprehensive back-office solution. Review verification results, manually check flagged cases, and track key metrics like pass rates and processing times — all from one intuitive dashboard. Add team comments, set custom verification rules, adjust similarity thresholds, and export detailed reports for audits. With real-time analytics and collaborative tools, your team can work efficiently while maintaining the highest compliance standards. Transform raw verification data into actionable insights that help optimize your onboarding procedure and reduce false positives.</p>
-                            </div>
-
-                            <div class="features__panel-content" data-index="5">
-                                <p class="features__panel-text">Stop fraudsters using photos, videos, or deepfakes with our advanced liveness checks. Our computer vision algorithms analyze facial movements, depth, reflections, and micro-expressions to confirm a real person is present — not a photo, mask, or recording. The verification happens seamlessly in the background, requiring no complex actions from honest users. Just a natural interaction that takes seconds while providing enterprise-grade protection against sophisticated spoofing attempts.</p>
-                            </div>
-
-                            <div class="features__panel-content" data-index="6">
-                                <p class="features__panel-text">Go beyond basic ID checks with comprehensive document verification. Our OCR technology reads and validates utility bills, bank statements, tax documents, and other proof of address materials — essential for full AML compliance. The system cross-references data across all submitted documents, ensuring consistency and authenticity. Perfect for financial institutions and insurance companies that need to verify income sources, residential addresses, or other supplementary information as part of their enhanced due diligence procedures.</p>
-                            </div>
-                            
-                        </div>
-
-                    </div>
+                <div class="solutions-why__nav">
+                    <button type="button" class="solutions-why__arrow solutions-why__arrow--prev" aria-label="Previous benefit" disabled><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M10.0137 5.5564C10.3648 5.41076 10.7767 5.5525 10.9609 5.89429C11.1571 6.25879 11.0206 6.71344 10.6562 6.90992C10.6558 6.91015 10.6545 6.91027 10.6533 6.91089C10.651 6.91214 10.6476 6.915 10.6426 6.91773C10.6324 6.92329 10.6164 6.93167 10.5957 6.94312C10.5541 6.96616 10.4925 7.00125 10.4131 7.04664C10.2537 7.13778 10.0238 7.27147 9.74805 7.44117C9.19501 7.78146 8.46189 8.26114 7.73242 8.82105C6.99842 9.38447 6.29193 10.0111 5.77637 10.6423C5.51686 10.9601 5.32608 11.2554 5.19824 11.5242H19.25C19.6642 11.5242 19.9999 11.86 20 12.2742C20 12.6884 19.6642 13.0242 19.25 13.0242H5.19727C5.32507 13.2933 5.51611 13.5895 5.77637 13.908C6.29187 14.5388 6.99755 15.1652 7.73145 15.7283C8.46104 16.2881 9.19491 16.767 9.74805 17.1072C10.0236 17.2767 10.2527 17.4106 10.4121 17.5017C10.4916 17.5472 10.5541 17.5822 10.5957 17.6052C10.6165 17.6168 10.6324 17.626 10.6426 17.6316C10.6475 17.6343 10.6511 17.6362 10.6533 17.6375L10.6562 17.6384L10.7217 17.6785C11.0364 17.8917 11.1452 18.3132 10.9609 18.655C10.7766 18.9968 10.3648 19.1376 10.0137 18.9919L9.94434 18.9587H9.94336L9.94238 18.9578C9.94141 18.9572 9.94006 18.9567 9.93848 18.9558C9.93505 18.954 9.92992 18.9513 9.92383 18.948C9.91116 18.9411 9.89248 18.9307 9.86914 18.9177C9.82212 18.8917 9.75372 18.8535 9.66797 18.8044C9.49654 18.7065 9.25318 18.5637 8.96191 18.3845C8.3807 18.027 7.60115 17.5183 6.81836 16.9177C6.04002 16.3205 5.23395 15.6134 4.61523 14.8562C4.04864 14.1628 3.56398 13.3371 3.50586 12.4529L3.5 12.2761V12.2742C3.5 12.2729 3.50097 12.2716 3.50098 12.2703C3.50295 11.3213 4.01126 10.4325 4.61426 9.6941C5.23299 8.93647 6.03997 8.22911 6.81836 7.6316C7.60128 7.03062 8.38067 6.52147 8.96191 6.16382C9.25325 5.98456 9.49653 5.84193 9.66797 5.7439C9.75368 5.69489 9.82214 5.65766 9.86914 5.6316C9.89234 5.61874 9.91016 5.60826 9.92285 5.60132C9.92922 5.59784 9.93494 5.59445 9.93848 5.59253C9.94003 5.59169 9.94143 5.59109 9.94238 5.59058L9.94336 5.5896H9.94434L10.0137 5.5564Z" fill="currentColor"/></svg></button>
+                    <button type="button" class="solutions-why__arrow solutions-why__arrow--next" aria-label="Next benefit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></button>
                 </div>
             </div>
         </div>

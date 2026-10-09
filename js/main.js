@@ -3972,6 +3972,127 @@ function initPageNavSticky() {
 
 
 
+/*
+ * «Why Leading Companies Choose ...» на /solutions/.
+ *
+ * С 992px блок работает как горизонтальный аккордеон: раскрыта ровно одна
+ * карточка, остальные сведены до номера. Переключение — клик по карточке,
+ * стрелки Previous/Next, стрелки клавиатуры и Home/End. На устройствах с мышью
+ * карточка раскрывается ещё и по наведению, выбор при этом остаётся
+ * (сброса по mouseleave нет — состояние предсказуемое).
+ *
+ * Ниже 992px карточки раскрыты все сразу, интерактива в макете нет: кнопки
+ * выводятся из фокуса, ARIA переключается в «всё раскрыто», стрелки спрятаны
+ * средствами CSS. Зацикливания нет — на крайних карточках стрелки выключаются.
+ *
+ * Обработчики вешаются один раз, смена режима идёт через `change`
+ * у matchMedia, поэтому resize не плодит слушателей.
+ */
+function initSolutionsWhy() {
+    const board = document.querySelector('[data-solutions-why]');
+    if (!board) return;
+
+    const list = board.querySelector('.solutions-why__cards');
+    const cards = Array.from(board.querySelectorAll('.solutions-why__card'));
+    const buttons = cards.map((card) => card.querySelector('.solutions-why__card-button'));
+    const prev = board.querySelector('.solutions-why__arrow--prev');
+    const next = board.querySelector('.solutions-why__arrow--next');
+
+    if (!list || !cards.length || buttons.some((btn) => !btn)) return;
+
+    const desktop = window.matchMedia('(min-width: 992px)');
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const last = cards.length - 1;
+
+    let current = cards.findIndex((card) => card.classList.contains('is-open'));
+    if (current < 0) current = 0;
+
+    function renderDesktop() {
+        cards.forEach((card, i) => {
+            const open = i === current;
+            card.classList.toggle('is-open', open);
+            buttons[i].setAttribute('aria-expanded', open ? 'true' : 'false');
+            buttons[i].removeAttribute('tabindex');
+            buttons[i].removeAttribute('aria-disabled');
+        });
+
+        if (prev) prev.disabled = current === 0;
+        if (next) next.disabled = current === last;
+    }
+
+    function renderStatic() {
+        cards.forEach((card, i) => {
+            card.classList.add('is-open');
+            buttons[i].setAttribute('aria-expanded', 'true');
+            /*
+             * Нажимать нечего: все описания и так видны. Кнопку оставляем
+             * в разметке ради заголовка, но убираем из порядка табуляции.
+             */
+            buttons[i].setAttribute('tabindex', '-1');
+            buttons[i].setAttribute('aria-disabled', 'true');
+        });
+
+        if (prev) prev.disabled = true;
+        if (next) next.disabled = true;
+    }
+
+    function setOpen(index, moveFocus) {
+        if (!desktop.matches) return;
+
+        const target = Math.min(last, Math.max(0, index));
+        if (target === current && !moveFocus) return;
+
+        current = target;
+        renderDesktop();
+
+        if (moveFocus) buttons[current].focus();
+    }
+
+    function syncMode() {
+        if (desktop.matches) {
+            renderDesktop();
+        } else {
+            renderStatic();
+        }
+    }
+
+    cards.forEach((card, i) => {
+        buttons[i].addEventListener('click', () => setOpen(i, false));
+
+        card.addEventListener('mouseenter', () => {
+            if (!finePointer.matches) return;
+            setOpen(i, false);
+        });
+    });
+
+    list.addEventListener('keydown', (e) => {
+        if (!desktop.matches) return;
+
+        const from = buttons.indexOf(document.activeElement);
+        if (from < 0) return;
+
+        let target = null;
+
+        if (e.key === 'ArrowRight') target = Math.min(last, from + 1);
+        else if (e.key === 'ArrowLeft') target = Math.max(0, from - 1);
+        else if (e.key === 'Home') target = 0;
+        else if (e.key === 'End') target = last;
+
+        if (target === null) return;
+
+        e.preventDefault();
+        setOpen(target, true);
+    });
+
+    if (prev) prev.addEventListener('click', () => setOpen(current - 1, false));
+    if (next) next.addEventListener('click', () => setOpen(current + 1, false));
+
+    desktop.addEventListener('change', syncMode);
+
+    syncMode();
+}
+
+
 // ==================== ГЛАВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ====================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -3993,6 +4114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNewsSlider();
     initBenefitsSlider();
     initFeaturesBlock();
+    initSolutionsWhy();
     initFlowSlider();
     initIndustriesSlider();
     initIntegrationSlider();
