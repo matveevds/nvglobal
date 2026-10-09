@@ -809,77 +809,61 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="section security" id="security">
+    <?php
+    /*
+     * Security & compliance — новый блок вместо прежней тёмной секции
+     * `.security` со слайдером. Figma: Full HD 2456:16639, Desktop 2398:24844,
+     * Tablet 2457:17350, Mobile 2467:18034.
+     *
+     * Четыре плитки: три текстовые и одна с иллюстрацией. Карточки
+     * не интерактивны — ни ссылок, ни кнопок в макете нет.
+     * На Full HD и Desktop иллюстрация стоит третьей, ниже 1200 — последней.
+     */
+    $nv_security_items = array(
+        array(
+            'title'       => 'Data protection',
+            'description' => 'Encryption in transit and at rest; biometric templates are irreversible and raw images are never stored; deletion on request.',
+        ),
+        array(
+            'title'       => 'Certifications',
+            'description' => 'ISO/IEC 27001:2022, GDPR-ready; face recognition benchmarked by NIST FRVT (TOP-24 worldwide, 03/2023).',
+        ),
+        array(
+            'title'       => 'Deployment',
+            'description' => 'On-premises, cloud or hybrid&nbsp;— your data stays where your regulator wants it.',
+        ),
+    );
+    ?>
+    <section class="section solutions-security" id="security">
         <div class="container">
-            <div class="security__wrapper">
-                <div class="security__left">
-                    <div class="section__badge">Security</div>
-                    <div class="security__title-block">
-                        <h2 class="section__title">Security & Compliance: Your Trust is Our Priority</h2>
-                        <p class="security__title-text large-text">At NeuroVision Global Systems we understand that handling identity verification means handling trust. That's why we've built our platform with security, privacy, and compliance at its core. Every piece of data, every verification, every interaction is protected by industry-leading standards and practices.</p>
-                    </div>
-                </div>
-                <div class="security__right">
-                    <div class="security__bg">
-                        <img src="<?php echo get_template_directory_uri(); ?>/img/security__imagepng.png" alt="Security & Compliance: Your Trust is Our Priority">
-                    </div>
-                    <div class="security__slider">
-                        <div class="security__slider-inner swiper animate-fade-up">
-                            <div class="security__slider-wrapper swiper-wrapper">
-
-                                <div class="security__slide swiper-slide">
-                                    <div class="security__slide-title">Data Protection</div>
-                                    <div class="security__slide-content">
-                                        <div class="security__slide-text">Your customers' data deserves fortress-level protection, and that's exactly what we deliver. All personal information is encrypted using AES-256 encryption during transmission and storage. We employ cutting-edge cybersecurity mechanisms and conduct regular security audits to ensure our defenses stay ahead of emerging threats.</div>
-                                        <div class="security__slide-subtitle">Our unique instant face comparison technology operates without storing biometric templates, allowing full GDPR compliance while maintaining the highest security standards.</div>
-                                    </div>
-                                </div>
-
-                                <div class="security__slide swiper-slide">
-                                    <div class="security__slide-title">Certifications & Standards</div>
-                                    <div class="security__slide-content">
-                                        <div class="security__slide-text">We don’t just talk about security — we prove it. Our platform operates in compliance with internationally recognized standards, including ISO/IEC 27001:2022 for information security management and GDPR requirements for data protection. These certifications cover the design, development, and operation of our AI-powered identity verification platforms.</div>
-                                        <div class="security__slide-subtitle">Our approach to security goes beyond compliance — it’s built into every layer of our infrastructure.</div>
-                                    </div>
-                                </div>
-
-                                <div class="security__slide swiper-slide">
-                                    <div class="security__slide-title">Privacy Compliance</div>
-                                    <div class="security__slide-content">
-                                        <div class="security__slide-text">Privacy isn’t an afterthought — it’s fundamental to how we operate. NeuroVision Global Systems is designed to meet the requirements of GDPR and global data protection standards, ensuring responsible handling of personal data across all systems. Users maintain control over their information, with transparent consent mechanisms and the ability to request data deletion.</div>
-                                        <div class="security__slide-subtitle">Our privacy-by-design approach means that compliance is built into every feature, not bolted on afterwards.</div>
-                                    </div>
-                                </div>
-
-                                <div class="security__slide swiper-slide">
-                                    <div class="security__slide-title">Regulatory Compliance</div>
-                                    <div class="security__slide-content">
-                                        <div class="security__slide-text">Subsection Content: Beyond standard KYC/AML requirements, we've designed our platform to meet specific regulatory demands across different jurisdictions. Whether it's video identification requirements, eIDAS standards for the EU market, the EU's 6th Anti-Money Laundering Directive, or FINRA/SEC regulations in the United States – we've got you covered.</div>
-                                        <div class="security__slide-subtitle">Our solution adapts to local regulatory requirements while maintaining a seamless user experience, helping you expand globally without compliance headaches.</div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="security__arrows">
-                                <div class="security__arrow security__arrow--prev">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M10.0137 5.55687C10.3648 5.41123 10.7767 5.55297 10.9609 5.89476C11.1571 6.25925 11.0206 6.7139 10.6562 6.91038C10.6558 6.91061 10.6545 6.91074 10.6533 6.91136C10.651 6.9126 10.6476 6.91547 10.6426 6.91819C10.6324 6.92375 10.6164 6.93213 10.5957 6.94358C10.5541 6.96663 10.4925 7.00171 10.4131 7.0471C10.2537 7.13824 10.0238 7.27193 9.74805 7.44163C9.19501 7.78192 8.46189 8.2616 7.73242 8.82151C6.99842 9.38494 6.29193 10.0115 5.77637 10.6428C5.51686 10.9606 5.32608 11.2559 5.19824 11.5246H19.25C19.6642 11.5246 19.9999 11.8605 20 12.2746C20 12.6889 19.6642 13.0246 19.25 13.0246H5.19727C5.32507 13.2938 5.51611 13.5899 5.77637 13.9084C6.29187 14.5392 6.99755 15.1656 7.73145 15.7287C8.46104 16.2885 9.19491 16.7674 9.74805 17.1076C10.0236 17.2771 10.2527 17.4111 10.4121 17.5022C10.4916 17.5476 10.5541 17.5826 10.5957 17.6057C10.6165 17.6172 10.6324 17.6265 10.6426 17.6321C10.6475 17.6347 10.6511 17.6367 10.6533 17.6379L10.6562 17.6389L10.7217 17.6789C11.0364 17.8922 11.1452 18.3136 10.9609 18.6555C10.7766 18.9973 10.3648 19.1381 10.0137 18.9924L9.94434 18.9592H9.94336L9.94238 18.9582C9.94141 18.9577 9.94006 18.9571 9.93848 18.9563C9.93505 18.9544 9.92992 18.9518 9.92383 18.9485C9.91116 18.9415 9.89248 18.9311 9.86914 18.9182C9.82212 18.8921 9.75372 18.8539 9.66797 18.8049C9.49654 18.7069 9.25318 18.5641 8.96191 18.385C8.3807 18.0275 7.60115 17.5188 6.81836 16.9182C6.04002 16.321 5.23395 15.6139 4.61523 14.8567C4.04864 14.1633 3.56398 13.3375 3.50586 12.4533L3.5 12.2766V12.2746C3.5 12.2733 3.50097 12.272 3.50098 12.2707C3.50295 11.3218 4.01126 10.433 4.61426 9.69456C5.23299 8.93694 6.03997 8.22958 6.81836 7.63206C7.60128 7.03109 8.38067 6.52194 8.96191 6.16429C9.25325 5.98502 9.49653 5.8424 9.66797 5.74437C9.75368 5.69535 9.82214 5.65812 9.86914 5.63206C9.89234 5.6192 9.91016 5.60872 9.92285 5.60179C9.92922 5.59831 9.93494 5.59492 9.93848 5.593C9.94003 5.59216 9.94143 5.59156 9.94238 5.59105L9.94336 5.59007H9.94434L10.0137 5.55687Z" fill="#FBFBFB"/>
-                                    </svg>
-                                </div>
-                                <div class="security__arrow security__arrow--next">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.9891 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="solutions-security__head">
+                <div class="section__badge">Security</div>
+                <h2 class="section__title solutions-security__title">Security &amp;&nbsp;compliance: your trust is&nbsp;our&nbsp;priority</h2>
             </div>
+
+            <ul class="solutions-security__grid">
+                <?php foreach ($nv_security_items as $nv_item) : ?>
+                <li class="solutions-security__card">
+                    <span class="solutions-security__icon" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <g> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.41896 3.36159C5.55963 3.22084 5.75047 3.14175 5.94946 3.14175H18.0499C18.4641 3.14175 18.7999 3.47754 18.7999 3.89175H18.0499C18.7999 3.89175 18.7999 3.89175 18.7999 3.89175V3.90289L18.7997 3.92939C18.7995 3.95206 18.7991 3.98465 18.7983 4.0265C18.7967 4.11019 18.7936 4.23099 18.7875 4.38362C18.7752 4.6887 18.7508 5.12194 18.7022 5.64086C18.6051 6.67514 18.4103 8.0665 18.016 9.4679C17.6242 10.8604 17.0201 12.3191 16.0718 13.4425C15.2452 14.4217 14.1519 15.1481 12.7466 15.3385V16.5851H15.2399C15.566 16.5851 15.8548 16.7959 15.9542 17.1066L16.6747 19.3581H17.7443C18.1585 19.3581 18.4943 19.6939 18.4943 20.1081C18.4943 20.5223 18.1585 20.8581 17.7443 20.8581H16.1497C16.1346 20.8586 16.1195 20.8586 16.1044 20.8581H8.039C8.02396 20.8586 8.00886 20.8586 7.99371 20.8581H6.39891C5.9847 20.8581 5.64891 20.5223 5.64891 20.1081C5.64891 19.6939 5.9847 19.3581 6.39891 19.3581H7.46876L8.18925 17.1066C8.28865 16.7959 8.57742 16.5851 8.90357 16.5851H11.2466V15.3369C9.84725 15.1439 8.75764 14.4189 7.93303 13.4426C6.98432 12.3194 6.37942 10.8607 5.98681 9.4683C5.59167 8.06693 5.39597 6.67559 5.29832 5.64131C5.24933 5.1224 5.22464 4.68917 5.21219 4.38409C5.20596 4.23146 5.20278 4.11066 5.20116 4.02698C5.20035 3.98513 5.19992 3.95253 5.1997 3.92986L5.1995 3.90337L5.19946 3.89355C5.19946 3.89355 5.19946 3.89223 5.94946 3.89175L5.19946 3.89223C5.19934 3.69323 5.2783 3.50235 5.41896 3.36159ZM6.72656 4.64175C6.74023 4.88274 6.76079 5.17308 6.79168 5.50032C6.88426 6.48092 7.06815 7.77609 7.43051 9.06123C7.7954 10.3553 8.32589 11.5831 9.07898 12.4748C9.81323 13.3441 10.749 13.8878 12.0026 13.8878C13.2564 13.8878 14.1919 13.3441 14.9256 12.4749C15.6782 11.5834 16.2079 10.3557 16.572 9.06162C16.9336 7.77652 17.1167 6.48137 17.2087 5.50078C17.2394 5.17334 17.2598 4.88283 17.2733 4.64175H6.72656ZM11.9689 18.0851H9.45103L9.04369 19.3581H15.0997L14.6924 18.0851H12.0243C12.0151 18.0855 12.0059 18.0856 11.9966 18.0856C11.9873 18.0856 11.9781 18.0855 11.9689 18.0851Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M2.27782 5.56872C2.3204 5.18925 2.64129 4.90234 3.02315 4.90234H6.0541C6.46831 4.90234 6.8041 5.23813 6.8041 5.65234C6.8041 6.06656 6.46831 6.40234 6.0541 6.40234H3.75301C3.76279 6.73612 3.79877 7.16445 3.89517 7.63065C4.11666 8.70178 4.63873 9.89725 5.81458 10.6714C6.16055 10.8991 6.25638 11.3642 6.02861 11.7102C5.80084 12.0562 5.33574 12.152 4.98977 11.9242C3.36041 10.8516 2.69297 9.22429 2.42624 7.9344C2.29211 7.2857 2.25466 6.70314 2.25042 6.28229C2.2483 6.0711 2.25452 5.89854 2.26155 5.77616C2.26506 5.71491 2.2688 5.66607 2.27181 5.63106C2.27332 5.61355 2.27465 5.59948 2.27569 5.58904L2.27702 5.5761L2.27767 5.57004L2.27782 5.56872C2.27782 5.56872 2.27782 5.56872 3.02315 5.65234L2.27782 5.56872Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1953 5.65234C17.1953 5.23813 17.5311 4.90234 17.9453 4.90234H20.9763C21.3581 4.90234 21.679 5.18925 21.7216 5.56872L20.9763 5.65234C21.7216 5.56872 21.7216 5.56872 21.7216 5.56872L21.7219 5.57171L21.7224 5.5761L21.7237 5.58904C21.7248 5.59948 21.7261 5.61355 21.7276 5.63106C21.7306 5.66607 21.7343 5.71491 21.7379 5.77616C21.7449 5.89854 21.7511 6.0711 21.749 6.28229C21.7447 6.70314 21.7073 7.2857 21.5732 7.9344C21.3064 9.22429 20.639 10.8516 19.0096 11.9242C18.6637 12.152 18.1986 12.0562 17.9708 11.7102C17.743 11.3642 17.8389 10.8991 18.1848 10.6714C19.3607 9.89725 19.8828 8.70178 20.1042 7.63065C20.2006 7.16445 20.2366 6.73612 20.2464 6.40234H17.9453C17.5311 6.40234 17.1953 6.06656 17.1953 5.65234Z" fill="currentColor"/> </g> </g> </svg></span>
+                    <div class="solutions-security__text">
+                        <h3 class="solutions-security__card-title"><?php echo $nv_item['title']; ?></h3>
+                        <p class="solutions-security__card-description"><?php echo $nv_item['description']; ?></p>
+                    </div>
+                </li>
+                <?php endforeach; ?>
+
+                <?php /* 2456:16646 — плитка с иллюстрацией: на Full HD щит выходит за верхний край. */ ?>
+                <li class="solutions-security__card solutions-security__card--image">
+                    <img class="solutions-security__image"
+                         src="<?php echo esc_url(get_template_directory_uri() . '/img/sol-sec-shield.webp'); ?>"
+                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-sec-shield.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-sec-shield@2x.webp'); ?> 2x"
+                         width="337" height="267" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                </li>
+            </ul>
         </div>
     </section>
 
+    <?php if (false) : /* Секция Testimonials скрыта: в новом макете Solutions её нет ни на одном вьюпорте (DECISIONS.md, Р-11). */ ?>
     <section class="section testimonials" id="testimonials">
         <div class="container">
             <div class="testimonials__wrapper">
@@ -961,6 +945,7 @@ get_header(); ?>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <section class="section faq" id="faq">
         <div class="container">

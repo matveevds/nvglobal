@@ -31,27 +31,28 @@
 
 ## 2. Solutions — `page-solutions.php` → `/solutions/`
 
-Редизайн по новому макету идёт по группам. Выполнена **группа 1** (2026-10-09):
-светлая тема страницы, шапка, первый экран, отключение `.page-nav`.
-Секции 3–11 — прежний тёмный дизайн, ждут своих групп.
+Редизайн по новому макету идёт по группам. Выполнены **группы 1–6** (2026-10-09):
+светлая тема и шапка, первый экран, Why, Industries, Products, Integration,
+Security & compliance. Секции FAQ и CTA — прежний тёмный дизайн, ждут своих групп.
 
 **Полностью статический файл: ни одного `get_field` / `WP_Query`.**
 
 | # | Строка | Разметка | CSS-секция | Якорь | Состояние |
 |---|---|---|---|---|---|
-| 1 | 18 | `.main.main--solutions` | `MAIN` (11050–11511) | — | **новый дизайн** |
-| 2 | 106 | `.page-nav` | `PAGE-NAV` (общая с главной) | — | **скрыта `if (false)`** |
-| 3 | 150 | `.benefits` | `BENEFITS` (11513–11991) | `#benefits` | **скрыта `if (false)`** |
-| 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11996–12502) | — | **новый дизайн** |
+| 1 | 18 | `.main.main--solutions` | `MAIN` (11053–11514) | — | **новый дизайн** |
+| 2 | 105 | `.page-nav` | `PAGE-NAV` (общая с главной) | — | **скрыта `if (false)`** |
+| 3 | 149 | `.benefits` | `BENEFITS` (11516–11994) | `#benefits` | **скрыта `if (false)`** |
+| 4 | 364 | `.solutions-why` | `SOLUTIONS WHY` (11996–12502) | — | **новый дизайн** |
 | — | — | ~~`.features`~~ | `FEATURES` (12504–13159) | — | разметки нет, CSS legacy |
 | 5 | 496 | `.industries` | `INDUSTRIES` (13835–14430) | `#industries` | **новый дизайн** |
 | 6 | 636 | `.solutions-products` | `SOLUTIONS PRODUCTS` (13161–13521) | `#solutions` | **новый дизайн** |
 | — | — | ~~`.flow`~~ | `FLOW` (13523–13833) | — | разметки нет, CSS legacy |
 | 7 | 716 | `.integration` | `INTEGRATION` (14432–15239) | `#integration` | **новый дизайн** |
-| 8 | 812 | `.security` | `SECURITY` (15241–15475) | `#security` | старый |
-| 9 | 883 | `.testimonials` | общая с главной | `#testimonials` | старый |
-| 10 | 965 | `.faq` | `FAQ` (15477–16024) | `#faq` | старый |
-| 11 | 1081 | `.cta` | `CTA` (16026–16261) | `#cta` | старый |
+| 8 | 837 | `.solutions-security` | `SOLUTIONS SECURITY` (15241–15523) | `#security` | **новый дизайн** |
+| — | — | ~~`.security`~~ | `SECURITY` (15525–15759) | — | разметки нет, CSS legacy |
+| 9 | 866 | `.testimonials` | общая с главной | `#testimonials` | **скрыта `if (false)`** |
+| 10 | 950 | `.faq` | `FAQ` (15761–16308) | `#faq` | старый |
+| 11 | 1066 | `.cta` | `CTA` (16310–16545) | `#cta` | старый |
 
 Порядок секций в разметке приведён к макету: Why → Industries → Products.
 Регионы CSS при этом остались на своих местах в файле.
@@ -60,13 +61,10 @@
 туда ведут ссылки «Learn more» со слайдера Products на главной.
 Якоря `#products` на этой странице больше нет (был на старой `.flow`).
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16264).
-Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10876–11048): светлая шапка
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16548).
+Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10879–11051): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
 
-⚠️ `id="solutions"` временно стоит на блоке Why: с главной на него ведут ссылки
-`/solutions/#solutions`. В группе Products якорь переедет на новый блок
-«One platform. Lots of products. One API» (DECISIONS.md, Р-46).
 
 ### Первый экран `.main--solutions` — новый компонент
 
