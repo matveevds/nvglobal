@@ -1175,7 +1175,8 @@ body.home .btn--header:focus-visible {
     gap: 32px;
     width: 100%;
     min-height: 872px;
-    padding: 32px;
+    /* Full HD 2380:22866 — поле 48, Desktop 2363:34983 — 32. */
+    padding: 48px;
     border-radius: var(--nv-radius-hero);
     overflow: hidden;
     isolation: isolate;
@@ -1200,12 +1201,13 @@ body.home .btn--header:focus-visible {
  * В макете логотип лежит внутри карточки, а шапка идёт без него.
  * Поэтому на главной логотип шапки скрыт (см. секцию MENU), а здесь выведен свой.
  */
+/* Full HD 2380:22868 — 342×64 с полем 48; Desktop 2363:34985 — 206×39 с полем 32. */
 .hero__logo {
     position: absolute;
-    top: 32px;
-    left: 32px;
-    width: 206px;
-    height: 39px;
+    top: 48px;
+    left: 48px;
+    width: 342px;
+    height: 64px;
     display: block;
 }
 
@@ -1300,25 +1302,39 @@ html.has-scroll-smooth body {
     gap: 32px;
 }
 
+/* Full HD 2380:22867 — колонка 852, Desktop 2363:34984 — 496. */
 .hero__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
-    max-width: 496px;
+    max-width: 852px;
     width: 100%;
 }
 
+/* Full HD 2380:22875 — 72/84; Desktop 2363:34992 — H1 52/64. */
 .hero__title {
     margin: 0;
-    font-size: 52px;
-    line-height: 123.077%;
+    font-size: 72px;
+    line-height: 116.667%;
     font-weight: 700;
     color: var(--nv-constant-1);
 }
 
 .hero__title-accent {
     color: var(--nv-primary);
+}
+
+/*
+ * На Full HD тире входит в оранжевую часть и переноса нет, на Desktop тире
+ * белое и строка рвётся перед «in seconds» (2363:34992).
+ */
+.hero__title-dash {
+    color: var(--nv-primary);
+}
+
+.hero__title br {
+    display: none;
 }
 
 .hero__actions {
@@ -1332,10 +1348,11 @@ html.has-scroll-smooth body {
 
 
 
+/* Full HD 2380:22876 — Title/H4 24/36; Desktop 2363:34993 — Title/H6 18/24. */
 .verify {
     color: var(--nv-constant-85);
-    font-size: 18px;
-    line-height: 133.333%;
+    font-size: 24px;
+    line-height: 150%;
     font-weight: 700;
 }
 
@@ -1513,6 +1530,46 @@ body.home .btn-hero:focus-visible {
     margin-right: 16px;
     margin-bottom: 16px;
     display: none;
+}
+
+@media (max-width: 1599.98px) {
+    /*
+     * Desktop 2363:34983: поле карточки 32, колонка 496, логотип 206×39,
+     * заголовок H1 52/64 с переносом перед «in seconds» и белым тире,
+     * подзаголовок Title/H6 18/24.
+     */
+    .hero__card {
+        padding: 32px;
+    }
+
+    .hero__logo {
+        top: 32px;
+        left: 32px;
+        width: 206px;
+        height: 39px;
+    }
+
+    .hero__content {
+        max-width: 496px;
+    }
+
+    .hero__title {
+        font-size: 52px;
+        line-height: 123.077%;
+    }
+
+    .hero__title-dash {
+        color: inherit;
+    }
+
+    .hero__title br {
+        display: inline;
+    }
+
+    .verify {
+        font-size: 18px;
+        line-height: 133.333%;
+    }
 }
 
 
@@ -2186,15 +2243,21 @@ body.home .btn-hero:focus-visible {
 }
 
 /*
- * Раскладка по макету Figma 291:5892: секция — колонка с gap 48,
- * внутри блок заголовка (1048px) и карточки, между ними 24.
+ * Базовый уровень — Full HD 2380:22898: секция колонкой с gap 48, внутри блок
+ * заголовка (1389px) и ряд из трёх карточек, между ними 24. Desktop-раскладка
+ * (291:5892) — в `max-width: 1599.98px`.
  */
 .about .section__content {
     gap: 24px;
 }
 
 .about .section__title-block {
-    max-width: 1048px;
+    max-width: 1389px;
+}
+
+/* На Full HD заголовок умещается в одну строку. */
+.about .section__title br {
+    display: none;
 }
 
 .about__info {
@@ -2210,19 +2273,24 @@ body.home .btn-hero:focus-visible {
     line-height: 155.556%;
     padding-right: 300px;
 }
+/*
+ * Full HD: три карточки в одном ряду, ширины 1 : 1 : 1.5 (521.14 / 521.14 / 781.71).
+ * База задана процентом, а не `flex-basis: 0` — при нулевой базе Chrome
+ * раздаёт свободное место поверх padding и border, и доли уезжают.
+ */
 .about__cards {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 16px;
     position: relative;
 }
 
 .about__card {
-    width: calc(50% - 8px);
-    min-width: 340px;
+    flex: 0 1 calc((100% - 32px) / 3.5);
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
     padding: 24px;
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
     border: 1px solid var(--nv-surface-4);
@@ -2232,24 +2300,33 @@ body.home .btn-hero:focus-visible {
     background-color: transparent;
 }
 
-/* Карточка со статистикой: две колонки с вертикальным разделителем. */
+/*
+ * Карточка со статистикой. Full HD 2380:22909 — две строки с горизонтальным
+ * разделителем, в строке процент и подпись рядом. Desktop 291:5892 — две
+ * колонки с вертикальным разделителем, он восстановлен в `max-width: 1599.98px`.
+ */
 .about__card-stats {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    gap: 12px;
     align-items: stretch;
     width: 100%;
+    min-width: 0;
 }
 
 .about__card-stat {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    min-width: 0;
 }
 
 .about__card-divider {
-    width: 1px;
-    align-self: stretch;
+    width: 100%;
+    height: 1px;
+    align-self: auto;
     background: var(--nv-surface-4);
     flex-shrink: 0;
 }
@@ -2295,6 +2372,7 @@ body.home .btn-hero:focus-visible {
     white-space: nowrap;
 }
 .about__card-description {
+    max-width: 192px;
     color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H6, 18px);
     font-weight: 700;
@@ -2366,13 +2444,45 @@ body.home .btn-hero:focus-visible {
     right: 40px;
 }
 
+/*
+ * Full HD 2380:22920: текст занимает всю ширину карточки, под ним ряд
+ * «кнопки слева — знаки справа», кнопки идут столбиком (2380:22923).
+ * Desktop 1738:16152 оставляет текст и знаки в одну строку — возвращается
+ * в `max-width: 1599.98px`.
+ */
 .about__card--long {
-    width: 100%;
-    flex-direction: row;
+    flex: 0 1 calc((100% - 32px) / 3.5 * 1.5);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    column-gap: 24px;
+    row-gap: 24px;
     height: auto;
+}
+
+.about__card--long .about__card-content {
+    display: contents;
+}
+
+/* Full HD 2380:22922 — Title/H6 18/24 в поле 588. */
+.about__card--long .about__card-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: 588px;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+}
+
+.about__card--long .about__card-actions {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about__card--long .about__card-logos {
+    grid-column: 2;
+    grid-row: 2;
 }
 
 .about__card-title {
@@ -2386,7 +2496,7 @@ body.home .btn-hero:focus-visible {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 24px;
+    gap: 12px;
     flex-shrink: 0;
 }
 
@@ -2394,9 +2504,9 @@ body.home .btn-hero:focus-visible {
     line-height: 0;
 }
 
-/* Высота 120 по макету; ширина по пропорции исходника (360x360, 282x360, 360x360). */
+/* Full HD 2380:22926 — 72px; Desktop 1738:16173 — 120px. Ширина по пропорции. */
 .about__card-logo img {
-    height: 120px;
+    height: 72px;
     width: auto;
     display: block;
 }
@@ -2424,7 +2534,7 @@ body.home .btn-hero:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    padding: 6px 6px 6px 12px;
+    padding: 5px 5px 5px 11px;
     min-height: 32px;
     border-radius: 6px;
     border: 1px solid var(--nv-surface-4);
@@ -2464,7 +2574,79 @@ body.home .btn-hero:focus-visible {
 
 
 @media (max-width: 1599.98px) {
+    /* Desktop 291:5892: две карточки в ряд, третья на всю ширину под ними. */
+    .about__card-description {
+        max-width: none;
+    }
 
+    .about__card--long .about__card-title {
+        max-width: none;
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .about__card--long {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .about__card--long .about__card-content {
+        display: flex;
+    }
+
+    .about__card--long .about__card-actions {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .about__card {
+        gap: 24px;
+    }
+    /* Собственный отступ карточки с формулировкой — восстанавливаем после правила выше. */
+    .about__card--statement {
+        gap: 12px;
+    }
+    .about__card-stats {
+        flex-direction: row;
+        gap: 40px;
+    }
+    .about__card-stat {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    .about__card-divider {
+        width: 1px;
+        height: auto;
+        align-self: stretch;
+    }
+    .about .section__title-block {
+        max-width: 1048px;
+    }
+    .about .section__title br {
+        display: inline;
+    }
+    .about__cards {
+        flex-wrap: wrap;
+    }
+    .about__card {
+        flex: 0 1 auto;
+        width: calc(50% - 8px);
+        min-width: 340px;
+    }
+    .about__card--long {
+        flex: none;
+        width: 100%;
+    }
+    .about__card-logos {
+        gap: 24px;
+    }
+    .about__card-logo img {
+        height: 120px;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -2647,26 +2829,37 @@ body.home .btn-hero:focus-visible {
  * Сетка карточек в макете — grid 2x2, здесь собрана на Flexbox
  * (flex-wrap + 50% − половина gap), как требует регламент.
  */
+/*
+ * Базовый уровень — Full HD 2380:22930: заголовок на всю ширину отдельной
+ * строкой, под ним ряд «карточка кейса 576 + четыре карточки по 302».
+ * Desktop 2363:33982 (заголовок и кейс в левой колонке, статистика сеткой 2×2)
+ * восстановлен в `max-width: 1599.98px`.
+ *
+ * `.results__intro` переведён в `display: contents`, чтобы заголовок и кейс
+ * стали элементами одной сетки — разметка не дублируется.
+ */
 .results__content {
-    display: flex;
-    align-items: center;
-    gap: 48px;
+    display: grid;
+    grid-template-columns: 576px minmax(0, 1fr);
+    column-gap: 24px;
+    row-gap: 24px;
+    align-items: stretch;
 }
 
 .results__intro {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    width: 560px;
-    flex-shrink: 0;
+    display: contents;
 }
 
 .results__title {
     margin: 0;
+    grid-column: 1 / -1;
+    grid-row: 1;
 }
 
 /* Карточка кейса: иллюстрация выходит за правый нижний угол и подрезается карточкой. */
 .results__case {
+    grid-column: 1;
+    grid-row: 2;
     position: relative;
     overflow: hidden;
     padding: 24px;
@@ -2740,11 +2933,11 @@ body.home .btn-hero:focus-visible {
     line-height: 142.857%;
 }
 
-/* Смещение из макета: bottom -46, right -66 при размере 276. */
+/* Смещение Full HD 2380:22946: right -50, bottom -45 при размере 276. Desktop — ниже. */
 .results__case-image {
     position: absolute;
-    right: -66px;
-    bottom: -46px;
+    right: -50px;
+    bottom: -45px;
     width: 276px;
     height: 276px;
     object-fit: contain;
@@ -2752,10 +2945,11 @@ body.home .btn-hero:focus-visible {
 }
 
 .results__stats {
+    grid-column: 2;
+    grid-row: 2;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 16px;
-    flex: 1 1 auto;
     align-self: stretch;
 }
 
@@ -2764,7 +2958,8 @@ body.home .btn-hero:focus-visible {
     flex-direction: column;
     justify-content: flex-end;
     gap: 8px;
-    flex: 0 0 calc(50% - 8px);
+    flex: 0 1 calc((100% - 48px) / 4);
+    min-width: 0;
     padding: 24px;
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
     border: 1px solid var(--nv-surface-4);
@@ -2786,14 +2981,24 @@ body.home .btn-hero:focus-visible {
     gap: 8px;
 }
 
+/*
+ * Заголовок карточки статистики. В макете стиль разный по брейкпоинтам:
+ * Full HD 2380:22951 — Title/H5 20/28, Desktop 2363:33996 и Tablet
+ * 2376:16779 — Title/H4 24/36. Desktop-значение возвращается ниже 1600.
+ */
 .results__stat-title {
     color: var(--nv-object-1);
-    font-size: var(--Text-Title-Size-H4, 24px);
+    font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
-    line-height: 150%;
+    line-height: 140%;
 }
 
 .results__stat-description {
+    /*
+     * Full HD I2380:22948;147:2811 — поле описания фиксировано в две строки,
+     * поэтому у карточки с короткой подписью значение не съезжает вниз.
+     */
+    min-height: 48px;
     color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Regular, 16px);
     font-weight: 400;
@@ -2801,7 +3006,42 @@ body.home .btn-hero:focus-visible {
 }
 
 @media (max-width: 1599.98px) {
+    /* Desktop 2363:33996 и Tablet 2376:16779: заголовок карточки — Title/H4. */
+    .results__stat-title {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
 
+    .results__stat-description {
+        min-height: 0;
+    }
+
+    /* Desktop 2363:33982: заголовок и кейс в левой колонке, статистика 2×2. */
+    .results__content {
+        display: flex;
+        align-items: center;
+        column-gap: 48px;
+        row-gap: 48px;
+        gap: 48px;
+    }
+    .results__intro {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+        width: 560px;
+        flex-shrink: 0;
+    }
+    .results__stats {
+        flex-wrap: wrap;
+        flex: 1 1 auto;
+    }
+    .results__stat {
+        flex: 0 0 calc(50% - 8px);
+    }
+    .results__case-image {
+        right: -66px;
+        bottom: -46px;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -3050,23 +3290,32 @@ body.home .btn-hero:focus-visible {
     padding-bottom: 2px;
 }
 
+/*
+ * Три колонки во всех широких фреймах: Full HD 2380:22956 — 608,
+ * Desktop 2363:33915 — 448, оба = (ширина − 32) / 3. Планшет 2376:16784 —
+ * две колонки по 380. Прежнее `flex: 1 0 0` с минимумом 340 раскладывало
+ * на Full HD пять карточек в ряд и шестую на всю ширину.
+ */
 .solutions__item {
     display: flex;
-    min-width: 340px;
+    min-width: 0;
     padding: var(--Frame-Card-Padding-Outside, 24px);
     flex-direction: column;
     align-items: flex-end;
     gap: 24px;
-    flex: 1 0 0;
+    flex: 0 1 calc((100% - 32px) / 3);
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
     border: 1px solid var(--nv-surface-4);
     backdrop-filter: blur(10px);
     overflow: hidden;
 }
 
+/* I2380:22957;147:2731 — рамка иконки 32x32, обводка внутри (padding 4 - border). */
 .solutions__item-icon {
     display: flex;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 3px;
     justify-content: center;
     align-items: center;
     border-radius: 6px;
@@ -3126,7 +3375,9 @@ body.home .btn-hero:focus-visible {
         gap: 48px;
     }
 
+    /* Планшет 2376:16784 — две колонки. */
     .solutions__item {
+        flex: 0 1 calc((100% - 16px) / 2);
         padding: 16px;
     }
 }
@@ -3217,9 +3468,15 @@ body.home .btn-hero:focus-visible {
     gap: 48px;
 }
 
+/*
+ * Колонки: Full HD 2380:22973 — 633 + 223 + 1000, Desktop 2363:30609 —
+ * 540 + 96 + 740. В узкой колонке заголовок переносится на вторую строку
+ * и секция вырастает на 52px (BACKLOG A-08), поэтому ширины разведены.
+ */
 .products__content {
     display: flex;
-    gap: 96px;
+    justify-content: space-between;
+    gap: 24px;
     align-items: stretch;
     width: 100%;
 }
@@ -3229,8 +3486,15 @@ body.home .btn-hero:focus-visible {
     flex-direction: column;
     justify-content: space-between;
     gap: 48px;
-    width: 540px;
+    width: 633px;
     flex-shrink: 0;
+}
+
+/* Карточка слайдера не шире макетных 1000 — остаток уходит в зазор колонок. */
+.products__slider {
+    flex: 1 1 auto;
+    max-width: 1000px;
+    min-width: 0;
 }
 
 .products__info-top {
@@ -3294,9 +3558,10 @@ body.home .btn-hero:focus-visible {
     min-width: 0;
 }
 
+/* 2380:22986 — высота вкладки 32, обводка внутри. */
 .products__slider-tab {
     display: flex;
-    padding: 4px 16px;
+    padding: 3px 15px;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
@@ -3412,7 +3677,9 @@ body.home .btn-hero:focus-visible {
     line-height: 133.333%;
 }
 
+/* Full HD 2380:22999 — поле описания слайда 571 при текстовом блоке 763. */
 .products__slidedescription {
+    max-width: 571px;
     color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Medium, 18px);
     font-weight: 400;
@@ -3475,7 +3742,7 @@ body.home .btn-hero:focus-visible {
 /* Крупные кнопки левой колонки: 18/24, иконка по высоте строки. */
 .products__info-actions .btn {
     gap: 8px;
-    padding: 8px 8px 8px 16px;
+    padding: 7px 7px 7px 15px;
     min-height: 40px;
 }
 
@@ -3493,7 +3760,7 @@ body.home .btn-hero:focus-visible {
 /* Кнопка внутри слайда: 14/20, иконка 20. */
 .products__slide-action .btn {
     gap: 4px;
-    padding: 6px 6px 6px 12px;
+    padding: 5px 5px 5px 11px;
     min-height: 32px;
 }
 
@@ -3544,7 +3811,23 @@ body.home .btn-hero:focus-visible {
 }
 
 @media (max-width: 1599.98px) {
+    /* Desktop 2363:30609: колонки 540 + 96 + 740. */
+    .products__content {
+        justify-content: flex-start;
+        gap: 96px;
+    }
 
+    .products__info {
+        width: 540px;
+    }
+
+    .products__slider {
+        max-width: none;
+    }
+
+    .products__slidedescription {
+        max-width: none;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -3677,6 +3960,17 @@ body.home .btn-hero:focus-visible {
  * Desktop: три колонки — шаги, плашка, блоки размещения.
  * Tablet:  шаги и плашка в ряд, блоки размещения под ними.
  */
+/*
+ * В макете у секции нет верхнего поля: бейдж стоит на y=1, а вертикальный
+ * ритм задаёт нижнее поле предыдущей секции (2298:32163, 2380:23002).
+ * Общее `.section { padding: 64px 0 }` давало лишние 63px (BACKLOG A-12).
+ * На планшете поле возвращается: там наша раскладка на 60px ниже макетной,
+ * и без поля секция ушла бы в минус.
+ */
+.how {
+    padding-top: 0;
+}
+
 .how__content {
     gap: 24px;
 }
@@ -3685,9 +3979,15 @@ body.home .btn-hero:focus-visible {
     max-width: none;
 }
 
+/*
+ * Full HD 2380:26815: блоки размещения 308, оранжевая плашка 152. Браузер
+ * при двух `auto`-строках отдавал весь избыток второй строке (260 / 206),
+ * поэтому вторая строка прижата к содержимому, а остаток уходит первой.
+ */
 .how__layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) min-content;
     column-gap: 24px;
     row-gap: 16px;
 }
@@ -3758,6 +4058,8 @@ body.home .btn-hero:focus-visible {
     position: relative;
     display: flex;
     align-items: flex-end;
+    /* Full HD 2380:23036 — высота плашки 152. */
+    min-height: 152px;
     padding: 24px;
     border-radius: 24px;
     background: linear-gradient(171deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
@@ -3970,12 +4272,43 @@ body.home .btn-hero:focus-visible {
 }
 
 @media (max-width: 1199.98px) {
+    /*
+     * Три колонки макета (1fr + 324 + 340 + два зазора по 24) требуют минимум
+     * 1050px окна: ниже столбец размещения срезался правым краем экрана
+     * (BACKLOG A-02). Фиксированные ширины заменены на `min()` — до 1050px
+     * значения остаются макетными, ниже столбцы ужимаются пропорционально
+     * окну, поэтому скачка на границе 1200 нет.
+     */
+    .how__layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, min(324px, 29vw))
+            minmax(0, min(340px, 30.5vw));
+    }
 
+    /* Без этого колонка шагов не даёт сетке сузиться ниже своего min-content. */
+    .how__steps,
+    .how__step,
+    .how__highlight,
+    .how__deploy {
+        min-width: 0;
+    }
+
+    .how__step-info,
+    .how__highlight-info,
+    .how__deploy-info {
+        min-width: 0;
+    }
 }
 
 /* Tablet 2376:16830: шаги и плашка в ряд, блоки размещения под ними. */
 @media (max-width: 991.98px) {
+    .how {
+        padding-top: 64px;
+    }
+
     .how__layout {
+        grid-template-rows: auto auto;
         grid-template-columns: 1fr 240px;
         row-gap: 24px;
     }
@@ -4463,6 +4796,15 @@ body.home .btn-hero:focus-visible {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+/*
+ * В макете 2380:23130 бейдж секции стоит по центру, а не слева. Общий
+ * `.section__badge` задаёт `align-self: flex-start`, поэтому переопределяем
+ * внутри секции — на /solutions/ и /pricing-matrix/ бейдж остаётся слева.
+ */
+.clients__top-info .section__badge {
+    align-self: center;
 }
 
 .clients__top-info {
@@ -5652,19 +5994,24 @@ body.home .clients__top-info .section__title-block {
 
 .pricing__cards {
     display: flex;
-    align-items: stretch;
+    /*
+     * Full HD 2380:23639: карточка цены 240, карточка преимуществ 228 —
+     * высоты независимы. На Desktop карточки выравниваются (`1599.98`).
+     */
+    align-items: flex-start;
     gap: 24px;
     width: 100%;
 }
 
 /* Карточка с ценой */
+/* Full HD 2380:23640 — карточка цены 560; Desktop 2377:20690 — 360. */
 .pricing__price {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 24px;
-    width: 360px;
+    gap: 0;
+    width: 560px;
     flex-shrink: 0;
     padding: var(--Frame-Card-Padding-Outside, 24px);
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
@@ -5738,10 +6085,16 @@ body.home .clients__top-info .section__title-block {
 }
 
 /* Карточка с преимуществами и кнопками */
+/*
+ * Full HD 2380:23649: преимущества и кнопки стоят в ряд, кнопки — столбиком
+ * справа по нижнему краю. Desktop 2363:31369 (кнопки строкой под карточками)
+ * восстановлен в `max-width: 1599.98px`.
+ */
 .pricing__offer {
     display: flex;
-    flex-direction: column;
-    gap: 32px;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
     flex: 1 1 auto;
     min-width: 304px;
     padding: var(--Frame-Card-Padding-Outside, 24px);
@@ -5758,7 +6111,10 @@ body.home .clients__top-info .section__title-block {
     margin: 0;
     padding: 0;
     list-style: none;
-    width: 100%;
+    flex: 1 1 auto;
+    align-self: flex-start;
+    min-width: 0;
+    width: auto;
 }
 
 .pricing__benefit {
@@ -5798,10 +6154,14 @@ body.home .clients__top-info .section__title-block {
 
 .pricing__actions {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-end;
+    flex-wrap: nowrap;
     justify-content: flex-end;
+    flex: 0 0 auto;
     gap: 12px;
-    width: 100%;
+    width: auto;
 }
 
 /* `.btn` и модификаторы общие, поэтому оформление ограничено секцией. */
@@ -5810,7 +6170,7 @@ body.home .clients__top-info .section__title-block {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 8px 8px 16px;
+    padding: 7px 7px 7px 15px;
     min-height: 40px;
     border-radius: 8px;
     border: 1px solid var(--nv-surface-4);
@@ -5870,7 +6230,38 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 1599.98px) {
+    /* Desktop 2363:31369: карточка цены 360, кнопки строкой под преимуществами. */
+    .pricing__cards {
+        align-items: stretch;
+    }
 
+    .pricing__price {
+        gap: 24px;
+        width: 360px;
+    }
+
+    .pricing__benefits {
+        align-self: auto;
+    }
+
+    .pricing__offer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+    }
+
+    .pricing__benefits {
+        flex: 0 1 auto;
+        width: 100%;
+    }
+
+    .pricing__actions {
+        flex-direction: row;
+        align-items: center;
+        align-self: auto;
+        flex-wrap: wrap;
+        width: 100%;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -5892,18 +6283,122 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 991.98px) {
+    /*
+     * Tablet 2376:17467: две колонки 326 + 24 + 426, карточки преимуществ
+     * столбиком, кнопки в ряд и слева. В макете галочка перекрывает верх
+     * текста, поэтому на планшете она позиционируется абсолютно — иначе
+     * карточка выходит 100 вместо 84.
+     */
+    /* В планшетном макете между заголовком и карточками 52 (2376:17423). */
+    .pricing__content {
+        gap: 52px;
+    }
 
+    .pricing__cards {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .pricing__price {
+        flex: 0 0 326px;
+        width: 326px;
+        justify-content: space-between;
+    }
+
+    /* Поле 16 из макета минус толщина рамки — Figma рисует обводку внутрь. */
+    .pricing__offer {
+        min-width: 0;
+        padding: 15px;
+    }
+
+    .pricing__benefits {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .pricing__benefit {
+        position: relative;
+        flex: 0 0 auto;
+        align-items: stretch;
+        min-height: 0;
+        gap: 0;
+        padding: 15px;
+    }
+
+    .pricing__benefit-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .pricing__benefit-text {
+        margin-top: 24px;
+    }
+
+    /* В планшетном макете третий пункт умещается в одну строку. */
+    .pricing__benefit:nth-child(3) .pricing__benefit-text br {
+        display: none;
+    }
+
+    /*
+     * В макете кнопки ровно заполняют ряд (225 + 12 + 157 = 394). В теме они
+     * на 2px шире каждая, и при зазоре 12 ряд не сходится на 3px — уменьшаем
+     * зазор до 8, иначе кнопки переносятся уже на ширине макета.
+     * Ниже 840 ряд всё равно не помещается и переносится штатно.
+     */
+    .pricing__actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        column-gap: 8px;
+        row-gap: 12px;
+    }
+
+    /* В планшетном макете основная кнопка стоит первой. */
+    .pricing__actions .btn--primary {
+        order: -1;
+    }
 }
 
 @media (max-width: 767.98px) {
+    /* Макета ниже 768 нет — возвращаем поведение темы. */
+    .pricing__cards {
+        flex-direction: column;
+    }
+
+    .pricing__price {
+        flex: 0 0 auto;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
     .pricing__benefits {
         flex-wrap: wrap;
     }
 
     .pricing__benefit {
+        position: static;
         flex: 1 1 100%;
         min-height: 0;
         gap: 16px;
+        padding: 16px 16px 16px 24px;
+        align-items: flex-end;
+    }
+
+    .pricing__benefit-icon {
+        position: static;
+    }
+
+    .pricing__benefit-text {
+        margin-top: 0;
+    }
+
+    .pricing__actions {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .pricing__actions .btn--primary {
+        order: 0;
     }
 }
 
@@ -5949,14 +6444,15 @@ body.home .clients__top-info .section__title-block {
     width: 100%;
 }
 
+/* Full HD 2380:23730 — колонка 503 и кнопки в ряд; Desktop 2363:32426 — 440 и столбиком. */
 .doc__info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 48px;
-    width: 440px;
+    width: 503px;
     flex-shrink: 0;
-    padding-right: 20px;
+    padding-right: 0;
 }
 
 .doc__info-top {
@@ -5972,11 +6468,17 @@ body.home .clients__top-info .section__title-block {
     gap: 24px;
 }
 
+.doc__title br {
+    display: inline;
+}
+
 .doc__title {
     margin: 0;
 }
 
+/* Full HD 2380:23735 — текстовый блок уже колонки: 437 при колонке 503. */
 .doc__description {
+    max-width: 437px;
     margin: 0;
     color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Regular, 16px);
@@ -6000,8 +6502,9 @@ body.home .clients__top-info .section__title-block {
 
 .doc__actions {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
 }
 
@@ -6026,7 +6529,11 @@ body.home .clients__top-info .section__title-block {
     align-items: flex-end;
     gap: 24px;
     flex: 1 1 0;
-    min-width: 340px;
+    /*
+     * Нижний предел — доля ряда, а не фиксированные 340px: на 1200–1230
+     * вторая карточка упиралась в минимум и вылезала за контейнер.
+     */
+    min-width: 0;
     padding: var(--Frame-Card-Padding-Outside, 24px);
     border-radius: var(--Frame-Card-Padding-Corner, 24px);
     border: 1px solid var(--nv-surface-4);
@@ -6125,7 +6632,7 @@ body.home .clients__top-info .section__title-block {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 8px 8px 16px;
+    padding: 7px 7px 7px 15px;
     min-height: 40px;
     border-radius: 8px;
     border: 1px solid var(--nv-surface-4);
@@ -6234,7 +6741,24 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 1599.98px) {
+    /* Desktop 2363:32426: колонка 440 с полем 20, кнопки столбиком. */
+    .doc__info {
+        width: 440px;
+        padding-right: 20px;
+    }
 
+    .doc__title br {
+        display: none;
+    }
+
+    .doc__description {
+        max-width: none;
+    }
+
+    .doc__actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 @media (max-width: 1399.98px) {
@@ -6267,9 +6791,58 @@ body.home .clients__top-info .section__title-block {
 }
 
 @media (max-width: 991.98px) {
+    /*
+     * Tablet 2376:17554: заголовок, затем две карточки в ряд, полоса поддержки
+     * и только внизу блок призыва с кнопками. `.doc__info` переведён
+     * в `display: contents`, порядок задаётся `order` — разметка не дублируется.
+     */
+    .doc__wrapper {
+        gap: 48px;
+    }
+
+    .doc__info {
+        display: contents;
+    }
+
+    .doc__info-top {
+        order: 1;
+        gap: 48px;
+    }
+
+    .doc__content {
+        order: 2;
+    }
+
+    .doc__info-bottom {
+        order: 3;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .doc__lead {
+        max-width: 414px;
+    }
+
+    .doc__actions {
+        align-items: flex-end;
+        flex-shrink: 0;
+    }
+
+    .doc__cards {
+        flex-wrap: nowrap;
+    }
+
     .doc__card {
-        flex: 1 1 100%;
+        flex: 1 1 0;
         min-width: 0;
+    }
+
+    /* В планшетном макете поле полосы поддержки 16, а не 24. */
+    .doc__support {
+        padding: 16px;
+        gap: 24px;
     }
 }
 
@@ -7756,7 +8329,13 @@ body.home .clients__top-info .section__title-block {
 body.home .contacts {
     /* Вылет оранжевой карточки к левому краю экрана. */
     --nv-bleed: calc((100vw - min(100vw, 1920px) + 64px) / 2);
-    padding: 64px 0;
+    /*
+     * Нижнего поля у секции в макете нет: контент заканчивается за 1px до низа
+     * во всех трёх фреймах (2380:23792, 322:9869, 2376:17617), дальше сразу
+     * идёт «Page edge» тизера. Общее `.section { padding: 64px 0 }` давало
+     * лишние 63px (BACKLOG A-09).
+     */
+    padding: 64px 0 0;
 }
 
 body.home .contacts .contacts__wrapper {
@@ -7766,9 +8345,16 @@ body.home .contacts .contacts__wrapper {
 }
 
 /* Full HD 2380:23794: левая колонка 459, карточка формы занимает остаток. */
+/*
+ * Строки задаём явно: без этого браузер выравнивает обе строки по самой
+ * высокой (карточке контактов) и колонка вырастала на 136px сверх формы.
+ * `min-content` — под блок заголовка, `1fr` — остаток под карточку,
+ * она прижата к низу через `align-self: end`, как в макете.
+ */
 body.home .contacts .contacts__content {
     display: grid;
     grid-template-columns: 459px minmax(0, 1fr);
+    grid-template-rows: min-content 1fr;
     column-gap: 48px;
     align-items: start;
 }
@@ -7980,8 +8566,9 @@ body.home .contacts .contacts__form-block {
     background: transparent;
 }
 
+/* 2380:23800 — заголовок списка в основном цвете. */
 body.home .contacts .contacts__form-title {
-    color: var(--nv-object-1);
+    color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
     line-height: 140%;
@@ -7993,13 +8580,23 @@ body.home .contacts .contacts__form-list {
     gap: 8px;
 }
 
+/* Перенос в карточке — только Full HD, где карточка 319 (I2380:23802;147:2709). */
+body.home .contacts .contacts__form-item-text br {
+    display: inline;
+}
+
 body.home .contacts .contacts__form-item {
     /* Старое правило задавало width: calc(25% - 12px) — в сетке это ломает колонку. */
     width: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 24px;
+    /*
+     * Full HD 2380:23802: между значком и текстом зазора нет, карточка 104.
+     * На Desktop макетная карточка 128 — там текст занимает три строки,
+     * у нас две, и высоту добирает зазор 24, поэтому ниже 1600 он возвращается.
+     */
+    gap: 0;
     padding: 11px;
     border: 1px solid var(--nv-surface-4);
     border-radius: 16px;
@@ -8433,6 +9030,15 @@ body.home .contacts .help-select__dropdown {
         grid-template-columns: 427px minmax(0, 1fr);
     }
 
+    body.home .contacts .contacts__form-item-text br {
+        display: none;
+    }
+
+    /* На Desktop макетная карточка выгоды 128 — зазор между значком и текстом возвращается. */
+    body.home .contacts .contacts__form-item {
+        gap: 24px;
+    }
+
     body.home .contacts .contacts__card {
         margin-left: calc(-1 * var(--nv-bleed));
         width: calc(100% + var(--nv-bleed));
@@ -8512,6 +9118,15 @@ body.home .contacts .help-select__dropdown {
 
 @media (max-width: 991.98px) {
     /* Tablet 2376:17617: одна колонка, оранжевая карточка уходит вниз. */
+
+    /* Карточки выгод 368×90 с зазорами 8 по обеим осям (2376:17626). */
+    body.home .contacts .contacts__form-list {
+        gap: 8px;
+    }
+
+    body.home .contacts .contacts__form-item {
+        gap: 8px;
+    }
 
     /* Вылета за край экрана на планшете в макете нет. */
     body.home .contacts .contacts__card {
@@ -13433,7 +14048,7 @@ body.home .faq__cta-btn {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 8px 8px 16px;
+    padding: 7px 7px 7px 15px;
     min-height: 40px;
     max-width: none;
     border: 1px solid var(--nv-surface-4);

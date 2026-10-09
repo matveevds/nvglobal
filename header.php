@@ -96,7 +96,10 @@
 
                             <li class="header__nav-item"><a href="<?php echo home_url(); ?>/#clients" class="header__nav-link header__nav-link--underline">Clients</a></li>
 
+                            <?php /* Секция Cases скрыта по Р-11, якоря #cases на главной нет — пункт там не выводим (BACKLOG A-01). */ ?>
+                            <?php if (!is_front_page()) : ?>
                             <li class="header__nav-item"><a href="<?php echo home_url(); ?>/#cases" class="header__nav-link header__nav-link--underline">Cases</a></li>
+                            <?php endif; ?>
 
                             <li class="header__nav-item"><a href="<?php echo home_url(); ?>/pricing-matrix/" class="header__nav-link header__nav-link--underline">Prices</a></li>
 

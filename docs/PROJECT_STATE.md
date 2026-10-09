@@ -75,7 +75,7 @@
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |
 | `page-privacy.php` | 37 | Шаблон страницы PRIVACY POLICY | 3 юр. страницы |
-| `header.php` | 128 | — | шапка |
+| `header.php` | 131 | — | шапка; пункт «Cases» выводится только вне главной (BACKLOG A-01) |
 | `footer.php` | 726 | — | футер (ветвление по `is_front_page()`) + cookie + 4 модалки |
 
 > Проверено сквозным аудитом 2026-10-07: на главной выводится один

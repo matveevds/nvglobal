@@ -411,6 +411,37 @@ function initProductsSlider() {
         if (e.key === 'ArrowRight') setDesktopActive(current + 1);
     });
 
+    /*
+     * Клавиатура вкладок по WAI-ARIA Tabs. Стрелки и Home/End двигают выбор
+     * ВМЕСТЕ с фокусом: без этого roving tabindex оставляет фокус на вкладке
+     * с tabindex="-1", и остальные становятся недостижимы (BACKLOG A-11).
+     * Край не заворачиваем — так же, как ведут себя кнопки prev/next.
+     * Всплытие останавливаем, иначе обработчик слайдера сдвинет выбор второй раз.
+     */
+    const tablist = tabs[0]?.closest('[role="tablist"]');
+
+    tablist?.addEventListener('keydown', (e) => {
+        if (mobileMedia.matches) return;
+
+        const from = tabs.indexOf(document.activeElement);
+        if (from < 0) return;
+
+        let next = null;
+
+        if (e.key === 'ArrowRight') next = Math.min(total - 1, from + 1);
+        else if (e.key === 'ArrowLeft') next = Math.max(0, from - 1);
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = total - 1;
+
+        if (next === null) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        setDesktopActive(next);
+        tabs[next]?.focus();
+    });
+
     syncDesktopState(current);
     applyMode();
 
