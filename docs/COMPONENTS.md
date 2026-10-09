@@ -44,15 +44,18 @@
 | 3 | 150 | `.benefits` | `BENEFITS` (11513–11991) | `#benefits` | **скрыта `if (false)`** |
 | 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11993–12499) | `#solutions` (временно) | **новый дизайн** |
 | — | — | ~~`.features`~~ | `FEATURES` (12501–13156) | — | разметки нет, CSS legacy |
-| 5 | 420 | `.flow` | `FLOW` (13158–13468) | `#products` | старый |
-| 6 | 519 | `.industries` | `INDUSTRIES` (13470–13846) | `#industries` | старый |
-| 7 | 698 | `.integration` | `INTEGRATION` (13848–14516) | `#integration` | старый |
-| 8 | 860 | `.security` | `SECURITY` (14518–14752) | `#security` | старый |
-| 9 | 931 | `.testimonials` | общая с главной | `#testimonials` | старый |
-| 10 | 1013 | `.faq` | `FAQ` (14754–15301) | `#faq` | старый |
-| 11 | 1129 | `.cta` | `CTA` (15303–15538) | `#cta` | старый |
+| 5 | 497 | `.industries` | `INDUSTRIES` (13470–14065) | `#industries` | **новый дизайн** |
+| 6 | 572 | `.flow` | `FLOW` (13158–13468) | `#products` | старый |
+| 7 | 672 | `.integration` | `INTEGRATION` (14067–14735) | `#integration` | старый |
+| 8 | 834 | `.security` | `SECURITY` (14737–14971) | `#security` | старый |
+| 9 | 905 | `.testimonials` | общая с главной | `#testimonials` | старый |
+| 10 | 987 | `.faq` | `FAQ` (14973–15520) | `#faq` | старый |
+| 11 | 1103 | `.cta` | `CTA` (15522–15757) | `#cta` | старый |
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10874) … `END` (15541).
+Порядок секций в разметке изменён: `.industries` поднят выше `.flow` — так
+идут блоки в новом макете. Регионы CSS при этом остались на своих местах.
+
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10874) … `END` (15760).
 Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10876–11048): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
 
@@ -147,6 +150,51 @@ JS — `initSolutionsWhy()` в `js/main.js`. Обработчики вешают
 
 Ассеты: `img/sol-why-{fhd,desktop,tablet,mobile}.webp` (+`@2x`). Фотография
 одна на все состояния — в макете она при переключении карточек не меняется.
+
+### Блок «Built for regulated industries» — `.industries` + `.nvslider`
+
+Адаптирован из прежнего блока: механика двух синхронных Swiper сохранена,
+оформление и контент переписаны. Данные — массив `$nv_industries`
+в `page-solutions.php` (`id`, `pill`, `title`, `description`, `summary`,
+`chips`, `image`, `alt`); из него рендерятся и вкладки, и слайды.
+
+```
+.section.industries #industries
+  .container
+    .industries__head           бейдж + H2 + подзаголовок
+    .industries__board          grid 3fr / 1fr
+      .industries__panel.nvslider
+        .nvslider__nav          стрелка — панель вкладок (Swiper) — стрелка
+          .nvslider__buttons > .swiper-wrapper[role=tablist]
+            button.nvslider__btn[role=tab]
+        .nvslider__main         Swiper содержимого
+          .nvslider__slide[role=tabpanel]
+            .nvslider__card     иконка + заголовок + описание
+            .nvslider__aside    пояснение + .nvslider__chips
+      .industries__media        6 .industries__illustration, активная .is-current
+```
+
+| Параметр | Full HD 1920 | Desktop 1440 | Tablet 840 | Mobile 392 |
+|---|---|---|---|---|
+| Раскладка | карточка слева, иллюстрация справа | то же | то же, блоки внутри друг под другом | иллюстрация сверху |
+| Вкладок видно | 3 равные | 3 равные | по содержимому | 1 |
+| Стрелки | по краям панели | по краям | по краям | внутри панели |
+| Карточка индустрии | 520 | 520 | во всю ширину | во всю ширину |
+| Поле карточки | 24 | 24 | 16 | 12 |
+| Радиус | 24 | 24 | 16 | 12 |
+| Заголовок | H4 24/36 | 24/36 | 24/36 | 20/32 |
+| Описание | H6 18/24 | 18/24 | 18/24 | 14/20 |
+| Пояснение | 18/28 | 18/28 | 18/28 | 16/24 |
+| Чип | 16/24 | 16/24 | 16/24 | 14/20 |
+| Иллюстрация | 480, +160 за правый край | 480 | 316, −78 под карточку | 360 над карточкой |
+
+Механика — `initIndustriesSlider()`: `loop: false`, выбор ведёт слайдер
+содержимого, панель вкладок только позиционируется; после `breakpoint`
+и `resize` оба слайдера возвращаются на выбранный индекс. Вкладки размечены
+как tabs (`tablist` / `tab` / `tabpanel`), стрелки выключаются на краях.
+
+Ассеты: `img/sol-ind-{banks,fintech,crypto,telecom,gambling,government}.webp`
+480×480 + `@2x`. Старые `img/industries_maskot1…4.*` остались на диске.
 
 ---
 

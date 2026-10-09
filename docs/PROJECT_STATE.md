@@ -70,7 +70,7 @@
 | Файл | Строк | Template Name | Роль |
 |---|---|---|---|
 | `main-page.php` | 2406 | Шаблон главной страницы | **главная** |
-| `page-solutions.php` | 1201 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран) и 2 (блок Why) |
+| `page-solutions.php` | 1175 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (блок Why) и 3 (Industries) |
 | `page-price-matrix.php` | 715 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |
@@ -175,7 +175,7 @@
 
 | Файл | Строк | Подключение |
 |---|---|---|
-| `css/styles.css` | **18 250** | глобально |
+| `css/styles.css` | **18 469** | глобально |
 | `css/post.css` | 902 | глобально (нужен только статьям) |
 | `css/blog.css` | 586 | глобально (нужен только блогу) |
 | `css/document-toc.css` | 539 | условно: `is_singular('document')` или `page-docs.php` |

@@ -1513,6 +1513,21 @@ function initFlowSlider() {
 /**
  * Индустрии слайдер
  */
+/*
+ * «Built for regulated industries» на /solutions/.
+ *
+ * Механика прежняя — два синхронных Swiper: панель вкладок и содержимое.
+ * Под новый макет снято зацикливание (`loop: false`): на первой вкладке
+ * выключается Previous, на шестой — Next, перехода 6 -> 1 и 1 -> 6 нет.
+ * Активная вкладка остаётся по центру панели, а у краёв панель прижимается
+ * к краю (`centeredSlidesBounds`), иначе рядом с первой вкладкой была бы
+ * пустота.
+ *
+ * Вкладки размечены как tabs: панель — `role="tablist"`, кнопки — `role="tab"`
+ * с `aria-selected` и roving `tabindex`, слайды — `role="tabpanel"`.
+ * Иллюстрация лежит вне слайдера отдельным слоем и переключается тем же
+ * индексом, поэтому рассинхрон вкладки и содержимого невозможен.
+ */
 function initIndustriesSlider() {
     const section = document.querySelector('.industries');
     if (!section) return;
@@ -1521,123 +1536,139 @@ function initIndustriesSlider() {
     const buttonsSliderEl = section.querySelector('.nvslider__buttons');
     const prevEl = section.querySelector('.nvslider__arrow--prev');
     const nextEl = section.querySelector('.nvslider__arrow--next');
+    const tablist = section.querySelector('[role="tablist"]');
 
     if (!contentSliderEl || !buttonsSliderEl || !prevEl || !nextEl) return;
 
-    let syncSource = null;
+    const buttons = Array.from(section.querySelectorAll('.nvslider__btn'));
+    const illustrations = Array.from(section.querySelectorAll('.industries__illustration'));
+    if (!buttons.length) return;
 
-    function setActiveButton(index) {
-        const allButtons = section.querySelectorAll('.nvslider__btn');
-        allButtons.forEach((btn) => btn.classList.remove('nvslider__btn--active'));
+    const last = buttons.length - 1;
+    let current = 0;
+    let syncing = false;
 
-        const matchingSlides = section.querySelectorAll(
-            `.nvslider__buttons .swiper-slide[data-swiper-slide-index="${index}"]`
-        );
+    function render(index) {
+        current = index;
 
-        matchingSlides.forEach((slide) => {
-            const btn = slide.querySelector('.nvslider__btn');
-            if (btn) btn.classList.add('nvslider__btn--active');
+        buttons.forEach((btn, i) => {
+            const active = i === index;
+            btn.classList.toggle('nvslider__btn--active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            btn.setAttribute('tabindex', active ? '0' : '-1');
         });
+
+        illustrations.forEach((img, i) => img.classList.toggle('is-current', i === index));
+
+        prevEl.disabled = index === 0;
+        nextEl.disabled = index === last;
+    }
+
+    /*
+     * Общая точка входа: и клик по вкладке, и стрелки, и свайп приводят сюда,
+     * поэтому вкладка, слайд и иллюстрация не могут разойтись.
+     */
+    function select(index, moveFocus) {
+        const target = Math.min(last, Math.max(0, index));
+
+        syncing = true;
+        render(target);
+        if (buttonsSwiper.activeIndex !== target) buttonsSwiper.slideTo(target);
+        if (contentSwiper.activeIndex !== target) contentSwiper.slideTo(target);
+        syncing = false;
+
+        /*
+         * `preventScroll` обязателен: панель вкладок обрезана по ширине,
+         * и обычный `focus()` прокручивает её `scrollLeft`, споря с
+         * трансформацией Swiper — активная вкладка уезжала из видимой зоны.
+         */
+        if (moveFocus) buttons[target].focus({ preventScroll: true });
     }
 
     const buttonsSwiper = new Swiper(buttonsSliderEl, {
-        loop: true,
-        slidesPerView: 3,
+        loop: false,
+        slidesPerView: 1,
         spaceBetween: 8,
         centeredSlides: true,
-        slideToClickedSlide: true,
+        centeredSlidesBounds: true,
+        slideToClickedSlide: false,
         watchSlidesProgress: true,
-        speed: 600,
+        speed: 500,
         nested: true,
         breakpoints: {
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            991: { slidesPerView: 2.6, centeredSlides: true },
-            1400: { slidesPerView: 3, centeredSlides: true }
-        },
-        on: {
-            init(swiper) {
-                setActiveButton(swiper.realIndex);
-            },
-            touchStart() {
-                syncSource = 'buttons';
-            },
-            realIndexChange(swiper) {
-                setActiveButton(swiper.realIndex);
-                if (syncSource === 'content') return;
-                contentSwiper.slideToLoop(swiper.realIndex, 600);
-            },
-            transitionEnd() {
-                if (syncSource === 'buttons') {
-                    syncSource = null;
-                }
-            }
+            /*
+             * От 1200 — три равные вкладки, как в макете. Между 768 и 1200
+             * равная ширина обрезала бы самую длинную подпись
+             * («Crypto exchanges & Web3»), поэтому там вкладки по содержимому.
+             * Ниже 768 в макете видна одна вкладка.
+             */
+            768: { slidesPerView: 'auto' },
+            1200: { slidesPerView: 3 }
         }
     });
 
     const contentSwiper = new Swiper(contentSliderEl, {
-        loop: true,
+        loop: false,
         slidesPerView: 1,
         spaceBetween: 32,
-        speed: 600,
+        speed: 500,
         autoHeight: false,
         allowTouchMove: true,
-        initialSlide: 2,
-        navigation: { prevEl, nextEl },
-        on: {
-            init(swiper) {
-                setActiveButton(swiper.realIndex);
-                buttonsSwiper.slideToLoop(swiper.realIndex, 0);
-            },
-            touchStart() {
-                syncSource = 'content';
-            },
-            realIndexChange(swiper) {
-                setActiveButton(swiper.realIndex);
-                if (syncSource === 'buttons') return;
-                buttonsSwiper.slideToLoop(swiper.realIndex, 600);
-            },
-            transitionEnd() {
-                if (syncSource === 'content') {
-                    syncSource = null;
-                }
-            }
-        }
+        initialSlide: 0
     });
 
-    section.addEventListener('click', (e) => {
-        const button = e.target.closest('.nvslider__btn');
-        if (!button) return;
-
-        const slide = button.closest('.swiper-slide');
-        if (!slide) return;
-
-        const index = Number(slide.dataset.swiperSlideIndex);
-        if (Number.isNaN(index)) return;
-
-        syncSource = 'buttons';
-        setActiveButton(index);
-        buttonsSwiper.slideToLoop(index, 600);
-        contentSwiper.slideToLoop(index, 600);
-
-        setTimeout(() => {
-            if (syncSource === 'buttons') syncSource = null;
-        }, 650);
+    /*
+     * Слушатели вешаются после создания обоих слайдеров: `slideChange`
+     * срабатывает уже при инициализации, а `select` обращается к обоим.
+     *
+     * Выбор меняет только содержимое: протягивание самой панели вкладок —
+     * это прокрутка списка, а не переключение. Иначе при смене брейкпоинта
+     * (3 вкладки -> по содержимому) Swiper пересчитывал `activeIndex`
+     * панели и сам «перещёлкивал» секцию на другую индустрию.
+     */
+    contentSwiper.on('slideChange', (swiper) => {
+        if (syncing) return;
+        select(swiper.activeIndex, false);
     });
 
-    prevEl.addEventListener('click', () => {
-        syncSource = 'content';
-        setTimeout(() => {
-            if (syncSource === 'content') syncSource = null;
-        }, 650);
+    /* После смены брейкпоинта и ресайза возвращаем оба слайдера на выбранный индекс. */
+    function restore() {
+        syncing = true;
+        if (buttonsSwiper.activeIndex !== current) buttonsSwiper.slideTo(current, 0);
+        if (contentSwiper.activeIndex !== current) contentSwiper.slideTo(current, 0);
+        syncing = false;
+    }
+
+    buttonsSwiper.on('breakpoint', restore);
+    buttonsSwiper.on('resize', restore);
+    contentSwiper.on('resize', restore);
+
+    buttons.forEach((btn, i) => {
+        btn.addEventListener('click', () => select(i, false));
     });
 
-    nextEl.addEventListener('click', () => {
-        syncSource = 'content';
-        setTimeout(() => {
-            if (syncSource === 'content') syncSource = null;
-        }, 650);
+    prevEl.addEventListener('click', () => select(current - 1, false));
+    nextEl.addEventListener('click', () => select(current + 1, false));
+
+    tablist?.addEventListener('keydown', (e) => {
+        const from = buttons.indexOf(document.activeElement);
+        if (from < 0) return;
+
+        let target = null;
+
+        if (e.key === 'ArrowRight') target = Math.min(last, from + 1);
+        else if (e.key === 'ArrowLeft') target = Math.max(0, from - 1);
+        else if (e.key === 'Home') target = 0;
+        else if (e.key === 'End') target = last;
+
+        if (target === null) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        select(target, true);
     });
+
+    render(0);
 }
 
 /**

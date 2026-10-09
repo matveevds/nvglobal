@@ -417,6 +417,158 @@ get_header(); ?>
         </div>
     </section>
 
+    <?php
+    /*
+     * Built for regulated industries. Figma: Full HD 2456:16556, Desktop 527:9591,
+     * Tablet 2457:17267, Mobile 2467:17951; состояния слайдов 2456:16556,
+     * 2422:26065, 2439:14516, 2439:14561, 2439:14606, 2439:14651.
+     *
+     * Блок адаптирован из прежнего `.industries` + `.nvslider`: механика двух
+     * синхронных Swiper сохранена, разметка и оформление переписаны под макет.
+     * Данные — один массив: из него рендерятся и вкладки, и слайды, поэтому
+     * индексы вкладки и содержимого совпадают по построению.
+     *
+     * Иллюстрация вынесена из слайдера отдельным слоем: в макете она выходит
+     * за правый край карточки, а внутри Swiper её срезал бы `overflow: hidden`.
+     */
+    $nv_industries = array(
+        array(
+            'id'          => 'banks',
+            'pill'        => 'Banks',
+            'title'       => 'Banks',
+            'description' => 'Open accounts remotely in one session: KYC and AML in a single flow, evidence logged for the regulator.',
+            'summary'     => 'Designed for traditional banks, for whom security and reliability are the top priorities.',
+            'chips'       => array('KYC', 'AML', 'Liveness'),
+            'image'       => 'sol-ind-banks',
+            'alt'         => 'Трёхмерная иллюстрация: здание банка с колоннами',
+        ),
+        array(
+            'id'          => 'fintech',
+            'pill'        => 'FinTech &amp; lending',
+            'title'       => 'FinTech &amp; lending',
+            'description' => 'Cut drop-off during checks: decision in seconds, risk signals passed straight to your scoring.',
+            'summary'     => 'Built for neobanks, and fintech innovators who refuse to compromise between security and user experience.',
+            'chips'       => array('KYC', 'AML', 'KYT'),
+            'image'       => 'sol-ind-fintech',
+            'alt'         => 'Трёхмерная иллюстрация: кошелёк и смартфон',
+        ),
+        array(
+            'id'          => 'crypto',
+            'pill'        => 'Crypto exchanges &amp; Web3',
+            'title'       => 'Crypto exchanges &amp; Web3',
+            'description' => 'Onboard users with KYC and AML, then monitor wallets and transactions in real time with KYT',
+            'summary'     => 'Our advanced fraud detection prevents multi-account abuse and identifies suspicious actors before they can harm your platform.',
+            'chips'       => array('KYC', 'AML', 'KYT'),
+            'image'       => 'sol-ind-crypto',
+            'alt'         => 'Трёхмерная иллюстрация: смартфон с биткоином и стопка монет',
+        ),
+        array(
+            'id'          => 'telecom',
+            'pill'        => 'Telecom',
+            'title'       => 'Telecom',
+            'description' => 'SIM registration and eSIM issue by document and face; re-verification on SIM swap.',
+            'summary'     => 'Make sure you can trust the people you sell SIM cards to and comply fully with regulatory requirements',
+            'chips'       => array('KYC', 'Liveness', 'Face Auth'),
+            'image'       => 'sol-ind-telecom',
+            'alt'         => 'Трёхмерная иллюстрация: SIM-карты и смартфон',
+        ),
+        array(
+            'id'          => 'gambling',
+            'pill'        => 'Gambling &amp; betting',
+            'title'       => 'Gambling &amp; betting',
+            'description' => 'Age 18+ verified from the document, self-exclusion lists screened, one person&nbsp;— one account.',
+            'summary'     => 'From online casinos to sports betting platforms, we help you run a responsible, regulated operation that puts player safety first.',
+            'chips'       => array('KYC', 'Liveness', '1:N'),
+            'image'       => 'sol-ind-gambling',
+            'alt'         => 'Трёхмерная иллюстрация: рулетка и фишки',
+        ),
+        array(
+            'id'          => 'government',
+            'pill'        => 'Government',
+            'title'       => 'Government',
+            'description' => 'Citizen services and digital ID on on-premises deployment; data never leaves your jurisdiction.',
+            'summary'     => 'Ensure that citizens can access public services comfortably, without having to choose between convenience and reliability',
+            'chips'       => array('KYC', 'AI-OCR', 'NeuroSign'),
+            'image'       => 'sol-ind-government',
+            'alt'         => 'Трёхмерная иллюстрация: здание государственного учреждения',
+        ),
+    );
+    ?>
+    <section class="section industries" id="industries">
+        <div class="container">
+            <div class="industries__head">
+                <div class="section__badge">Industries</div>
+                <div class="industries__title-block">
+                    <h2 class="section__title industries__title">Built for regulated industries</h2>
+                    <p class="section__subtitle industries__subtitle">Every card is a flow we already run in production. Pick yours&nbsp;— or&nbsp;tell us about a new one.</p>
+                </div>
+            </div>
+
+            <div class="industries__board" data-industries>
+                <div class="industries__panel nvslider">
+                    <div class="nvslider__nav">
+                        <button type="button" class="nvslider__arrow nvslider__arrow--prev" aria-label="Previous industry"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path d="M8.34473 4.63033C8.63731 4.50897 8.98055 4.62709 9.13411 4.91191C9.29756 5.21566 9.18387 5.59453 8.88021 5.75826C8.87985 5.75846 8.87872 5.75856 8.87777 5.75908C8.87586 5.76011 8.87297 5.7625 8.86882 5.76477C8.86034 5.76941 8.84696 5.77639 8.82975 5.78593C8.79512 5.80513 8.74372 5.83437 8.67757 5.8722C8.54474 5.94815 8.3532 6.05955 8.12337 6.20097C7.66251 6.48455 7.05157 6.88428 6.44368 7.35087C5.83202 7.82039 5.24327 8.34256 4.81364 8.86862C4.59738 9.13342 4.4384 9.37952 4.33187 9.60348H16.0417C16.3868 9.60348 16.6666 9.88335 16.6667 10.2285C16.6667 10.5737 16.3868 10.8535 16.0417 10.8535H4.33105C4.43756 11.0777 4.59676 11.3245 4.81364 11.59C5.24323 12.1157 5.83129 12.6376 6.44287 13.1069C7.05086 13.5734 7.66243 13.9725 8.12337 14.256C8.35299 14.3972 8.54393 14.5088 8.67676 14.5848C8.743 14.6226 8.79508 14.6518 8.82975 14.671C8.84709 14.6806 8.86035 14.6884 8.86882 14.693C8.87289 14.6952 8.87588 14.6969 8.87777 14.6979L8.88021 14.6987L8.93473 14.7321C9.19701 14.9098 9.28767 15.261 9.13411 15.5459C8.98053 15.8307 8.63733 15.948 8.34473 15.8266L8.28695 15.799H8.28613L8.28532 15.7981C8.28451 15.7977 8.28338 15.7972 8.28206 15.7965C8.27921 15.795 8.27493 15.7928 8.26986 15.79C8.2593 15.7842 8.24373 15.7756 8.22428 15.7648C8.1851 15.7431 8.1281 15.7112 8.05664 15.6704C7.91378 15.5887 7.71099 15.4697 7.46826 15.3204C6.98392 15.0225 6.33429 14.5986 5.68197 14.0981C5.03335 13.6004 4.36162 13.0112 3.84603 12.3802C3.37387 11.8023 2.96998 11.1142 2.92155 10.3774L2.91667 10.2301V10.2285C2.91667 10.2274 2.91747 10.2263 2.91748 10.2252C2.91912 9.43443 3.34272 8.69379 3.84521 8.07841C4.36083 7.44706 5.03331 6.85759 5.68197 6.35966C6.3344 5.85885 6.98389 5.43456 7.46826 5.13652C7.71104 4.98713 7.91377 4.86828 8.05664 4.78658C8.12807 4.74574 8.18511 4.71471 8.22428 4.693C8.24361 4.68228 8.25847 4.67355 8.26904 4.66777C8.27435 4.66487 8.27912 4.66204 8.28206 4.66044C8.28336 4.65974 8.28453 4.65925 8.28532 4.65882L8.28613 4.658H8.28695L8.34473 4.63033Z" fill="currentColor"/> </g> </svg></button>
+
+                        <div class="nvslider__buttons swiper">
+                            <div class="swiper-wrapper" role="tablist" aria-label="Industries">
+                                <?php foreach ($nv_industries as $nv_i => $nv_industry) : $nv_first = (0 === $nv_i); ?>
+                                <div class="swiper-slide">
+                                    <button type="button"
+                                            class="nvslider__btn<?php echo $nv_first ? ' nvslider__btn--active' : ''; ?>"
+                                            role="tab"
+                                            id="industry-tab-<?php echo esc_attr($nv_industry['id']); ?>"
+                                            aria-controls="industry-panel-<?php echo esc_attr($nv_industry['id']); ?>"
+                                            aria-selected="<?php echo $nv_first ? 'true' : 'false'; ?>"
+                                            tabindex="<?php echo $nv_first ? '0' : '-1'; ?>"><?php echo $nv_industry['pill']; ?></button>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <button type="button" class="nvslider__arrow nvslider__arrow--next" aria-label="Next industry"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path d="M10.8659 4.45481C11.0297 4.15096 11.4092 4.03713 11.7131 4.2009H11.7139L11.7147 4.20172C11.7155 4.20215 11.7166 4.20263 11.7179 4.20334C11.7208 4.20492 11.7249 4.20783 11.7301 4.21067C11.7407 4.21643 11.7563 4.22433 11.7757 4.23508C11.8149 4.2568 11.8719 4.28863 11.9434 4.32948C12.0862 4.41115 12.289 4.53009 12.5317 4.67942C13.0161 4.97735 13.6657 5.40122 14.318 5.90175C14.9667 6.39944 15.6384 6.98869 16.154 7.61969C16.6575 8.23595 17.0833 8.97818 17.0833 9.77056L17.0785 9.91786C17.03 10.655 16.627 11.3441 16.1548 11.9223C15.6392 12.5536 14.9667 13.1423 14.318 13.6402C13.6656 14.141 13.0161 14.5653 12.5317 14.8633C12.289 15.0127 12.0862 15.1316 11.9434 15.2133C11.8719 15.2541 11.8149 15.286 11.7757 15.3077C11.7566 15.3183 11.7415 15.3263 11.731 15.3321C11.7257 15.335 11.7209 15.3378 11.7179 15.3394C11.7166 15.3401 11.7155 15.3406 11.7147 15.341L11.7139 15.3419H11.7131C11.4092 15.5057 11.0297 15.3925 10.8659 15.0888C10.7021 14.7849 10.816 14.4054 11.1198 14.2416C11.1201 14.2414 11.1213 14.2413 11.1222 14.2408C11.1241 14.2398 11.1271 14.2381 11.1312 14.2359C11.1397 14.2313 11.1529 14.2235 11.1702 14.2139C11.2049 14.1947 11.2563 14.1655 11.3224 14.1277C11.4553 14.0517 11.6468 13.9403 11.8766 13.7989C12.3375 13.5153 12.9484 13.1156 13.5563 12.649C14.168 12.1794 14.7567 11.6573 15.1864 11.1312C15.4026 10.8664 15.5616 10.6204 15.6681 10.3964H3.95833C3.61316 10.3964 3.33333 10.1166 3.33333 9.77138C3.33335 9.42622 3.61317 9.14638 3.95833 9.14638H15.6689C15.5625 8.9222 15.4031 8.676 15.1864 8.4107C14.7567 7.88493 14.1688 7.36229 13.5571 6.89296C12.9491 6.42647 12.3376 6.0274 11.8766 5.74387C11.647 5.60263 11.4561 5.49102 11.3232 5.4151C11.257 5.3772 11.2049 5.34805 11.1702 5.32883C11.153 5.31927 11.1397 5.3123 11.1312 5.30767C11.127 5.30538 11.1241 5.30301 11.1222 5.30198C11.1213 5.30146 11.1201 5.30135 11.1198 5.30116C10.8161 5.13743 10.7024 4.75857 10.8659 4.45481Z" fill="currentColor"/> </g> </svg></button>
+                    </div>
+
+                    <div class="nvslider__main swiper">
+                        <div class="nvslider__content swiper-wrapper">
+                            <?php foreach ($nv_industries as $nv_industry) : ?>
+                            <div class="nvslider__slide swiper-slide"
+                                 role="tabpanel"
+                                 id="industry-panel-<?php echo esc_attr($nv_industry['id']); ?>"
+                                 aria-labelledby="industry-tab-<?php echo esc_attr($nv_industry['id']); ?>">
+                                <div class="nvslider__card">
+                                    <span class="nvslider__card-icon"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8916 20.25V12.2539H20.4807C20.8949 12.2539 21.2307 11.9181 21.2307 11.5039C21.2307 11.0897 20.8949 10.7539 20.4807 10.7539H19.8564C19.502 6.9941 16.5097 4.00152 12.7499 3.6468L12.7503 3.00043C12.7505 2.58621 12.4149 2.25024 12.0007 2.25C11.5865 2.24976 11.2505 2.58536 11.2503 2.99957L11.2499 3.64671C7.48971 4.00098 4.49664 6.99373 4.14211 10.7539H3.51904C3.10483 10.7539 2.76904 11.0897 2.76904 11.5039C2.76904 11.9181 3.10483 12.2539 3.51904 12.2539H4.10693V20.25H3.51904C3.10483 20.25 2.76904 20.5858 2.76904 21C2.76904 21.4142 3.10483 21.75 3.51904 21.75H4.85693H8.42952H12.0002H15.5709H19.1416H20.4807C20.8949 21.75 21.2307 21.4142 21.2307 21C21.2307 20.5858 20.8949 20.25 20.4807 20.25H19.8916ZM18.3916 20.25V12.2539H16.3209V20.25H18.3916ZM14.8209 20.25V12.2539H12.7502V20.25H14.8209ZM11.2502 20.25V12.2539H9.17952V20.25H11.2502ZM7.67952 20.25V12.2539H5.60693V20.25H7.67952ZM18.3481 10.7539H15.5709H12.0002H8.42952H5.65047C6.02183 7.57712 8.72296 5.11158 11.9994 5.11158C15.2759 5.11158 17.9768 7.57708 18.3481 10.7539Z" fill="currentColor"/> </g> </svg></span>
+                                    <div class="nvslider__card-text">
+                                        <h3 class="nvslider__card-title"><?php echo $nv_industry['title']; ?></h3>
+                                        <p class="nvslider__card-description"><?php echo $nv_industry['description']; ?></p>
+                                    </div>
+                                </div>
+                                <div class="nvslider__aside">
+                                    <p class="nvslider__summary"><?php echo $nv_industry['summary']; ?></p>
+                                    <ul class="nvslider__chips">
+                                        <?php foreach ($nv_industry['chips'] as $nv_chip) : ?>
+                                        <li class="nvslider__chip"><?php echo esc_html($nv_chip); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <?php /* 2456:16576 — иллюстрация 480x480 выходит за правый край; слой лежит вне слайдера. */ ?>
+                <div class="industries__media" aria-hidden="true">
+                    <?php foreach ($nv_industries as $nv_i => $nv_industry) : ?>
+                    <img class="industries__illustration<?php echo (0 === $nv_i) ? ' is-current' : ''; ?>"
+                         src="<?php echo esc_url(get_template_directory_uri() . '/img/' . $nv_industry['image'] . '.webp'); ?>"
+                         srcset="<?php echo esc_url(get_template_directory_uri() . '/img/' . $nv_industry['image'] . '.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/' . $nv_industry['image'] . '@2x.webp'); ?> 2x"
+                         width="480" height="480" alt="" loading="lazy" decoding="async">
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section flow" id="products">
         <div class="container">
             <div class="flow__wrapper section__wrapper">
@@ -516,184 +668,6 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="section industries" id="industries">
-        <div class="container">
-            <div class="industries__wrapper">
-                <div class="industries__left">
-                    <div class="section__badge">Industries</div>
-                    <div class="industries__title-block">
-                        <h2 class="section__title">Tailored KYC Solutions for Every Industry</h2>
-                        <p class="section__subtitle section__subtitle--small">From crypto exchanges to online gaming platforms, our identity verification technology adapts to your unique compliance needs and customer expectations.</p>
-                    </div>
-                    <div class="industries__text">
-                        <p>Every industry faces distinct identity verification challenges. Whether you're onboarding crypto traders in seconds or ensuring regulatory compliance for financial services, our platform delivers the precise tools you need. We've processed hundreds of millions of identity verifications across diverse sectors, understanding the nuances that make each industry unique.</p>
-                    </div>
-                </div>
-                <div class="industries__right">
-                    <div class="industries__slider nvslider swiper animate-fade-up">
-                        <div class="nvslider__nav">
-                            <div class="nvslider__arrow nvslider__arrow--prev">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M8.34481 4.62942C8.63739 4.50805 8.98063 4.62617 9.1342 4.91099C9.29764 5.21474 9.18396 5.59361 8.88029 5.75735C8.87994 5.75754 8.8788 5.75765 8.87785 5.75816C8.87594 5.7592 8.87305 5.76159 8.8689 5.76386C8.86042 5.76849 8.84704 5.77548 8.82983 5.78502C8.7952 5.80422 8.7438 5.83346 8.67765 5.87128C8.54482 5.94723 8.35329 6.05864 8.12345 6.20006C7.66259 6.48363 7.05165 6.88336 6.44377 7.34996C5.8321 7.81948 5.24335 8.34164 4.81372 8.8677C4.59746 9.1325 4.43848 9.3786 4.33195 9.60256H16.0417C16.3869 9.60256 16.6667 9.88243 16.6667 10.2276C16.6667 10.5727 16.3869 10.8526 16.0417 10.8526H4.33114C4.43764 11.0768 4.59684 11.3236 4.81372 11.5891C5.24331 12.1147 5.83137 12.6367 6.44295 13.106C7.05094 13.5725 7.66251 13.9715 8.12345 14.2551C8.35307 14.3963 8.54401 14.5079 8.67684 14.5838C8.74308 14.6217 8.79516 14.6509 8.82983 14.6701C8.84717 14.6797 8.86043 14.6875 8.8689 14.6921C8.87297 14.6943 8.87596 14.6959 8.87785 14.697L8.88029 14.6978L8.93481 14.7311C9.19709 14.9088 9.28775 15.2601 9.1342 15.5449C8.98061 15.8298 8.63741 15.9471 8.34481 15.8257L8.28703 15.798H8.28621L8.2854 15.7972C8.28459 15.7968 8.28346 15.7963 8.28215 15.7956C8.27929 15.794 8.27501 15.7919 8.26994 15.7891C8.25938 15.7833 8.24381 15.7746 8.22437 15.7639C8.18518 15.7421 8.12818 15.7103 8.05672 15.6695C7.91386 15.5878 7.71107 15.4688 7.46834 15.3195C6.984 15.0216 6.33437 14.5977 5.68205 14.0972C5.03343 13.5995 4.3617 13.0102 3.84611 12.3793C3.37395 11.8014 2.97007 11.1133 2.92163 10.3765L2.91675 10.2292V10.2276C2.91675 10.2265 2.91756 10.2254 2.91756 10.2243C2.91921 9.43351 3.3428 8.69288 3.8453 8.0775C4.36091 7.44614 5.03339 6.85668 5.68205 6.35875C6.33448 5.85794 6.98397 5.43365 7.46834 5.1356C7.71112 4.98622 7.91386 4.86736 8.05672 4.78567C8.12815 4.74483 8.18519 4.7138 8.22437 4.69208C8.24369 4.68137 8.25855 4.67263 8.26912 4.66685C8.27443 4.66395 8.2792 4.66113 8.28215 4.65953C8.28344 4.65883 8.28461 4.65833 8.2854 4.6579L8.28621 4.65709H8.28703L8.34481 4.62942Z" fill="#FBFBFB"/>
-                                </svg>
-                            </div>
-
-                            <div class="nvslider__buttons swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Insurance & InsurTech</button>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">E-commerce & Marketplaces</button>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Banks & Fintech</button>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Crypto Exchanges & Web3</button>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <button type="button" class="nvslider__btn">Online Gaming & Gambling</button>
-                                    </div>
-                                </div>                             
-                            </div>
-
-                            <div class="nvslider__arrow nvslider__arrow--next">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M10.8658 4.45575C11.0296 4.1519 11.4091 4.03806 11.713 4.20184H11.7138L11.7146 4.20265C11.7154 4.20309 11.7165 4.20356 11.7179 4.20428C11.7208 4.20586 11.7249 4.20876 11.7301 4.21161C11.7406 4.21736 11.7562 4.22526 11.7756 4.23602C11.8148 4.25774 11.8718 4.28957 11.9433 4.33042C12.0861 4.41208 12.2889 4.53103 12.5317 4.68036C13.016 4.97828 13.6656 5.40215 14.318 5.90269C14.9666 6.40038 15.6383 6.98963 16.1539 7.62062C16.6575 8.23689 17.0833 8.97911 17.0833 9.7715L17.0784 9.9188C17.0299 10.6559 16.6269 11.345 16.1547 11.9232C15.6391 12.5545 14.9666 13.1432 14.318 13.6411C13.6655 14.1419 13.016 14.5662 12.5317 14.8643C12.2889 15.0137 12.0861 15.1325 11.9433 15.2142C11.8718 15.2551 11.8148 15.2869 11.7756 15.3086C11.7565 15.3192 11.7414 15.3273 11.7309 15.333C11.7256 15.3359 11.7208 15.3388 11.7179 15.3403C11.7165 15.3411 11.7154 15.3415 11.7146 15.342L11.7138 15.3428H11.713C11.4092 15.5066 11.0296 15.3935 10.8658 15.0897C10.702 14.7859 10.8159 14.4063 11.1197 14.2425C11.1201 14.2423 11.1212 14.2422 11.1222 14.2417C11.124 14.2407 11.127 14.2391 11.1311 14.2368C11.1396 14.2322 11.1528 14.2245 11.1702 14.2149C11.2048 14.1957 11.2562 14.1664 11.3223 14.1286C11.4552 14.0526 11.6467 13.9413 11.8765 13.7998C12.3374 13.5162 12.9483 13.1165 13.5562 12.6499C14.1679 12.1804 14.7566 11.6583 15.1863 11.1322C15.4026 10.8673 15.5615 10.6213 15.668 10.3973H3.95825C3.61307 10.3973 3.33325 10.1175 3.33325 9.77232C3.33327 9.42716 3.61309 9.14732 3.95825 9.14732H15.6689C15.5624 8.92314 15.403 8.67694 15.1863 8.41164C14.7567 7.88587 14.1687 7.36323 13.557 6.8939C12.9491 6.4274 12.3375 6.02833 11.8765 5.74481C11.6469 5.60357 11.456 5.49196 11.3232 5.41603C11.2569 5.37814 11.2048 5.34899 11.1702 5.32977C11.1529 5.3202 11.1396 5.31324 11.1311 5.30861C11.1269 5.30631 11.1241 5.30395 11.1222 5.30291C11.1212 5.3024 11.1201 5.30229 11.1197 5.3021C10.8161 5.13837 10.7024 4.7595 10.8658 4.45575Z" fill="#FBFBFB"/>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="nvslider__main swiper">
-                            <div class="nvslider__content swiper-wrapper">
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.2367 3.75C6.49864 3.75 5.08984 5.1588 5.08984 6.89686V16.1316C5.08984 17.8696 6.49864 19.2784 8.2367 19.2784H10.6887C11.1029 19.2784 11.4387 19.6142 11.4387 20.0284C11.4387 20.4427 11.1029 20.7784 10.6887 20.7784H8.2367C5.67022 20.7784 3.58984 18.6981 3.58984 16.1316V6.89686C3.58984 4.33037 5.67022 2.25 8.2367 2.25H14.9504C17.5169 2.25 19.5972 4.33037 19.5972 6.89686V10.0805C19.5972 10.4947 19.2615 10.8305 18.8472 10.8305C18.433 10.8305 18.0972 10.4947 18.0972 10.0805V6.89686C18.0972 5.1588 16.6884 3.75 14.9504 3.75H8.2367Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.61033 8.65625C7.61033 8.24204 7.94611 7.90625 8.36033 7.90625H12.2445C12.6587 7.90625 12.9945 8.24204 12.9945 8.65625C12.9945 9.07046 12.6587 9.40625 12.2445 9.40625H8.36033C7.94611 9.40625 7.61033 9.07046 7.61033 8.65625ZM7.60938 12.8533C7.60938 12.439 7.94516 12.1033 8.35938 12.1033H9.94536C10.3596 12.1033 10.6954 12.439 10.6954 12.8533C10.6954 13.2675 10.3596 13.6033 9.94536 13.6033H8.35938C7.94516 13.6033 7.60938 13.2675 7.60938 12.8533Z" fill="#F9AA66"/>
-                                                    <path d="M16.4297 21.6004C16.1981 21.601 15.9686 21.556 15.7545 21.4678C15.5403 21.3796 15.3457 21.25 15.1817 21.0864L14.8487 20.7544C14.7976 20.7039 14.7286 20.6755 14.6567 20.6754H14.1917C13.7215 20.6746 13.2708 20.4875 12.9385 20.1549C12.6061 19.8224 12.4192 19.3716 12.4187 18.9014V18.4334C12.4191 18.3963 12.4121 18.3595 12.398 18.3251C12.3839 18.2908 12.3631 18.2596 12.3367 18.2334L12.0147 17.9114C11.683 17.5806 11.4958 17.1318 11.4942 16.6633C11.4925 16.1948 11.6764 15.7447 12.0057 15.4114L12.0357 15.3824L12.3357 15.0824C12.3864 15.0314 12.4148 14.9624 12.4147 14.8904V14.4254C12.4155 13.9555 12.6024 13.5051 12.9345 13.1726C13.2665 12.8402 13.7168 12.6528 14.1867 12.6514H14.6537C14.7259 12.6514 14.7952 12.623 14.8467 12.5724L15.1697 12.2494C15.5014 11.9163 15.9517 11.7283 16.4218 11.7266C16.892 11.7249 17.3436 11.9097 17.6777 12.2404L18.0087 12.5714C18.0338 12.5968 18.0637 12.617 18.0966 12.6307C18.1296 12.6445 18.165 12.6515 18.2007 12.6514H18.6677C19.138 12.652 19.5889 12.839 19.9215 13.1716C20.2541 13.5042 20.4411 13.9551 20.4417 14.4254V14.8914C20.442 14.9631 20.47 15.0318 20.5197 15.0834L20.8457 15.4094C21.1779 15.7415 21.3649 16.1916 21.366 16.6612C21.3672 17.1308 21.1822 17.5818 20.8517 17.9154L20.5187 18.2484C20.4694 18.2989 20.4421 18.3669 20.4427 18.4374V18.9054C20.4422 19.3754 20.2552 19.826 19.9227 20.1582C19.5903 20.4904 19.1397 20.6772 18.6697 20.6774H18.1997C18.1645 20.6773 18.1295 20.6841 18.0969 20.6975C18.0643 20.7109 18.0347 20.7306 18.0097 20.7554L17.6807 21.0824C17.5175 21.2476 17.3232 21.3788 17.109 21.4684C16.8947 21.558 16.6649 21.6043 16.4327 21.6044L16.4297 21.6004ZM13.0577 16.4804C13.0126 16.533 12.989 16.6007 12.9918 16.6699C12.9946 16.7391 13.0235 16.8047 13.0727 16.8534L13.4007 17.1824C13.7322 17.5144 13.9185 17.9643 13.9187 18.4334V18.9014C13.9187 18.9739 13.9474 19.0435 13.9986 19.0948C14.0498 19.1462 14.1192 19.1752 14.1917 19.1754H14.6567C15.1255 19.1763 15.575 19.3621 15.9077 19.6924L16.2327 20.0164C16.2588 20.043 16.2899 20.064 16.3243 20.0782C16.3586 20.0925 16.3955 20.0997 16.4327 20.0994C16.4683 20.0997 16.5036 20.0927 16.5364 20.079C16.5692 20.0652 16.5989 20.045 16.6237 20.0194L16.9547 19.6894C17.1185 19.525 17.3135 19.3948 17.528 19.3062C17.7426 19.2176 17.9725 19.1725 18.2047 19.1734H18.6737C18.7097 19.1736 18.7454 19.1666 18.7787 19.1528C18.812 19.1391 18.8422 19.1189 18.8677 19.0934C18.9188 19.0418 18.9475 18.9721 18.9477 18.8994V18.4334C18.9467 17.9654 19.1315 17.5162 19.4617 17.1844L19.7907 16.8554C19.8163 16.8299 19.8365 16.7996 19.8504 16.7662C19.8642 16.7328 19.8713 16.6971 19.8713 16.6609C19.8713 16.6248 19.8642 16.589 19.8504 16.5557C19.8365 16.5223 19.8163 16.492 19.7907 16.4664L19.4637 16.1384C19.2992 15.9744 19.1688 15.7794 19.08 15.5647C18.9913 15.3499 18.946 15.1198 18.9467 14.8874V14.4214C18.9467 14.3488 18.9179 14.2791 18.8665 14.2277C18.8151 14.1763 18.7453 14.1474 18.6727 14.1474H18.2057C17.9733 14.1481 17.743 14.1027 17.5283 14.0138C17.3135 13.9249 17.1186 13.7942 16.9547 13.6294L16.6297 13.3064L16.6147 13.2924C16.5646 13.2471 16.4993 13.2221 16.4317 13.2224C16.3958 13.2223 16.3603 13.2294 16.3272 13.2431C16.294 13.2568 16.264 13.277 16.2387 13.3024L15.9127 13.6294C15.5793 13.9601 15.1292 14.1462 14.6597 14.1474H14.1937C14.1212 14.1477 14.0517 14.1767 14.0006 14.228C13.9494 14.2794 13.9207 14.3489 13.9207 14.4214V14.8874C13.921 15.1196 13.8756 15.3495 13.7869 15.564C13.6982 15.7785 13.5679 15.9734 13.4037 16.1374L13.0787 16.4634L13.0577 16.4804ZM15.9557 18.3904C15.857 18.3904 15.7593 18.3708 15.6682 18.3329C15.577 18.2949 15.4943 18.2394 15.4247 18.1694L14.5047 17.2474C14.3683 17.1058 14.2929 16.9162 14.2949 16.7196C14.2969 16.5229 14.376 16.3349 14.5153 16.1961C14.6545 16.0572 14.8428 15.9786 15.0394 15.9772C15.2361 15.9757 15.4254 16.0516 15.5667 16.1884L15.9567 16.5784L17.3227 15.2124C17.4641 15.0758 17.6535 15.0001 17.8502 15.0017C18.0468 15.0033 18.2349 15.0821 18.374 15.2211C18.5132 15.3601 18.5921 15.5481 18.5939 15.7448C18.5957 15.9414 18.5202 16.1309 18.3837 16.2724L16.4837 18.1724C16.3433 18.3118 16.1535 18.3902 15.9557 18.3904Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Insurance & InsurTech</div>
-                                                <div class="nvslider__slide-description">Protect your business from fraudulent claims while delivering the seamless digital experience modern customers expect. Our identity verification platform ensures you know exactly who you're insuring, whether issuing new policies or processing claims. Remote verification eliminates office visits, accelerating policy issuance and claim settlements. With document authenticity checks and face matching technology, detect synthetic identities and prevent insurance fraud before it impacts your bottom line.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Perfect for life, health, and property insurers embracing digital transformation without sacrificing security.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot2">
-                                            <?php echo td_image(448, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.61483 6.04214C4.08028 6.61631 3.75 7.46423 3.75 8.53052V11.824C3.75 12.2383 3.41421 12.574 3 12.574C2.58579 12.574 2.25 12.2383 2.25 11.824V8.53052C2.25 7.15465 2.68009 5.91895 3.51696 5.02004C4.35946 4.11508 5.55755 3.61328 6.96486 3.61328H17.0351C18.4395 3.61328 19.6372 4.11537 20.4802 5.01971C21.3177 5.91819 21.75 7.15377 21.75 8.53052V15.1176C21.75 16.4934 21.3199 17.7291 20.483 18.628C19.6405 19.533 18.4424 20.0348 17.0351 20.0348H11.6225C11.2083 20.0348 10.8725 19.699 10.8725 19.2848C10.8725 18.8706 11.2083 18.5348 11.6225 18.5348H17.0351C18.0719 18.5348 18.8563 18.1741 19.3852 17.6059C19.9197 17.0318 20.25 16.1838 20.25 15.1176V8.53052C20.25 7.46511 19.9185 6.61708 19.3829 6.04248C18.8528 5.47373 18.0681 5.11328 17.0351 5.11328H6.96486C5.92807 5.11328 5.14373 5.47402 4.61483 6.04214Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 9.65759C2.25 9.24338 2.58579 8.90759 3 8.90759H21C21.4142 8.90759 21.75 9.24338 21.75 9.65759C21.75 10.0718 21.4142 10.4076 21 10.4076H3C2.58579 10.4076 2.25 10.0718 2.25 9.65759Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.59566 13.3358C5.90961 13.3358 6.19034 13.5314 6.29916 13.8259L6.40018 14.0992C6.70528 14.925 7.35518 15.5756 8.17897 15.8809L8.45197 15.982C8.74614 16.091 8.94139 16.3716 8.94139 16.6853C8.94139 16.999 8.74614 17.2796 8.45197 17.3886L8.17899 17.4897C7.35519 17.795 6.70528 18.4456 6.40019 19.2713L6.29917 19.5447C6.19036 19.8392 5.90962 20.0348 5.59566 20.0348C5.28169 20.0348 5.00095 19.8392 4.89214 19.5447L4.79113 19.2713C4.48603 18.4456 3.83613 17.795 3.01233 17.4897L2.73935 17.3885C2.44522 17.2795 2.25 16.999 2.25 16.6853C2.25 16.3716 2.44522 16.0911 2.73935 15.982L3.01228 15.8809C3.83609 15.5756 4.48603 14.925 4.79113 14.0993L4.89215 13.8259C5.00097 13.5314 5.2817 13.3358 5.59566 13.3358ZM5.59566 17.6348C5.8628 17.2728 6.18262 16.9527 6.54432 16.6853C6.18262 16.4179 5.8628 16.0978 5.59566 15.7358C5.32851 16.0978 5.00869 16.4179 4.647 16.6853C5.00869 16.9527 5.32851 17.2728 5.59566 17.6348Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.409 12.6681C11.7392 12.6681 12.0305 12.8841 12.1266 13.2C12.2256 13.5258 12.48 13.7803 12.8043 13.8791C13.12 13.9753 13.3356 14.2666 13.3356 14.5965C13.3356 14.9265 13.12 15.2177 12.8043 15.3139C12.48 15.4128 12.2256 15.6672 12.1266 15.9931C12.0305 16.309 11.7392 16.525 11.409 16.525C11.0788 16.525 10.7874 16.309 10.6914 15.9931C10.5923 15.6672 10.3379 15.4128 10.0136 15.3139C9.69797 15.2177 9.4823 14.9265 9.4823 14.5965C9.4823 14.2666 9.69797 13.9754 10.0136 13.8791C10.3379 13.7803 10.5923 13.5259 10.6914 13.2C10.7874 12.8841 11.0788 12.6681 11.409 12.6681Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">E-commerce & Marketplaces</div>
-                                                <div class="nvslider__slide-description">Build trust in every transaction by knowing who's behind each account. While KYC isn't always mandatory for e-commerce, verifying seller and buyer identities dramatically reduces payment fraud, fake accounts, and marketplace scams. Our solution is particularly valuable for peer-to-peer platforms, luxury goods marketplaces, and age-restricted product sales.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Enable smooth age verification for regulated products, prevent account takeovers, and create safer communities where genuine users can transact with confidence. Because trust is your most valuable currency.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot3">
-                                            <?php echo td_image(449, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8916 20.25V12.2539H20.4807C20.8949 12.2539 21.2307 11.9181 21.2307 11.5039C21.2307 11.0897 20.8949 10.7539 20.4807 10.7539H19.8564C19.502 6.9941 16.5097 4.00152 12.7499 3.6468L12.7503 3.00043C12.7505 2.58621 12.4149 2.25024 12.0007 2.25C11.5865 2.24976 11.2505 2.58536 11.2503 2.99957L11.2499 3.64671C7.48971 4.00098 4.49664 6.99373 4.14211 10.7539H3.51904C3.10483 10.7539 2.76904 11.0897 2.76904 11.5039C2.76904 11.9181 3.10483 12.2539 3.51904 12.2539H4.10693V20.25H3.51904C3.10483 20.25 2.76904 20.5858 2.76904 21C2.76904 21.4142 3.10483 21.75 3.51904 21.75H4.85693H8.42952H12.0002H15.5709H19.1416H20.4807C20.8949 21.75 21.2307 21.4142 21.2307 21C21.2307 20.5858 20.8949 20.25 20.4807 20.25H19.8916ZM18.3916 20.25V12.2539H16.3209V20.25H18.3916ZM14.8209 20.25V12.2539H12.7502V20.25H14.8209ZM11.2502 20.25V12.2539H9.17952V20.25H11.2502ZM7.67952 20.25V12.2539H5.60693V20.25H7.67952ZM18.3481 10.7539H15.5709H12.0002H8.42952H5.65048C6.02183 7.57712 8.72297 5.11158 11.9994 5.11158C15.2759 5.11158 17.9768 7.57708 18.3481 10.7539Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Banks & Fintech</div>
-                                                <div class="nvslider__slide-description">Transform compliance from a cost center into a competitive advantage. Our digital banking KYC solution automates identity verification while maintaining the rigorous standards required for AML6, PSD2, and GDPR compliance. By reducing false positives and streamlining document checks, compliance teams can focus on real risks instead of routine verifications. Enable instant account opening, enhance customer experience, and reduce operational costs – all while exceeding regulatory requirements.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Built for traditional banks, neobanks, and fintech innovators who refuse to compromise between security and user experience.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot1">
-                                            <?php echo td_image(447, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.05248 3.80355L11.0079 20.2276C11.0108 20.2343 11.0145 20.2393 11.0145 20.2393C11.0157 20.2409 11.0184 20.2431 11.0184 20.2431C11.0217 20.2456 11.0283 20.2489 11.0377 20.2502C11.0471 20.2514 11.0541 20.2499 11.0577 20.2485L11.0621 20.2461C11.0621 20.2461 11.0666 20.2426 11.0711 20.2369L19.9456 8.94943C19.9574 8.93424 19.956 8.9116 19.9415 8.89798L16.9587 6.13472L4.09293 3.75198C4.08467 3.75044 4.07793 3.75076 4.07793 3.75076L4.0735 3.7518C4.07034 3.75304 4.06398 3.75669 4.05763 3.7646C4.05127 3.77252 4.04888 3.7798 4.04825 3.78375C4.04825 3.78375 4.04793 3.78711 4.04817 3.78916C4.04817 3.78916 4.0492 3.79577 4.05248 3.80355ZM4.36608 2.27706C3.15933 2.05296 2.1951 3.26173 2.67077 4.38741L9.62665 20.8124C10.0823 21.8886 11.5274 22.0841 12.2506 21.1636L21.125 9.87627C21.6189 9.24741 21.5487 8.3436 20.9621 7.79876L17.8187 4.88665C17.7146 4.79017 17.5852 4.72523 17.4456 4.69938L4.36608 2.27706Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.941 2.91039C3.21594 2.60058 3.68998 2.57231 3.99978 2.84725L12.4976 10.3887C12.6758 10.5468 12.7683 10.7802 12.7467 11.0175L11.8331 21.0682C11.7956 21.4807 11.4308 21.7848 11.0183 21.7473C10.6058 21.7098 10.3018 21.345 10.3393 20.9324L11.2186 11.2591L3.00414 3.96917C2.69433 3.69423 2.66606 3.2202 2.941 2.91039Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8287 4.89525C18.1271 5.18254 18.1361 5.65733 17.8488 5.95572L14.3198 9.62123L20.5281 8.13109C20.9309 8.03441 21.3358 8.28255 21.4324 8.68533C21.5291 9.0881 21.281 9.49299 20.8782 9.58966L12.1751 11.6786C11.8511 11.7564 11.5147 11.6111 11.3491 11.322C11.1836 11.0328 11.2286 10.6692 11.4597 10.4291L16.7682 4.91537C17.0555 4.61698 17.5303 4.60797 17.8287 4.89525Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Crypto Exchanges & Web3</div>
-                                                <div class="nvslider__slide-description">Speed meets security in the fast-paced world of digital assets. Our crypto KYC compliance solution enables instant user onboarding while meeting FATF recommendations and regulatory requirements from FINMA, FCA, and other global authorities. With coverage across 195+ countries and territories, we help exchanges verify users worldwide in seconds, not hours.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">Our advanced fraud detection prevents multi-account abuse and identifies suspicious actors before they can harm your platform. Because in crypto, every second counts – and so does every verification.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot5">
-                                            <?php echo td_image(451, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nvslider__slide swiper-slide">
-                                    <div class="nvslider__slide-left">
-                                        <div class="nvslider__slide-content">
-                                            <div class="nvslider__slide-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.41896 3.36242C5.55963 3.22167 5.75047 3.14258 5.94946 3.14258H18.0499C18.4641 3.14258 18.7999 3.47837 18.7999 3.89258H18.0499C18.7999 3.89258 18.7999 3.89258 18.7999 3.89258V3.90372L18.7997 3.93022C18.7995 3.95289 18.7991 3.98548 18.7983 4.02733C18.7967 4.11102 18.7936 4.23182 18.7875 4.38445C18.7752 4.68953 18.7508 5.12277 18.7022 5.64169C18.6051 6.67597 18.4103 8.06733 18.016 9.46873C17.6242 10.8612 17.0201 12.3199 16.0718 13.4433C15.2452 14.4225 14.1519 15.1489 12.7466 15.3393V16.5859H15.2399C15.566 16.5859 15.8548 16.7967 15.9542 17.1074L16.6747 19.3589H17.7443C18.1585 19.3589 18.4943 19.6947 18.4943 20.1089C18.4943 20.5231 18.1585 20.8589 17.7443 20.8589H16.1497C16.1346 20.8594 16.1195 20.8594 16.1044 20.8589H8.039C8.02396 20.8594 8.00886 20.8594 7.99371 20.8589H6.39891C5.9847 20.8589 5.64891 20.5231 5.64891 20.1089C5.64891 19.6947 5.9847 19.3589 6.39891 19.3589H7.46876L8.18925 17.1074C8.28865 16.7967 8.57742 16.5859 8.90357 16.5859H11.2466V15.3377C9.84725 15.1447 8.75764 14.4197 7.93303 13.4434C6.98432 12.3202 6.37942 10.8615 5.98681 9.46913C5.59167 8.06776 5.39597 6.67642 5.29832 5.64214C5.24933 5.12323 5.22464 4.69 5.21219 4.38492C5.20596 4.23229 5.20278 4.11149 5.20116 4.02781C5.20035 3.98596 5.19992 3.95336 5.1997 3.93069L5.1995 3.9042L5.19946 3.89438C5.19946 3.89438 5.19946 3.89306 5.94946 3.89258L5.19946 3.89306C5.19934 3.69406 5.2783 3.50318 5.41896 3.36242ZM6.72656 4.64258C6.74023 4.88357 6.76079 5.17391 6.79168 5.50115C6.88426 6.48175 7.06815 7.77692 7.43051 9.06206C7.7954 10.3561 8.32589 11.5839 9.07898 12.4756C9.81323 13.3449 10.749 13.8886 12.0026 13.8886C13.2564 13.8886 14.1919 13.3449 14.9256 12.4757C15.6782 11.5842 16.2079 10.3565 16.572 9.06245C16.9336 7.77735 17.1167 6.4822 17.2087 5.50161C17.2394 5.17417 17.2598 4.88366 17.2733 4.64258H6.72656ZM11.9689 18.0859H9.45103L9.04369 19.3589H15.0997L14.6924 18.0859H12.0243C12.0151 18.0863 12.0059 18.0864 11.9966 18.0864C11.9873 18.0864 11.9781 18.0863 11.9689 18.0859Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.27782 5.56955C2.3204 5.19008 2.64129 4.90317 3.02315 4.90317H6.0541C6.46831 4.90317 6.8041 5.23896 6.8041 5.65317C6.8041 6.06739 6.46831 6.40317 6.0541 6.40317H3.75301C3.76279 6.73695 3.79877 7.16528 3.89517 7.63148C4.11666 8.70261 4.63873 9.89808 5.81458 10.6722C6.16055 10.8999 6.25638 11.365 6.02861 11.711C5.80084 12.057 5.33574 12.1528 4.98977 11.925C3.36041 10.8524 2.69297 9.22512 2.42624 7.93523C2.29211 7.28653 2.25466 6.70397 2.25042 6.28312C2.2483 6.07193 2.25452 5.89937 2.26155 5.77699C2.26506 5.71574 2.2688 5.6669 2.27181 5.63189C2.27332 5.61438 2.27465 5.60031 2.27569 5.58987L2.27702 5.57693L2.27767 5.57087L2.27782 5.56955C2.27782 5.56955 2.27782 5.56955 3.02315 5.65317L2.27782 5.56955Z" fill="#F9AA66"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1953 5.65317C17.1953 5.23896 17.5311 4.90317 17.9453 4.90317H20.9763C21.3581 4.90317 21.679 5.19008 21.7216 5.56955L20.9763 5.65317C21.7216 5.56955 21.7216 5.56955 21.7216 5.56955L21.7219 5.57254L21.7224 5.57693L21.7237 5.58987C21.7248 5.60031 21.7261 5.61438 21.7276 5.63189C21.7306 5.6669 21.7343 5.71574 21.7379 5.77699C21.7449 5.89937 21.7511 6.07193 21.749 6.28312C21.7447 6.70397 21.7073 7.28653 21.5732 7.93523C21.3064 9.22512 20.639 10.8524 19.0096 11.925C18.6637 12.1528 18.1986 12.057 17.9708 11.711C17.743 11.365 17.8389 10.8999 18.1848 10.6722C19.3607 9.89808 19.8828 8.70261 20.1042 7.63148C20.2006 7.16528 20.2366 6.73695 20.2464 6.40317H17.9453C17.5311 6.40317 17.1953 6.06739 17.1953 5.65317Z" fill="#F9AA66"/>
-                                                </svg>
-                                            </div>
-                                            <div class="nvslider__slide-info">
-                                                <div class="nvslider__slide-title">Online Gaming & Gambling</div>
-                                                <div class="nvslider__slide-description">Meet licensing requirements without disrupting the player experience. Our KYC for gambling platforms ensures swift age verification and jurisdiction checks, keeping minors out and restricting access from prohibited territories. Verify player identities before withdrawals, cross-reference with self-exclusion databases, and maintain compliance with gaming authorities worldwide. Our frictionless verification process takes seconds, not minutes, ensuring players stay engaged while you stay compliant.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nvslider__slide-right">
-                                        <div class="nvslider__slide-subtitle">From online casinos to sports betting platforms, we help you run a responsible, regulated operation that puts player safety first.</div>
-                                        <div class="nvslider__slide-maskot nvslider__slide-maskot4">
-                                            <?php echo td_image(450, ['loading' => 'eager']); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="section integration" id="integration">
         <div class="container">
