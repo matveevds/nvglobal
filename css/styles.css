@@ -679,9 +679,10 @@ body.home .top__widget-btn:focus-visible {
 /* HOME THEME START */
 
 /*
- * Светлая тема главной страницы по макету Figma NV-Global.
- * Ограничена `body.home`, чтобы не затронуть /solutions/, /pricing-matrix/ и /docs/
- * (решение Р-9 в docs/DECISIONS.md).
+ * Светлая тема макетов Figma NV-Global. Токены объявлены для главной и для
+ * страницы Solutions: обе переведены на один и тот же светлый дизайн, поэтому
+ * значения не дублируются (решение Р-9 / Р-12 в docs/DECISIONS.md).
+ * /pricing-matrix/, /docs/, /blog/, 404 и архивы остаются тёмными.
  *
  * Токены названы с префиксом --nv-, чтобы не пересекаться с семейством
  * --island-* / --text-white-* / --stroke-white-*: те 384 раза используются
@@ -689,7 +690,8 @@ body.home .top__widget-btn:focus-visible {
  * (docs/THEME-TODO.md, раздел 1).
  */
 
-body.home {
+body.home,
+body.page-template-page-solutions {
     --nv-primary: #FD6B01;
     --nv-primary-2: #FF4601;
     --nv-primary-soft: #FFF0E6;
@@ -712,7 +714,15 @@ body.home {
     --nv-radius-card: 24px;
     --nv-radius-hero: 32px;
     --nv-gutter: 32px;
+}
 
+/*
+ * Фон и базовый цвет текста включаются постранично. На /solutions/ редизайн
+ * идёт по группам, и ниже первого экрана ещё остаются тёмные секции, которым
+ * нужен унаследованный светлый текст, — поэтому светлый фон там задаёт пока
+ * сама секция. Страница целиком переедет сюда вместе с последней группой.
+ */
+body.home {
     background: var(--nv-surface-1);
     color: var(--nv-object-1);
 }
@@ -10862,110 +10872,88 @@ body.home .footer__bottom-line {
 
 /* SOLUTIONS-PAGE START */
 
-/* MAIN START */
+/* SOLUTIONS THEME START */
 
-
-.main {
-    padding-bottom: 130px;
+/*
+ * Светлая шапка страницы Solutions. Состав навигации, ссылки, порядок пунктов
+ * и JS меню не меняются — повторяется только палитра макета (2456:16497).
+ * Ограничено шаблоном страницы, шапка остальных страниц остаётся тёмной.
+ */
+/*
+ * Шапка встаёт в поток над первым экраном и красится в фон макета. Светлый фон
+ * задаётся именно шапке, а не `body`: ниже первого экрана на странице пока
+ * остаются тёмные секции прежнего дизайна.
+ */
+body.page-template-page-solutions .header {
+    position: relative;
+    top: 0;
+    padding-top: 32px;
+    background: var(--nv-surface-1);
 }
 
-.main--solutions {
-    height: 100vh;
-    min-height: 680px;
-    background-image:
-        radial-gradient(
-            71.94% 65.1% at 59.86% 35.65%,
-            rgba(17,17,17,0) 1.2%,
-            #111 81.01%
-        ),
-        url('../img/main-solutions-bg3.webp');
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center center, center bottom;
-}
-
-.main--solutions .container {
-    height: 100%;
-}
-
-.main__wrapper {
-    display: flex;
-    gap: 48px;
-    align-items: flex-end;
-    height: 100%;
-}
-
-.main__content {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding-top: 140px;
-    max-width: 580px;
-    justify-content: flex-end;
-}
-
-
-.main__title {
-    margin-bottom: 32px;
-    color: var(--Text-White, #FBFBFB);
-    font-size: var(--Text-Title-Size-H1, 56px);
-    font-weight: 700;
-    line-height: 114.286%;
-}
-
-.main__subtitle {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H6, 18px);
-    font-weight: 700;
-    line-height: 133.333%;
-}
-
-.main__action {}
-
-.main__slider {}
-
-.main__slider-track {}
-
-.main__slider-group {
-    display: flex;
-    gap: 16px;
-}
-
-.main__slide {
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    backdrop-filter: blur(10px);
-    display: flex;
-    padding: 16px;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex: 1 0 0;
-    align-self: stretch;
-    height: 192px;
-}
-
-.main__slide-icon {
-    border-radius: 6px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.main__slide-text {
-    color: var(--Text-Orange, #F9AA66);
-    font-size: var(--Text-Title-Size-H6, 18px);
-    font-weight: 700;
-    line-height: 133.333%;
-    text-align: left;
-    align-self: flex-start;
-}
-
-.main__slider-group--mobile {
+/* В макете логотип лежит внутри карточки первого экрана, в шапке его нет. */
+body.page-template-page-solutions .header__logo {
     display: none;
+}
+
+/*
+ * Шапка живёт на той же сетке, что и первый экран: поле 32, контент = экран − 64.
+ * Общая лесенка `.container` (1560/1408/1140/960/754) оставила бы навигацию
+ * в стороне от края карточки.
+ */
+body.page-template-page-solutions .header .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+body.page-template-page-solutions .header__menu {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: none;
+}
+
+body.page-template-page-solutions .header__nav-link {
+    color: var(--nv-object-1);
+}
+
+body.page-template-page-solutions .header__nav-toggle svg path {
+    fill: var(--nv-object-1);
+}
+
+body.page-template-page-solutions .burger svg path {
+    fill: var(--nv-object-1);
+}
+
+body.page-template-page-solutions .btn--header {
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    transition: filter .2s ease;
+}
+
+body.page-template-page-solutions .btn--header {
+    /*
+     * Стрелку рисует lottie (`arrow_right_black.json`): у её путей нет
+     * собственного `fill`, цвет берётся из CSS. Задаём его кнопке и пускаем
+     * через `currentColor` — тогда и анимация, и запасная inline-иконка
+     * белые. На остальных страницах цвет кнопки не менялся.
+     */
+    color: var(--nv-constant-1);
+}
+
+body.page-template-page-solutions .btn--header .btn__icon svg,
+body.page-template-page-solutions .btn--header .btn__icon svg path {
+    fill: currentColor;
+}
+
+body.page-template-page-solutions .btn--header .btn__text {
+    color: var(--nv-constant-1);
+}
+
+body.page-template-page-solutions .btn--header:hover,
+body.page-template-page-solutions .btn--header:focus-visible {
+    background: var(--nv-primary);
 }
 
 @media (max-width: 1599.98px) {
@@ -10973,60 +10961,7 @@ body.home .footer__bottom-line {
 }
 
 @media (max-width: 1399.98px) {
-    .main__wrapper {
-        gap: 24px;
-    }
-    .main__content {
-        max-width: 480px;
-    }
-    .main__slider {
-        overflow: hidden;
-        width: 100%;
-    }
 
-    .main__slider-track {
-        display: flex;
-        width: max-content;
-        will-change: transform;
-        animation: main-slider-scroll 20s linear infinite;
-        gap: 16px;
-    }
-
-    .main__slider-group {
-        display: flex;
-        align-items: stretch;
-        gap: 16px;
-        flex: 0 0 auto;
-    }
-
-    .main__slide {
-        flex: 0 0 auto;
-        width: 174px;
-        height: 192px;
-    }
-
-    .main__slider-group--mobile {
-        display: flex;
-    }
-
-    .main__content {
-        
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        .main__slider-track:hover {
-            animation-play-state: paused;
-        }
-    }
-
-    @keyframes main-slider-scroll {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(calc(-50% - 12px));
-        }
-    }
 }
 
 @media (max-width: 1199.98px) {
@@ -11034,86 +10969,543 @@ body.home .footer__bottom-line {
 }
 
 @media (max-width: 991.98px) {
-    .main--solutions {
-        background-image:
-        radial-gradient(78.82% 77.47% at 75.65% 26.9%, rgba(17, 17, 17, 0.00) 0%, #111 81.01%),
-        url('../img/main-solutions-bg3.webp');
-        min-height: 870px;
-        background-position: 0 0, right -300px top -160px;
+    /*
+     * На бургер-ширинах макет (2467:18538) показывает отдельную светлую кнопку
+     * 40x40 без окружающей «пилюли», поэтому обёртку меню делаем прозрачной,
+     * а рамку и подложку отдаём самому бургеру.
+     */
+    body.page-template-page-solutions .header__menu {
+        padding: 0;
+        border: 0;
+        background: none;
+        box-shadow: none;
     }
-    .main__wrapper {
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        gap: 48px;
+
+    body.page-template-page-solutions .burger {
+        border-color: var(--nv-surface-4);
+        background: var(--nv-surface-2);
     }
-    .main__content {
-        width: 100%;
-        padding-top: 195px;
-        max-width: unset;
+
+    body.page-template-page-solutions .header__menu--open .burger {
+        background: var(--nv-primary);
     }
-    .main__slider {
-        width: 100%;
+
+    body.page-template-page-solutions .header__menu--open .burger svg path {
+        fill: var(--nv-constant-1);
     }
-    .main__subtitle {
-        max-width: 490px;
+
+    /*
+     * Панель открывается от бургера влево: в теме она привязана к левому краю
+     * обёртки (`left: 0`), а на Solutions бургер стоит у правого края экрана —
+     * и панель уезжала за него. (Главную не трогаем: там тот же дефект, он
+     * записан в BACKLOG отдельно.)
+     */
+    body.page-template-page-solutions .header__menu--open .header__nav {
+        left: auto;
+        right: 0;
+        border-color: var(--nv-surface-4);
+        background: var(--nv-surface-2);
+        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.12);
     }
 }
 
 @media (max-width: 767.98px) {
-    .main {
-        padding-bottom: 80px;
+    /*
+     * Mobile 2467:18538: логотип слева в шапке, бургер справа. Первый экран на
+     * этой ширине свой логотип не показывает. Тёмная версия логотипа подаётся
+     * фоном, чтобы не трогать разметку header.php (BACKLOG: перенести в PHP).
+     */
+    body.page-template-page-solutions .header__wrapper {
+        flex-direction: row;
     }
-    .main__title {
-        font-size: 40px;
-        max-width: 400px;
-        margin-bottom: 0;
+
+    /* Тёмную версию логотипа подставляет header.php по `is_page_template`. */
+    body.page-template-page-solutions .header__logo {
+        display: block;
+        width: 168px;
+        height: 32px;
     }
-    .main__subtitle {
-        font-size: 16px;
+
+    body.page-template-page-solutions .header .container {
+        padding-left: 16px;
+        padding-right: 16px;
     }
-    .main__subtitle {
-        margin-bottom: 4px;
-    }
-    .main__content {
-        gap: 28px;
-    }    
 }
 
 @media (max-width: 575.98px) {
-    
+
 }
 
 @media (max-width: 478.98px) {
-    .main__content {
-        padding-top: 200px;
-    }
-    .main--solutions {
-        background-image:
-        radial-gradient(266.81% 73.86% at 50% 26.14%, rgba(17, 17, 17, 0.00) 1.2%, #111 56.41%),
-        url('../img/main-solutions-bg3.webp');
-        background-position: 0 0, right -300px top -160px;
-        max-height: 860px;
-    }
-    .main__slide {
-        height: 120px;
-        padding: 16px;
-        border-radius: 12px;
-        gap: 16px;
-        justify-content: space-between;
-    }
-    .main__slide-text {
-        font-size: 14px;
-    }
-    .main__subtitle {
-        font-size: 14px;
-    }
+
 }
 
 @media (max-width: 419.98px) {
 
 }
 
+/* SOLUTIONS THEME END */
+
+/* MAIN START */
+
+/*
+ * Первый экран Solutions. Фреймы Figma: Full HD 2456:16496 (карточка 1856x732),
+ * Desktop 2396:15605 (1376x732), Tablet 2457:17207 (776x872),
+ * Mobile 2467:17894 (перестроенная раскладка, 2467:18560).
+ *
+ * Секция светлая внутри пока ещё тёмной страницы, поэтому фон задаётся самой
+ * секции: остальные блоки /solutions/ до своих групп остаются тёмными.
+ */
+.main {
+    padding: 32px 0;
+}
+
+.main--solutions {
+    background: var(--nv-surface-1);
+}
+
+/*
+ * Сетка макета: поле 32, контент = ширина экрана − 64
+ * (1920 -> 1856, 1440 -> 1376, 840 -> 776). Потолок повторяет самый широкий фрейм.
+ * Пока ограничено первым экраном — остальные секции переедут со своими группами.
+ */
+.main--solutions .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+/* 2456:16507 — карточка 1856x732, поле 32, радиус 32. */
+.main__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 732px;
+    padding: 32px;
+    border-radius: 32px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.main__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+}
+
+.main__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*
+ * Затемнение из макета: от прозрачного в правом верхнем углу к 95% чёрного
+ * в левом нижнем. Отдельного слоя в разметке не заводим.
+ */
+.main__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(246.95deg, rgba(0, 0, 0, 0) 20.628%, rgba(0, 0, 0, 0.95) 90.79%);
+}
+
+/* 2456:16509 — логотип 206x39 в левом верхнем углу карточки. */
+.main__logo {
+    display: block;
+    width: 206px;
+    height: 39px;
+    flex-shrink: 0;
+}
+
+/* 2456:16508 — левая колонка 600 во всю высоту карточки: логотип сверху, текст снизу. */
+.main__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    gap: 32px;
+    width: 600px;
+    flex-shrink: 0;
+}
+
+.main__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+}
+
+.main__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Title/H1 52/64. */
+.main__title {
+    margin: 0;
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+    color: var(--nv-constant-1);
+}
+
+/* Title/H6 18/24, белый 85%. */
+.main__subtitle {
+    margin: 0;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    color: var(--nv-constant-85);
+}
+
+.main__actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/*
+ * Кнопки первого экрана. Классы локальные: общие `.btn` и `.btn-hero` несут
+ * оформление тёмной темы и используются ниже на этой же странице
+ * (секция Integration) и на /pricing-matrix/, /blog/, 404 — переопределять их
+ * нельзя. Обработчик модального окна остаётся на `.open-callForm2`.
+ */
+.main__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.main__btn-text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Стрелка берёт цвет через currentColor: у <button> он не наследуется от body. */
+.main__btn-icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.main__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.main__btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.main__btn--primary:hover,
+.main__btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Обводка в Figma рисуется внутрь рамки, поэтому поле 16 − 1px. */
+.main__btn--ghost {
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.main__btn--ghost:hover,
+.main__btn--ghost:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+/* Обе кнопки лежат на тёмной фотографии — обводка фокуса светлая. */
+.main__btn:focus-visible {
+    outline: 2px solid var(--nv-constant-1);
+    outline-offset: 2px;
+}
+
+/* 2456:16522 — колонка 280, четыре карточки равной высоты, зазор 16. */
+.main__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: stretch;
+    width: 280px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Поле 16 и обводка 1px: обводка рисуется внутрь, поэтому padding 15. */
+.main__fact {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* Поле 4 с обводкой внутрь: 3 + 1 + иконка 24 + 1 + 3 = 32. */
+.main__fact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    flex-shrink: 0;
+}
+
+.main__fact-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* Full HD — Title/H4 24/36; ниже 1600 — Title/H6 18/24. */
+.main__fact-title {
+    width: 100%;
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+    color: var(--nv-primary);
+}
+
+/* Переносы в карточках есть только на Full HD, ниже текст ложится сам. */
+.main__fact-title br {
+    display: inline;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2396:15616: карточка 1376x732, колонка 372, полоса фактов 180. */
+    .main__body {
+        width: 372px;
+    }
+
+    .main__facts {
+        width: 180px;
+    }
+
+    .main__fact-title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .main__fact-title br {
+        display: none;
+    }
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Tablet 2457:17218: карточка 776x872 — колонка с логотипом и текстом,
+     * под ней строка из четырёх фактов высотой 120.
+     */
+    .main__card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 48px;
+        min-height: 872px;
+    }
+
+    .main__body {
+        width: 100%;
+        flex: 1;
+    }
+
+    /* Title/H1 44/56. */
+    .main__title {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+
+    .main__subtitle {
+        max-width: 516px;
+    }
+
+    .main__facts {
+        flex-direction: row;
+        align-self: auto;
+        width: 100%;
+        height: 120px;
+    }
+
+    .main__fact {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 11px;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 2467:18560. Заголовок и описание выходят из фотокарточки на
+     * светлый фон, кнопки остаются внутри фотографии. Переставить блоки одним
+     * flex нельзя: фотография и кнопки должны лежать в одной ячейке, поэтому
+     * карточка здесь становится сеткой, а её обёртки раскрываются
+     * через `display: contents` — разметка при этом не дублируется.
+     */
+    /* 2467:17894 — между шапкой и контентом 48, поля экрана 16. */
+    .main {
+        padding-top: 48px;
+    }
+
+    .main--solutions .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .main__card {
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 16px;
+        min-height: 0;
+        padding: 0;
+        border-radius: 0;
+        overflow: visible;
+    }
+
+    .main__body,
+    .main__group,
+    .main__content {
+        display: contents;
+    }
+
+    .main__logo {
+        display: none;
+    }
+
+    /* Title/H1 30/36, тёмный на светлом фоне. */
+    .main__title {
+        grid-row: 1;
+        font-size: 30px;
+        line-height: 120%;
+        color: var(--nv-object-1);
+    }
+
+    /* 2467:17905 — фотокарточка 360x248, радиус 16. */
+    .main__media {
+        position: relative;
+        grid-column: 1;
+        grid-row: 2;
+        z-index: auto;
+        height: 248px;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .main__media::after {
+        background: linear-gradient(215.36deg, rgba(0, 0, 0, 0) 32.249%, rgba(0, 0, 0, 0.95) 74.63%);
+    }
+
+    /* 2467:18550 — кнопки в левом нижнем углу фотографии, в столбик. */
+    .main__actions {
+        grid-column: 1;
+        grid-row: 2;
+        z-index: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: end;
+        justify-self: start;
+        margin: 16px;
+    }
+
+    /* Button/Regular 16/20. */
+    .main__btn-text {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    /* Title/H6 14/20, Object_2. */
+    .main__subtitle {
+        grid-row: 3;
+        max-width: none;
+        font-size: 14px;
+        line-height: 142.857%;
+        color: var(--nv-object-2);
+    }
+
+    /*
+     * 2467:17920 — карточки по 160 не помещаются в 360: полоса уходит под
+     * правый край экрана и прокручивается пальцем. Поля выносятся наружу,
+     * чтобы строка начиналась по сетке, а обрезалась по краю экрана.
+     */
+    .main__facts {
+        grid-row: 4;
+        width: calc(100% + 32px);
+        height: 120px;
+        margin-left: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+    }
+
+    .main__facts::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main__fact {
+        flex: 0 0 160px;
+        border-radius: 12px;
+    }
+
+    .main__fact-title {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
 
 /* MAIN END */
 
