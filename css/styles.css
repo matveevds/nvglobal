@@ -14431,666 +14431,805 @@ body.page-template-page-solutions .btn--header:focus-visible {
 
 /* INTEGRATION START */
 
+/*
+ * Seamless Integration That Just Works. Figma: Full HD 2456:16592,
+ * Desktop 499:6223, Tablet 2457:17303, Mobile 2467:17987; состояния слайдов
+ * 2456:16592, 2439:14696, 2440:14768.
+ *
+ * Слева слайдер из трёх путей интеграции, справа три статичные карточки.
+ * Прежние правила тёмной темы переписаны: блок и `.integration*`
+ * используются только на /solutions/.
+ */
+.integration {
+    background: var(--nv-surface-1);
+    /* Сверху поле даёт нижнее поле секции Products, снизу — своё. */
+    padding: 0 0 64px;
+}
 
+/* Та же сетка, что у остальных блоков страницы. */
+.integration .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
 
-.integration {}
-
-.integration__wrapper {
+.integration__head {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 48px;
 }
 
-.integration__content {
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
-    gap: 16px 16px; 
-    grid-template-areas: 
-        "integration__title-block integration__title-block integration__title-block integration__box integration__box integration__box integration__slider-block integration__slider-block"
-        "integration__title-block integration__title-block integration__title-block integration__box integration__box integration__box integration__slider-block integration__slider-block"
-        "integration__title-block integration__title-block integration__title-block integration__box integration__box integration__box integration__slider-block integration__slider-block"
-        "integration__speed integration__speed integration__speed integration__speed integration__speed integration__speed integration__slider-block integration__slider-block"
-        "integration__speed integration__speed integration__speed integration__speed integration__speed integration__speed integration__slider-block integration__slider-block"; 
+/* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+.integration .section__badge {
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
 }
 
-.integration__title-block { grid-area: integration__title-block; }
-.integration__box { grid-area: integration__box; }
-.integration__speed { grid-area: integration__speed; }
-.integration__slider-block { grid-area: integration__slider-block; }
+.integration__head-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 48px;
+    width: 100%;
+}
 
 .integration__title-block {
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 12px;
+    max-width: none;
 }
 
-.integration__title-info {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.integration__title-text {}
-
-.integration__box {
-    padding: 23px;
-    border-radius: 24px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.integration__box-title-block {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.integration__box-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.integration__box-item {
-    padding: 3px 11px;
-    border-radius: 8px;
-    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
-    backdrop-filter: blur(10px);
-    color: var(--Text-White, #FBFBFB);
-}
-
-.integration__speed {
-    display: flex;
-    gap: 48px;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    backdrop-filter: blur(10px);
-    padding: 23px;
-}
-
-.integration__speed-info {
-    width: calc(50% - 24px);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.integration__speed-title {}
-
-.integration__speed-text {}
-
-.integration__speed-animation {
-    width: 523px;
-    flex-shrink: 0;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-    backdrop-filter: blur(10px);
-    padding: 0;
-    position: relative;
-}
-
-.integration__gauge {
-    width: 466px;
-    height: 160px;
-    overflow: hidden;
-}
-
-.integration__gauge-info {
-    width: 100%;
-    position: absolute;
-    bottom: 24px;
-    left:0;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-}
-
-.integration__gauge-title {
-    color: var(--Text-Orange, #F9AA66);
-    text-align: center;
-    font-size: 80px;
-    font-weight: 700;
-    line-height: 100%;
-    width: 100%;
-}
-
-.integration__gauge-text {
-    color: var(--Text-Orange, #F9AA66);
-    text-align: center;
-    font-size: var(--Text-Title-Size-H3, 32px);
-    font-weight: 700;
-    line-height: 150%;
-    text-align: center;
-}
-
-.integration__slider-block {
-    padding: 47px 23px;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    justify-content: space-between;
-    height: 100%;
-    max-width: 340px;
-}
-
-.integration__slider-title {
-    color: var(--Text-Dark-blue, #2B323B);
-    text-align: center;
+/* Title/H2 40/52. */
+.integration__title {
+    color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H2, 40px);
-    font-weight: 700;
     line-height: 130%;
 }
 
-.integration__arrows {
+/* Title/H5 20/28. */
+.integration__subtitle {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.integration__actions {
+    flex-shrink: 0;
     display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/* Те же кнопки, что в первом экране: поле 16/8, радиус 8, Button/Regular 18/24. */
+.integration__btn {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.integration__btn-text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.integration__btn-icon {
+    display: flex;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.integration__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.integration__btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.integration__btn--primary:hover,
+.integration__btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Обводка Figma рисуется внутрь, поэтому поле 16 − 1px. */
+.integration__btn--ghost {
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.integration__btn--ghost:hover,
+.integration__btn--ghost:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.integration__btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* 2456:16601 — слайдер 540 и колонка карточек, зазор 16. */
+.integration__board {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: 48px;
+}
+
+/* Поле 24 с обводкой внутрь. */
+.integration__path {
+    flex: 0 0 540px;
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: linear-gradient(146deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+    backdrop-filter: blur(10px);
+}
+
+/* Title/H3 32/48. */
+.integration__path-title {
+    margin: 0;
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+    text-align: center;
+}
+
+.integration__path-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.integration__nav {
+    display: flex;
+    align-items: center;
     gap: 8px;
 }
 
+/* Тёмные кнопки 40x40: поле 8, иконка 24. */
 .integration__arrow {
-    padding: 7px;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Black, #212121);
-    backdrop-filter: blur(10px);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-object-1);
+    color: var(--nv-constant-1);
+    backdrop-filter: blur(10px);
     cursor: pointer;
+    transition: opacity .2s ease, background-color .2s ease;
 }
+
 .integration__arrow svg {
-    
+    display: block;
+    width: 24px;
+    height: 24px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .integration__arrow:hover {
-        background: #2B323B;
-    }
-
-    .integration__arrow:hover svg path {
-        fill: #F9AA66;
-    }
-}
-@media (hover: none) and (pointer: coarse) {
-    .integration__arrow:active {
-        background: #2B323B;
-    }
-
-    .integration__arrow:active svg path {
-        fill: #F9AA66;
-    }
+.integration__arrow:hover:not(:disabled) {
+    background: var(--nv-object-2);
 }
 
-.integration__arrow--disabled {
-    opacity: 0.7;
+.integration__arrow:focus-visible {
+    outline: 2px solid var(--nv-constant-1);
+    outline-offset: 2px;
+}
+
+/* Зацикливания в макете нет: на крайних слайдах кнопка выключается. */
+.integration__arrow:disabled {
+    opacity: .4;
     cursor: default;
 }
 
-.integration__arrow--disabled:hover {
-    background: #212121;
-}
-.integration__arrow--disabled:hover svg path {
-    fill:#fff;
-}
-
-
-
+/*
+ * Белая карточка — обёртка: Swiper держит высоту только своей ленты, поэтому
+ * индикатор лежит рядом с ним, а не внутри (иначе `overflow: hidden`
+ * контейнера Swiper его срезает). Внутреннее поле карточки 12.
+ */
 .integration__slider {
+    width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    width: 100%;
-    position: relative;
+    gap: 24px;
+    padding: 12px;
+    border-radius: 24px;
+    background: var(--nv-surface-1);
 }
 
-.integration__slider-inner {
-    padding: 24px;
-    background-size: 10px 10px, 10px 10px, auto;
-    background-position: 0 0, 5px 5px, 0 0;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    background: var(--Background-Pattern-White-pattern, #212121);
+.integration__swiper {
     width: 100%;
-    overflow: hidden;
+    min-width: 0;
+}
+
+/*
+ * Высота слайдов выравнивается по самому высокому, поэтому переключение
+ * не двигает ни правую колонку, ни следующую секцию.
+ */
+.integration__swiper .swiper-wrapper {
+    align-items: stretch;
 }
 
 .integration__slide {
-
-    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    justify-content: flex-start;
+    gap: 12px;
+    height: auto;
+    text-align: center;
 }
 
 .integration__slide-icon {
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
 }
-.integration__slide-info {
+
+.integration__slide-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.integration__slide-text {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
+    width: 100%;
 }
 
+/* Title/H4 24/36. */
 .integration__slide-title {
-    color: var(--Text-Orange, #F9AA66);
-    text-align: center;
+    margin: 0;
+    color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H4, 24px);
-    font-weight: 700;
     line-height: 150%;
-}
-
-.integration__slide-title span {
-    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
-    font-size: var(--Text-Body-Text-Size-Small, 14px);
-    font-weight: 500;
-    line-height: 143%;
-}
-
-.integration__slidetext {
-    color: var(--Text-White, #FBFBFB);
-    text-align: center;
-    font-size: var(--Text-Title-Size-H6, 18px);
     font-weight: 700;
+}
+
+/* Подпись под названием у Mobile SDK — Body text/Regular Medium 14/20. */
+.integration__slide-subtitle {
+    display: block;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 500;
+}
+
+/* Title/H6 18/24. */
+.integration__slide-description {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
     line-height: 133.333%;
+    font-weight: 700;
 }
 
-.integration__slider-dots {
-    position: absolute;
-    bottom: 24px!important;
-    left:0;
-    z-index: 3;
+/* 539:11129 — активный штрих 32x4, остальные 16x2. */
+/*
+ * Индикатор свой, а не Swiper-овский: его разметка приходит с `position:
+ * absolute` и вылезает из белой карточки, а кликабельность по макету
+ * не нужна. Активный штрих переключает `initIntegrationSlider`.
+ */
+.integration__pagination {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 4px!important;
+    justify-content: center;
+    gap: 4px;
 }
 
-.integration__slider-dots .swiper-pagination-bullet {
+.integration__bar {
     width: 16px;
     height: 2px;
     border-radius: 4px;
-    background: var(--island-white-10, rgba(251, 251, 251, 0.30));
-    margin: 0!important;
+    background: var(--nv-surface-4);
+    transition: width .25s ease, height .25s ease, background-color .25s ease;
 }
 
-.integration__slider-dots .swiper-pagination-bullet-active {
+.integration__bar.is-active {
     width: 32px;
     height: 4px;
-    background: #212121;
-    border-radius: 4px;
-    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+    background: var(--nv-gradient);
 }
 
+/* 2456:16616 — три карточки в ряд с зазором 16. */
+.integration__info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
 
-.uptime-gauge {
+.integration__card {
     position: relative;
-    width: 100%;
-    max-width: 640px;
-    aspect-ratio: 650 / 350;
-    overflow: hidden;
-    margin-bottom: -24px;
-    margin-top: -24px;
-}
-
-.uptime-gauge__svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.uptime-gauge__path {
-    fill: none;
-    stroke: transparent;
-    stroke-width: 1;
-}
-
-.uptime-gauge__tick {
-    stroke: rgba(255,255,255,0.08);
-    stroke-width: 3;
-    stroke-linecap: round;
-}
-
-.uptime-gauge__tick--active {
-    stroke: #F7A85A;
-}
-
-.uptime-gauge__thumb {    
-    border-radius: 32px;
-    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
-    box-shadow: 0 -4px 160px 0 rgba(255, 255, 255, 0.25), 0 12px 40px 0 rgba(249, 170, 102, 0.20);
-    backdrop-filter: blur(10px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.uptime-gauge__thumb-outer {
-    fill: rgba(247, 168, 90, 0.18);
-    stroke: rgba(255,255,255,0.16);
-    stroke-width: 1.5;
-}
-
-.uptime-gauge__thumb-inner {
-    fill: linear-gradient(180deg, #8a6748 0%, #6c5138 100%);
-}
-
-.uptime-gauge__center {
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    transform: translateX(-50%);
-    text-align: center;
-    z-index: 2;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.uptime-gauge__value {
-    color: var(--Text-Orange, #F9AA66);
-    text-align: center;
-    font-size: 80px;
-    font-weight: 700;
-    line-height: 100%;
-}
-
-.uptime-gauge__label {
-    color: var(--Text-Orange, #F9AA66);
-    text-align: center;
-    font-size: var(--Text-Title-Size-H3, 32px);
-    font-weight: 700;
-    line-height: 150%;
-}
-
-.integration__bottom {
+    gap: 24px;
     padding: 23px;
-    border-radius: var(--Frame-Card-Padding-Corner, 24px);
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
     backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
-    gap: 48px;
 }
 
-.integration__bottom-info {
-    max-width: 746px;
+/*
+ * Между 1600 и 1920 раскладка Full HD сохраняется, но места меньше —
+ * карточки ужимаются пропорционально, а не схлопывают первую.
+ */
+.integration__card--list {
+    flex: 1 1 468px;
+    min-width: 0;
+}
+
+.integration__card--deploy,
+.integration__card--backoffice {
+    flex: 0 1 400px;
+    min-width: 0;
+}
+
+.integration__card--backoffice {
+    background: var(--nv-surface-2);
+}
+
+/* Title/H4 24/36. */
+.integration__card-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.integration__card-text {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
 }
 
-.integration__bottom-action {
+/* Body text/Regular Regular 16/24. */
+.integration__card-note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.integration__list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.integration__bottom-buttons {
+/* Поле 8/12 с обводкой внутрь: 7 + 1 + 24 + 1 + 7 = 40. */
+.integration__list-item {
+    padding: 7px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+    backdrop-filter: blur(10px);
+}
+
+.integration__chips {
     display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.btn-hero {}
+/* Поле 4/12 с обводкой внутрь: 3 + 1 + 24 + 1 + 3 = 32. */
+.integration__chip {
+    padding: 3px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 500;
+    white-space: nowrap;
+}
 
-.btn__text {}
+.integration__card--backoffice .integration__card-text {
+    gap: 16px;
+}
 
-.btn__text-hero {}
+/*
+ * Иллюстрации прижаты к нижнему краю карточки и выходят за её рамку —
+ * обрезает `overflow: hidden` самой карточки.
+ */
+.integration__card-image {
+    position: absolute;
+    bottom: -1px;
+    display: block;
+    pointer-events: none;
+}
 
-.btn__icon {}
+.integration__card-image--servers {
+    right: -1px;
+    width: 335px;
+    height: 224px;
+}
 
-.btn__icon-arrow {}
+/* На Full HD папки развёрнуты зеркально и стоят справа. */
+.integration__card-image--folders {
+    right: 7px;
+    width: 252px;
+    height: 176px;
+    transform: scaleX(-1);
+}
 
-.btn {}
-
-.btn--transparent {}
-
-.open-callForm2 {}
-
-.btn--18 {}
+@media (prefers-reduced-motion: reduce) {
+    .integration__bar {
+        transition: none;
+    }
+}
 
 @media (max-width: 1599.98px) {
+    /*
+     * Desktop 2440:14777: слайдер уже, справа две карточки в ряд, под ними
+     * широкая карточка Back-office.
+     */
+    .integration__path {
+        flex-basis: 400px;
+        width: 400px;
+    }
 
+    .integration__info {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 400px;
+        grid-template-rows: auto auto;
+        gap: 16px;
+    }
+
+    .integration__card--list {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .integration__card--deploy {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    /* Широкая карточка: текст справа, иллюстрация слева и без зеркала. */
+    .integration__card--backoffice {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        flex: 0 0 auto;
+        width: auto;
+        align-items: flex-end;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: 700px;
+        max-width: 100%;
+    }
+
+    .integration__card-image--servers {
+        width: 277px;
+        height: 185px;
+    }
+
+    .integration__card-image--folders {
+        right: auto;
+        left: -1px;
+        width: 222px;
+        height: 155px;
+        transform: none;
+    }
 }
 
 @media (max-width: 1399.98px) {
-    .integration__content {
-        display: grid; 
-        gap: 16px 16px; 
-        grid-template-columns: repeat(8, 1fr);
-        grid-template-rows: auto auto auto;
-        grid-template-areas:
-            "integration__title-block integration__title-block integration__title-block integration__title-block integration__title-block integration__title-block integration__title-block integration__title-block"            
-            "integration__box integration__box integration__box integration__box integration__speed integration__speed integration__speed integration__speed"            
-            "integration__slider-block integration__slider-block integration__slider-block integration__slider-block integration__slider-block integration__slider-block integration__slider-block integration__slider-block";
-    }
-    .integration__box {
-        padding: 16px;
-        border-radius: 16px;
-    }
-    .integration__speed {
-        flex-direction: column;
-        padding: 16px;
-    }
-    .integration__speed-info {
-        width: 100%;
-    }
-    .integration__speed {
-        gap: 24px;
-    }
-    .integration__speed-animation {
-        width: 100%;
-    }
-    .uptime-gauge {
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .integration__slider-block {
-        width: 100%;
-        max-width: unset;
-        flex-direction: row;
-        padding: 16px;
-        border-radius: 16px;
-        position: relative;
-        overflow: hidden;
-    }
-    .integration__slider {
-        position: unset;
-        width: calc(100% - 298px);
-    }
-    .integration__slider-title {
-        text-align: left;
-        margin-bottom: 60px;
-        width: 250px;
-    }
-    .integration__slide {
-        border-radius: 16px;
-    }
-    .integration__speed-animation {
-        border-radius: 16px;
-        padding: 16px;
-    }
-    .integration__arrows {
-        position: absolute;
-        bottom: 16px;
-        left:16px;
-        z-index: 3;
-    }
-    .integration__slider-dots {
-        width: 72px!important;
-        left:unset!important;
-        right: 354px;
-    }
-    .integration__bottom {
-        padding: 16px;
-    }
-    .integration__slider-dots {
-        bottom: 32px!important;
-    }
+
 }
 
 @media (max-width: 1199.98px) {
-    .uptime-gauge__center {
-        bottom: 0;
-    }
-    .uptime-gauge__value {
-        font-size: 68px;
-        line-height: 1;
-    }
-    .uptime-gauge__label {
-        line-height: 1;
-    }
-    .integration__slider-dots {
-        right: 260px;
-    }
-    .integration__bottom {
+    /*
+     * Отдельного макета между 992 и 1440 нет: двух колонок рядом со слайдером
+     * уже не хватает, поэтому раскладка переходит на планшетную — слайдер
+     * во всю ширину, заголовок и стрелки в одну строку.
+     */
+    .integration__board {
         flex-direction: column;
     }
-    .integration__bottom-info {
-        max-width: unset;
-        width: 100%;
+
+    .integration__path {
+        flex: 0 0 auto;
+        width: auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px 16px;
     }
-    .integration__bottom-action {
-        width: 100%;
+
+    .integration__path-title {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        text-align: left;
     }
-    .integration__bottom-buttons {
-        justify-content: flex-start;
+
+    /* Обёртка тела раскрывается, чтобы её дети попали в сетку карточки. */
+    .integration__path-body {
+        display: contents;
+    }
+
+    .integration__nav {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+    }
+
+    .integration__slider {
+        grid-column: 1 / -1;
+        grid-row: 2;
     }
 }
 
 @media (max-width: 991.98px) {
-    .integration__content {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "integration__title-block"
-            "integration__box"
-            "integration__speed"
-            "integration__slider-block";
+    /* Tablet 2457:17312: поля карточек 16, кнопки шапки уходят под заголовок. */
+    .integration__head-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 48px;
     }
-    .integration__title-block,
-    .integration__box,
-    .integration__speed,
-    .integration__slider-block {
-        width: 100%;
+
+    .integration__actions {
+        align-items: flex-start;
     }
-    .integration__slider-block {
-        overflow: hidden;
+
+    .integration__path {
+        padding: 15px;
+        border-radius: 16px;
     }
-    .uptime-gauge__center {
-        bottom: 26px;
+
+    .integration__slider {
+        padding: 8px;
+        border-radius: 16px;
     }
-    .uptime-gauge__value {
-        font-size: 96px;
+
+    .integration__info {
+        grid-template-columns: minmax(0, 1fr) 268px;
     }
-    .integration__slider-dots {
-        right: 154px;
+
+    .integration__card {
+        padding: 15px;
+        border-radius: 16px;
     }
-    .integration__slide {
-        padding: 16px 16px 24px 16px;
+
+    .integration__card--deploy {
+        flex: 0 1 268px;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: 500px;
     }
 }
 
 @media (max-width: 767.98px) {
-    .integration__slider-block {
-        flex-direction: column;
-        gap: 24px;
-        padding-bottom: 68px;
+    /*
+     * Mobile 2467:17996: всё в одну колонку, заголовок слайдера и стрелки
+     * по центру, карточки друг под другом.
+     */
+    .integration {
+        padding-bottom: 32px;
     }
-    .integration__arrows {
-        left: 50%;
-        transform: translateX(-50%);
+
+    .integration .container {
+        padding-left: 16px;
+        padding-right: 16px;
     }
-    .integration__slider {
-        width: 100%;
+
+    /* Бейдж 98x24: Body text/Regular 14/20. */
+    .integration .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
     }
-    .integration__slider-dots {
-        bottom: 24px!important;
-        right: 50%;
-        transform: translateX(50%);
-    }
-    .integration__slider-title {
+
+    /* Title/H2 32/44. */
+    .integration__title {
         font-size: 32px;
-        margin-bottom: 0;
-        text-align: center;
+        line-height: 137.5%;
+    }
+
+    /* Title/H5 16/20. */
+    .integration__subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .integration__actions {
+        flex-direction: column;
+        align-items: stretch;
         width: 100%;
     }
-    .uptime-gauge__center {
-        bottom: 16px;
+
+    .integration__btn {
+        min-height: 36px;
+        justify-content: flex-start;
     }
-    .uptime-gauge__value {
-        font-size: 82px;
+
+    /* Button/Regular 16/20. */
+    .integration__btn-text {
+        font-size: 16px;
+        line-height: 125%;
+        white-space: normal;
+    }
+
+    .integration__path {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        gap: 24px;
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    /* Title/H3 24/36; в макете заголовок намеренно разбит на две строки. */
+    .integration__path-title {
+        grid-column: 1;
+        grid-row: 1;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+        font-size: 24px;
+        line-height: 150%;
+        text-align: center;
+    }
+
+    .integration__nav {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: center;
+    }
+
+    .integration__slider {
+        grid-column: 1;
+        grid-row: 3;
+        padding: 4px;
+        border-radius: 12px;
+    }
+
+    /* Title/H4 20/32. */
+    .integration__slide-title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* Title/H6 14/20. */
+    .integration__slide-description {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .integration__info {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto;
+    }
+
+    .integration__card {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .integration__card--list,
+    .integration__card--deploy,
+    .integration__card--backoffice {
+        grid-column: 1;
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .integration__card--list { grid-row: 1; }
+    .integration__card--deploy { grid-row: 2; }
+    .integration__card--backoffice { grid-row: 3; }
+
+    .integration__card--deploy {
+        min-height: 200px;
+    }
+
+    .integration__card--backoffice {
+        min-height: 216px;
+        align-items: flex-start;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: auto;
+    }
+
+    /* Title/H4 20/32. */
+    .integration__card-title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* Body text/Regular 14/20. */
+    .integration__card-note,
+    .integration__list-item,
+    .integration__chip {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .integration__list-item {
+        padding: 7px 11px;
+    }
+
+    .integration__chip {
+        padding: 3px 11px;
+    }
+
+    .integration__card-image--servers {
+        width: 197px;
+        height: 132px;
+    }
+
+    .integration__card-image--folders {
+        left: auto;
+        right: -1px;
+        width: 194px;
+        height: 135px;
+        transform: scaleX(-1);
     }
 }
 
 @media (max-width: 575.98px) {
-    .integration__title-info {
-        gap: 4px;
-    }
-    .integration__box {
-        padding: 12px;
-        border-radius: 12px;
-    }
-    .integration__speed {
-        padding: 12px;
-        border-radius: 12px;
-    }
-    .integration__box-item {
-        font-size: 14px;
-    }
-    .integration__speed-animation {
-        border-radius: 12px;
-    }
-    .integration__bottom-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .integration__bottom {
-        gap: 20px;
-    }
-    .uptime-gauge__center {
-        
-    }
-    .integration__speed-animation {
-        display: flex;
-        justify-content: center;
-    }
-    .uptime-gauge {
-        margin-left: -24px;
-        margin-right: -24px;
-        width: 110%;
-    }
-    .integration__slide-title {
-        font-size: 20px;
-    }
-    .integration__slidetext {
-        font-size: 14px;
-    }
+
 }
 
 @media (max-width: 478.98px) {
-    .uptime-gauge__value {
-        font-size: 54px;
-    }
-    .uptime-gauge__label {
-        font-size: 22px;
-    }
+
 }
 
 @media (max-width: 419.98px) {

@@ -1674,29 +1674,66 @@ function initIndustriesSlider() {
 /**
  * Интеграция слайдер
  */
+/*
+ * «Seamless Integration That Just Works» на /solutions/ — слайдер из трёх
+ * путей интеграции.
+ *
+ * Зацикливания в макете нет: на первом слайде выключается Previous,
+ * на третьем — Next, автопрокрутки тоже нет. Точки — индикатор, а не
+ * управление (так в макете), поэтому они не кликабельны и скрыты от
+ * скринридера; переключают стрелки, свайп и стрелки клавиатуры, когда
+ * фокус внутри блока.
+ *
+ * Высоту держит CSS (`align-items: stretch` у обёртки), поэтому смена
+ * слайда не двигает соседнюю колонку и следующую секцию.
+ */
 function initIntegrationSlider() {
-    const section = document.querySelector('.integration');
-    if (!section) return;
+    const block = document.querySelector('[data-integration-slider]');
+    if (!block) return;
 
-    const sliderEl = section.querySelector('.integration__slider-inner');
-    const prevEl = section.querySelector('.integration__arrow-prew');
-    const nextEl = section.querySelector('.integration__arrow-next');
-    const paginationEl = section.querySelector('.integration__slider-dots');
+    const sliderEl = block.querySelector('.integration__swiper');
+    const prevEl = block.querySelector('.integration__arrow--prev');
+    const nextEl = block.querySelector('.integration__arrow--next');
+    const paginationEl = block.querySelector('.integration__pagination');
 
-    if (!sliderEl || !prevEl || !nextEl || !paginationEl) return;
+    if (!sliderEl || !prevEl || !nextEl) return;
 
-    const integrationSwiper = new Swiper(sliderEl, {
+    const slides = block.querySelectorAll('.integration__slide');
+    if (!slides.length) return;
+
+    const bars = paginationEl ? Array.from(paginationEl.querySelectorAll('.integration__bar')) : [];
+    const last = slides.length - 1;
+
+    function sync(swiper) {
+        prevEl.disabled = swiper.activeIndex === 0;
+        nextEl.disabled = swiper.activeIndex === last;
+        bars.forEach((bar, i) => bar.classList.toggle('is-active', i === swiper.activeIndex));
+    }
+
+    const swiper = new Swiper(sliderEl, {
+        loop: false,
         slidesPerView: 1,
-        spaceBetween: 32,
-        loop: true,
-        speed: 600,
+        spaceBetween: 24,
+        speed: 500,
+        initialSlide: 0,
         watchOverflow: true,
         navigation: { prevEl, nextEl },
-        pagination: { el: paginationEl, clickable: true }
+        /* Иначе модуль a11y Swiper перетирает наши подписи своими по умолчанию. */
+        a11y: {
+            prevSlideMessage: 'Previous integration path',
+            nextSlideMessage: 'Next integration path'
+        }
     });
 
-    window.addEventListener('resize', () => {
-        integrationSwiper.update();
+    swiper.on('slideChange', sync);
+    sync(swiper);
+
+    block.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        /* Внутри блока нет других элементов со стрелочной навигацией. */
+        e.preventDefault();
+        if (e.key === 'ArrowLeft') swiper.slidePrev();
+        else swiper.slideNext();
     });
 }
 

@@ -44,14 +44,14 @@
 | 3 | 150 | `.benefits` | `BENEFITS` (11513–11991) | `#benefits` | **скрыта `if (false)`** |
 | 4 | 365 | `.solutions-why` | `SOLUTIONS WHY` (11996–12502) | — | **новый дизайн** |
 | — | — | ~~`.features`~~ | `FEATURES` (12504–13159) | — | разметки нет, CSS legacy |
-| 5 | 497 | `.industries` | `INDUSTRIES` (13835–14430) | `#industries` | **новый дизайн** |
-| 6 | 637 | `.solutions-products` | `SOLUTIONS PRODUCTS` (13161–13521) | `#solutions` | **новый дизайн** |
+| 5 | 496 | `.industries` | `INDUSTRIES` (13835–14430) | `#industries` | **новый дизайн** |
+| 6 | 636 | `.solutions-products` | `SOLUTIONS PRODUCTS` (13161–13521) | `#solutions` | **новый дизайн** |
 | — | — | ~~`.flow`~~ | `FLOW` (13523–13833) | — | разметки нет, CSS legacy |
-| 7 | 674 | `.integration` | `INTEGRATION` (14432–15100) | `#integration` | старый |
-| 8 | 836 | `.security` | `SECURITY` (15102–15336) | `#security` | старый |
-| 9 | 907 | `.testimonials` | общая с главной | `#testimonials` | старый |
-| 10 | 989 | `.faq` | `FAQ` (15338–15885) | `#faq` | старый |
-| 11 | 1105 | `.cta` | `CTA` (15887–16122) | `#cta` | старый |
+| 7 | 716 | `.integration` | `INTEGRATION` (14432–15239) | `#integration` | **новый дизайн** |
+| 8 | 812 | `.security` | `SECURITY` (15241–15475) | `#security` | старый |
+| 9 | 883 | `.testimonials` | общая с главной | `#testimonials` | старый |
+| 10 | 965 | `.faq` | `FAQ` (15477–16024) | `#faq` | старый |
+| 11 | 1081 | `.cta` | `CTA` (16026–16261) | `#cta` | старый |
 
 Порядок секций в разметке приведён к макету: Why → Industries → Products.
 Регионы CSS при этом остались на своих местах в файле.
@@ -60,7 +60,7 @@
 туда ведут ссылки «Learn more» со слайдера Products на главной.
 Якоря `#products` на этой странице больше нет (был на старой `.flow`).
 
-Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16125).
+Вся страница обёрнута маркерами `SOLUTIONS-PAGE START` (10877) … `END` (16264).
 Внутри, перед `MAIN`, — подрегион `SOLUTIONS THEME` (10876–11048): светлая шапка
 страницы, ограниченная `body.page-template-page-solutions`.
 
@@ -240,6 +240,53 @@ JS — `initSolutionsWhy()` в `js/main.js`. Обработчики вешают
 сейчас это KYC → `/docs/products/kyc/`. Для KYB цели нет (BACKLOG A-29).
 
 JS у блока нет.
+
+### Блок «Seamless Integration That Just Works» — `.integration`
+
+Слева слайдер из трёх путей интеграции, справа три статичные карточки.
+Данные — массивы `$nv_integration_slides`, `$nv_integration_includes`,
+`$nv_integration_backoffice` в `page-solutions.php`.
+
+```
+.section.integration #integration
+  .container
+    .integration__head        бейдж + заголовок/подзаголовок + две кнопки
+    .integration__board
+      .integration__path      оранжевая карточка слайдера
+        h3.integration__path-title
+        .integration__path-body
+          .integration__nav        две .integration__arrow
+          .integration__slider     белая карточка
+            .integration__swiper   Swiper, .integration__slide
+            .integration__pagination  три .integration__bar
+      .integration__info      три .integration__card
+```
+
+| Параметр | Full HD 1920 | Desktop 1440 | Tablet 840 | Mobile 392 |
+|---|---|---|---|---|
+| Раскладка | слайдер 540 + три карточки в ряд | слайдер 400 + две карточки и широкая снизу | слайдер во всю ширину, заголовок и стрелки в строку | всё в колонку |
+| Карточка слайдера | 540×364 | 400×488 | 776×268 | 360×352 |
+| Поле карточки | 24 | 24 | 16 | 12 |
+| Поле белой карточки | 12 | 12 | 8 | 4 |
+| Радиус | 24 | 24 | 16 | 12 |
+| Заголовок слайдера | H3 32/48 | 32/48 | 32/48 | 24/36 |
+| Заголовок слайда | H4 24/36 | 24/36 | 24/36 | 20/32 |
+| Описание слайда | H6 18/24 | 18/24 | 18/24 | 14/20 |
+| Стрелки | 40×40, тёмные | то же | то же | то же |
+| Иллюстрация серверов | 335×224 | 277×185 | 277×185 | 197×132 |
+| Иллюстрация папок | 252×176, зеркально справа | 222×155 слева | 222×155 слева | 194×135 справа |
+
+Механика — `initIntegrationSlider()`: `loop: false`, `initialSlide: 0`,
+без автопрокрутки; стрелки выключаются на крайних слайдах; индикатор
+собственный (`aria-hidden`), подписи стрелок задаются через `a11y` Swiper.
+ArrowLeft / ArrowRight работают, когда фокус внутри блока. Высота слайдов
+выровнена по самому высокому — переключение не двигает страницу.
+
+Ассеты: `img/sol-int-servers.webp`, `img/sol-int-folders.webp` (+`@2x`).
+Звезда и стрелки — inline-SVG, уже были в теме.
+
+Датчика аптайма в разметке больше нет; `initUptimeGauge` оставлен
+как legacy (BACKLOG A-31).
 
 ---
 

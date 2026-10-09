@@ -670,162 +670,139 @@ get_header(); ?>
     </section>
 
 
+    <?php
+    /*
+     * Seamless Integration That Just Works — новый блок вместо прежней секции
+     * `.integration` со слайдером и датчиком аптайма. Figma: Full HD 2456:16592,
+     * Desktop 499:6223, Tablet 2457:17303, Mobile 2467:17987; состояния слайдов
+     * 2456:16592, 2439:14696, 2440:14768.
+     *
+     * Левая часть — слайдер из трёх путей интеграции, правая — три статичные
+     * карточки, с активным слайдом они не связаны. Датчика аптайма в макете
+     * нет, он не переносится (DECISIONS.md, Р-75).
+     */
+    $nv_integration_slides = array(
+        array(
+            'title'       => 'API Integration',
+            'subtitle'    => '',
+            'description' => 'Direct backend integration for maximum control and extensive customisation options.',
+        ),
+        array(
+            'title'       => 'Web SDK &amp; Widget',
+            'subtitle'    => '',
+            'description' => 'Drop our embeddable verification widget into your website with just a few lines of code.',
+        ),
+        array(
+            'title'       => 'Mobile SDK',
+            'subtitle'    => 'iOS &amp; Android',
+            'description' => 'Native SDKs that bring document scanning and selfie capture directly into your mobile app.',
+        ),
+    );
+
+    $nv_integration_includes = array(
+        'step-by-step implementation guides',
+        'sandbox with test data',
+        'dedicated technical support',
+        'an account manager who speaks both business and tech',
+        'regular check-ins',
+    );
+
+    $nv_integration_backoffice = array(
+        'scenario builder',
+        'stop-lists',
+        'manual review and analytics',
+    );
+    ?>
     <section class="section integration" id="integration">
         <div class="container">
-            <div class="integration__wrapper">
-                <div class="integration__content">
-
+            <div class="integration__head">
+                <div class="section__badge">Integration</div>
+                <div class="integration__head-row">
                     <div class="integration__title-block">
-                        <div class="section__badge">Seamless Integration</div>
-                        <div class="integration__title-info">
-                            <h2 class="section__title integration__title">Seamless Integration That Just Works</h2>
-                            <p class="section__subtitle">Get up and running in just one business day with our developer-friendly platform</p>
-                        </div>
-                        <div class="integration__title-text large-text">Whether you're building a fintech app, launching a crypto exchange, or scaling an e-commerce platform, our KYC solution integrates smoothly with your existing tech stack. We've designed every aspect of the platform to minimize friction and maximize flexibility.</div>
+                        <h2 class="section__title integration__title">Seamless Integration That Just Works</h2>
+                        <p class="integration__subtitle">Integration under an&nbsp;hour, on&nbsp;your terms</p>
                     </div>
-
-                    <div class="integration__box animate-fade-up">
-                        <div class="integration__box-title-block">
-                            <div class="integration__box-title medium-title">We know your time is valuable.</div>
-                            <div class="integration__box-text medium-text">That's why we've invested heavily in comprehensive documentation, interactive API explorers, and ready-to-use code examples in Python, Java, Node.js, and more. </div>
-                        </div>
-                        <div class="section__subtitle">Every integration includes:</div>
-                        <div class="integration__box-list">
-                            <div class="integration__box-item">Step-by-step implementation guides that actually make sense</div>
-                            <div class="integration__box-item">Sandbox environment for testing without real data</div>
-                            <div class="integration__box-item">Dedicated technical support during integration</div>
-                            <div class="integration__box-item">Account managers who understand both business and technical needs</div>
-                            <div class="integration__box-item">Regular check-ins to ensure everything runs smoothly</div>
-                        </div>
-                    </div>
-
-                    <div class="integration__speed">
-                        <div class="integration__speed-info">
-                            <div class="integration__speed-title medium-title">Cloud-First Architecture with Enterprise Option</div>
-                            <div class="integration__speed-text medium-text">Our platform runs as a highly available SaaS service handling hundreds of millions of identity verifications annually. For organizations with strict data residency requirements — like banks and government institutions — we also offer on-premise deployment options that keep all processing within your infrastructure.</div>
-                        </div>
-                        <div class="integration__speed-animation">
-
-                                <div class="uptime-gauge" data-value="99.9" data-duration="2200">
-                                    <svg class="uptime-gauge__svg" viewBox="0 0 640 360" aria-hidden="true">
-                                        <defs>
-                                            <filter id="uptimeThumbShadow" x="-50%" y="-50%" width="200%" height="200%">
-                                                <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="rgba(0,0,0,0.35)"></feDropShadow>
-                                            </filter>
-                                        </defs>
-
-                                        <!-- Дуга для вычислений -->
-                                        <path
-                                            class="uptime-gauge__path"
-                                            d="M 60 335 A 260 260 0 0 1 580 335"
-                                        ></path>
-
-                                        <!-- Шкала -->
-                                        <g class="uptime-gauge__ticks"></g>
-
-                                        <!-- Ползунок -->
-                                        <g class="uptime-gauge__thumb" filter="url(#uptimeThumbShadow)">
-                                            <circle class="uptime-gauge__thumb-outer" r="18" cx="0" cy="0"></circle>
-                                            <circle class="uptime-gauge__thumb-inner" r="16" cx="0" cy="0"></circle>
-                                        </g>
-                                    </svg>
-
-                                    <div class="uptime-gauge__center">
-                                        <div class="uptime-gauge__value">0.0%</div>
-                                        <div class="uptime-gauge__label">uptime</div>
-                                    </div>
-                                </div>
-
-                                
-                        </div>
-                    </div>
-
-                    <div class="integration__slider-block animate-fade-up">
-                        <div class="integration__slider-title">Choose Your Integration Path</div>
-                        
-                        <div class="integration__slider">
-                            <div class="integration__arrows">
-                                <div class="integration__arrow integration__arrow-prew" tabindex="0" role="button" aria-label="Previous slide">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M10.0137 5.55687C10.3648 5.41123 10.7767 5.55297 10.9609 5.89476C11.1571 6.25925 11.0206 6.7139 10.6562 6.91038C10.6558 6.91061 10.6545 6.91074 10.6533 6.91136C10.651 6.9126 10.6476 6.91547 10.6426 6.91819C10.6324 6.92375 10.6164 6.93213 10.5957 6.94358C10.5541 6.96663 10.4925 7.00171 10.4131 7.0471C10.2537 7.13824 10.0238 7.27193 9.74805 7.44163C9.19501 7.78192 8.46189 8.2616 7.73242 8.82151C6.99842 9.38494 6.29193 10.0115 5.77637 10.6428C5.51686 10.9606 5.32608 11.2559 5.19824 11.5246H19.25C19.6642 11.5246 19.9999 11.8605 20 12.2746C20 12.6889 19.6642 13.0246 19.25 13.0246H5.19727C5.32507 13.2938 5.51611 13.5899 5.77637 13.9084C6.29187 14.5392 6.99755 15.1656 7.73145 15.7287C8.46104 16.2885 9.19491 16.7674 9.74805 17.1076C10.0236 17.2771 10.2527 17.4111 10.4121 17.5022C10.4916 17.5476 10.5541 17.5826 10.5957 17.6057C10.6165 17.6172 10.6324 17.6265 10.6426 17.6321C10.6475 17.6347 10.6511 17.6367 10.6533 17.6379L10.6562 17.6389L10.7217 17.6789C11.0364 17.8922 11.1452 18.3136 10.9609 18.6555C10.7766 18.9973 10.3648 19.1381 10.0137 18.9924L9.94434 18.9592H9.94336L9.94238 18.9582C9.94141 18.9577 9.94006 18.9571 9.93848 18.9563C9.93505 18.9544 9.92992 18.9518 9.92383 18.9485C9.91116 18.9415 9.89248 18.9311 9.86914 18.9182C9.82212 18.8921 9.75372 18.8539 9.66797 18.8049C9.49654 18.7069 9.25318 18.5641 8.96191 18.385C8.3807 18.0275 7.60115 17.5188 6.81836 16.9182C6.04002 16.321 5.23395 15.6139 4.61523 14.8567C4.04864 14.1633 3.56398 13.3375 3.50586 12.4533L3.5 12.2766V12.2746C3.5 12.2733 3.50097 12.272 3.50098 12.2707C3.50295 11.3218 4.01126 10.433 4.61426 9.69456C5.23299 8.93694 6.03997 8.22958 6.81836 7.63206C7.60128 7.03109 8.38067 6.52194 8.96191 6.16429C9.25325 5.98502 9.49653 5.8424 9.66797 5.74437C9.75368 5.69535 9.82214 5.65812 9.86914 5.63206C9.89234 5.6192 9.91016 5.60872 9.92285 5.60179C9.92922 5.59831 9.93494 5.59492 9.93848 5.593C9.94003 5.59216 9.94143 5.59156 9.94238 5.59105L9.94336 5.59007H9.94434L10.0137 5.55687Z" fill="#FBFBFB"/>
-                                    </svg>
-                                </div>
-
-                                <div class="integration__arrow integration__arrow-next" tabindex="0" role="button" aria-label="Next slide">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"/>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <div class="integration__slider-inner swiper">
-                                <div class="integration__slider-wrapper swiper-wrapper">
-                                    <div class="integration__slide swiper-slide">
-                                        <div class="integration__slide-icon medium-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M10.2246 3.8411C10.953 2.3863 13.0469 2.3863 13.7754 3.8411L15.6025 7.49247L15.665 7.58719C15.7387 7.67338 15.8439 7.73308 15.9638 7.75028L20.0517 8.33817H20.0527C21.6655 8.57115 22.3383 10.5491 21.1455 11.6936L21.1445 11.6927L18.1894 14.5325C18.0773 14.6403 18.0293 14.7923 18.0547 14.9388V14.9397L18.7529 18.9495V18.9505C19.034 20.5753 17.3154 21.7675 15.8818 21.0227V21.0237L12.2275 19.1292V19.1282C12.0864 19.0551 11.9146 19.0543 11.7715 19.1282L8.11813 21.0237L8.11716 21.0227C6.68408 21.7665 4.96491 20.5752 5.24801 18.9495L5.94528 14.9397V14.9388C5.97065 14.7923 5.9217 14.6413 5.80954 14.5335V14.5325L2.85544 11.6927L2.85446 11.6936C1.66162 10.5491 2.33446 8.57115 3.94723 8.33817H3.94821L8.0361 7.75028L8.15134 7.71903C8.25983 7.67512 8.34773 7.59388 8.39841 7.49247L10.2246 3.84208V3.8411ZM12.4336 4.51298C12.2691 4.18466 11.8054 4.16428 11.6035 4.45145L11.5664 4.51298L9.7402 8.16337C9.44964 8.74477 8.89006 9.14269 8.24899 9.23466L4.1611 9.82255C3.75462 9.88167 3.62416 10.3525 3.89255 10.6106L3.89352 10.6116L6.84958 13.4515V13.4524C7.28899 13.875 7.50624 14.4741 7.43942 15.0765L7.42282 15.1966L6.72653 19.2063V19.2073C6.66456 19.5648 7.05482 19.8856 7.42673 19.6927L7.4277 19.6917L11.081 17.7972H11.082C11.6571 17.4996 12.3438 17.4987 12.9189 17.7972L16.5722 19.6917L16.5732 19.6927C16.9217 19.8734 17.288 19.6028 17.2812 19.2727L17.2744 19.2063L16.5771 15.1966C16.4653 14.5546 16.6817 13.9031 17.1504 13.4524V13.4515L20.1074 10.6106C20.3759 10.3524 20.2448 9.88228 19.8379 9.82352L15.7509 9.23466C15.1893 9.15408 14.6918 8.8389 14.3818 8.37235L14.2607 8.16337L12.4336 4.51298Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="integration__slide-info">
-                                            <div class="integration__slide-title">API Integration</div>
-                                            <div class="integration__slidetext">Direct backend integration for maximum control and customization. Our RESTful API supports all major programming languages and frameworks, letting your developers implement exactly the workflow you need.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="integration__slide swiper-slide">
-                                        <div class="integration__slide-icon medium-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M10.2246 3.8411C10.953 2.3863 13.0469 2.3863 13.7754 3.8411L15.6025 7.49247L15.665 7.58719C15.7387 7.67338 15.8439 7.73308 15.9638 7.75028L20.0517 8.33817H20.0527C21.6655 8.57115 22.3383 10.5491 21.1455 11.6936L21.1445 11.6927L18.1894 14.5325C18.0773 14.6403 18.0293 14.7923 18.0547 14.9388V14.9397L18.7529 18.9495V18.9505C19.034 20.5753 17.3154 21.7675 15.8818 21.0227V21.0237L12.2275 19.1292V19.1282C12.0864 19.0551 11.9146 19.0543 11.7715 19.1282L8.11813 21.0237L8.11716 21.0227C6.68408 21.7665 4.96491 20.5752 5.24801 18.9495L5.94528 14.9397V14.9388C5.97065 14.7923 5.9217 14.6413 5.80954 14.5335V14.5325L2.85544 11.6927L2.85446 11.6936C1.66162 10.5491 2.33446 8.57115 3.94723 8.33817H3.94821L8.0361 7.75028L8.15134 7.71903C8.25983 7.67512 8.34773 7.59388 8.39841 7.49247L10.2246 3.84208V3.8411ZM12.4336 4.51298C12.2691 4.18466 11.8054 4.16428 11.6035 4.45145L11.5664 4.51298L9.7402 8.16337C9.44964 8.74477 8.89006 9.14269 8.24899 9.23466L4.1611 9.82255C3.75462 9.88167 3.62416 10.3525 3.89255 10.6106L3.89352 10.6116L6.84958 13.4515V13.4524C7.28899 13.875 7.50624 14.4741 7.43942 15.0765L7.42282 15.1966L6.72653 19.2063V19.2073C6.66456 19.5648 7.05482 19.8856 7.42673 19.6927L7.4277 19.6917L11.081 17.7972H11.082C11.6571 17.4996 12.3438 17.4987 12.9189 17.7972L16.5722 19.6917L16.5732 19.6927C16.9217 19.8734 17.288 19.6028 17.2812 19.2727L17.2744 19.2063L16.5771 15.1966C16.4653 14.5546 16.6817 13.9031 17.1504 13.4524V13.4515L20.1074 10.6106C20.3759 10.3524 20.2448 9.88228 19.8379 9.82352L15.7509 9.23466C15.1893 9.15408 14.6918 8.8389 14.3818 8.37235L14.2607 8.16337L12.4336 4.51298Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="integration__slide-info">
-                                            <div class="integration__slide-title">Web SDK &amp; Widget</div>
-                                            <div class="integration__slidetext">Drop our embeddable verification widget into your website with just a few lines of code. It handles the entire verification flow while maintaining your brand's look and feel through customizable themes.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="integration__slide swiper-slide">
-                                        <div class="integration__slide-icon medium-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M10.2246 3.8411C10.953 2.3863 13.0469 2.3863 13.7754 3.8411L15.6025 7.49247L15.665 7.58719C15.7387 7.67338 15.8439 7.73308 15.9638 7.75028L20.0517 8.33817H20.0527C21.6655 8.57115 22.3383 10.5491 21.1455 11.6936L21.1445 11.6927L18.1894 14.5325C18.0773 14.6403 18.0293 14.7923 18.0547 14.9388V14.9397L18.7529 18.9495V18.9505C19.034 20.5753 17.3154 21.7675 15.8818 21.0227V21.0237L12.2275 19.1292V19.1282C12.0864 19.0551 11.9146 19.0543 11.7715 19.1282L8.11813 21.0237L8.11716 21.0227C6.68408 21.7665 4.96491 20.5752 5.24801 18.9495L5.94528 14.9397V14.9388C5.97065 14.7923 5.9217 14.6413 5.80954 14.5335V14.5325L2.85544 11.6927L2.85446 11.6936C1.66162 10.5491 2.33446 8.57115 3.94723 8.33817H3.94821L8.0361 7.75028L8.15134 7.71903C8.25983 7.67512 8.34773 7.59388 8.39841 7.49247L10.2246 3.84208V3.8411ZM12.4336 4.51298C12.2691 4.18466 11.8054 4.16428 11.6035 4.45145L11.5664 4.51298L9.7402 8.16337C9.44964 8.74477 8.89006 9.14269 8.24899 9.23466L4.1611 9.82255C3.75462 9.88167 3.62416 10.3525 3.89255 10.6106L3.89352 10.6116L6.84958 13.4515V13.4524C7.28899 13.875 7.50624 14.4741 7.43942 15.0765L7.42282 15.1966L6.72653 19.2063V19.2073C6.66456 19.5648 7.05482 19.8856 7.42673 19.6927L7.4277 19.6917L11.081 17.7972H11.082C11.6571 17.4996 12.3438 17.4987 12.9189 17.7972L16.5722 19.6917L16.5732 19.6927C16.9217 19.8734 17.288 19.6028 17.2812 19.2727L17.2744 19.2063L16.5771 15.1966C16.4653 14.5546 16.6817 13.9031 17.1504 13.4524V13.4515L20.1074 10.6106C20.3759 10.3524 20.2448 9.88228 19.8379 9.82352L15.7509 9.23466C15.1893 9.15408 14.6918 8.8389 14.3818 8.37235L14.2607 8.16337L12.4336 4.51298Z" fill="#F9AA66"/>
-                                            </svg>
-                                        </div>
-                                        <div class="integration__slide-info">
-                                            <div class="integration__slide-title">Mobile SDK<br><span>iOS &amp; Android</span></div>
-                                            <div class="integration__slidetext">Native SDKs that bring document scanning and selfie capture directly into your mobile app. Built with performance in mind, they work seamlessly even on older devices and slower connections.</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="integration__slider-dots"></div>
-                            </div>
-                        </div>
-                        
+                    <div class="integration__actions">
+                        <a class="integration__btn integration__btn--primary" href="<?php echo esc_url(home_url('/docs/')); ?>">
+                            <span class="integration__btn-text">View documentation</span>
+                            <span class="integration__btn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
+                        </a>
+                        <button class="integration__btn integration__btn--ghost open-callForm2" type="button">
+                            <span class="integration__btn-text">Talk to integration team</span>
+                            <span class="integration__btn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
+                        </button>
                     </div>
                 </div>
-                <div class="integration__bottom animate-fade-up">
-                    <div class="integration__bottom-info">
-                        <div class="integration__bottom-title medium-title">From First Line of Code to Production</div>
-                        <div class="integration__bottomtext medium-text">Most teams complete their basic integration in just one business day. Yes, really. Our platform is designed to be plug-and-play, not plug-and-pray. Start with our quickstart guide, test in sandbox, then switch to production — it's that straightforward.</div>
-                    </div>
-                    <div class="integration__bottom-action">
-                        <div class="integration__bottom-subtitle medium-title orange-text">Ready to see how easy integration can be?</div>
-                        <div class="integration__bottom-buttons">
-                            <a href="/docs/" class="btn-hero">
-                                <span class="btn__text btn__text-hero">View Documentation</span>
-                                <div class="btn__icon btn__icon-arrow"></div>
-                            </a>
-                            <button class="btn btn--transparent open-callForm2 btn--18 btn-with-lottie">
-                                <span class="btn__text">Talk to integration team</span>
-                                <span class="btn__icon lottie-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M21.7038 10.5392C21.3268 10.5392 21.0028 10.2562 20.9598 9.87322C20.5798 6.49722 17.9568 3.87722 14.5808 3.50222C14.1698 3.45622 13.8728 3.08622 13.9188 2.67422C13.9638 2.26322 14.3328 1.95622 14.7468 2.01222C18.8238 2.46422 21.9918 5.62822 22.4498 9.70522C22.4968 10.1172 22.1998 10.4882 21.7888 10.5342C21.7608 10.5372 21.7318 10.5392 21.7038 10.5392Z" fill="#FBFBFB"></path>
-                                        <path d="M18.1625 10.55C17.8105 10.55 17.4975 10.302 17.4275 9.94398C17.1395 8.46398 15.9985 7.32298 14.5205 7.03598C14.1135 6.95698 13.8485 6.56398 13.9275 6.15698C14.0065 5.74998 14.4095 5.48498 14.8065 5.56398C16.8875 5.96798 18.4945 7.57398 18.8995 9.65598C18.9785 10.064 18.7135 10.457 18.3075 10.536C18.2585 10.545 18.2105 10.55 18.1625 10.55Z" fill="#FBFBFB"></path>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.48215 16.8361C12.1952 21.5501 15.3332 22.7861 17.3152 22.7861C18.2932 22.7861 18.9912 22.4851 19.4562 22.1511C19.4772 22.1391 21.6292 20.8231 22.0062 18.8311C22.1842 17.8961 21.9242 16.9711 21.2562 16.1551C18.5042 12.8141 17.1022 13.1261 15.5542 13.8791C14.6032 14.3451 13.8522 14.7071 11.7312 12.5881C9.6114 10.4674 9.97707 9.71628 10.44 8.76544C11.194 7.21744 11.5042 5.81511 8.16215 3.06111C7.34815 2.39611 6.42915 2.13611 5.49515 2.31111C3.53215 2.67811 2.20815 4.79511 2.21015 4.79511C1.15815 6.27211 0.444156 9.79911 7.48215 16.8361ZM5.80115 3.77911C5.88915 3.76511 5.97615 3.75711 6.06215 3.75711C6.45415 3.75711 6.83215 3.91011 7.20915 4.22011C9.90413 6.44009 9.56316 7.1401 9.09116 8.10908C8.38216 9.56608 8.01115 10.9881 10.6702 13.6491C13.3322 16.3101 14.7552 15.9391 16.2102 15.2281L16.2126 15.2269C17.1804 14.7565 17.8801 14.4164 20.0972 17.1081C20.4762 17.5701 20.6212 18.0321 20.5392 18.5191C20.3502 19.6391 19.0482 20.6421 18.6542 20.8861C17.2432 21.8921 13.8462 21.0791 8.54215 15.7761C3.24015 10.4731 2.42615 7.07611 3.46815 5.61111C3.67615 5.27211 4.68315 3.96811 5.80115 3.77911Z" fill="#FBFBFB"></path>
-                                    </svg>
-                                </span>
-                            </button>
+            </div>
+
+            <div class="integration__board">
+                <div class="integration__path" data-integration-slider>
+                    <h3 class="integration__path-title">Choose Your Integration Path</h3>
+                    <div class="integration__path-body">
+                        <div class="integration__nav">
+                            <button type="button" class="integration__arrow integration__arrow--prev" aria-label="Previous integration path"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path d="M10.0137 5.5564C10.3648 5.41076 10.7767 5.5525 10.9609 5.89429C11.1571 6.25879 11.0206 6.71344 10.6562 6.90992C10.6558 6.91015 10.6545 6.91027 10.6533 6.91089C10.651 6.91214 10.6476 6.915 10.6426 6.91773C10.6324 6.92329 10.6164 6.93167 10.5957 6.94312C10.5541 6.96616 10.4925 7.00125 10.4131 7.04664C10.2537 7.13778 10.0238 7.27147 9.74805 7.44117C9.19501 7.78146 8.46189 8.26114 7.73242 8.82105C6.99842 9.38447 6.29193 10.0111 5.77637 10.6423C5.51686 10.9601 5.32608 11.2554 5.19824 11.5242H19.25C19.6642 11.5242 19.9999 11.86 20 12.2742C20 12.6884 19.6642 13.0242 19.25 13.0242H5.19727C5.32507 13.2933 5.51611 13.5895 5.77637 13.908C6.29187 14.5388 6.99755 15.1652 7.73145 15.7283C8.46104 16.2881 9.19491 16.767 9.74805 17.1072C10.0236 17.2767 10.2527 17.4106 10.4121 17.5017C10.4916 17.5472 10.5541 17.5822 10.5957 17.6052C10.6165 17.6168 10.6324 17.626 10.6426 17.6316C10.6475 17.6343 10.6511 17.6362 10.6533 17.6375L10.6562 17.6384L10.7217 17.6785C11.0364 17.8917 11.1452 18.3132 10.9609 18.655C10.7766 18.9968 10.3648 19.1376 10.0137 18.9919L9.94434 18.9587H9.94336L9.94238 18.9578C9.94141 18.9572 9.94006 18.9567 9.93848 18.9558C9.93505 18.954 9.92992 18.9513 9.92383 18.948C9.91116 18.9411 9.89248 18.9307 9.86914 18.9177C9.82212 18.8917 9.75372 18.8535 9.66797 18.8044C9.49654 18.7065 9.25318 18.5637 8.96191 18.3845C8.3807 18.027 7.60115 17.5183 6.81836 16.9177C6.04002 16.3205 5.23395 15.6134 4.61523 14.8562C4.04864 14.1628 3.56398 13.3371 3.50586 12.4529L3.5 12.2761V12.2742C3.5 12.2729 3.50097 12.2716 3.50098 12.2703C3.50295 11.3213 4.01126 10.4325 4.61426 9.6941C5.23299 8.93647 6.03997 8.22911 6.81836 7.6316C7.60128 7.03062 8.38067 6.52147 8.96191 6.16382C9.25325 5.98456 9.49653 5.84193 9.66797 5.7439C9.75368 5.69489 9.82214 5.65766 9.86914 5.6316C9.89234 5.61874 9.91016 5.60826 9.92285 5.60132C9.92922 5.59784 9.93494 5.59445 9.93848 5.59253C9.94003 5.59169 9.94143 5.59109 9.94238 5.59058L9.94336 5.5896H9.94434L10.0137 5.5564Z" fill="currentColor"/> </g> </svg></button>
+                            <button type="button" class="integration__arrow integration__arrow--next" aria-label="Next integration path"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7257C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/> </g> </svg></button>
                         </div>
+
+                        <div class="integration__slider">
+                            <div class="integration__swiper swiper">
+                                <div class="swiper-wrapper">
+                                <?php foreach ($nv_integration_slides as $nv_slide) : ?>
+                                    <div class="integration__slide swiper-slide">
+                                    <span class="integration__slide-icon" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g> <path d="M10.2246 3.84082C10.9531 2.38602 13.0469 2.38602 13.7754 3.84082L15.6025 7.49219L15.665 7.58691C15.7388 7.6731 15.844 7.7328 15.9639 7.75L20.0518 8.33789H20.0527C21.6655 8.57087 22.3383 10.5488 21.1455 11.6934L21.1445 11.6924L18.1895 14.5322C18.0773 14.6401 18.0293 14.792 18.0547 14.9385V14.9395L18.7529 18.9492V18.9502C19.034 20.575 17.3154 21.7672 15.8818 21.0225V21.0234L12.2275 19.1289V19.1279C12.0864 19.0549 11.9147 19.054 11.7715 19.1279L8.11816 21.0234L8.11719 21.0225C6.68412 21.7663 4.96495 20.5749 5.24805 18.9492L5.94531 14.9395V14.9385C5.97069 14.792 5.92173 14.641 5.80957 14.5332V14.5322L2.85547 11.6924L2.85449 11.6934C1.66166 10.5488 2.33449 8.57087 3.94727 8.33789H3.94824L8.03613 7.75L8.15137 7.71875C8.25986 7.67484 8.34776 7.5936 8.39844 7.49219L10.2246 3.8418V3.84082ZM12.4336 4.5127C12.2692 4.18437 11.8055 4.164 11.6035 4.45117L11.5664 4.5127L9.74023 8.16309C9.44967 8.74449 8.8901 9.14241 8.24902 9.23437L4.16113 9.82227C3.75466 9.88139 3.6242 10.3522 3.89258 10.6104L3.89355 10.6113L6.84961 13.4512V13.4521C7.28902 13.8747 7.50627 14.4738 7.43945 15.0762L7.42285 15.1963L6.72656 19.2061V19.207C6.66459 19.5646 7.05485 19.8853 7.42676 19.6924L7.42773 19.6914L11.0811 17.7969H11.082C11.6571 17.4993 12.3439 17.4984 12.9189 17.7969L16.5723 19.6914L16.5732 19.6924C16.9217 19.8731 17.288 19.6025 17.2812 19.2725L17.2744 19.2061L16.5771 15.1963C16.4653 14.5543 16.6818 13.9028 17.1504 13.4521V13.4512L20.1074 10.6104C20.3759 10.3521 20.2448 9.882 19.8379 9.82324L15.751 9.23437C15.1893 9.1538 14.6918 8.83862 14.3818 8.37207L14.2607 8.16309L12.4336 4.5127Z" fill="currentColor"/> </g> </svg></span>
+                                    <div class="integration__slide-text">
+                                        <h4 class="integration__slide-title"><?php echo $nv_slide['title']; ?><?php if ($nv_slide['subtitle']) : ?><span class="integration__slide-subtitle"><?php echo $nv_slide['subtitle']; ?></span><?php endif; ?></h4>
+                                        <p class="integration__slide-description"><?php echo $nv_slide['description']; ?></p>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            </div>
+
+                            <?php /* 539:11129 — индикатор, а не управление: переключают стрелки, свайп и клавиатура. */ ?>
+                            <div class="integration__pagination" aria-hidden="true">
+                                <?php foreach ($nv_integration_slides as $nv_i => $nv_slide) : ?>
+                                <span class="integration__bar<?php echo (0 === $nv_i) ? ' is-active' : ''; ?>"></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="integration__info">
+                    <div class="integration__card integration__card--list">
+                        <h3 class="integration__card-title">Every integration includes:</h3>
+                        <ul class="integration__list">
+                            <?php foreach ($nv_integration_includes as $nv_item) : ?>
+                            <li class="integration__list-item"><?php echo esc_html($nv_item); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+
+                    <div class="integration__card integration__card--deploy">
+                        <div class="integration__card-text">
+                            <h3 class="integration__card-title">Cloud, on-premises or&nbsp;hybrid</h3>
+                            <p class="integration__card-note">data stays in your jurisdiction</p>
+                        </div>
+                        <img class="integration__card-image integration__card-image--servers"
+                             src="<?php echo esc_url(get_template_directory_uri() . '/img/sol-int-servers.webp'); ?>"
+                             srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-int-servers.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-int-servers@2x.webp'); ?> 2x"
+                             width="335" height="224" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                    </div>
+
+                    <div class="integration__card integration__card--backoffice">
+                        <div class="integration__card-text">
+                            <h3 class="integration__card-title">Back-office included</h3>
+                            <ul class="integration__chips">
+                                <?php foreach ($nv_integration_backoffice as $nv_chip) : ?>
+                                <li class="integration__chip"><?php echo esc_html($nv_chip); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <img class="integration__card-image integration__card-image--folders"
+                             src="<?php echo esc_url(get_template_directory_uri() . '/img/sol-int-folders.webp'); ?>"
+                             srcset="<?php echo esc_url(get_template_directory_uri() . '/img/sol-int-folders.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/sol-int-folders@2x.webp'); ?> 2x"
+                             width="252" height="176" alt="" aria-hidden="true" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
