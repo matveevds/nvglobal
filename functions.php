@@ -2069,6 +2069,23 @@ function nv_has_content($value): bool {
 }
 
 
+/**
+ * Страницы, переведённые на светлый макет Figma.
+ *
+ * Одно условие на всю тему: от него зависят светлый тизер
+ * (`template-parts/teaser.php`), светлый футер (`template-parts/footer-home.php`)
+ * и токены `--nv-*` в `css/styles.css`. Остальные шаблоны продолжают
+ * выводить прежнюю тёмную разметку — её не трогаем.
+ *
+ * Добавлять сюда шаблон можно только вместе с его CSS-контекстом:
+ * стили светлой темы ограничены селекторами `body.home`
+ * и `body.page-template-page-solutions`.
+ */
+function nv_is_light_theme(): bool {
+    return is_front_page() || is_page_template('page-solutions.php');
+}
+
+
 
 
 /**

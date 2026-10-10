@@ -768,8 +768,13 @@ body.home .section__title-block {
  * (1920 → 1856, 1440 → 1376, 840 → 776). Потолок 1920 повторяет самый широкий фрейм.
  * Специфичность `body.home .container` выше, чем у лесенки `.container` в media-запросах,
  * поэтому общие правила переопределять не нужно.
+ *
+ * С группы 9 то же правило действует на /solutions/: светлые тизер и футер
+ * выводятся вне шаблона страницы и своей сетки не задают. Секции страницы
+ * задают `.container` сами и идут ниже по файлу — их это не затрагивает.
  */
-body.home .container {
+body.home .container,
+body.page-template-page-solutions .container {
     max-width: 1920px;
     padding-left: var(--nv-gutter);
     padding-right: var(--nv-gutter);
@@ -793,7 +798,8 @@ body.home .container {
 
 @media (max-width: 767.98px) {
     /* Макета мобильной версии нет — сохраняем поля темы (docs/DECISIONS.md, Р-1 / BACKLOG R-01). */
-    body.home .container {
+    body.home .container,
+    body.page-template-page-solutions .container {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -9932,7 +9938,8 @@ body.page-template-page-solutions .contacts .input-form-action {
  * снизу 64 до карточки футера.
  */
 
-body.home .teaser {
+body.home .teaser,
+body.page-template-page-solutions .teaser {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -9940,7 +9947,8 @@ body.home .teaser {
 }
 
 /* «Page edge» из макета — скруглённый низ контентной области страницы. */
-body.home .teaser::before {
+body.home .teaser::before,
+body.page-template-page-solutions .teaser::before {
     content: '';
     position: absolute;
     top: 0;
@@ -9954,41 +9962,49 @@ body.home .teaser::before {
 }
 
 /* Тёплое свечение тёмной темы в светлом макете не используется. */
-body.home .teaser::after {
+body.home .teaser::after,
+body.page-template-page-solutions .teaser::after {
     display: none;
 }
 
-body.home .teaser__wrapper {
+body.home .teaser__wrapper,
+body.page-template-page-solutions .teaser__wrapper {
     gap: 32px;
     padding-bottom: 64px;
     padding-top: 128px;
 }
 
-body.home .teaser__logo {
+body.home .teaser__logo,
+body.page-template-page-solutions .teaser__logo {
     border: 1px solid var(--nv-surface-4);
     background: var(--nv-surface-3);
 }
 
-body.home .teaser__logo-image {
+body.home .teaser__logo-image,
+body.page-template-page-solutions .teaser__logo-image {
     background: var(--nv-surface-2);
 }
 
-body.home .teaser__info {
+body.home .teaser__info,
+body.page-template-page-solutions .teaser__info {
     width: 100%;
     gap: 16px;
 }
 
-body.home .teaser__title {
+body.home .teaser__title,
+body.page-template-page-solutions .teaser__title {
     max-width: none;
     color: var(--nv-object-1);
 }
 
 /* Full HD — заголовок в одну строку. */
-body.home .teaser__title br {
+body.home .teaser__title br,
+body.page-template-page-solutions .teaser__title br {
     display: none;
 }
 
-body.home .teaser__subtitle {
+body.home .teaser__subtitle,
+body.page-template-page-solutions .teaser__subtitle {
     color: var(--nv-primary);
     font-size: 16px;
     line-height: 150%;
@@ -9996,7 +10012,8 @@ body.home .teaser__subtitle {
 
 @media (max-width: 1599.98px) {
     /* Desktop 1440 — перенос после «Platform» из макета. */
-    body.home .teaser__title br {
+    body.home .teaser__title br,
+    body.page-template-page-solutions .teaser__title br {
         display: inline;
     }
 }
@@ -10007,35 +10024,41 @@ body.home .teaser__subtitle {
 
 @media (max-width: 1199.98px) {
     /* Маскота в светлом футере нет — запас под него не нужен. */
-    body.home .teaser__wrapper {
+    body.home .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper {
         padding-bottom: 64px;
     }
 }
 
 @media (max-width: 991.98px) {
     /* Tablet 840 — перенос по ширине контейнера. */
-    body.home .teaser__title br {
+    body.home .teaser__title br,
+    body.page-template-page-solutions .teaser__title br {
         display: none;
     }
     /* В планшетном макете до карточки футера 128px, а не 64 (2376:17671). */
-    body.home .teaser__wrapper {
+    body.home .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper {
         padding-bottom: 128px;
     }
 }
 
 @media (max-width: 767.98px) {
     /* Ниже 768 макета нет — возвращаем отступ темы. */
-    body.home .teaser__wrapper {
+    body.home .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper {
         padding-top: 96px;
         padding-bottom: 64px;
     }
-    body.home .teaser__title {
+    body.home .teaser__title,
+    body.page-template-page-solutions .teaser__title {
         font-size: 32px;
     }
 }
 
 @media (max-width: 575.98px) {
-    body.home .teaser__title {
+    body.home .teaser__title,
+    body.page-template-page-solutions .teaser__title {
         font-size: 28px;
     }
 }
@@ -10361,7 +10384,8 @@ body.home .teaser__subtitle {
  * `max-width: 991.98px`. Ниже 768 макета нет, раскладка подобрана по логике темы.
  */
 
-body.home .footer {
+body.home .footer,
+body.page-template-page-solutions .footer {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -10369,7 +10393,8 @@ body.home .footer {
 }
 
 /* Карточка футера. Обводка в Figma внутренняя, поэтому паддинг минус её ширина. */
-body.home .footer__wrapper {
+body.home .footer__wrapper,
+body.page-template-page-solutions .footer__wrapper {
     gap: 32px;
     padding: 63px 31px 32px;
     border-width: 1px 1px 0;
@@ -10379,65 +10404,75 @@ body.home .footer__wrapper {
     background: var(--nv-surface-1);
 }
 
-body.home .footer__top {
+body.home .footer__top,
+body.page-template-page-solutions .footer__top {
     align-items: flex-start;
     gap: 0;
 }
 
 /* --- Левая колонка: логотип, слоган, реквизиты, сертификаты --- */
 
-body.home .footer__info {
+body.home .footer__info,
+body.page-template-page-solutions .footer__info {
     flex: 1 0 0;
     max-width: none;
     justify-content: flex-start;
     gap: 32px;
 }
 
-body.home .footer__brand {
+body.home .footer__brand,
+body.page-template-page-solutions .footer__brand {
     display: flex;
     flex-direction: column;
     gap: 32px;
 }
 
-body.home .footer__logo-image {
+body.home .footer__logo-image,
+body.page-template-page-solutions .footer__logo-image {
     display: block;
     width: 302px;
     line-height: 0;
 }
 
-body.home .footer__logo-image img {
+body.home .footer__logo-image img,
+body.page-template-page-solutions .footer__logo-image img {
     display: block;
     width: 100%;
     height: auto;
 }
 
-body.home .footer__tagline {
+body.home .footer__tagline,
+body.page-template-page-solutions .footer__tagline {
     color: var(--nv-primary);
     font-size: 24px;
     font-weight: 700;
     line-height: 150%;
 }
 
-body.home .footer__details {
+body.home .footer__details,
+body.page-template-page-solutions .footer__details {
     display: flex;
     align-items: flex-start;
     gap: 32px;
 }
 
-body.home .footer__legal {
+body.home .footer__legal,
+body.page-template-page-solutions .footer__legal {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-body.home .footer__legal-name {
+body.home .footer__legal-name,
+body.page-template-page-solutions .footer__legal-name {
     color: var(--nv-object-1);
     font-size: 18px;
     font-weight: 500;
     line-height: 155.556%;
 }
 
-body.home .footer__legal-address {
+body.home .footer__legal-address,
+body.page-template-page-solutions .footer__legal-address {
     color: var(--nv-object-2);
     font-size: 16px;
     font-weight: 400;
@@ -10445,26 +10480,30 @@ body.home .footer__legal-address {
 }
 
 /* В Full HD значки стоят слева от реквизитов, ниже — под ними. */
-body.home .footer__badges {
+body.home .footer__badges,
+body.page-template-page-solutions .footer__badges {
     display: flex;
     align-items: center;
     order: -1;
     gap: 12px;
 }
 
-body.home .footer__badge {
+body.home .footer__badge,
+body.page-template-page-solutions .footer__badge {
     display: block;
     line-height: 0;
 }
 
-body.home .footer__badge img {
+body.home .footer__badge img,
+body.page-template-page-solutions .footer__badge img {
     display: block;
     width: auto;
     height: 64px;
 }
 
 /* Круглый значок в макете обрезан по окружности с небольшим зумом. */
-body.home .footer__badge--round {
+body.home .footer__badge--round,
+body.page-template-page-solutions .footer__badge--round {
     position: relative;
     width: 64px;
     height: 64px;
@@ -10472,7 +10511,8 @@ body.home .footer__badge--round {
     border-radius: 50%;
 }
 
-body.home .footer__badge--round img {
+body.home .footer__badge--round img,
+body.page-template-page-solutions .footer__badge--round img {
     position: absolute;
     top: -4.75%;
     left: -9.54%;
@@ -10482,31 +10522,36 @@ body.home .footer__badge--round img {
 
 /* --- Навигация --- */
 
-body.home .footer__navigation {
+body.home .footer__navigation,
+body.page-template-page-solutions .footer__navigation {
     flex: 1 0 0;
     justify-content: flex-start;
     gap: 96px;
 }
 
-body.home .footer__nav {
+body.home .footer__nav,
+body.page-template-page-solutions .footer__nav {
     gap: 32px;
 }
 
-body.home .footer__nav-title {
+body.home .footer__nav-title,
+body.page-template-page-solutions .footer__nav-title {
     color: var(--nv-primary);
     font-size: 18px;
     font-weight: 500;
     line-height: 155.556%;
 }
 
-body.home .footer__nav-list {
+body.home .footer__nav-list,
+body.page-template-page-solutions .footer__nav-list {
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 16px;
 }
 
 /* Шесть продуктов в макете разложены в две колонки по три. */
-body.home .footer__nav--products .footer__nav-list {
+body.home .footer__nav--products .footer__nav-list,
+body.page-template-page-solutions .footer__nav--products .footer__nav-list {
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(3, auto);
@@ -10515,7 +10560,8 @@ body.home .footer__nav--products .footer__nav-list {
     row-gap: 16px;
 }
 
-body.home .footer__nav-link {
+body.home .footer__nav-link,
+body.page-template-page-solutions .footer__nav-link {
     width: auto;
     color: var(--nv-object-1);
     font-size: 18px;
@@ -10526,13 +10572,16 @@ body.home .footer__nav-link {
 }
 
 body.home .footer__nav-link:hover,
-body.home .footer__nav-link:focus-visible {
+body.page-template-page-solutions .footer__nav-link:hover,
+body.home .footer__nav-link:focus-visible,
+body.page-template-page-solutions .footer__nav-link:focus-visible {
     color: var(--nv-primary);
 }
 
 /* --- Правая колонка: почта и соцсети --- */
 
-body.home .footer__aside {
+body.home .footer__aside,
+body.page-template-page-solutions .footer__aside {
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
@@ -10541,26 +10590,31 @@ body.home .footer__aside {
     gap: 48px;
 }
 
-body.home .footer__contacts {
+body.home .footer__contacts,
+body.page-template-page-solutions .footer__contacts {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
 body.home .footer__contacts-title,
-body.home .footer__social-title {
+body.page-template-page-solutions .footer__contacts-title,
+body.home .footer__social-title,
+body.page-template-page-solutions .footer__social-title {
     color: var(--nv-object-1);
     font-size: 18px;
     font-weight: 500;
     line-height: 155.556%;
 }
 
-body.home .footer__contacts-list {
+body.home .footer__contacts-list,
+body.page-template-page-solutions .footer__contacts-list {
     display: flex;
     align-items: flex-start;
 }
 
-body.home .footer__mail {
+body.home .footer__mail,
+body.page-template-page-solutions .footer__mail {
     display: inline-flex;
     align-items: center;
     padding: 5px 5px 5px 11px;
@@ -10578,27 +10632,33 @@ body.home .footer__mail {
 }
 
 body.home .footer__mail:hover,
-body.home .footer__mail:focus-visible {
+body.page-template-page-solutions .footer__mail:hover,
+body.home .footer__mail:focus-visible,
+body.page-template-page-solutions .footer__mail:focus-visible {
     background: var(--nv-surface-3);
     color: var(--nv-primary);
 }
 
-body.home .footer__mail-icon {
+body.home .footer__mail-icon,
+body.page-template-page-solutions .footer__mail-icon {
     display: flex;
     line-height: 0;
 }
 
-body.home .footer__social {
+body.home .footer__social,
+body.page-template-page-solutions .footer__social {
     max-width: none;
     gap: 24px;
 }
 
-body.home .footer__social-list {
+body.home .footer__social-list,
+body.page-template-page-solutions .footer__social-list {
     padding-right: 0;
     gap: 8px;
 }
 
-body.home .footer__social-item {
+body.home .footer__social-item,
+body.page-template-page-solutions .footer__social-item {
     padding: 7px;
     border: 1px solid var(--nv-surface-4);
     border-radius: 8px;
@@ -10609,45 +10669,55 @@ body.home .footer__social-item {
 }
 
 body.home .footer__social-item:hover,
-body.home .footer__social-item:focus-visible {
+body.page-template-page-solutions .footer__social-item:hover,
+body.home .footer__social-item:focus-visible,
+body.page-template-page-solutions .footer__social-item:focus-visible {
     background: var(--nv-surface-3);
     color: var(--nv-primary);
 }
 
 /* --- Нижняя строка --- */
 
-body.home .footer__line {
+body.home .footer__line,
+body.page-template-page-solutions .footer__line {
     background: var(--nv-surface-4);
 }
 
-body.home .footer__bottom {
+body.home .footer__bottom,
+body.page-template-page-solutions .footer__bottom {
     flex-wrap: nowrap;
     align-items: flex-start;
     gap: 32px;
 }
 
 body.home .footer__bottom-col--copy,
-body.home .footer__bottom-col--links {
+body.page-template-page-solutions .footer__bottom-col--copy,
+body.home .footer__bottom-col--links,
+body.page-template-page-solutions .footer__bottom-col--links {
     flex: 0 0 auto;
 }
 
-body.home .footer__bottom-col--trademark {
+body.home .footer__bottom-col--trademark,
+body.page-template-page-solutions .footer__bottom-col--trademark {
     flex: 1 1 auto;
 }
 
-body.home .footer__bottom p {
+body.home .footer__bottom p,
+body.page-template-page-solutions .footer__bottom p {
     color: var(--nv-object-3);
     font-size: 14px;
     font-weight: 400;
     line-height: 142.857%;
 }
 
-body.home .footer__bottom-list {
+body.home .footer__bottom-list,
+body.page-template-page-solutions .footer__bottom-list {
     align-items: center;
     gap: 16px;
 }
 
-body.home .footer__bottom-link {
+body.home .footer__bottom-link,
+body.page-template-page-solutions .footer__bottom-link {
     color: var(--nv-object-2);
     font-size: 14px;
     font-weight: 400;
@@ -10656,11 +10726,14 @@ body.home .footer__bottom-link {
 }
 
 body.home .footer__bottom-link:hover,
-body.home .footer__bottom-link:focus-visible {
+body.page-template-page-solutions .footer__bottom-link:hover,
+body.home .footer__bottom-link:focus-visible,
+body.page-template-page-solutions .footer__bottom-link:focus-visible {
     color: var(--nv-primary);
 }
 
-body.home .footer__bottom-line {
+body.home .footer__bottom-line,
+body.page-template-page-solutions .footer__bottom-line {
     width: 1px;
     height: 20px;
     background: var(--nv-surface-4);
@@ -10668,29 +10741,36 @@ body.home .footer__bottom-line {
 
 @media (max-width: 1599.98px) {
     /* Desktop 1440. */
-    body.home .footer__navigation {
+    body.home .footer__navigation,
+    body.page-template-page-solutions .footer__navigation {
         gap: 80px;
     }
-    body.home .footer__nav--products .footer__nav-list {
+    body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
         grid-auto-flow: row;
         grid-template-rows: none;
         column-gap: 0;
     }
-    body.home .footer__nav-link {
+    body.home .footer__nav-link,
+    body.page-template-page-solutions .footer__nav-link {
         font-size: 14px;
         line-height: 142.857%;
     }
-    body.home .footer__details {
+    body.home .footer__details,
+    body.page-template-page-solutions .footer__details {
         flex-direction: column;
         gap: 32px;
     }
-    body.home .footer__badges {
+    body.home .footer__badges,
+    body.page-template-page-solutions .footer__badges {
         order: 0;
     }
-    body.home .footer__badge img {
+    body.home .footer__badge img,
+    body.page-template-page-solutions .footer__badge img {
         height: 48px;
     }
-    body.home .footer__badge--round {
+    body.home .footer__badge--round,
+    body.page-template-page-solutions .footer__badge--round {
         width: 48px;
         height: 48px;
     }
@@ -10701,47 +10781,56 @@ body.home .footer__bottom-line {
 }
 
 @media (max-width: 1199.98px) {
-    body.home .footer__navigation {
+    body.home .footer__navigation,
+    body.page-template-page-solutions .footer__navigation {
         gap: 32px;
     }
 }
 
 @media (max-width: 991.98px) {
     /* Tablet 840: три ряда — реквизиты, навигация, контакты. */
-    body.home .footer__top {
+    body.home .footer__top,
+    body.page-template-page-solutions .footer__top {
         flex-direction: column;
         align-items: stretch;
         gap: 64px;
     }
-    body.home .footer__info {
+    body.home .footer__info,
+    body.page-template-page-solutions .footer__info {
         flex: 0 0 auto;
         flex-direction: row;
         align-items: flex-start;
         gap: 0;
     }
-    body.home .footer__brand {
+    body.home .footer__brand,
+    body.page-template-page-solutions .footer__brand {
         flex: 0 0 44%;
     }
-    body.home .footer__logo-image {
+    body.home .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image {
         width: 207px;
     }
-    body.home .footer__details {
+    body.home .footer__details,
+    body.page-template-page-solutions .footer__details {
         flex: 1 1 auto;
         gap: 24px;
     }
     /* В макете у ряда навигации справа 64px запаса — отсюда равные промежутки. */
-    body.home .footer__navigation {
+    body.home .footer__navigation,
+    body.page-template-page-solutions .footer__navigation {
         flex: 0 0 auto;
         justify-content: space-between;
         padding-right: 64px;
         gap: 32px;
     }
-    body.home .footer__nav--products .footer__nav-list {
+    body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
         grid-auto-flow: column;
         grid-template-rows: repeat(3, auto);
         column-gap: 48px;
     }
-    body.home .footer__aside {
+    body.home .footer__aside,
+    body.page-template-page-solutions .footer__aside {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
@@ -10749,67 +10838,83 @@ body.home .footer__bottom-line {
         gap: 96px;
     }
     body.home .footer__contacts,
-    body.home .footer__social {
+    body.page-template-page-solutions .footer__contacts,
+    body.home .footer__social,
+    body.page-template-page-solutions .footer__social {
         flex-direction: row;
         align-items: center;
         gap: 24px;
     }
-    body.home .footer__bottom {
+    body.home .footer__bottom,
+    body.page-template-page-solutions .footer__bottom {
         flex-direction: column;
         flex-wrap: wrap;
         gap: 16px;
     }
-    body.home .footer__bottom-col--trademark {
+    body.home .footer__bottom-col--trademark,
+    body.page-template-page-solutions .footer__bottom-col--trademark {
         flex: 0 0 auto;
     }
 }
 
 @media (max-width: 767.98px) {
     /* Макета нет — сохраняем логику темы: колонки распрямляются. */
-    body.home .footer__wrapper {
+    body.home .footer__wrapper,
+    body.page-template-page-solutions .footer__wrapper {
         padding: 31px 15px 32px;
     }
-    body.home .footer__info {
+    body.home .footer__info,
+    body.page-template-page-solutions .footer__info {
         flex-direction: column;
         gap: 32px;
     }
-    body.home .footer__brand {
+    body.home .footer__brand,
+    body.page-template-page-solutions .footer__brand {
         flex: 0 0 auto;
     }
-    body.home .footer__aside {
+    body.home .footer__aside,
+    body.page-template-page-solutions .footer__aside {
         flex-direction: column;
         align-items: flex-start;
         gap: 32px;
     }
     body.home .footer__contacts,
-    body.home .footer__social {
+    body.page-template-page-solutions .footer__contacts,
+    body.home .footer__social,
+    body.page-template-page-solutions .footer__social {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
     }
-    body.home .footer__navigation {
+    body.home .footer__navigation,
+    body.page-template-page-solutions .footer__navigation {
         gap: 24px;
     }
 }
 
 @media (max-width: 575.98px) {
-    body.home .footer__navigation {
+    body.home .footer__navigation,
+    body.page-template-page-solutions .footer__navigation {
         flex-direction: column;
         gap: 32px;
     }
-    body.home .footer__nav {
+    body.home .footer__nav,
+    body.page-template-page-solutions .footer__nav {
         gap: 16px;
     }
-    body.home .footer__nav--products .footer__nav-list {
+    body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
         column-gap: 32px;
     }
-    body.home .footer__logo-image {
+    body.home .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image {
         width: 240px;
     }
 }
 
 @media (max-width: 478.98px) {
-    body.home .footer__logo-image {
+    body.home .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image {
         width: 100%;
         max-width: 240px;
     }

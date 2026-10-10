@@ -2,11 +2,12 @@
 /**
  * Футер темы.
  *
- * Главная страница переведена на светлый макет Figma (группа 9) и выводит
- * `template-parts/footer-home.php`. Остальные страницы продолжают использовать
- * прежнюю тёмную разметку ниже — она не менялась.
+ * Светлый макет Figma включён на главной и на /solutions/ — обе страницы
+ * выводят `template-parts/footer-home.php`. Условие одно на всю тему:
+ * `nv_is_light_theme()` в `functions.php`. Остальные страницы продолжают
+ * использовать прежнюю тёмную разметку ниже — она не менялась.
  */
-if (is_front_page()) :
+if (nv_is_light_theme()) :
     get_template_part('template-parts/footer', 'home');
 else : ?>
     <footer class="footer">

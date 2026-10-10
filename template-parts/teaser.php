@@ -2,14 +2,15 @@
 /**
  * Тизер над футером. Подключается на всех шаблонах страниц.
  *
- * Главная переведена на светлый макет Figma (655:11651 / 2380:23846 / 2376:17671),
+ * Светлый макет Figma включён на главной (655:11651 / 2380:23846 / 2376:17671)
+ * и на /solutions/ (2456:16730 / 652:10946 / 2457:17441 / 2467:18125);
  * остальные страницы остаются на тёмной теме. Разметка общая, различается только
  * файл логотипа: тёмная тема — персиковый `teaser_logo.svg`, светлая — оранжевый
  * `teaser_logo_primary.svg` (#FD6B01 из макета). Всё остальное — в `css/styles.css`
- * под `body.home`.
+ * под `body.home` и `body.page-template-page-solutions`.
  */
 
-$nv_teaser_logo = is_front_page() ? 'teaser_logo_primary.svg' : 'teaser_logo.svg';
+$nv_teaser_logo = nv_is_light_theme() ? 'teaser_logo_primary.svg' : 'teaser_logo.svg';
 ?>
 <section class="teaser section">
     <div class="container">

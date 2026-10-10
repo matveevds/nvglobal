@@ -31,9 +31,10 @@
 
 ## 2. Solutions — `page-solutions.php` → `/solutions/`
 
-Редизайн по новому макету идёт по группам. Выполнены **группы 1–8** (2026-10-09):
+Редизайн по новому макету выполнен **полностью, группы 1–9** (2026-10-09/10):
 светлая тема и шапка, первый экран, Why, Industries, Products, Integration,
-Security & compliance, FAQ, Contacts. Осталась группа 9 — тизер и подвал.
+Security & compliance, FAQ, Contacts, светлые тизер и подвал.
+Следующий этап — финальный визуальный аудит всей страницы.
 
 **Полностью статический файл: ни одного `get_field` / `WP_Query`.**
 
@@ -288,6 +289,38 @@ ArrowLeft / ArrowRight работают, когда фокус внутри бл
 как legacy (BACKLOG A-31).
 
 ---
+
+### Тизер и подвал — светлый вариант на двух страницах
+
+Выбор варианта — одно условие на всю тему, `nv_is_light_theme()`
+в `functions.php`:
+
+```php
+function nv_is_light_theme(): bool {
+    return is_front_page() || is_page_template('page-solutions.php');
+}
+```
+
+Его читают два места:
+
+| Файл | Что делает |
+|---|---|
+| `footer.php` | `if (nv_is_light_theme())` → `template-parts/footer-home.php`, иначе прежняя тёмная разметка |
+| `template-parts/teaser.php` | выбирает логотип: светлый `teaser_logo_primary.svg` или тёмный `teaser_logo.svg` |
+
+Разметка тизера и подвала **общая**: отдельных `teaser-solutions.php` и
+`footer-solutions.php` нет. CSS — регионы `TEASER HOME` и `FOOTER HOME`:
+каждый селектор перечисляет оба контекста (`body.home` и
+`body.page-template-page-solutions`) с одними и теми же значениями.
+
+**Solutions-специфичных правил в этих регионах нет и быть не должно.**
+Шапка и подвал приняты при редизайне главной и являются общими
+компонентами; подгонять их под отдельный Figma-инстанс страницы Solutions
+не нужно (DECISIONS.md, Р-101).
+
+Сетку подвалу и тизеру даёт общее правило `body.home .container,
+body.page-template-page-solutions .container` — секции страницы задают
+`.container` сами и идут ниже по файлу, их это не затрагивает.
 
 ### Contacts — один компонент и одна форма на две страницы
 

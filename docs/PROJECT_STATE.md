@@ -70,20 +70,20 @@
 | Файл | Строк | Template Name | Роль |
 |---|---|---|---|
 | `main-page.php` | 1547 | Шаблон главной страницы | **главная**; форма Contacts вынесена в `template-parts/contacts-form.php` |
-| `page-solutions.php` | 1134 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (Why), 3 (Industries), 4 (Products), 5 (Integration), 6 (Security; секция отзывов скрыта), 7 (FAQ), 8 (Contacts) |
+| `page-solutions.php` | 1134 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (Why), 3 (Industries), 4 (Products), 5 (Integration), 6 (Security; секция отзывов скрыта), 7 (FAQ), 8 (Contacts), 9 (светлые тизер и подвал) |
 | `page-price-matrix.php` | 715 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |
 | `page-privacy.php` | 37 | Шаблон страницы PRIVACY POLICY | 3 юр. страницы |
 | `header.php` | 131 | — | шапка; пункт «Cases» выводится только вне главной (BACKLOG A-01) |
-| `footer.php` | 726 | — | футер (ветвление по `is_front_page()`) + cookie + 4 модалки |
+| `footer.php` | 726 | — | футер (ветвление по `nv_is_light_theme()`) + cookie + 4 модалки |
 
 > Проверено сквозным аудитом 2026-10-07: на главной выводится один
 > `<footer class="footer">` (светлый), на остальных страницах — прежний
 > тёмный; двойного вывода нет, `wp_footer()` вызывается, cookie-баннер
 > и обе модалки на месте, теги сбалансированы (534 `div`, 13 `section`,
 > 3 `form`, по одному `header`/`footer`/`main`).
-| `template-parts/footer-home.php` | 181 | — | светлый футер главной (группа 9) |
+| `template-parts/footer-home.php` | 181 | — | светлый футер: главная и `/solutions/` |
 | `template-parts/contacts-form.php` | 228 | — | общая форма обратной связи: главная и `/solutions/` |
 | `functions.php` | 2464 | — | вся логика темы |
 | `404.php` | 32 | — | 404 |
