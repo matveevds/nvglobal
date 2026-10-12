@@ -31,10 +31,13 @@
 
 ## 2. Solutions — `page-solutions.php` → `/solutions/`
 
-Редизайн по новому макету выполнен **полностью, группы 1–9** (2026-10-09/10):
-светлая тема и шапка, первый экран, Why, Industries, Products, Integration,
-Security & compliance, FAQ, Contacts, светлые тизер и подвал.
-Следующий этап — финальный визуальный аудит всей страницы.
+Редизайн по новому макету **завершён**: группы 1–9 (2026-10-09/10) плюс
+финальный визуальный аудит 2026-10-10. Светлая тема и шапка, первый экран,
+Why, Industries, Products, Integration, Security & compliance, FAQ, Contacts,
+светлые тизер и подвал.
+
+Шапка и подвал — общие компоненты главной; у Solutions своих версий нет
+(DECISIONS.md, Р-104).
 
 **Полностью статический файл: ни одного `get_field` / `WP_Query`.**
 
@@ -343,6 +346,18 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 Перед подключением формы шаблон обязан подключить
 `template-parts/contacts-icons.php` — оттуда берутся иконки полей.
 
+**Фокус полей.** Рамка обёртки при фокусе задаётся через `:focus-within`:
+в тёмной базе — `.input-form-block:focus-within` рядом с существующей
+группой `:has(...)`, в светлой теме — парой `body.home .contacts …` /
+`body.page-template-page-solutions .contacts …` с `--nv-primary`.
+`:has(.input-form:focus)` одного не хватает: у `textarea` нет класса
+`.input-form`, а в светлой теме правило проигрывает по специфичности
+(DECISIONS.md, Р-110). Правило светлой темы стоит **выше** `.is-error`,
+чтобы ошибка не перекрывалась фокусом.
+
+Известное ограничение: `.help-select__control` на главной — `div`
+с `tabindex="-1"`, с клавиатуры недостижим (BACKLOG A-45).
+
 Структура секции на Solutions (2456:16687):
 
 ```
@@ -381,9 +396,14 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 - Вопрос **с ответом** — `<button>` с `aria-expanded` и `aria-controls`;
   id панели `faq-answer-N`, id кнопки `faq-question-N`.
 - Вопрос **без ответа** (`faq__item--static`) — `div`, не в фокусе, без шеврона.
-  Так сделано потому, что в макетах ответ есть только у первого вопроса.
+  Ветка нужна на случай вопроса без текста; на Solutions с 2026-10-12
+  не используется — ответы есть у всех пяти.
 - Данные: `$nv_faq_items` на главной (8 вопросов), `$nv_solutions_faq`
-  на Solutions (5 вопросов, поля `question` / `answer` / `initial_open`).
+  на Solutions (5 вопросов от заказчика, поля `question` / `answer` /
+  `initial_open`). На Solutions `answer` — **массив абзацев**: каждый
+  печатается отдельным `<p>`, пустые отбрасываются через `nv_has_content`.
+  `.faq__item-answer-text` — flex-колонка с `gap: 12px` и `p { margin: 0 }`,
+  поэтому несколько абзацев поддерживаются без правок CSS.
 - JS — общий `initFaq()` в `js/main.js`: одновременно открыт один элемент,
   высота панели считается по содержимому, второго обработчика нет.
 - CSS — регион `FAQ` (15761–16502). Базовые правила перечисляют оба контекста
@@ -633,7 +653,7 @@ Get pricing information, Technical questions.
 | 9 | Pricing | ✅ сделано, новая секция | группа 4 |
 | 10 | Developers | ✅ сделано | группа 4 |
 | 11 | Blog | ✅ сделано, вывод из WP_Query | группа 6 |
-| 12 | FAQ | ⚠️ сделано, нет 7 ответов (R-18) | группа 7 |
+| 12 | FAQ | ⚠️ сделано, на главной нет 7 ответов (R-18); на Solutions тексты заказчика от 2026-10-12 | группа 7 |
 | 13 | Contacts | ✅ сделано, оформление | группа 8 |
 | 14 | Teaser + Footer | — | |
 

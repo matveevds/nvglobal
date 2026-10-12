@@ -70,7 +70,7 @@
 | Файл | Строк | Template Name | Роль |
 |---|---|---|---|
 | `main-page.php` | 1547 | Шаблон главной страницы | **главная**; форма Contacts вынесена в `template-parts/contacts-form.php` |
-| `page-solutions.php` | 1134 | Шаблон страницы Solutions | `/solutions/`; редизайн по группам, выполнены 1 (шапка и первый экран), 2 (Why), 3 (Industries), 4 (Products), 5 (Integration), 6 (Security; секция отзывов скрыта), 7 (FAQ), 8 (Contacts), 9 (светлые тизер и подвал) |
+| `page-solutions.php` | 1176 | Шаблон страницы Solutions | `/solutions/`; **редизайн завершён**, группы 1–9, финальный визуальный аудит и overlay с Figma 2026-10-10 |
 | `page-price-matrix.php` | 715 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single-document.php` | 208 | — | CPT `document` |

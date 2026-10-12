@@ -7492,6 +7492,7 @@ body.home .clients__top-info .section__title-block {
 }
 
 .input-form-block:hover,
+.input-form-block:focus-within,
 .input-form-block:has(.input-form:active),
 .input-form-block:has(.input-form:hover),
 .input-form-block:has(.input-form:focus), 
@@ -8826,6 +8827,20 @@ body.page-template-page-solutions .contacts .help-select__control {
     border: 1px solid var(--nv-surface-4);
     border-radius: 8px;
     background: transparent;
+}
+
+/*
+ * Общее `.input-form-block:has(.input-form:focus)` проигрывает правилу выше
+ * по специфичности, поэтому фокус в светлой теме задаётся той же парой
+ * селекторов. Меняется только цвет рамки — габариты и скругление прежние.
+ */
+body.home .contacts .input-form-block:focus-within,
+body.page-template-page-solutions .contacts .input-form-block:focus-within,
+body.home .contacts .phone-field__control:focus-within,
+body.page-template-page-solutions .contacts .phone-field__control:focus-within,
+body.home .contacts .help-select__control:focus-within,
+body.page-template-page-solutions .contacts .help-select__control:focus-within {
+    border-color: var(--nv-primary);
 }
 
 body.home .contacts .input-form-icon,
@@ -13925,11 +13940,9 @@ body.page-template-page-solutions .btn--header:focus-visible {
     /*
      * Mobile 2467:17979 — одна колонка. Карточки по содержимому: номер и текст
      * идут подряд, без растяжки по высоте, поэтому карточки без кнопки ниже.
+     * Page edge (2467:17973, 2467:17986) остаётся 64 — мельче становится
+     * только поле внутри панели.
      */
-    .solutions-products {
-        padding: 32px 0;
-    }
-
     .solutions-products__panel {
         padding: 32px 0;
         border-radius: 24px;
@@ -14796,6 +14809,13 @@ body.page-template-page-solutions .btn--header:focus-visible {
     .nvslider__buttons .swiper-slide,
     .nvslider__btn {
         width: 100%;
+    }
+
+    /* Бейдж 87x24: Body text/Regular 14/20 — как в остальных секциях. */
+    .industries .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
     }
 
     .industries {
@@ -15888,6 +15908,18 @@ body.page-template-page-solutions .btn--header:focus-visible {
         right: 24px;
         width: 238px;
         height: 188px;
+    }
+
+    /* Title/H5 20/28 — в Desktop 2398:24868 заголовок плитки на ступень мельче. */
+    .solutions-security__card-title {
+        font-size: 20px;
+        line-height: 140%;
+    }
+
+    /* Body text/Regular Regular 16/24 — текст плитки укладывается в 212. */
+    .solutions-security__card-description {
+        font-size: var(--Text-Body-Size-Regular, 16px);
+        line-height: 150%;
     }
 }
 
