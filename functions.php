@@ -11,6 +11,15 @@ function theme_setup() {
     add_theme_support('title-tag'); // Поддержка заголовков страниц
     add_theme_support('post-thumbnails'); // Включение миниатюр записей
     add_theme_support('html5', array('search-form', 'navigation-widgets')); // Поддержка HTML5
+
+    /*
+     * Стили редактора. С WordPress 6 канва блочного редактора — отдельный iframe,
+     * и стили, подключённые через `enqueue_block_editor_assets`, в неё не попадают:
+     * туда едут только editor styles темы и `editorStyle` из block.json.
+     * Здесь — общая заглушка пустого ACF-блока (css/editor-blocks.css).
+     */
+    add_theme_support('editor-styles');
+    add_editor_style('css/editor-blocks.css');
 }
 
 define('THEME_ASSETS_VER', '1.0.87');
@@ -1705,6 +1714,35 @@ function nv_add_block_category($categories, $post) {
 }
 
 
+// Помощники ACF-блоков записей блога (заглушка пустого блока в редакторе).
+require_once get_template_directory() . '/inc/block-helpers.php';
+
+
+/**
+ * Совместимость ACF-блоков с iframe-канвой блочного редактора.
+ *
+ * ACF Pro 6.3.11 инициализирует quicktags для WYSIWYG-полей в верхнем документе,
+ * а разметка поля лежит внутри <iframe name="editor-canvas"> редактора WordPress 7.x.
+ * Из-за этого блоки с WYSIWYG падали в редакторе с «Этот блок содержит ошибку
+ * и не может быть просмотрен» (подробности — в шапке js/admin-blocks.js
+ * и в docs/BACKLOG.md, B-27).
+ *
+ * Зависимость от `quicktags` обязательна: скрипт правит уже существующую
+ * глобальную функцию, и без неё ядро перезапишет её своей следом.
+ */
+add_action('enqueue_block_editor_assets', 'nv_enqueue_block_editor_compat');
+
+function nv_enqueue_block_editor_compat() {
+    wp_enqueue_script(
+        'nv-admin-blocks',
+        get_template_directory_uri() . '/js/admin-blocks.js',
+        ['quicktags'],
+        THEME_ASSETS_VER,
+        false
+    );
+}
+
+
 /**
  * Регистрируем ACF-блоки темы
  */
@@ -1739,7 +1777,39 @@ function nv_register_acf_blocks() {
     ];
 
     foreach ($blocks as $block) {
-        register_block_type(get_template_directory() . '/blocks/' . $block);
+        $type = register_block_type(get_template_directory() . '/blocks/' . $block);
+
+        /*
+         * Стили формы редактирования блока.
+         *
+         * С WordPress 6 канва редактора — отдельный iframe. Форму полей ACF
+         * печатает внутрь неё, а свои стили (`acf-input` и зависимости
+         * `acf-global` + `dashicons`) подключает только в родительский документ.
+         * Из-за этого поля блока выглядели как голая HTML-форма: подписи без
+         * оформления, инпуты и вкладки «Визуально / Текст» в стилях браузера.
+         *
+         * WordPress кладёт в iframe `editor_style_handles` каждого
+         * зарегистрированного блока (`_wp_get_iframed_editor_assets()`),
+         * поэтому дописываем туда хэндл ACF — ядро само разрешит зависимости
+         * и подключит стили ссылкой, с обычным кэшированием.
+         *
+         * Снять вместе с шимом `js/admin-blocks.js` после обновления ACF Pro
+         * до версии с поддержкой iframe-канвы (docs/BACKLOG.md, B-27).
+         */
+        if ($type instanceof WP_Block_Type) {
+            /*
+             * acf-input   — оформление полей ACF (тянет acf-global и dashicons);
+             * editor-buttons — вкладки «Визуально / Текст» у WYSIWYG-поля;
+             * buttons     — кнопка «Добавить медиафайл».
+             * Последние два живут в ядре и тоже остаются в родительском документе.
+             */
+            $handles = ['acf-input', 'editor-buttons', 'buttons'];
+            $current = (array) $type->editor_style_handles;
+
+            $type->editor_style_handles = array_values(
+                array_unique(array_merge($current, $handles))
+            );
+        }
     }
 }
 

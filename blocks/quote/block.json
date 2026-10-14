@@ -6,9 +6,15 @@
   "description": "Блок для оформления цитат с указанием автора и его должности.",
   "icon": "format-quote",
   "category": "neurovision",
-  "keywords": ["цитата", "quote", "цитирование", "автор", "высказывание"],
+  "keywords": [
+    "цитата",
+    "quote",
+    "цитирование",
+    "автор",
+    "высказывание"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "quote.php",
     "jsx": true
   },

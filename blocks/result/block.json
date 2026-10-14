@@ -6,9 +6,13 @@
   "description": "Этапы timeline",
   "icon": "analytics",
   "category": "neurovision",
-  "keywords": ["result", "итог", "вывод"],
+  "keywords": [
+    "result",
+    "итог",
+    "вывод"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "result.php",
     "jsx": true
   },

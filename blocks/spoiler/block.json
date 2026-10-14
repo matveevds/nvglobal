@@ -6,9 +6,15 @@
   "description": "Раскрывающийся спойлер",
   "icon": "editor-insertmore",
   "category": "neurovision",
-  "keywords": ["spoiler", "спойлер", "toggle", "accordion", "faq"],
+  "keywords": [
+    "spoiler",
+    "спойлер",
+    "toggle",
+    "accordion",
+    "faq"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "spoiler.php",
     "jsx": true
   },

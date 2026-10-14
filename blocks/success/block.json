@@ -6,9 +6,15 @@
   "description": "Врезка для отображения успешных действий, подтверждений и положительных уведомлений.",
   "icon": "yes-alt",
   "category": "neurovision",
-  "keywords": ["success", "успех", "подтверждение", "уведомление", "positive"],
+  "keywords": [
+    "success",
+    "успех",
+    "подтверждение",
+    "уведомление",
+    "positive"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "success.php",
     "jsx": true
   },

@@ -6,7 +6,10 @@
   "description": "Вкладки с контентом",
   "icon": "index-card",
   "category": "neurovision",
-  "keywords": ["tabs", "вкладки"],
+  "keywords": [
+    "tabs",
+    "вкладки"
+  ],
   "acf": {
     "mode": "auto",
     "renderTemplate": "tabs.php",

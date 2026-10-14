@@ -6,9 +6,15 @@
   "description": "Врезка для выделения важных предупреждений и критической информации.",
   "icon": "warning",
   "category": "neurovision",
-  "keywords": ["warning", "предупреждение", "alert", "врезка", "notice"],
+  "keywords": [
+    "warning",
+    "предупреждение",
+    "alert",
+    "врезка",
+    "notice"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "warning.php",
     "jsx": true
   },

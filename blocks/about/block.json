@@ -6,18 +6,22 @@
   "description": "",
   "icon": "archive",
   "category": "neurovision",
-  "keywords": ["about", "О нас"],
+  "keywords": [
+    "about",
+    "О нас"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "about.php",
     "jsx": true
   },
   "example": {
     "attributes": {
       "data": {
-        "text_content": "<p>Описание</p>",
-        "ssylka_na_istochnik": "",
-        "tekst_ssylki": ""
+        "about_title": "О NeuroVision Global Systems",
+        "about_text": "<p>Платформа верификации личности: распознавание документов, liveness и AML-скрининг в одном API.</p>",
+        "about_link": "",
+        "about_link_text": ""
       }
     }
   },

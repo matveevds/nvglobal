@@ -6,9 +6,15 @@
   "description": "Нейтральная врезка для дополнительной информации, комментариев и уточнений.",
   "icon": "info-outline",
   "category": "neurovision",
-  "keywords": ["note", "примечание", "инфо", "информация", "message"],
+  "keywords": [
+    "note",
+    "примечание",
+    "инфо",
+    "информация",
+    "message"
+  ],
   "acf": {
-    "mode": "auto",
+    "mode": "preview",
     "renderTemplate": "note.php",
     "jsx": true
   },

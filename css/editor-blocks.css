@@ -1,0 +1,42 @@
+/*
+ * Оформление ACF-блоков в блочном редакторе.
+ *
+ * Подключается только в админке (`enqueue_block_editor_assets`), на сайт
+ * не попадает. Здесь лежит общая заглушка пустого блока: шаблоны блоков
+ * печатают её вместо пустоты, иначе блок получает нулевую высоту и его
+ * нельзя выделить, чтобы заполнить поля.
+ */
+
+.nv-block-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 96px;
+    padding: 24px 16px;
+    border: 1px dashed #D2D2D2;
+    border-radius: 12px;
+    background: #F8F8F8;
+    color: #898989;
+    text-align: center;
+}
+
+.nv-block-placeholder__icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: #FD6B01;
+}
+
+.nv-block-placeholder__title {
+    color: #212121;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.nv-block-placeholder__hint {
+    font-size: 14px;
+    line-height: 142.857%;
+}
