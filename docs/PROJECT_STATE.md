@@ -414,7 +414,7 @@ simple-user-avatar, Yoast SEO.
 | Последний коммит | `1b6162e` «Solutions: финальный визуальный аудит, доступность форм и тексты FAQ» (2026-10-12 11:59 +0700) |
 | Remote | `git@github.com:matveevds/nvglobal.git` |
 | **`origin/dev` не существует** | ветка `dev` **ни разу не пушилась**. На remote только `origin/main` |
-| Незакоммичено | код — ничего (разобрано 2026-10-14 в коммиты `f378cb5`, `97af0d0`, `c9458d1`, `15472fc`); осталась пустая папка `</` |
+| Незакоммичено | код — ничего (разобрано 2026-10-14 в коммиты `f378cb5`, `97af0d0`, `c9458d1`, `15472fc`) |
 
 ### Что было незакоммичено — четыре задачи (разложено по коммитам 2026-10-14)
 
@@ -516,12 +516,11 @@ simple-user-avatar, Yoast SEO.
 |---|---|
 | `/Users/dmitriy/ZAKAZI/nv.global/BLOG/GUTENBERG_BLOCKS_CATALOG.md` | каталог 19 ACF-блоков и 6 core-блоков: назначение, поля, ACF-ключи, режимы |
 | `/Users/dmitriy/ZAKAZI/nv.global/BLOG/BLOG_IMPORT_JSON_SPEC.md` | формат JSON для `blog-json-io`; все примеры проверены рендером и живым импортом |
-| `/Users/dmitriy/ZAKAZI/nv.global/BLOG/rules/WORDPRESS_BLOCKS_REFERENCE.md` | **конфликт:** помечен `STATUS: WORDPRESS SCHEMA NOT VERIFIED. JSON BUILD BLOCKED.`, хотя два файла выше его вопросы закрывают. Статус не снят — ждёт решения |
+| `/Users/dmitriy/ZAKAZI/nv.global/BLOG/rules/WORDPRESS_BLOCKS_REFERENCE.md` | статус снят 2026-10-14: `SCHEMA VERIFIED … JSON BUILD ALLOWED`; прод не подтверждён — импортировать черновиком |
 | «ТЗ на новые страницы» | ТЗ страниц nv.global, `.md` + `.docx` |
 
 Внутритемная копия справки по импорту — `docs/BLOG-IMPORT-GUIDE.md`.
-**Расхождение:** в ней колонка `mode` устарела для 8 блоков, переведённых
-в `preview`. Внешний `BLOG_IMPORT_JSON_SPEC.md` актуален. Синхронизировать.
+Колонка `mode` синхронизирована с `block.json` 2026-10-14 (8 блоков в `preview`).
 
 ---
 
@@ -529,8 +528,7 @@ simple-user-avatar, Yoast SEO.
 
 1. ~~Разобрать незакоммиченное~~ — сделано 2026-10-14. Остаётся принять или откатить
    правки `header.php` / `footer.php` (коммит `15472fc`).
-2. Удалить мусорный каталог `</`.
-3. Снять статус `JSON BUILD BLOCKED` в `rules/WORDPRESS_BLOCKS_REFERENCE.md`
-   и синхронизировать `mode` в `docs/BLOG-IMPORT-GUIDE.md`.
+2. ~~Удалить мусорный каталог `</`~~ — удалён 2026-10-14.
+3. ~~Снять статус `JSON BUILD BLOCKED`, синхронизировать `mode`~~ — сделано 2026-10-14.
 4. Закрыть приёмку по пунктам 1–4 раздела 14.
 5. `git push` ветки `dev` — её на remote нет. **Только по прямому указанию.**

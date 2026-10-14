@@ -276,9 +276,9 @@ ACF разворачивает репитер в плоские ключи: сч
 
 | Блок | mode | Поле | Тип | field key |
 |---|---|---|---|---|
-| `acf/warning` | auto | `text_content` | wysiwyg | `field_69268eadd076f` |
-| `acf/success` | auto | `text_content` | wysiwyg | `field_69268eadd076f` |
-| `acf/disclaimer` | auto | `disclaimer_content` | wysiwyg | `field_6926768f32397` |
+| `acf/warning` | **preview** | `text_content` | wysiwyg | `field_69268eadd076f` |
+| `acf/success` | **preview** | `text_content` | wysiwyg | `field_69268eadd076f` |
+| `acf/disclaimer` | **preview** | `disclaimer_content` | wysiwyg | `field_6926768f32397` |
 
 > `warning` и `success` делят одну группу полей, поэтому ключ у них общий.
 > **У `acf/note` поле называется так же (`text_content`), но ключ другой** —
@@ -286,7 +286,7 @@ ACF разворачивает репитер в плоские ключи: сч
 
 ```json
 { "blockName": "acf/warning",
-  "attrs": { "name": "acf/warning", "mode": "auto",
+  "attrs": { "name": "acf/warning", "mode": "preview",
     "data": { "text_content": "<p>Текст предупреждения.</p>", "_text_content": "field_69268eadd076f" } },
   "innerBlocks": [], "innerHTML": "", "innerContent": [] }
 ```
@@ -295,20 +295,20 @@ ACF разворачивает репитер в плоские ключи: сч
 
 | Блок | mode | Поля (тип, field key) |
 |---|---|---|
-| `acf/note` | auto | `text_content` wysiwyg `field_694369da4a9b2`; `ssylka_na_istochnik` url `field_69436a024a9b3`; `tekst_ssylki` text `field_69436aa4fa9ab` |
-| `acf/spoiler` | auto | `spoiler_title` text `field_69266a592c5f5`; `spoiler_content` wysiwyg `field_69266bd92c5f6` |
-| `acf/result` | auto | `result_title` text `field_6936c8f5aa17d`; `result_text` wysiwyg `field_6936c920aa17e` |
-| `acf/about` | auto | `about_title` text `field_6998062eca25e`; `about_text` wysiwyg `field_69980665ca25f`; `about_link` text `field_69980693ca260`; `about_link_text` text `field_699806abca261` |
+| `acf/note` | **preview** | `text_content` wysiwyg `field_694369da4a9b2`; `ssylka_na_istochnik` url `field_69436a024a9b3`; `tekst_ssylki` text `field_69436aa4fa9ab` |
+| `acf/spoiler` | **preview** | `spoiler_title` text `field_69266a592c5f5`; `spoiler_content` wysiwyg `field_69266bd92c5f6` |
+| `acf/result` | **preview** | `result_title` text `field_6936c8f5aa17d`; `result_text` wysiwyg `field_6936c920aa17e` |
+| `acf/about` | **preview** | `about_title` text `field_6998062eca25e`; `about_text` wysiwyg `field_69980665ca25f`; `about_link` text `field_69980693ca260`; `about_link_text` text `field_699806abca261` |
 | `acf/callout` | **preview** | `callout_title` text `field_69b003ce25e8b`; `callout_text` wysiwyg `field_69b003ee25e8c`; `callout_btn` text `field_69b0040c25e8d` |
 | `acf/code` | auto | `code_lang` text `field_697a0fd28915a`; `code_content` **textarea** `field_697a101e8915b` |
-| `acf/quote` | auto | `quote_content` wysiwyg `field_69267a6bed983`; `quote_author` text `field_69267aaaed984`; `quote_author_job` text `field_69267ac2ed985`; `quote_author_image` **image → ID** `field_69267f4575236` |
+| `acf/quote` | **preview** | `quote_content` wysiwyg `field_69267a6bed983`; `quote_author` text `field_69267aaaed984`; `quote_author_job` text `field_69267ac2ed985`; `quote_author_image` **image → ID** `field_69267f4575236` |
 
 > `code_content` — textarea: код кладётся **чистым текстом**, без `<p>` и без
 > HTML-экранирования. В `wysiwyg`-поля, наоборот, кладётся HTML (`<p>…</p>`, `<ul>`, `<a>`).
 
 ```json
 { "blockName": "acf/quote",
-  "attrs": { "name": "acf/quote", "mode": "auto", "data": {
+  "attrs": { "name": "acf/quote", "mode": "preview", "data": {
     "quote_content": "<p>Текст цитаты.</p>", "_quote_content": "field_69267a6bed983",
     "quote_author": "Иван Петров", "_quote_author": "field_69267aaaed984",
     "quote_author_job": "CTO", "_quote_author_job": "field_69267ac2ed985",
@@ -440,7 +440,7 @@ attachment ID, URL, CSS-классы, имена тегов, числа.
         "innerHTML": "\n<h2 class=\"wp-block-heading\">Первый раздел</h2>\n",
         "innerContent": ["\n<h2 class=\"wp-block-heading\">Первый раздел</h2>\n"] },
       { "blockName": "acf/warning",
-        "attrs": { "name": "acf/warning", "mode": "auto",
+        "attrs": { "name": "acf/warning", "mode": "preview",
           "data": { "text_content": "<p>Важное предупреждение.</p>", "_text_content": "field_69268eadd076f" } },
         "innerBlocks": [], "innerHTML": "", "innerContent": [] }
     ]
