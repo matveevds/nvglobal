@@ -5,59 +5,62 @@ Template Post Type: page
 */
 get_header(); ?>
 
-<section class="intro">
+<?php /*
+ * Первый экран. Макеты Figma: Desktop 2547:23059 (карточка 1376x732),
+ * Mobile 2547:23252 (перестроенная раскладка, 2547:23261).
+ * Отдельного Tablet-фрейма первого экрана в макете нет — раскладка на 840
+ * повторяет Desktop с полями темы (docs/DECISIONS.md, Р-130).
+ *
+ * Блок `main` — общий с /solutions/: та же карточка, тот же набор классов,
+ * различия вынесены в модификатор `main--pricing` (FRONTEND.md §11).
+ * Как и там, на мобильной ширине заголовок выходит из фотокарточки
+ * на светлый фон, а кнопки остаются внутри фотографии.
+ */ ?>
+<section class="main main--pricing">
     <div class="container">
-        <div class="intro__wrapper">
-            <div class="intro__row">
-                <div class="intro__col intro__col--content">
-                    <div class="intro__content">
-                       <div class="intro__breadcrumbs">
-                            <div class="intro__breadcrumbs-item">
-                                <a href="/" class="intro__breadcrumbs-link">Home</a>
-                            </div>
-                            <div class="intro__breadcrumbs-sep">/</div>
-                            <div class="intro__breadcrumbs-item">
-                                <p class="intro__breadcrumbs-current">Pricing Matrix</p>
-                            </div>
-                       </div>
+        <div class="main__card">
+            <picture class="main__media">
+                <?php /* Свой кроп на каждый фрейм — исходник один (2547:23070 / 2547:23264). */ ?>
+                <source media="(min-width: 1600px)"
+                        srcset="<?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-fhd.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-fhd@2x.webp'); ?> 2x"
+                        width="1856" height="732">
+                <source media="(min-width: 992px)"
+                        srcset="<?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-desktop.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-desktop@2x.webp'); ?> 2x"
+                        width="1376" height="732">
+                <source media="(min-width: 768px)"
+                        srcset="<?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-tablet.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-tablet@2x.webp'); ?> 2x"
+                        width="776" height="560">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-mobile.webp'); ?>"
+                     srcset="<?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-mobile.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/pricing-hero-mobile@2x.webp'); ?> 2x"
+                     width="360" height="360" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+            </picture>
 
-                       <div class="intro__info">
-                            <h1 class="intro__title">Unified Pricing Matrix for&nbsp;KYC/AML&nbsp;Services</h1>
-                            <p class="intro__description">Smooth per-check pricing plus additional modules and database checks. Choose a fixed price or cost-effective package rates.</p>
-                       </div>
+            <div class="main__body">
+                <?php /* 2547:23072 — логотип 206x39 в левом верхнем углу карточки; на мобильной он уходит в шапку. */ ?>
+                <img class="main__logo" src="<?php echo esc_url(get_template_directory_uri() . '/img/logo-hero.svg'); ?>"
+                     width="206" height="39" alt="NeuroVision Global Systems">
 
-                       <div class="intro__actions-block">
-                            <button class="btn-hero open-callForm2">
-                                <span class="btn__text btn__text-hero">Request Demo</span>
-                                <div class="btn__icon btn__icon-arrow"></div>
-                            </button>
-                            <hr>
-                            <div class="intro__actions">
-
-                                <button class="btn btn--gray btn-with-lottie-arrow-orange open-callForm">
-                                    <span class="btn__text">Start Free Trial</span>
-                                    <span class="btn__icon lottie-container-arrow-orange">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"/>
-                                        </svg>
-                                    </span>
-                                </button>
-
-                                <a href="#packages" class="btn btn--gray btn-with-lottie-arrow-orange">
-                                    <span class="btn__text">View Rates</span>
-                                    <span class="btn__icon lottie-container-arrow-orange">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"/>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                       </div>
-                       
-                    </div>                    
-                </div>
-                <div class="intro__col intro__col--image" aria-hidden="true">
-                    <?php echo td_image(965, ['loading' => 'eager']); ?>
+                <div class="main__group">
+                    <div class="main__content">
+                        <?php /* 2547:23147 — хлебные крошки над заголовком. */ ?>
+                        <nav class="main__breadcrumbs" aria-label="Breadcrumb">
+                            <a class="main__breadcrumbs-link" href="<?php echo esc_url(home_url('/')); ?>">Home</a>
+                            <span class="main__breadcrumbs-sep" aria-hidden="true">/</span>
+                            <span class="main__breadcrumbs-current" aria-current="page">Pricing Matrix</span>
+                        </nav>
+                        <h1 class="main__title">Unified Pricing Matrix<br> for&nbsp;KYC&nbsp;/&nbsp;AML Services</h1>
+                    </div>
+                    <div class="main__actions">
+                        <?php /* 2547:23153 — акцентная кнопка со стрелкой слева, открывает ту же модалку, что и раньше. */ ?>
+                        <button class="main__btn main__btn--primary main__btn--lead open-callForm2" type="button">
+                            <span class="main__btn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
+                            <span class="main__btn-text">Request Demo</span>
+                        </button>
+                        <button class="main__btn main__btn--ghost open-callForm" type="button">
+                            <span class="main__btn-text">Start Free Trial</span>
+                            <span class="main__btn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,15 +122,15 @@ $calculator_package_prices = [
                         <div class="calculator__spoiler-content">
                             <div class="calculator__spoiler-item">
                                 <div class="calculator__spoiler-item-title">Base Package</div>
-                                <div class="calculator__spoiler-item-actions" id="calculator-package">
-                                    <button class="calculator__spoiler-btn active" type="button" data-pkg="DOCUMENT">
+                                <div class="calculator__spoiler-item-actions" id="calculator-package" role="group" aria-label="Base package">
+                                    <button class="calculator__spoiler-btn active" type="button" aria-pressed="true" data-pkg="DOCUMENT">
                                         <span class="calculator__spoiler-btn-title">DOCUMENT</span>
                                         <span class="calculator__spoiler-btn-note">Document Recognition</span>
                                     </button>
-                                    <button class="calculator__spoiler-btn" type="button" data-pkg="LIVENESS">
+                                    <button class="calculator__spoiler-btn" type="button" aria-pressed="false" data-pkg="LIVENESS">
                                         <span class="calculator__spoiler-btn-title">LIVENESS</span>
                                     </button>
-                                    <button class="calculator__spoiler-btn" type="button" data-pkg="BASIC">
+                                    <button class="calculator__spoiler-btn" type="button" aria-pressed="false" data-pkg="BASIC">
                                         <span class="calculator__spoiler-btn-title">BASIC</span>
                                         <span class="calculator__spoiler-btn-note">Selfie / Liveness</span>
                                     </button>
@@ -138,10 +141,10 @@ $calculator_package_prices = [
                                 <div class="calculator__spoiler-item-title">Document Type in Package</div>
                                 <div class="calculator__spoiler-item-subtitle">Multiple types are possible: the first one is included in the package, each additional one is priced as an extra document</div>
 
-                                <div class="calculator__spoiler-item-actions" id="calculator-document-type">
-                                    <button class="calculator__spoiler-btn small active" type="button" data-dt="passport">Passport</button>
-                                    <button class="calculator__spoiler-btn small" type="button" data-dt="id">ID Card</button>
-                                    <button class="calculator__spoiler-btn small" type="button" data-dt="driver">Driver’s License</button>
+                                <div class="calculator__spoiler-item-actions" id="calculator-document-type" role="group" aria-label="Document type in package">
+                                    <button class="calculator__spoiler-btn small active" type="button" aria-pressed="true" data-dt="passport">Passport</button>
+                                    <button class="calculator__spoiler-btn small" type="button" aria-pressed="false" data-dt="id">ID Card</button>
+                                    <button class="calculator__spoiler-btn small" type="button" aria-pressed="false" data-dt="driver">Driver’s License</button>
                                 </div>
                             </div>
 
@@ -170,7 +173,7 @@ $calculator_package_prices = [
                                 <div class="calculator__spoiler-item-actions">
                                     <div class="calculator-volume-range-wrap">
                                         <output class="calculator-volume-range-value" id="calculator-volume-range-value" for="calculator-volume-range">10 000</output>
-                                        <input class="calculator-volume-range" type="range" id="calculator-volume-range" min="0" max="100" step="1" value="0">
+                                        <input class="calculator-volume-range" type="range" id="calculator-volume-range" min="0" max="100" step="1" value="0" aria-label="Annual check volume">
                                         <div class="calculator-volume-range-limits">
                                             <span>10,000</span>
                                             <span>50,000</span>
@@ -317,7 +320,7 @@ $calculator_package_prices = [
                         <div class="calculator__result-action">
                             <button class="btn-hero open-callForm2" data-calculator-trigger data-modal-service="Get KYC Cost Estimate" data-modal-title="KYC Cost Estimate" data-modal-btn="Get Package">
                                 <span class="btn__text btn__text-hero">Get Package</span>
-                                <div class="btn__icon btn__icon-arrow"></div>
+                                <span class="btn__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
                             </button>
                         </div>
                     </div>
@@ -334,7 +337,7 @@ $calculator_package_prices = [
                             <div class="calculator__result-request-text">Please contact a sales representative<br>for large orders.</div>
                             <button class="btn-hero open-callForm2">
                                 <span class="btn__text btn__text-hero">Talk to an Engineer</span>
-                                <div class="btn__icon btn__icon-arrow"></div>
+                                <span class="btn__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M13.0391 5.34577C13.2356 4.98115 13.691 4.84455 14.0557 5.04108H14.0566L14.0576 5.04206C14.0586 5.04258 14.0599 5.04315 14.0615 5.04401C14.065 5.0459 14.0699 5.04939 14.0762 5.0528C14.0888 5.05971 14.1076 5.06919 14.1309 5.0821C14.1779 5.10816 14.2463 5.14636 14.332 5.19538C14.5035 5.29338 14.7468 5.43611 15.0381 5.6153C15.6193 5.97282 16.3988 6.48146 17.1816 7.0821C17.96 7.67933 18.766 8.38643 19.3848 9.14362C19.9891 9.88314 20.5 10.7738 20.5 11.7247L20.4941 11.9014C20.436 12.7859 19.9524 13.6129 19.3857 14.3067C18.767 15.0643 17.96 15.7707 17.1816 16.3682C16.3987 16.9692 15.6193 17.4784 15.0381 17.836C14.7467 18.0153 14.5035 18.1579 14.332 18.2559C14.2463 18.305 14.1779 18.3431 14.1309 18.3692C14.1079 18.382 14.0898 18.3916 14.0771 18.3985C14.0708 18.402 14.0651 18.4054 14.0615 18.4073C14.0599 18.4082 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6068 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2865 13.3438 17.0899C13.3442 17.0897 13.3455 17.0896 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.0831C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0337 13.5075 16.9986 13.5869 16.9532C13.7463 16.862 13.9761 16.7284 14.252 16.5587C14.805 16.2184 15.5381 15.7387 16.2676 15.1788C17.0016 14.6153 17.7081 13.9888 18.2236 13.3575C18.4832 13.0397 18.6739 12.7444 18.8018 12.4757H4.75C4.33579 12.4757 4 12.1399 4 11.7247C4.00002 11.3115 4.3358 10.9757 4.75 10.9757H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46192 17.0026 8.83475 16.2686 8.27155C15.539 7.71176 14.8051 7.23288 14.252 6.89265C13.9764 6.72316 13.7473 6.58922 13.5879 6.49812C13.5083 6.45264 13.4459 6.41766 13.4043 6.3946C13.3836 6.38312 13.3676 6.37476 13.3574 6.36921C13.3524 6.36645 13.349 6.36361 13.3467 6.36237C13.3455 6.36175 13.3442 6.36163 13.3438 6.3614C12.9794 6.16492 12.8429 5.71028 13.0391 5.34577Z" fill="currentColor"/></svg></span>
                             </button>
                         </div>
                     </div>
@@ -364,12 +367,6 @@ $calculator_package_prices = [
                         <div class="overview__info-content">
                             <div class="overview__info-text">Each step allows</div>
                             <div class="overview__info-title">up to 6 free photo attempts</div>
-                        </div>
-                        <div class="overview__info-image" aria-hidden="true">
-                            <?php echo td_image(967, [
-                                'class'   => 'overview__info-maskot',
-                                'loading' => 'lazy',
-                            ]); ?>
                         </div>
                     </div>                    
                     <div class="overview__info-description">After all attempts are used the session is blocked.</div>
@@ -516,7 +513,7 @@ if (have_rows('tarif-group')) {
                             <span class="packages__group-name">
                                 <?php echo esc_html($group['title']); ?>
                                 <?php if (!empty($group['description'])) : ?>
-                                    <span class="packages__icon packages__service-icon packages__group-icon">
+                                    <span class="packages__icon packages__service-icon packages__group-icon"><svg class="packages__service-icon-glyph" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44329 3.75 3.75 7.44329 3.75 12C3.75 16.5558 7.44335 20.25 12 20.25C16.5567 20.25 20.25 16.5558 20.25 12C20.25 7.44329 16.5567 3.75 12 3.75ZM2.25 12C2.25 6.61487 6.61487 2.25 12 2.25C17.3851 2.25 21.75 6.61487 21.75 12C21.75 17.3841 17.3852 21.75 12 21.75C6.61481 21.75 2.25 17.3841 2.25 12Z" fill="#FBFBFB" fill-opacity="0.5"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.54102C12.4142 7.54102 12.75 7.8768 12.75 8.29102V8.35426C12.75 8.76847 12.4142 9.10426 12 9.10426C11.5858 9.10426 11.25 8.76847 11.25 8.35426V8.29102C11.25 7.8768 11.5858 7.54102 12 7.54102ZM12.0057 10.6436C12.4199 10.6436 12.7557 10.9794 12.7557 11.3936V15.6932C12.7557 16.1074 12.4199 16.4432 12.0057 16.4432C11.5915 16.4432 11.2557 16.1074 11.2557 15.6932V11.3936C11.2557 10.9794 11.5915 10.6436 12.0057 10.6436Z" fill="#FBFBFB" fill-opacity="0.5"/> </svg>
                                         <span class="packages__service-description">
                                             <?php echo wp_kses_post($group['description']); ?>
                                         </span>
@@ -548,7 +545,7 @@ if (have_rows('tarif-group')) {
                                 <div class="packages__service-name">
                                     <?php echo esc_html($service['name']); ?>
                                     <?php if (!empty($service['description'])) : ?>
-                                        <span class="packages__icon packages__service-icon">
+                                        <span class="packages__icon packages__service-icon"><svg class="packages__service-icon-glyph" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44329 3.75 3.75 7.44329 3.75 12C3.75 16.5558 7.44335 20.25 12 20.25C16.5567 20.25 20.25 16.5558 20.25 12C20.25 7.44329 16.5567 3.75 12 3.75ZM2.25 12C2.25 6.61487 6.61487 2.25 12 2.25C17.3851 2.25 21.75 6.61487 21.75 12C21.75 17.3841 17.3852 21.75 12 21.75C6.61481 21.75 2.25 17.3841 2.25 12Z" fill="#FBFBFB" fill-opacity="0.5"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.54102C12.4142 7.54102 12.75 7.8768 12.75 8.29102V8.35426C12.75 8.76847 12.4142 9.10426 12 9.10426C11.5858 9.10426 11.25 8.76847 11.25 8.35426V8.29102C11.25 7.8768 11.5858 7.54102 12 7.54102ZM12.0057 10.6436C12.4199 10.6436 12.7557 10.9794 12.7557 11.3936V15.6932C12.7557 16.1074 12.4199 16.4432 12.0057 16.4432C11.5915 16.4432 11.2557 16.1074 11.2557 15.6932V11.3936C11.2557 10.9794 11.5915 10.6436 12.0057 10.6436Z" fill="#FBFBFB" fill-opacity="0.5"/> </svg>
                                             <span class="packages__service-description">
                                                 <?php echo wp_kses_post($service['description']); ?>
                                             </span>
@@ -562,9 +559,9 @@ if (have_rows('tarif-group')) {
 
                                 <div class="packages__cell packages__cell--value packages__cell--<?php echo esc_attr($package_key); ?>">
                                     <?php if ($is_included) : ?>
-                                        <span class="packages__icon packages__icon--check"></span>
+                                        <span class="packages__icon packages__icon--check"><svg class="packages__icon-glyph" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.7603 3.99219C7.33611 3.99219 3.75 7.5783 3.75 12.0025C3.75 16.4267 7.33611 20.0128 11.7603 20.0128C16.1845 20.0128 19.7706 16.4267 19.7706 12.0025C19.7706 7.5783 16.1845 3.99219 11.7603 3.99219ZM2.25 12.0025C2.25 6.74987 6.50768 2.49219 11.7603 2.49219C17.0129 2.49219 21.2706 6.74987 21.2706 12.0025C21.2706 17.2551 17.0129 21.5128 11.7603 21.5128C6.50768 21.5128 2.25 17.2551 2.25 12.0025Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21.6554 5.0375C21.8577 5.39893 21.7287 5.85596 21.3673 6.05829C16.759 8.63806 13.8775 12.8263 12.5028 15.4088C12.3756 15.6478 12.1295 15.7996 11.8588 15.8061C11.5881 15.8126 11.335 15.6728 11.1964 15.4402C10.2738 13.8914 9.1036 12.513 7.67625 11.3076C7.3598 11.0403 7.31992 10.5671 7.58718 10.2507C7.85444 9.93419 8.32764 9.89431 8.64409 10.1616C9.86302 11.191 10.914 12.3407 11.7981 13.6081C13.4186 10.8974 16.2982 7.17697 20.6346 4.74942C20.996 4.54709 21.4531 4.67607 21.6554 5.0375Z" fill="currentColor"/></svg></span>
                                     <?php else : ?>
-                                        <span class="packages__icon packages__icon--cross"></span>
+                                        <span class="packages__icon packages__icon--cross"><svg class="packages__icon-glyph" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.414 12.0002L18.707 6.70725C19.098 6.31625 19.098 5.68425 18.707 5.29325C18.316 4.90225 17.684 4.90225 17.293 5.29325L12 10.5862L6.70701 5.29325C6.31601 4.90225 5.68401 4.90225 5.29301 5.29325C4.90201 5.68425 4.90201 6.31625 5.29301 6.70725L10.586 12.0002L5.29301 17.2933C4.90201 17.6842 4.90201 18.3162 5.29301 18.7072C5.48801 18.9022 5.74401 19.0002 6.00001 19.0002C6.25601 19.0002 6.51201 18.9022 6.70701 18.7072L12 13.4143L17.293 18.7072C17.488 18.9022 17.744 19.0002 18 19.0002C18.256 19.0002 18.512 18.9022 18.707 18.7072C19.098 18.3162 19.098 17.6842 18.707 17.2933L13.414 12.0002Z" fill="currentColor" fill-opacity="0.5"/></svg></span>
                                     <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
@@ -654,7 +651,7 @@ if (have_rows('tarif-group')) {
                                         <span class="packages__group-name">
                                             <?php echo esc_html($package_group['title']); ?>
                                             <?php if (!empty($package_group['description'])) : ?>
-                                                <span class="packages__icon packages__service-icon packages__group-icon">
+                                                <span class="packages__icon packages__service-icon packages__group-icon"><svg class="packages__service-icon-glyph" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44329 3.75 3.75 7.44329 3.75 12C3.75 16.5558 7.44335 20.25 12 20.25C16.5567 20.25 20.25 16.5558 20.25 12C20.25 7.44329 16.5567 3.75 12 3.75ZM2.25 12C2.25 6.61487 6.61487 2.25 12 2.25C17.3851 2.25 21.75 6.61487 21.75 12C21.75 17.3841 17.3852 21.75 12 21.75C6.61481 21.75 2.25 17.3841 2.25 12Z" fill="#FBFBFB" fill-opacity="0.5"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.54102C12.4142 7.54102 12.75 7.8768 12.75 8.29102V8.35426C12.75 8.76847 12.4142 9.10426 12 9.10426C11.5858 9.10426 11.25 8.76847 11.25 8.35426V8.29102C11.25 7.8768 11.5858 7.54102 12 7.54102ZM12.0057 10.6436C12.4199 10.6436 12.7557 10.9794 12.7557 11.3936V15.6932C12.7557 16.1074 12.4199 16.4432 12.0057 16.4432C11.5915 16.4432 11.2557 16.1074 11.2557 15.6932V11.3936C11.2557 10.9794 11.5915 10.6436 12.0057 10.6436Z" fill="#FBFBFB" fill-opacity="0.5"/> </svg>
                                                     <span class="packages__service-description">
                                                         <?php echo wp_kses_post($package_group['description']); ?>
                                                     </span>
@@ -676,7 +673,7 @@ if (have_rows('tarif-group')) {
                                             <div class="packages__service-name">
                                                 <?php echo esc_html($service['name']); ?>
                                                 <?php if (!empty($service['description'])) : ?>
-                                                    <span class="packages__icon packages__service-icon">
+                                                    <span class="packages__icon packages__service-icon"><svg class="packages__service-icon-glyph" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44329 3.75 3.75 7.44329 3.75 12C3.75 16.5558 7.44335 20.25 12 20.25C16.5567 20.25 20.25 16.5558 20.25 12C20.25 7.44329 16.5567 3.75 12 3.75ZM2.25 12C2.25 6.61487 6.61487 2.25 12 2.25C17.3851 2.25 21.75 6.61487 21.75 12C21.75 17.3841 17.3852 21.75 12 21.75C6.61481 21.75 2.25 17.3841 2.25 12Z" fill="#FBFBFB" fill-opacity="0.5"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.54102C12.4142 7.54102 12.75 7.8768 12.75 8.29102V8.35426C12.75 8.76847 12.4142 9.10426 12 9.10426C11.5858 9.10426 11.25 8.76847 11.25 8.35426V8.29102C11.25 7.8768 11.5858 7.54102 12 7.54102ZM12.0057 10.6436C12.4199 10.6436 12.7557 10.9794 12.7557 11.3936V15.6932C12.7557 16.1074 12.4199 16.4432 12.0057 16.4432C11.5915 16.4432 11.2557 16.1074 11.2557 15.6932V11.3936C11.2557 10.9794 11.5915 10.6436 12.0057 10.6436Z" fill="#FBFBFB" fill-opacity="0.5"/> </svg>
                                                         <span class="packages__service-description">
                                                             <?php echo wp_kses_post($service['description']); ?>
                                                         </span>

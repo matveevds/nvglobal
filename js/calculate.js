@@ -611,15 +611,20 @@ document.addEventListener('DOMContentLoaded', function () {
         updateOpenSpoilerHeights();
     }
 
+    // Состояние кнопки-переключателя дублируется в aria-pressed:
+    // выбор пакета и типа документа — группы кнопок, а не вкладки с панелями.
+    function setButtonPressed(button, isPressed) {
+        button.classList.toggle('active', isPressed);
+        button.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+    }
+
     packageButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             selectedPackage = button.dataset.pkg;
 
             packageButtons.forEach(function (btn) {
-                btn.classList.remove('active');
+                setButtonPressed(btn, btn === button);
             });
-
-            button.classList.add('active');
 
             updateCalculator();
         });
@@ -632,11 +637,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selectedDocumentTypes.has(type)) {
                 if (selectedDocumentTypes.size > 1) {
                     selectedDocumentTypes.delete(type);
-                    button.classList.remove('active');
+                    setButtonPressed(button, false);
                 }
             } else {
                 selectedDocumentTypes.add(type);
-                button.classList.add('active');
+                setButtonPressed(button, true);
             }
 
             updateCalculator();
