@@ -10,17 +10,20 @@
   gap: 24px;
   align-self: stretch;
   border-radius: var(--Frame-Card-Padding-Corner, 24px);
-  border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-  background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+  border: 1px solid var(--nv-surface-4);
+  background: var(--nv-surface-2);
   backdrop-filter: blur(10px);
 }
 
 .note__icon {
+  /* Цвет глифа: иконка выводится inline-SVG с fill="currentColor". */
+  color: var(--nv-primary);
   width: 32px;
   height: 32px;
   padding: 4px;
-  border-radius: 6px;
-  background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+  border: 1px solid var(--nv-primary);
+  border-radius: 8px;
+  background: var(--nv-primary-soft);
   display: flex;
   user-select: contain;
   align-items: center;
@@ -34,7 +37,7 @@
 }
 
 .post__content .note__content p {
-  color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+  color: var(--nv-object-2);
   font-size: var(--Text-Body-Text-Size-Regular, 16px);
   margin-bottom: 0;
 }
@@ -45,7 +48,7 @@
   align-self: flex-end;
 }
 .note__source span {
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-1);
   font-size: var(--Text-Button-Size-Small, 14px);
   font-weight: 700;
 }
@@ -54,9 +57,11 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  /* Стрелка внутри — inline-SVG с fill="currentColor". */
+  color: var(--nv-object-1);
 }
 .note__link span{
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-1);
   font-size: var(--Text-Button-Size-Small, 14px);
   font-weight: 700;
 }
@@ -65,12 +70,14 @@
   text-decoration: underline;
 }
 
-.note__link:hover span {
-  color:#F9AA66;
+.note__link:hover,
+.note__link:focus-visible {
+  color: var(--nv-primary);
 }
 
-.note__link:hover svg path {
-  fill: #F9AA66;
+.note__link:hover span,
+.note__link:focus-visible span {
+  color: var(--nv-primary);
 }
 
 @media (max-width: 1599.98px) {

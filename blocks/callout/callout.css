@@ -12,13 +12,26 @@
     display: flex;
     flex-direction: column;
     border-radius: 16px;
-    background: var(--Main-Grad, linear-gradient(104deg, #FE7338 0%, #EA3700 100%));
+    background: var(--nv-gradient);
     gap:24px;
 }
 
+/* 2570:38960 — белый квадрат 48 со знаком NV. */
 .callout__icon {
-    width: 64px;
-    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--nv-surface-1);
+}
+
+.callout__icon img {
+    display: block;
+    width: 32px;
+    height: auto;
 }
 
 .callout__content {
@@ -28,7 +41,7 @@
 }
 
 .callout__title {
-    color: #FFF;
+    color: var(--nv-constant-1);
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -36,7 +49,7 @@
 }
 
 .post__content .callout__text p{
-    color: var(--Secondary-White, #FFF);
+    color: var(--nv-constant-1);
     font-size: 18px;
     font-weight: 400;
     line-height: 155.556%;
@@ -45,8 +58,8 @@
 .post__content .callout-btn {
     padding: 12px 12px 12px 20px;
     border-radius: 100px;
-    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
-    background: var(--Secondary-White, #FFF);
+    border: 1px solid transparent;
+    background: var(--nv-object-1);
     display: flex;
     gap:8px;
     align-self: flex-end;
@@ -57,20 +70,20 @@
 .post__content .callout-btn:hover,
 .post__content .callout-btn:focus,
 .post__content .callout-btn:active {
-    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
+    border: 1px solid transparent;
     opacity: 0.8;
-    background: var(--Secondary-White, #FFF);
+    background: var(--nv-object-1);
 }
 @media (hover: none) {
   .post__content .callout-btn:hover {
-    border: 1px solid var(--secondary-black-10, rgba(46, 46, 46, 0.10));
+    border: 1px solid transparent;
     opacity: 1;
-    background: #fff;
+    background: var(--nv-object-1);
   }
 }
 
 .callout-btn span {
-    color: var(--Secondary-Black, #2E2E2E);
+    color: var(--nv-constant-1);
     font-size: 16px;
     font-weight: 500;
     line-height: 150%;

@@ -8,7 +8,7 @@
   gap:28px;
   padding: 16px 16px 32px 16px;
   border-radius: 24px;
-  background: var(--secondary-black-3, rgba(46, 46, 46, 0.03));
+  background: var(--nv-surface-2);
 }
 
 .tabs__titles-block {
@@ -21,7 +21,7 @@
   padding: 0 32px 12px;
   border:none;
   background: transparent;
-  color: var(--Secondary-Black, #2E2E2E);
+  color: var(--nv-object-1);
   text-align: center;
   font-size: 18px;
   font-weight: 400;
@@ -36,12 +36,12 @@
   bottom: -4px;
   width: 100%;
   height: 8px;
-  background-color: #FE7338;
+  background-color: var(--nv-primary);
   border-radius: 8px;
 }
 
 .tabs__title.is-active {
-  color: var(--main-orange-light, #FE7338);
+  color: var(--nv-primary);
   font-weight: 700;
 }
 
@@ -77,7 +77,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 100px;
-  background: var(--Main-Grad, linear-gradient(104deg, #FE7338 0%, #EA3700 100%));
+  background: var(--nv-gradient);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
@@ -135,7 +135,7 @@
     align-items: center;
     flex-shrink: 0;
     border-radius: 100px;
-    border: 1px solid var(--secondary-black-50, rgba(46, 46, 46, 0.50));
+    border: 1px solid var(--nv-object-3);
   }
   .tabs__titles-block {
     border-bottom: none;

@@ -81,5 +81,5 @@ if ( $matches ) :
 </nav>
 
 <?php else : ?>
-<p class="toc-block__empty">Нет заголовков для оглавления.</p>
+<?php echo nv_block_placeholder($is_preview, 'Оглавление', 'Добавьте в запись заголовки H2–H4 — список соберётся сам'); ?>
 <?php endif; ?>

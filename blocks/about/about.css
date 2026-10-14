@@ -4,8 +4,8 @@
 
 .about-block__wrapper {
   border-radius: 0 16px 16px 0;
-  border-left: 4px solid var(--main-orange-light, #FE7338);
-  background: rgba(241, 75, 19, 0.03);
+  border-left: 4px solid var(--nv-primary);
+  background: var(--nv-surface-2);
   display: flex;
   padding: 28px 32px;
   flex-direction: column;
@@ -23,7 +23,7 @@
 }
 
 .about-block-title {
-  color: var(--main-orange-light, #FE7338);
+  color: var(--nv-primary);
   font-size: 24px;
   font-weight: 600;
   line-height: 116.667%;

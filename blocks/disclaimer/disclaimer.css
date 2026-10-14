@@ -5,8 +5,8 @@
 .disclaimer__wrapper {
   padding: 24px;
   border-radius: var(--Frame-Card-Padding-Corner, 24px);
-  border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-  background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+  border: 1px solid var(--nv-surface-4);
+  background: var(--nv-surface-2);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
@@ -16,12 +16,15 @@
 }
 
 .disclaimer__icon {
+  /* Цвет глифа: иконка выводится inline-SVG с fill="currentColor". */
+  color: var(--nv-primary);
   padding: 4px;
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-  border-radius: 6px;
-  background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+  border: 1px solid var(--nv-primary);
+  border-radius: 8px;
+  background: var(--nv-primary-soft);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +38,7 @@
 
 }
 .post__content .disclaimer__content p {
-  color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+  color: var(--nv-object-2);
   text-align: center;
   font-size: var(--Text-Body-Text-Size-Medium, 18px);
   font-weight: 500;

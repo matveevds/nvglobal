@@ -900,3 +900,985 @@ h4.wp-block-heading {
 }
 
 
+/* ===================== BLOG POST LIGHT START ===================== */
+
+/*
+ * Страница записи блога — светлый дизайн.
+ *
+ * Макеты Figma: Full HD 2570:37654, Desktop 198:2964, Tablet 236:5552,
+ * Mobile 236:6388. Решения — docs/DECISIONS.md, Р-133…Р-137.
+ *
+ * Шаблон `single.php` добавлен в `nv_is_light_theme()`, поэтому шапка, тизер
+ * и футер приезжают светлыми сами. Токены `--nv-*` объявлены в блоке HOME THEME
+ * в css/styles.css и действуют на `body.single-post`.
+ *
+ * Все правила ограничены `body.single-post`. Файл подключается глобально,
+ * а классы `.post`, `.post-content`, `.post-text`, `.post-sidebar`
+ * и `.breadcrumbs` используют ещё `page-docs.php` и `single-document.php` —
+ * документация остаётся тёмной, её правила лежат выше по файлу и не меняются.
+ *
+ * Сетка колонок: сайдбар 436 фиксированно, статья занимает остаток
+ * и не шире 1080 (на 1920 остаётся воздух справа — так в макете,
+ * на 1440 колонка ровно 904).
+ */
+
+/* ---------- Раскладка страницы ---------- */
+body.single-post .post {
+    position: relative;
+    z-index: 2;
+    padding-top: 48px;
+    padding-bottom: 64px;
+    background: var(--nv-surface-1);
+}
+
+body.single-post .post__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+body.single-post .post__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+}
+
+body.single-post .post-sidebar {
+    position: relative;
+    flex: 0 0 436px;
+    width: 436px;
+    align-self: stretch;
+    height: auto;
+}
+
+body.single-post .post-sidebar__wrapper {
+    position: sticky;
+    top: 40px;
+}
+
+body.single-post .post-content {
+    flex: 0 1 1080px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* ---------- Хлебные крошки ---------- */
+body.single-post .breadcrumbs a {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body.single-post .breadcrumbs a:hover,
+body.single-post .breadcrumbs a:focus-visible {
+    color: var(--nv-primary);
+}
+
+body.single-post .breadcrumbs span {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+}
+
+/* ---------- Шапка статьи ---------- */
+/* 2570:38932 — заголовок, под ним 24 до счётчиков и ещё 24 до картинки. */
+body.single-post .post__header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+/* Title/H1 52/64. */
+body.single-post .post-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H1, 52px);
+    font-weight: 700;
+    line-height: 123.077%;
+}
+
+body.single-post .post__meta {
+    display: flex;
+    gap: 16px;
+}
+
+/* Поля 8/16 с обводкой внутрь габарита. */
+body.single-post .post__meta-views,
+body.single-post .post__meta-likes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 15px 7px 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+body.single-post .post__meta-views {
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+body.single-post .post__meta-likes {
+    background: var(--nv-gradient);
+    border-color: transparent;
+    color: var(--nv-constant-1);
+    cursor: pointer;
+    transition: filter .2s ease;
+}
+
+body.single-post .post__meta-likes:hover {
+    filter: brightness(1.05);
+}
+
+body.single-post .post__meta-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: inherit;
+}
+
+body.single-post .post__meta-icon svg path {
+    fill: currentColor;
+}
+
+/* Button/Regular 18/24. */
+body.single-post .post__meta-count {
+    color: inherit;
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+/* 2570:38937 — картинка в светлой рамке: поле 8, радиус 24, внутри радиус 16. */
+body.single-post .post__thumbnail {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-2);
+    line-height: 0;
+}
+
+body.single-post .post__thumbnail-wrapper {
+    /* 2570:38937 — слот 1080x512. */
+    aspect-ratio: 1080 / 512;
+    border-radius: 16px;
+    overflow: hidden;
+    line-height: 0;
+    height: 100%;
+}
+
+body.single-post .post__thumbnail img {
+    width: 100%;
+    height: 100%;
+    max-height: 512px;
+    object-fit: cover;
+    line-height: 0;
+}
+
+/* ---------- Лид ---------- */
+body.single-post .post-intro p {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+/* ---------- Типографика статьи ---------- */
+/*
+ * 2570:38949 — вертикальный ритм статьи один на все блоки: 32.
+ * Заголовки задают отступ сверху сами, параграфы — снизу.
+ */
+body.single-post .post-text {
+    color: var(--nv-object-2);
+}
+
+body.single-post h2.wp-block-heading {
+    margin-top: 48px;
+    margin-bottom: 32px;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+body.single-post h3.wp-block-heading {
+    margin-top: 40px;
+    margin-bottom: 28px;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+body.single-post h4.wp-block-heading {
+    margin-top: 32px;
+    margin-bottom: 24px;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+body.single-post .post-text > *:first-child {
+    margin-top: 0;
+}
+
+/* Body text/Medium Regular 18/28. */
+/*
+ * Только собственные абзацы статьи: у `.post-text p` и у правил вроде
+ * `.post__content .warning__content p` одинаковое число классов, и по числу
+ * элементов выигрывало бы это правило — врезки теряли бы свой цвет.
+ * Дочерний комбинатор оставляет внутренности блоков их собственным стилям.
+ */
+body.single-post .post-text > p {
+    margin-bottom: 32px;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+body.single-post .post-text > p:last-child {
+    margin-bottom: 0;
+}
+
+body.single-post .post-text a {
+    color: var(--nv-primary);
+    text-decoration: none;
+}
+
+body.single-post .post-text a:hover,
+body.single-post .post-text a:focus-visible {
+    text-decoration: underline;
+}
+
+body.single-post .wp-block-paragraph strong,
+body.single-post .post-text strong {
+    color: var(--nv-object-1);
+}
+
+body.single-post .wp-block-separator {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    border: 0;
+    border-top: 1px solid var(--nv-surface-4);
+    opacity: 1;
+}
+
+/* ---------- Картинки в статье ---------- */
+body.single-post .wp-block-image {
+    width: 100%;
+    margin-bottom: 32px;
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-2);
+}
+
+body.single-post .wp-block-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+body.single-post .wp-block-image :where(figcaption) {
+    margin: 0;
+}
+
+body.single-post .wp-block-image:has(.alignleft),
+body.single-post .wp-block-image:has(.alignright),
+body.single-post .wp-block-image:has(.aligncenter) {
+    width: fit-content;
+}
+
+/* Body text/Small Regular 14/20. */
+body.single-post .wp-element-caption {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    line-height: 142.857%;
+    text-align: center;
+}
+
+body.single-post .wp-block-image:has(.aligncenter) {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.single-post .post__content .wp-block-image:has(.alignleft) {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+body.single-post .post__content .wp-block-image .alignleft {
+    margin: 0;
+}
+
+body.single-post .post__content .wp-block-image:has(.alignright) {
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+body.single-post .post__content .wp-block-image .alignright {
+    margin: 0;
+}
+
+body.single-post .no-border,
+body.single-post .no-border img {
+    border: none;
+    border-radius: unset;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+/* ---------- Списки ---------- */
+body.single-post .post__content ul.wp-block-list,
+body.single-post .post__content ol.wp-block-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 32px;
+}
+
+body.single-post .post__content ul.wp-block-list li,
+body.single-post .post__content ol.wp-block-list li {
+    position: relative;
+    margin-bottom: 16px;
+    padding-left: 40px;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    line-height: 155.556%;
+}
+
+body.single-post .post__content ul.wp-block-list li:last-child,
+body.single-post .post__content ol.wp-block-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Маркер — кружок 24 с градиентом. */
+body.single-post .post__content ul.wp-block-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--nv-gradient);
+}
+
+/* 2570:38994 — номер в квадрате 24, текст с отступом 40. */
+body.single-post .post__content ol.wp-block-list {
+    counter-reset: post-counter;
+}
+
+body.single-post .post__content ol.wp-block-list li {
+    counter-increment: post-counter;
+}
+
+body.single-post .post__content ol.wp-block-list li::before {
+    content: counter(post-counter);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ---------- Таблицы ---------- */
+body.single-post .post__content .wp-block-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px;
+}
+
+body.single-post .post__content .wp-block-table thead th {
+    padding: 8px 16px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 12px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    font-weight: 700;
+    text-align: center;
+}
+
+body.single-post .post__content .wp-block-table thead th:first-child {
+    text-align: left;
+}
+
+body.single-post .post__content .wp-block-table tbody td {
+    padding: 8px 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 12px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-2);
+    line-height: 142.857%;
+    text-align: center;
+}
+
+body.single-post .post__content .wp-block-table tbody td:first-child {
+    color: var(--nv-object-1);
+    text-align: left;
+}
+
+body.single-post .wp-block-table table th,
+body.single-post .wp-block-table table td {
+    border-width: 1px;
+}
+
+/* Узкая колонка — таблица прокручивается внутри своей обёртки. */
+body.single-post .wp-block-table {
+    max-width: 100%;
+    margin-bottom: 32px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--nv-primary) var(--nv-surface-3);
+}
+
+body.single-post .wp-block-table table {
+    min-width: 700px;
+}
+
+body.single-post .wp-block-table::-webkit-scrollbar {
+    height: 8px;
+}
+
+body.single-post .wp-block-table::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background: var(--nv-surface-3);
+}
+
+body.single-post .wp-block-table::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--nv-gradient);
+}
+
+/* ---------- Кнопки сайдбара ---------- */
+body.single-post .post-sidebar-btn,
+body.single-post .post-sidebar-btn-mobile {
+    display: none;
+}
+
+body.single-post .post-sidebar-btn-mobile {
+    position: fixed;
+    right: 32px;
+    bottom: 44px;
+    z-index: 5;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transform: translateY(0);
+    transition: all 0.3s;
+}
+
+body.single-post .post-sidebar-btn svg path,
+body.single-post .post-sidebar-btn-mobile svg path {
+    fill: currentColor;
+}
+
+body.single-post .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(33, 33, 33, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+body.single-post .sidebar-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+body.single-post .post-sidebar.is-open {
+    z-index: 20;
+}
+
+body.single-post.body__widget--active .post-sidebar-btn-mobile {
+    transform: translateY(-60px);
+}
+
+/* ---------- Нижний блок ---------- */
+/*
+ * 2570:39540 — нижняя полоса на Island/1 level, карточки на Background/1 level
+ * с обводкой Stroke 2. Над ней — скруглённый «page edge» светлой области статьи.
+ */
+body.single-post .post-bottom {
+    position: relative;
+    z-index: 0;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    background: var(--nv-surface-2);
+}
+
+body.single-post .post-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+    border: 1px solid var(--nv-surface-4);
+    border-top: 0;
+    border-radius: 0 0 var(--nv-radius-hero) var(--nv-radius-hero);
+    background: var(--nv-surface-1);
+}
+
+body.single-post .post-bottom__wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 36px;
+}
+
+body.single-post .post-bottom__left {
+    width: calc(28% - 18px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.single-post .post__author,
+body.single-post .post__articles {
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-1);
+}
+
+body.single-post .post__author {
+    display: flex;
+    flex-direction: column;
+}
+
+body.single-post .post__author-top {
+    display: flex;
+    flex-direction: column;
+    padding: 23px;
+}
+
+body.single-post .post__author-title {
+    color: var(--nv-primary);
+    text-align: right;
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+body.single-post .post__author-content {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+body.single-post .post__author-image {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+body.single-post .post__author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body.single-post .post__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Title/H4 24/36. */
+body.single-post .post__author-name {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+body.single-post .post__author-job {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    line-height: 150%;
+}
+
+body.single-post .post__author-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 23px 15px;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+body.single-post .post__author-bottom p {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+}
+
+body.single-post .post__author-bottom p span {
+    color: var(--nv-object-3);
+}
+
+/*
+ * Кнопка «See» — общий `.btn`, на тёмных страницах он персиковый.
+ * Здесь перекрашиваем только в пределах карточки автора.
+ */
+body.single-post .post__author-action .btn {
+    padding: 7px 7px 7px 15px;
+    gap: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    transition: background .2s ease;
+}
+
+body.single-post .post__author-action .btn:hover,
+body.single-post .post__author-action .btn:focus-visible {
+    background: var(--nv-primary);
+}
+
+body.single-post .post__author-action .btn .btn__text {
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+}
+
+body.single-post .post__author-action .btn .btn__icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--nv-constant-1);
+}
+
+body.single-post .post__author-action .btn .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+body.single-post .post__author-action .btn .btn__icon svg path {
+    fill: currentColor;
+}
+
+body.single-post .post__articles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 23px;
+}
+
+/* Title/H5 20/28. */
+body.single-post .post__articles-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+body.single-post .post__articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.single-post .post__article-item {
+    display: flex;
+    gap: 16px;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+}
+
+body.single-post .post__article-image {
+    width: 76px;
+    height: 88px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.single-post .post__article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body.single-post .post__article-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    line-height: 150%;
+    text-decoration: none;
+}
+
+body.single-post .post__article-title:hover,
+body.single-post .post__article-title:focus-visible {
+    color: var(--nv-primary);
+    text-decoration: underline;
+}
+
+body.single-post .post-bottom__right {
+    width: calc(72% - 18px);
+}
+
+body.single-post .post__form {
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-1);
+}
+
+/* ---------- Адаптив ---------- */
+body.single-post @media (max-width: 1599.98px) {
+
+}
+
+body.single-post @media (max-width: 1399.98px) {
+
+}
+
+body.single-post @media (max-width: 1199.98px) {/* Сайдбар уезжает в выдвижную панель — поведение темы сохраняем. */
+    
+    body.single-post .post-sidebar {
+        position: fixed;
+        top: calc(50% + 32px);
+        right: 0;
+        z-index: 3;
+        flex: none;
+        width: 560px;
+        max-height: 680px;
+        height: calc(100% - 65px);
+        padding: 16px 16px 16px 32px;
+        border: 1px solid var(--nv-surface-4);
+        border-right: 0;
+        border-radius: 12px 0 0 12px;
+        background: var(--nv-surface-1);
+        box-shadow: 0 8px 48px 0 rgba(33, 33, 33, 0.12);
+        backdrop-filter: blur(30px);
+        transform: translateY(-50%) translateX(calc(100% - 24px));
+        transition: transform 0.3s ease;
+    }    body.single-post .post-sidebar-btn {
+        position: absolute;
+        top: 50%;
+        left: -20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        padding: 7px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 8px;
+        background: var(--nv-gradient);
+        color: var(--nv-constant-1);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        transform: translateY(-50%);
+    }    body.single-post .post-sidebar-btn svg {
+        transform: scaleX(1);
+    }    body.single-post .post-sidebar.is-open {
+        transform: translateY(-50%) translateX(0);
+    }    body.single-post .post-sidebar-btn.open svg,
+body.single-post .post-sidebar-btn-mobile.open svg {
+        transform: scaleX(-1);
+    }    body.single-post .post-sidebar__wrapper {
+        position: unset;
+        height: 100%;
+    }    body.single-post .post-content {
+        flex: 1 1 auto;
+        width: 100%;
+    }    body.single-post .post__wrapper {
+        gap: 36px;
+    }    body.single-post .post-bottom__left {
+        width: calc(40% - 18px);
+    }    body.single-post .post-bottom__right {
+        width: calc(60% - 18px);
+    }    body.single-post .single-document .footer {
+        position: unset;
+    }
+}
+
+body.single-post @media (max-width: 991.98px) {/* Tablet 236:5552 — поля карточек 16, заголовки на ступень ниже. */
+    
+    body.single-post .post {
+        padding-top: 32px;
+        padding-bottom: 48px;
+    }    body.single-post .post__thumbnail,
+body.single-post .wp-block-image {
+        border-radius: 16px;
+    }    body.single-post .post__content .wp-block-table {
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }    body.single-post .post__content .wp-block-table table {
+        min-width: 600px;
+    }    body.single-post .post-title {
+        font-size: 44px;
+        line-height: 127.273%;
+    }    body.single-post h2.wp-block-heading {
+        margin-top: 40px;
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 150%;
+    }    body.single-post h3.wp-block-heading {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }    body.single-post .post__meta-icon,
+body.single-post .post__meta-icon svg {
+        width: 20px;
+        height: 20px;
+    }    body.single-post .post-bottom {
+        padding-top: 72px;
+        padding-bottom: 72px;
+    }    body.single-post .post-bottom__wrapper {
+        flex-direction: column;
+    }    body.single-post .post-bottom__left,
+body.single-post .post-bottom__right {
+        width: 100%;
+    }    body.single-post .post__author-top,
+body.single-post .post__author-bottom,
+body.single-post .post__articles,
+body.single-post .post__form {
+        padding: 15px;
+    }    body.single-post .post__author,
+body.single-post .post__articles,
+body.single-post .post__form {
+        border-radius: 16px;
+    }
+}
+
+body.single-post @media (max-width: 767.98px) {    body.single-post .post-sidebar {
+        width: 460px;
+    }
+}
+
+body.single-post @media (max-width: 575.98px) {/* Mobile 236:6388 — поля 12, H1 32/40. */
+    
+    body.single-post .post__thumbnail,
+body.single-post .wp-block-image {
+        border-radius: 12px;
+    }    body.single-post .post-text p,
+body.single-post .post-intro p {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }    body.single-post .post-sidebar-btn-mobile {
+        display: flex;
+    }    body.single-post .post-sidebar-btn {
+        display: none;
+    }    body.single-post .post-sidebar {
+        top: 64px;
+        right: -26px;
+        width: 320px;
+        height: calc(100% - 240px);
+        padding: 12px;
+        transform: translateX(calc(100% - 24px));
+    }    body.single-post .post-sidebar.is-open {
+        transform: translateX(-26px);
+        z-index: 20;
+    }    body.single-post .post-title {
+        font-size: 32px;
+        line-height: 125%;
+    }    body.single-post .post__meta-count {
+        font-size: 16px;
+        line-height: 1.25;
+    }    body.single-post .post__wrapper {
+        gap: 24px;
+    }    body.single-post h2.wp-block-heading {
+        margin-top: 32px;
+        margin-bottom: 24px;
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }    body.single-post h3.wp-block-heading {
+        margin-top: 24px;
+        margin-bottom: 16px;
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }    body.single-post h4.wp-block-heading {
+        margin-top: 24px;
+        margin-bottom: 16px;
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }    body.single-post .post__content .wp-block-image:has(.alignright),
+body.single-post .wp-block-image:has(.aligncenter),
+body.single-post .post__content .wp-block-image:has(.alignleft) {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }    body.single-post .post__content ol.wp-block-list li,
+body.single-post .post__content ul.wp-block-list li {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }    body.single-post .post__content ol.wp-block-list li::before {
+        font-size: 14px;
+    }    body.single-post .post__author,
+body.single-post .post__articles,
+body.single-post .post__form {
+        border-radius: 12px;
+    }    body.single-post .post__author-top,
+body.single-post .post__author-bottom,
+body.single-post .post__articles,
+body.single-post .post__form {
+        padding: 11px;
+    }    body.single-post .post__author-name {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }    body.single-post .post__author-image {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+body.single-post @media (max-width: 478.98px) {
+
+}
+
+body.single-post @media (max-width: 419.98px) {
+
+}
+
+/* ====================== BLOG POST LIGHT END ====================== */

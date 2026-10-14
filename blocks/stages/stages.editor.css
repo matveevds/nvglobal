@@ -31,7 +31,7 @@
 }
 
 .post-stages__item-name {
-  color: var(--Text-Orange, #F9AA66);
+  color: var(--nv-primary);
   text-align: right;
   font-size: var(--Text-Title-Size-H4, 24px);
   font-weight: 700;
@@ -40,7 +40,7 @@
 }
 
 .post-stages__item-title {
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-1);
   text-align: right;
   font-size: var(--Text-Title-Size-H6, 18px);
   font-weight: 700;
@@ -48,7 +48,7 @@
 }
 
 .post-stages__item-text {
-  color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+  color: var(--nv-object-2);
   text-align: right;
   font-size: var(--Text-Body-Text-Size-Small, 14px);
   font-weight: 500;
@@ -74,7 +74,7 @@
   height: 6px;
   flex-shrink: 0;
   border-radius: 16px;
-  background: #F9AA66;
+  background: var(--nv-primary);
   position: absolute;
   top:54px;
   left:-4px;
@@ -135,7 +135,7 @@
 }
 
 .post-stages__item--active .post-stages__item-line {
-  background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+  background: var(--nv-gradient);
 }
 
 .post-stages__item:last-of-type .post-stages__item-line {
@@ -149,7 +149,7 @@
 .post-stages__item-hr {
   width: 40px;
   height: 2px;
-  background-color: #F9AA66;
+  background-color: var(--nv-primary);
   flex-shrink: 0;
   align-self: flex-end;
   margin: 0;

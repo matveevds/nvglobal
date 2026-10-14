@@ -16,11 +16,6 @@ $data = extract_toc_block_from_content($content);
                 <?php nv_breadcrumbs(); ?>
                 </div>
 
-                <?php
-$author_id = get_post_field('post_author', get_the_ID());
-echo esc_url(get_author_posts_url($author_id));
-?>
-
                 <div class="post__content">
                     <button class="post-sidebar-btn-mobile">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -68,16 +63,24 @@ echo esc_url(get_author_posts_url($author_id));
                                     </div>
                                 </div>
 
-                                <?php if (has_post_thumbnail()) : ?>
+                                <?php
+                                /*
+                                 * `blog_image()` возвращает пустую строку, если у вложения нет
+                                 * размеров blog_1x/2x/3x. Рамку в этом случае не печатаем,
+                                 * иначе на странице остаётся пустая полоса.
+                                 */
+                                $nv_thumb_html = has_post_thumbnail()
+                                    ? blog_image(get_post_thumbnail_id(), [
+                                        'class'         => 'post-thumbnail__image',
+                                        'loading'       => 'eager',
+                                        'fetchpriority' => 'high',
+                                    ])
+                                    : '';
+                                ?>
+                                <?php if ($nv_thumb_html !== '') : ?>
                                     <div class="post__thumbnail">
                                         <div class="post__thumbnail-wrapper">
-                                            <?php
-                                                echo blog_image(get_post_thumbnail_id(), [
-                                                    'class'         => 'post-thumbnail__image',
-                                                    'loading'       => 'eager',
-                                                    'fetchpriority' => 'high',
-                                                ]);
-                                            ?>
+                                            <?php echo $nv_thumb_html; ?>
                                         </div>
                                     </div>
                                 <?php endif; ?>

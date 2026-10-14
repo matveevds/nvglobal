@@ -6,17 +6,17 @@
   flex-direction: column;
   gap:28px;
   padding: 12px 32px;
-  border-left: 4px solid #F9AA66;
+  border-left: 4px solid var(--nv-primary);
 }
 .post__content .result__subtitle {
-  color: #F9AA66;
+  color: var(--nv-primary);
   font-size: 18px;
   font-weight: 400;
   line-height: 155.556%;
   text-transform: uppercase;
 }
 .post__content .result__title {
-  color: #F9AA66;
+  color: var(--nv-primary);
   font-size: 24px;
   font-weight: 600;
   line-height: 100%;

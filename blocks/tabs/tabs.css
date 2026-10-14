@@ -2,47 +2,62 @@
   margin-bottom: 32px!important;
 }
 
+/* 2570:39023 — карточка Island/1 level, обводка Stroke 2, поле 24, радиус 24. */
 .tabs__wrapper {
   display: flex;
   flex-direction: column;
-  gap:28px;
-  padding: 16px 16px 32px 16px;
-  border-radius: 24px;
-  background: var(--secondary-black-3, rgba(46, 46, 46, 0.03));
+  gap: 24px;
+  padding: 23px;
+  border: 1px solid var(--nv-surface-4);
+  border-radius: var(--Frame-Card-Padding-Corner, 24px);
+  background: var(--nv-surface-2);
 }
 
+/* Панель вкладок: Island/2 level, поле 4, радиус 12, зазор 8. */
 .tabs__titles-block {
   display: flex;
-  border-bottom: solid 1px rgba(46, 46, 46, 0.10);
+  align-items: stretch;
+  gap: 8px;
+  padding: 4px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--nv-surface-3);
 }
 
 .tabs__title {
   cursor: pointer;
-  padding: 0 32px 12px;
-  border:none;
-  background: transparent;
-  color: var(--Secondary-Black, #2E2E2E);
-  text-align: center;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 122.222%;
-  position: relative;
-}
-
-.tabs__title.is-active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 8px;
-  background-color: #FE7338;
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 4px 24px;
+  /* Прозрачная рамка держит высоту: у активной вкладки рамка видимая. */
+  border: 1px solid transparent;
   border-radius: 8px;
+  background: var(--nv-surface-3);
+  color: var(--nv-object-3);
+  text-align: center;
+  font-family: Satoshi, sans-serif;
+  font-size: var(--Text-Body-Text-Size-Regular, 16px);
+  font-weight: 400;
+  line-height: 150%;
+  transition: background-color .2s ease, color .2s ease;
 }
 
-.tabs__title.is-active {
-  color: var(--main-orange-light, #FE7338);
-  font-weight: 700;
+.tabs__title:hover {
+  background: var(--nv-surface-4);
+  color: var(--nv-object-1);
+}
+
+.tabs__title:focus-visible {
+  outline: 2px solid var(--nv-primary);
+  outline-offset: 2px;
+}
+
+.tabs__title.is-active,
+.tabs__title.is-active:hover {
+  border-color: var(--nv-surface-4);
+  background: var(--nv-gradient);
+  color: var(--nv-constant-1);
+  font-weight: 400;
 }
 
 .tabs__content-item {
@@ -55,6 +70,7 @@
 
 .post__content .tabs__content-item p {
   margin-bottom: 12px;
+  color: var(--nv-object-2);
 }
 .post__content .tabs__content-item p:last-of-type {
   margin-bottom: 0;
@@ -66,28 +82,46 @@
 .tabs__arrows-list {
   display: flex;
   justify-content: center;
-  gap:8px;
+  gap: 8px;
 }
+
+/* 2570:39023 — стрелки 40x40, поле 8 с обводкой внутрь, иконка 24. */
 .tabs__arrow-item {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
-  padding: 12px;
+  padding: 7px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  border-radius: 100px;
-  background: var(--Main-Grad, linear-gradient(104deg, #FE7338 0%, #EA3700 100%));
-  backdrop-filter: blur(8px);
+  border: 1px solid var(--nv-surface-4);
+  border-radius: 8px;
+  background: var(--nv-surface-1);
+  color: var(--nv-object-1);
   cursor: pointer;
+  transition: background-color .2s ease;
 }
+
+.tabs__arrow-item:hover {
+  background: var(--nv-surface-3);
+}
+
+.tabs__arrow-item svg path {
+  fill: currentColor;
+}
+
 .tabs__arrow-prev {
 
 }
 .tabs__arrow-disabled {
-  opacity: 0.4;
+  color: var(--nv-object-3);
+  opacity: 1;
   cursor: default;
 }
+
+.tabs__arrow-disabled:hover {
+  background: var(--nv-surface-1);
+}
+
 .tabs__titles-arrow {
   display: none;
 }
@@ -135,7 +169,7 @@
     align-items: center;
     flex-shrink: 0;
     border-radius: 100px;
-    border: 1px solid var(--secondary-black-50, rgba(46, 46, 46, 0.50));
+    border: 1px solid var(--nv-object-3);
   }
   .tabs__titles-block {
     border-bottom: none;

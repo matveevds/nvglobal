@@ -96,6 +96,6 @@
   text-underline-position: from-font;
 }
 .toc-block__item a:hover {
-  color: #FE7338;
+  color: var(--nv-primary);
 }
 

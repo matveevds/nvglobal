@@ -17,6 +17,8 @@
 }
 
 .success__icon {
+  /* Цвет глифа: иконка выводится inline-SVG с fill="currentColor". */
+  color: var(--nv-constant-1);
   width: 32px;
   height: 32px;
   padding: 4px;

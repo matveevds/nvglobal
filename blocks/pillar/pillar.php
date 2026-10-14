@@ -4,7 +4,10 @@
  */
 
 $pillar = get_field('pillar');
-if (empty($pillar) || !is_array($pillar)) return;
+if (empty($pillar) || !is_array($pillar)) {
+  echo nv_block_placeholder($is_preview, 'Шкала', 'Добавьте хотя бы одну строку в настройках блока');
+  return;
+}
 ?>
 
 <div class="pillar">

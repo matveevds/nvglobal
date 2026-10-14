@@ -5,6 +5,7 @@
 
 $stages = get_field('stages');
 if (empty($stages) || !is_array($stages)) {
+  echo nv_block_placeholder($is_preview, 'Этапы', 'Добавьте этапы в настройках блока');
   return;
 }
 ?>

@@ -28,10 +28,11 @@ if (!empty($is_preview) && (empty(trim((string) get_field('about_link_text')))))
 
 <div class="about-block">
   <div class="about-block__wrapper">
-    <div class="about-block-icon">
-      <img src="<?php echo get_template_directory_uri(); ?>/img/logo_nv.svg" alt="Нейровижн">
-    </div>
-
+    <?php /*
+     * Иконки у врезки больше нет: в макете 2570:39198 это карточка с оранжевой
+     * полосой слева, без логотипа. Прежний <img> ссылался на img/logo_nv.svg,
+     * которого в теме нет, — запрос уходил в 404.
+     */ ?>
     <div class="about-block__content">
       <?php if ($about_title) : ?>
         <div class="about-block-title"><?php echo wp_kses_post($about_title); ?></div>

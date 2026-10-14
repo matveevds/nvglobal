@@ -2,6 +2,11 @@
 /**
  * Template for FAQ block.
  */
+
+if (!have_rows('faq_list')) {
+  echo nv_block_placeholder($is_preview, 'Блок FAQ', 'Добавьте вопросы в настройках блока');
+  return;
+}
 ?>
 <div class="faq">
   <div class="faq-block__wrapper">
@@ -52,7 +57,14 @@
           <div class="faq-block__item">
             <div class="faq-block__question">
               <div class="faq-block__question-author">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/img/author_question.jpg'); ?>" alt="Автор вопроса">
+                <?php
+                /*
+                 * Прежде здесь стоял img/author_question.jpg, которого в теме нет (404).
+                 * Отдельного поля под автора вопроса у блока тоже нет, поэтому берём
+                 * стандартную аватарку WordPress — она разрешается всегда.
+                 */
+                echo get_avatar(0, 120, '', __('Автор вопроса', 'nvglobal'), ['class' => 'faq-block__question-avatar-img']);
+                ?>
               </div>
               <div class="faq-block__question-content">
                 <?php echo esc_html($question); ?>

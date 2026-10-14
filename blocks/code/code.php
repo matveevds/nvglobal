@@ -9,6 +9,11 @@ if ($html) {
     $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $text = preg_replace("/\r\n|\r/", "\n", $text);   
 }
+
+if ('' === trim((string) $html)) {
+    echo nv_block_placeholder($is_preview, 'Блок кода', 'Вставьте код в настройках блока');
+    return;
+}
 ?>
 <div class="code">
     <div class="code__wrapper">

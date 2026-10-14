@@ -12,6 +12,11 @@ $author_image  = get_field('quote_author_image'); // image array or ID (depends 
 if (!empty($author_image) && is_numeric($author_image)) {
   $author_image = wp_get_attachment_image_src((int) $author_image, 'thumbnail');
 }
+
+if ('' === trim(wp_strip_all_tags((string) $quote_content . $author . $job))) {
+  echo nv_block_placeholder($is_preview, 'Цитата', 'Заполните текст цитаты и автора в настройках блока');
+  return;
+}
 ?>
 
 <figure class="quote">

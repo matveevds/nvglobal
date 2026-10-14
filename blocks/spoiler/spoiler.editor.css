@@ -6,8 +6,8 @@
 .post__content .spoiler {
   margin-bottom: 32px;
   border-radius: var(--Frame-Card-Padding-Corner, 24px);
-  border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-  background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+  border: 1px solid var(--nv-surface-4);
+  background: var(--nv-surface-2);
   backdrop-filter: blur(10px);
   padding: 24px;
 }
@@ -34,13 +34,15 @@
 }
 
 .spoiler__title {
-  color: #FFF;
+  color: var(--nv-object-1);
   font-size: var(--Text-Title-Size-H6, 18px);
   font-weight: 700;
   line-height: 133.333%;
 }
 
 .spoiler__title-icon {
+  /* Иконка — inline-SVG с fill="currentColor". */
+  color: var(--nv-object-1);
   display: flex;
   width: 32px;
   height: 32px;
@@ -48,8 +50,8 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 6px;
-  border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-  background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+  border: 1px solid var(--nv-surface-4);
+  background: var(--nv-surface-2);
   backdrop-filter: blur(10px);
 }
 
@@ -95,7 +97,7 @@
   display: block;
 }
 .post__content .spoiler__content p{
-  color: #FFF;
+  color: var(--nv-object-2);
   font-size: var(--Text-Body-Text-Size-Medium, 18px);
   margin-bottom: 0;
 }

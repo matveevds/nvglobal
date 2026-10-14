@@ -32,7 +32,7 @@
 }
 
 .nv-single-image__caption {
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-3);
   text-align: center;
   font-size: var(--Text-Body-Text-Size-Regular, 16px);
   width: 100%;
@@ -46,7 +46,7 @@
 
 .nv-single-image__source,
 .nv-single-image__source a {
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-2);
   font-size: var(--Text-Button-Size-Small, 14px);
   font-weight: 700;
 }
@@ -56,16 +56,17 @@
 }
 
 .nv-single-image__source-link {
+  color: inherit;
   display: flex;
   gap: 4px;
   align-items: center;
 }
 
 .nv-single-image__source-link:hover {
-  color:#F9AA66;
+  color:var(--nv-primary);
   text-decoration: underline;
 }
 
 .nv-single-image__source-link:hover svg path {
-  fill:#F9AA66;
+  fill:var(--nv-primary);
 }

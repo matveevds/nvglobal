@@ -13,8 +13,8 @@
   margin: 0;
   padding: 7px;
   border-radius: var(--Frame-Card-Padding-Corner, 24px);
-  border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-  background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+  border: 1px solid var(--nv-surface-4);
+  background: var(--nv-surface-2);
   backdrop-filter: blur(4px);
 }
 
@@ -45,7 +45,7 @@
 
 .nv-gallery__caption {
   width: 100%;
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-3);
   text-align: center;
   font-size: var(--Text-Button-Size-Small, 14px);
 }
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  color: var(--Text-White, #FBFBFB);
+  color: var(--nv-object-2);
   font-size: var(--Text-Button-Size-Small, 14px);
   font-weight: 700;
 }
@@ -65,18 +65,19 @@
 }
 
 .nv-gallery__source-link {
+  color: inherit;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 .nv-gallery__source-link:hover {
-  color: #F9AA66;
+  color: var(--nv-primary);
   text-decoration: underline;
 }
 
 .nv-gallery__source-link:hover svg path {
-  fill: #F9AA66;
+  fill: var(--nv-primary);
 }
 
 .nv-gallery__list .nv-gallery__item.wp-block-image {
