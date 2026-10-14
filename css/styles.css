@@ -679,10 +679,16 @@ body.home .top__widget-btn:focus-visible {
 /* HOME THEME START */
 
 /*
- * Светлая тема макетов Figma NV-Global. Токены объявлены для главной и для
- * страницы Solutions: обе переведены на один и тот же светлый дизайн, поэтому
- * значения не дублируются (решение Р-9 / Р-12 в docs/DECISIONS.md).
+ * Светлая тема макетов Figma NV-Global. Токены объявлены для главной, для
+ * страницы Solutions и для юридических страниц (шаблон `page-privacy.php`):
+ * все переведены на один и тот же светлый дизайн, поэтому значения
+ * не дублируются (решения Р-9 / Р-12 / Р-122 в docs/DECISIONS.md).
  * /pricing-matrix/, /docs/, /blog/, 404 и архивы остаются тёмными.
+ *
+ * С 2026-10-12 тот же набор объявлен на `.modal--form` и `.modal--result`:
+ * всплывающие формы — глобальный компонент и открываются на тёмных шаблонах
+ * тоже, где токенов на body нет (DECISIONS.md, Р-113). Окно отзывов
+ * (`#review`) модификаторов не получает и остаётся тёмным.
  *
  * Токены названы с префиксом --nv-, чтобы не пересекаться с семейством
  * --island-* / --text-white-* / --stroke-white-*: те 384 раза используются
@@ -691,7 +697,12 @@ body.home .top__widget-btn:focus-visible {
  */
 
 body.home,
-body.page-template-page-solutions {
+body.page-template-page-solutions,
+body.page-template-page-privacy,
+body.page-template-page-price-matrix,
+body.single-post,
+.modal--form,
+.modal--result {
     --nv-primary: #FD6B01;
     --nv-primary-2: #FF4601;
     --nv-primary-soft: #FFF0E6;
@@ -774,7 +785,10 @@ body.home .section__title-block {
  * задают `.container` сами и идут ниже по файлу — их это не затрагивает.
  */
 body.home .container,
-body.page-template-page-solutions .container {
+body.page-template-page-solutions .container,
+body.page-template-page-privacy .container,
+body.page-template-page-price-matrix .container,
+body.single-post .container {
     max-width: 1920px;
     padding-left: var(--nv-gutter);
     padding-right: var(--nv-gutter);
@@ -799,7 +813,10 @@ body.page-template-page-solutions .container {
 @media (max-width: 767.98px) {
     /* Макета мобильной версии нет — сохраняем поля темы (docs/DECISIONS.md, Р-1 / BACKLOG R-01). */
     body.home .container,
-    body.page-template-page-solutions .container {
+    body.page-template-page-solutions .container,
+    body.page-template-page-privacy .container,
+    body.page-template-page-price-matrix .container,
+    body.single-post .container {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -1140,6 +1157,48 @@ body.home .btn--header .btn__text {
     color: var(--nv-constant-1);
 }
 
+/*
+ * Стрелка в кнопке шапки. Её рисует lottie из `arrow_right_black.json`,
+ * и цвет там задан атрибутом `stroke="rgb(0,0,0)"` прямо на путях —
+ * заливки у них нет вовсе (`fill-opacity="0"`). Поэтому одного `fill`
+ * не хватало и стрелка оставалась чёрной.
+ *
+ * Атрибут презентации перебивается любым правилом CSS, так что цвет
+ * ведём через `currentColor` кнопки: он же красит и запасную
+ * inline-иконку, которая видна до инициализации lottie.
+ *
+ * Только светлые страницы: там кнопка оранжевая с белой подписью.
+ * На тёмных шаблонах у кнопки подпись тёмная, и стрелка остаётся тёмной.
+ */
+body.home .btn--header,
+body.page-template-page-solutions .btn--header,
+body.page-template-page-privacy .btn--header,
+body.page-template-page-price-matrix .btn--header,
+body.single-post .btn--header {
+    color: var(--nv-constant-1);
+}
+
+body.home .btn--header .btn__icon svg,
+body.home .btn--header .btn__icon svg path,
+body.page-template-page-solutions .btn--header .btn__icon svg,
+body.page-template-page-solutions .btn--header .btn__icon svg path,
+body.page-template-page-privacy .btn--header .btn__icon svg,
+body.page-template-page-price-matrix .btn--header .btn__icon svg,
+body.single-post .btn--header .btn__icon svg,
+body.page-template-page-privacy .btn--header .btn__icon svg path,
+body.page-template-page-price-matrix .btn--header .btn__icon svg path,
+body.single-post .btn--header .btn__icon svg path {
+    fill: currentColor;
+}
+
+body.home .btn--header .lottie-container-arrow svg path,
+body.page-template-page-solutions .btn--header .lottie-container-arrow svg path,
+body.page-template-page-privacy .btn--header .lottie-container-arrow svg path,
+body.page-template-page-price-matrix .btn--header .lottie-container-arrow svg path,
+body.single-post .btn--header .lottie-container-arrow svg path {
+    stroke: currentColor;
+}
+
 body.home .btn--header:hover,
 body.home .btn--header:focus-visible {
     background: var(--nv-primary);
@@ -1399,8 +1458,10 @@ html.has-scroll-smooth body {
     color: var(--Text-White, #FBFBFB);
 }
 
-/* Светлая тема главной: кнопка перерисована по макету. */
-body.home .btn-hero {
+/* Светлая тема: кнопка перерисована по макету. Разметка иконки та же — inline-SVG в `.btn__icon`. */
+body.home .btn-hero,
+body.page-template-page-price-matrix .btn-hero,
+body.single-post .btn-hero {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1424,19 +1485,25 @@ body.home .btn-hero {
     transition: filter .2s ease;
 }
 
-body.home .btn-hero .btn__icon {
+body.home .btn-hero .btn__icon,
+body.page-template-page-price-matrix .btn-hero .btn__icon,
+body.single-post .btn-hero .btn__icon {
     display: flex;
     width: 24px;
     height: 24px;
     flex-shrink: 0;
 }
 
-body.home .btn-hero .btn__icon svg {
+body.home .btn-hero .btn__icon svg,
+body.page-template-page-price-matrix .btn-hero .btn__icon svg,
+body.single-post .btn-hero .btn__icon svg {
     width: 100%;
     height: 100%;
 }
 
-body.home .btn__text-hero {
+body.home .btn__text-hero,
+body.page-template-page-price-matrix .btn__text-hero,
+body.single-post .btn__text-hero {
     color: var(--nv-constant-1);
     font-size: 18px;
     line-height: 133.333%;
@@ -8348,7 +8415,8 @@ body.home .clients__top-info .section__title-block {
  * ============================================================
  */
 body.home .contacts,
-body.page-template-page-solutions .contacts {
+body.page-template-page-solutions .contacts,
+body.single-post .post__form {
     /* Вылет оранжевой карточки к левому краю экрана. */
     --nv-bleed: calc((100vw - min(100vw, 1920px) + 64px) / 2);
     /*
@@ -8361,7 +8429,8 @@ body.page-template-page-solutions .contacts {
 }
 
 body.home .contacts .contacts__wrapper,
-body.page-template-page-solutions .contacts .contacts__wrapper {
+body.page-template-page-solutions .contacts .contacts__wrapper,
+body.single-post .post__form .contacts__wrapper {
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -8375,7 +8444,8 @@ body.page-template-page-solutions .contacts .contacts__wrapper {
  * она прижата к низу через `align-self: end`, как в макете.
  */
 body.home .contacts .contacts__content,
-body.page-template-page-solutions .contacts .contacts__content {
+body.page-template-page-solutions .contacts .contacts__content,
+body.single-post .post__form .contacts__content {
     display: grid;
     grid-template-columns: 459px minmax(0, 1fr);
     grid-template-rows: min-content 1fr;
@@ -8384,7 +8454,8 @@ body.page-template-page-solutions .contacts .contacts__content {
 }
 
 body.home .contacts .contacts__title-block,
-body.page-template-page-solutions .contacts .contacts__title-block {
+body.page-template-page-solutions .contacts .contacts__title-block,
+body.single-post .post__form .contacts__title-block {
     grid-column: 1;
     grid-row: 1;
     display: flex;
@@ -8394,7 +8465,8 @@ body.page-template-page-solutions .contacts .contacts__title-block {
 }
 
 body.home .contacts .contacts__title-block .section__title,
-body.page-template-page-solutions .contacts .contacts__title-block .section__title {
+body.page-template-page-solutions .contacts .contacts__title-block .section__title,
+body.single-post .post__form .contacts__title-block .section__title {
     margin: 0;
     color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H2, 40px);
@@ -8403,7 +8475,8 @@ body.page-template-page-solutions .contacts .contacts__title-block .section__tit
 }
 
 body.home .contacts .contacts__title-block .section__subtitle,
-body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle {
+body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
+body.single-post .post__form .contacts__title-block .section__subtitle {
     margin: 0;
     color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H5, 20px);
@@ -8412,14 +8485,16 @@ body.page-template-page-solutions .contacts .contacts__title-block .section__sub
 }
 
 body.home .contacts .contacts__actions,
-body.page-template-page-solutions .contacts .contacts__actions {
+body.page-template-page-solutions .contacts .contacts__actions,
+body.single-post .post__form .contacts__actions {
     grid-column: 1;
     grid-row: 2;
     align-self: end;
 }
 
 body.home .contacts .contacts__form-block,
-body.page-template-page-solutions .contacts .contacts__form-block {
+body.page-template-page-solutions .contacts .contacts__form-block,
+body.single-post .post__form .contacts__form-block {
     grid-column: 2;
     grid-row: 1 / 3;
 }
@@ -8432,7 +8507,8 @@ body.page-template-page-solutions .contacts .contacts__form-block {
  * Здесь карточка в потоке, вылет считается от контейнера.
  */
 body.home .contacts .contacts__card,
-body.page-template-page-solutions .contacts .contacts__card {
+body.page-template-page-solutions .contacts .contacts__card,
+body.single-post .post__form .contacts__card {
     position: static;
     right: auto;
     bottom: auto;
@@ -8449,31 +8525,38 @@ body.page-template-page-solutions .contacts .contacts__card {
 
 body.home .contacts .contacts__card-icon,
 body.page-template-page-solutions .contacts .contacts__card-icon,
+body.single-post .post__form .contacts__card-icon,
 body.home .contacts .contacts__card-info,
 body.page-template-page-solutions .contacts .contacts__card-info,
+body.single-post .post__form .contacts__card-info,
 body.home .contacts .contacts__card-line,
 body.page-template-page-solutions .contacts .contacts__card-line,
+body.single-post .post__form .contacts__card-line,
 body.home .contacts .contacts__card-action,
-body.page-template-page-solutions .contacts .contacts__card-action {
+body.page-template-page-solutions .contacts .contacts__card-action,
+body.single-post .post__form .contacts__card-action {
     width: 395px;
     max-width: 100%;
 }
 
 body.home .contacts .contacts__card-icon,
-body.page-template-page-solutions .contacts .contacts__card-icon {
+body.page-template-page-solutions .contacts .contacts__card-icon,
+body.single-post .post__form .contacts__card-icon {
     display: flex;
     color: var(--nv-constant-1);
 }
 
 body.home .contacts .contacts__card-info,
-body.page-template-page-solutions .contacts .contacts__card-info {
+body.page-template-page-solutions .contacts .contacts__card-info,
+body.single-post .post__form .contacts__card-info {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
 body.home .contacts .contacts__card-title,
-body.page-template-page-solutions .contacts .contacts__card-title {
+body.page-template-page-solutions .contacts .contacts__card-title,
+body.single-post .post__form .contacts__card-title {
     color: var(--nv-constant-1);
     font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
@@ -8481,19 +8564,22 @@ body.page-template-page-solutions .contacts .contacts__card-title {
 }
 
 body.home .contacts .contacts__card-item,
-body.page-template-page-solutions .contacts .contacts__card-item {
+body.page-template-page-solutions .contacts .contacts__card-item,
+body.single-post .post__form .contacts__card-item {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
 body.home .contacts .contacts__card-item--social,
-body.page-template-page-solutions .contacts .contacts__card-item--social {
+body.page-template-page-solutions .contacts .contacts__card-item--social,
+body.single-post .post__form .contacts__card-item--social {
     gap: 12px;
 }
 
 body.home .contacts .contacts__card-item-name,
-body.page-template-page-solutions .contacts .contacts__card-item-name {
+body.page-template-page-solutions .contacts .contacts__card-item-name,
+body.single-post .post__form .contacts__card-item-name {
     color: var(--nv-constant-1);
     font-size: var(--Text-Body-Text-Size-Small, 14px);
     font-weight: 500;
@@ -8501,7 +8587,8 @@ body.page-template-page-solutions .contacts .contacts__card-item-name {
 }
 
 body.home .contacts .contacts__card-item-link,
-body.page-template-page-solutions .contacts .contacts__card-item-link {
+body.page-template-page-solutions .contacts .contacts__card-item-link,
+body.single-post .post__form .contacts__card-item-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -8515,19 +8602,23 @@ body.page-template-page-solutions .contacts .contacts__card-item-link {
 
 body.home .contacts .contacts__card-item-link:hover,
 body.page-template-page-solutions .contacts .contacts__card-item-link:hover,
+body.single-post .post__form .contacts__card-item-link:hover,
 body.home .contacts .contacts__card-item-link:focus-visible,
-body.page-template-page-solutions .contacts .contacts__card-item-link:focus-visible {
+body.page-template-page-solutions .contacts .contacts__card-item-link:focus-visible,
+body.single-post .post__form .contacts__card-item-link:focus-visible {
     text-decoration: underline;
 }
 
 body.home .contacts .contacts__card-social-list,
-body.page-template-page-solutions .contacts .contacts__card-social-list {
+body.page-template-page-solutions .contacts .contacts__card-social-list,
+body.single-post .post__form .contacts__card-social-list {
     display: flex;
     gap: 8px;
 }
 
 body.home .contacts .contacts__card-social-link,
-body.page-template-page-solutions .contacts .contacts__card-social-link {
+body.page-template-page-solutions .contacts .contacts__card-social-link,
+body.single-post .post__form .contacts__card-social-link {
     display: flex;
     width: 24px;
     height: 24px;
@@ -8536,33 +8627,40 @@ body.page-template-page-solutions .contacts .contacts__card-social-link {
 }
 
 body.home .contacts .contacts__card-social-link:hover,
-body.page-template-page-solutions .contacts .contacts__card-social-link:hover {
+body.page-template-page-solutions .contacts .contacts__card-social-link:hover,
+body.single-post .post__form .contacts__card-social-link:hover {
     opacity: 0.8;
 }
 
 body.home .contacts .contacts__card-icon svg,
 body.page-template-page-solutions .contacts .contacts__card-icon svg,
+body.single-post .post__form .contacts__card-icon svg,
 body.home .contacts .contacts__card-social-link svg,
 body.page-template-page-solutions .contacts .contacts__card-social-link svg,
+body.single-post .post__form .contacts__card-social-link svg,
 body.home .contacts .contacts__card-item-link svg,
-body.page-template-page-solutions .contacts .contacts__card-item-link svg {
+body.page-template-page-solutions .contacts .contacts__card-item-link svg,
+body.single-post .post__form .contacts__card-item-link svg {
     display: block;
 }
 
 body.home .contacts .contacts__card-line,
-body.page-template-page-solutions .contacts .contacts__card-line {
+body.page-template-page-solutions .contacts .contacts__card-line,
+body.single-post .post__form .contacts__card-line {
     height: 1px;
     background: var(--nv-surface-3);
 }
 
 body.home .contacts .contacts__card-action,
-body.page-template-page-solutions .contacts .contacts__card-action {
+body.page-template-page-solutions .contacts .contacts__card-action,
+body.single-post .post__form .contacts__card-action {
     display: flex;
     justify-content: flex-end;
 }
 
 body.home .contacts .contacts__card-action .btn,
-body.page-template-page-solutions .contacts .contacts__card-action .btn {
+body.page-template-page-solutions .contacts .contacts__card-action .btn,
+body.single-post .post__form .contacts__card-action .btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8582,13 +8680,15 @@ body.page-template-page-solutions .contacts .contacts__card-action .btn {
 }
 
 body.home .contacts .contacts__card-action .btn:hover,
-body.page-template-page-solutions .contacts .contacts__card-action .btn:hover {
+body.page-template-page-solutions .contacts .contacts__card-action .btn:hover,
+body.single-post .post__form .contacts__card-action .btn:hover {
     background: #000;
 }
 
 /* Контейнер lottie-стрелки без размеров схлопывался. */
 body.home .contacts .contacts__card-action .btn__icon,
-body.page-template-page-solutions .contacts .contacts__card-action .btn__icon {
+body.page-template-page-solutions .contacts .contacts__card-action .btn__icon,
+body.single-post .post__form .contacts__card-action .btn__icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8598,14 +8698,16 @@ body.page-template-page-solutions .contacts .contacts__card-action .btn__icon {
 }
 
 body.home .contacts .contacts__card-action .btn__icon svg,
-body.page-template-page-solutions .contacts .contacts__card-action .btn__icon svg {
+body.page-template-page-solutions .contacts .contacts__card-action .btn__icon svg,
+body.single-post .post__form .contacts__card-action .btn__icon svg {
     display: block;
     width: 100%;
     height: 100%;
 }
 
 body.home .contacts .contacts__card-action .btn:focus-visible,
-body.page-template-page-solutions .contacts .contacts__card-action .btn:focus-visible {
+body.page-template-page-solutions .contacts .contacts__card-action .btn:focus-visible,
+body.single-post .post__form .contacts__card-action .btn:focus-visible {
     outline: 2px solid var(--nv-constant-1);
     outline-offset: 2px;
 }
@@ -8613,7 +8715,8 @@ body.page-template-page-solutions .contacts .contacts__card-action .btn:focus-vi
 /* ——— карточка формы ——— */
 
 body.home .contacts .contacts__form-block,
-body.page-template-page-solutions .contacts .contacts__form-block {
+body.page-template-page-solutions .contacts .contacts__form-block,
+body.single-post .post__form .contacts__form-block {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -8625,7 +8728,8 @@ body.page-template-page-solutions .contacts .contacts__form-block {
 
 /* 2380:23800 — заголовок списка в основном цвете. */
 body.home .contacts .contacts__form-title,
-body.page-template-page-solutions .contacts .contacts__form-title {
+body.page-template-page-solutions .contacts .contacts__form-title,
+body.single-post .post__form .contacts__form-title {
     color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H5, 20px);
     font-weight: 700;
@@ -8633,7 +8737,8 @@ body.page-template-page-solutions .contacts .contacts__form-title {
 }
 
 body.home .contacts .contacts__form-list,
-body.page-template-page-solutions .contacts .contacts__form-list {
+body.page-template-page-solutions .contacts .contacts__form-list,
+body.single-post .post__form .contacts__form-list {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
@@ -8641,12 +8746,14 @@ body.page-template-page-solutions .contacts .contacts__form-list {
 
 /* Перенос в карточке — только Full HD, где карточка 319 (I2380:23802;147:2709). */
 body.home .contacts .contacts__form-item-text br,
-body.page-template-page-solutions .contacts .contacts__form-item-text br {
+body.page-template-page-solutions .contacts .contacts__form-item-text br,
+body.single-post .post__form .contacts__form-item-text br {
     display: inline;
 }
 
 body.home .contacts .contacts__form-item,
-body.page-template-page-solutions .contacts .contacts__form-item {
+body.page-template-page-solutions .contacts .contacts__form-item,
+body.single-post .post__form .contacts__form-item {
     /* Старое правило задавало width: calc(25% - 12px) — в сетке это ломает колонку. */
     width: auto;
     display: flex;
@@ -8664,7 +8771,8 @@ body.page-template-page-solutions .contacts .contacts__form-item {
 }
 
 body.home .contacts .contacts__form-item-icon,
-body.page-template-page-solutions .contacts .contacts__form-item-icon {
+body.page-template-page-solutions .contacts .contacts__form-item-icon,
+body.single-post .post__form .contacts__form-item-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8676,12 +8784,14 @@ body.page-template-page-solutions .contacts .contacts__form-item-icon {
 }
 
 body.home .contacts .contacts__form-item-icon svg,
-body.page-template-page-solutions .contacts .contacts__form-item-icon svg {
+body.page-template-page-solutions .contacts .contacts__form-item-icon svg,
+body.single-post .post__form .contacts__form-item-icon svg {
     display: block;
 }
 
 body.home .contacts .contacts__form-item-text,
-body.page-template-page-solutions .contacts .contacts__form-item-text {
+body.page-template-page-solutions .contacts .contacts__form-item-text,
+body.single-post .post__form .contacts__form-item-text {
     width: 100%;
     color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H6, 18px);
@@ -8691,8 +8801,12 @@ body.page-template-page-solutions .contacts .contacts__form-item-text {
 
 body.home .contacts .contacts__form-line,
 body.page-template-page-solutions .contacts .contacts__form-line,
+body.single-post .post__form .contacts__form-line,
 body.home .contacts .contacts__form-line--orange,
-body.page-template-page-solutions .contacts .contacts__form-line--orange {
+body.page-template-page-solutions .contacts .contacts__form-line--orange,
+body.single-post .post__form .contacts__form-line--orange,
+.modal .contacts__form-line,
+.modal .contacts__form-line--orange {
     width: 100%;
     height: 1px;
     background: var(--nv-surface-4);
@@ -8711,7 +8825,9 @@ body.page-template-page-solutions .contacts .contacts__form-line--orange {
  * появление текста ошибки раскладку не ломает.
  */
 body.home .contacts .contacts__form,
-body.page-template-page-solutions .contacts .contacts__form {
+body.page-template-page-solutions .contacts .contacts__form,
+body.single-post .post__form .contacts__form,
+.modal .contacts__form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 24px;
@@ -8720,20 +8836,26 @@ body.page-template-page-solutions .contacts .contacts__form {
 }
 
 body.home .contacts .contacts__form > *,
-body.page-template-page-solutions .contacts .contacts__form > * {
+body.page-template-page-solutions .contacts .contacts__form > *,
+body.single-post .post__form .contacts__form > *,
+.modal .contacts__form > * {
     min-width: 0;
 }
 
 /* Четыре поля занимают левую колонку, строки раздаются автоматически. */
 body.home .contacts .input-form-item--50,
-body.page-template-page-solutions .contacts .input-form-item--50 {
+body.page-template-page-solutions .contacts .input-form-item--50,
+body.single-post .post__form .input-form-item--50,
+.modal .input-form-item--50 {
     grid-column: 1;
     /* Старое правило задаёт ширину в 50% — в колонке сетки это лишнее. */
     width: auto;
 }
 
 body.home .contacts .input-form-item.help-select,
-body.page-template-page-solutions .contacts .input-form-item.help-select {
+body.page-template-page-solutions .contacts .input-form-item.help-select,
+body.single-post .post__form .input-form-item.help-select,
+.modal .input-form-item.help-select {
     grid-column: 2;
     grid-row: 1;
 }
@@ -8743,7 +8865,9 @@ body.page-template-page-solutions .contacts .input-form-item.help-select {
  * минус верхний отступ 12 даёт ровно 192 из макета, начало на y = 84.
  */
 body.home .contacts .input-form-item:has(.input-form-block--textarea),
-body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea) {
+body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
+body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
+.modal .input-form-item:has(.input-form-block--textarea) {
     grid-column: 2;
     grid-row: 2 / 5;
     align-self: stretch;
@@ -8751,25 +8875,33 @@ body.page-template-page-solutions .contacts .input-form-item:has(.input-form-blo
 }
 
 body.home .contacts .input-form-block--textarea,
-body.page-template-page-solutions .contacts .input-form-block--textarea {
+body.page-template-page-solutions .contacts .input-form-block--textarea,
+body.single-post .post__form .input-form-block--textarea,
+.modal .input-form-block--textarea {
     flex: 1 1 auto;
     min-height: 0;
 }
 
 body.home .contacts .input-form-block--textarea textarea,
-body.page-template-page-solutions .contacts .input-form-block--textarea textarea {
+body.page-template-page-solutions .contacts .input-form-block--textarea textarea,
+body.single-post .post__form .input-form-block--textarea textarea,
+.modal .input-form-block--textarea textarea {
     height: 100%;
     min-height: 0;
     resize: none;
 }
 
 body.home .contacts .contacts__form-line,
-body.page-template-page-solutions .contacts .contacts__form-line {
+body.page-template-page-solutions .contacts .contacts__form-line,
+body.single-post .post__form .contacts__form-line,
+.modal .contacts__form-line {
     display: none;
 }
 
 body.home .contacts .input-form-item--privacy,
-body.page-template-page-solutions .contacts .input-form-item--privacy {
+body.page-template-page-solutions .contacts .input-form-item--privacy,
+body.single-post .post__form .input-form-item--privacy,
+.modal .input-form-item--privacy {
     grid-column: 1 / -1;
     margin-top: 12px;
     padding-top: 24px;
@@ -8778,15 +8910,23 @@ body.page-template-page-solutions .contacts .input-form-item--privacy {
 
 body.home .contacts .captcha-holder,
 body.page-template-page-solutions .contacts .captcha-holder,
+body.single-post .post__form .captcha-holder,
 body.home .contacts .input-form-action,
-body.page-template-page-solutions .contacts .input-form-action {
+body.page-template-page-solutions .contacts .input-form-action,
+body.single-post .post__form .input-form-action,
+.modal .captcha-holder,
+.modal .input-form-action {
     grid-column: 1 / -1;
 }
 
 body.home .contacts .input-form-item,
 body.page-template-page-solutions .contacts .input-form-item,
+body.single-post .post__form .input-form-item,
 body.home .contacts .phone-field,
-body.page-template-page-solutions .contacts .phone-field {
+body.page-template-page-solutions .contacts .phone-field,
+body.single-post .post__form .phone-field,
+.modal .input-form-item,
+.modal .phone-field {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -8794,10 +8934,16 @@ body.page-template-page-solutions .contacts .phone-field {
 
 body.home .contacts .input-form-label,
 body.page-template-page-solutions .contacts .input-form-label,
+body.single-post .post__form .input-form-label,
 body.home .contacts .help-select__label,
 body.page-template-page-solutions .contacts .help-select__label,
+body.single-post .post__form .help-select__label,
 body.home .contacts .phone-field__label,
-body.page-template-page-solutions .contacts .phone-field__label {
+body.page-template-page-solutions .contacts .phone-field__label,
+body.single-post .post__form .phone-field__label,
+.modal .input-form-label,
+.modal .help-select__label,
+.modal .phone-field__label {
     color: var(--nv-object-1);
     font-size: var(--Text-Body-Text-Size-Tiny, 12px);
     font-weight: 300;
@@ -8806,20 +8952,32 @@ body.page-template-page-solutions .contacts .phone-field__label {
 
 body.home .contacts .input-form-label span,
 body.page-template-page-solutions .contacts .input-form-label span,
+body.single-post .post__form .input-form-label span,
 body.home .contacts .help-select__label span,
 body.page-template-page-solutions .contacts .help-select__label span,
+body.single-post .post__form .help-select__label span,
 body.home .contacts .phone-field__label span,
-body.page-template-page-solutions .contacts .phone-field__label span {
+body.page-template-page-solutions .contacts .phone-field__label span,
+body.single-post .post__form .phone-field__label span,
+.modal .input-form-label span,
+.modal .help-select__label span,
+.modal .phone-field__label span {
     color: var(--nv-primary);
 }
 
 /* Отступы уменьшены на 1px рамки — в макете обводка внутри габарита. */
 body.home .contacts .input-form-block,
 body.page-template-page-solutions .contacts .input-form-block,
+body.single-post .post__form .input-form-block,
 body.home .contacts .phone-field__control,
 body.page-template-page-solutions .contacts .phone-field__control,
+body.single-post .post__form .phone-field__control,
 body.home .contacts .help-select__control,
-body.page-template-page-solutions .contacts .help-select__control {
+body.page-template-page-solutions .contacts .help-select__control,
+body.single-post .post__form .help-select__control,
+.modal .input-form-block,
+.modal .phone-field__control,
+.modal .help-select__control {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -8836,17 +8994,27 @@ body.page-template-page-solutions .contacts .help-select__control {
  */
 body.home .contacts .input-form-block:focus-within,
 body.page-template-page-solutions .contacts .input-form-block:focus-within,
+body.single-post .post__form .input-form-block:focus-within,
 body.home .contacts .phone-field__control:focus-within,
 body.page-template-page-solutions .contacts .phone-field__control:focus-within,
+body.single-post .post__form .phone-field__control:focus-within,
 body.home .contacts .help-select__control:focus-within,
-body.page-template-page-solutions .contacts .help-select__control:focus-within {
+body.page-template-page-solutions .contacts .help-select__control:focus-within,
+body.single-post .post__form .help-select__control:focus-within,
+.modal .input-form-block:focus-within,
+.modal .phone-field__control:focus-within,
+.modal .help-select__control:focus-within {
     border-color: var(--nv-primary);
 }
 
 body.home .contacts .input-form-icon,
 body.page-template-page-solutions .contacts .input-form-icon,
+body.single-post .post__form .input-form-icon,
 body.home .contacts .phone-field__icon,
-body.page-template-page-solutions .contacts .phone-field__icon {
+body.page-template-page-solutions .contacts .phone-field__icon,
+body.single-post .post__form .phone-field__icon,
+.modal .input-form-icon,
+.modal .phone-field__icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8861,19 +9029,31 @@ body.page-template-page-solutions .contacts .phone-field__icon {
 
 body.home .contacts .input-form-icon svg,
 body.page-template-page-solutions .contacts .input-form-icon svg,
+body.single-post .post__form .input-form-icon svg,
 body.home .contacts .phone-field__icon svg,
-body.page-template-page-solutions .contacts .phone-field__icon svg {
+body.page-template-page-solutions .contacts .phone-field__icon svg,
+body.single-post .post__form .phone-field__icon svg,
+.modal .input-form-icon svg,
+.modal .phone-field__icon svg {
     display: block;
 }
 
 body.home .contacts .input-form,
 body.page-template-page-solutions .contacts .input-form,
+body.single-post .post__form .input-form,
 body.home .contacts .phone-field__input,
 body.page-template-page-solutions .contacts .phone-field__input,
+body.single-post .post__form .phone-field__input,
 body.home .contacts .contacts__form textarea,
 body.page-template-page-solutions .contacts .contacts__form textarea,
+body.single-post .post__form .contacts__form textarea,
 body.home .contacts .help-select__button,
-body.page-template-page-solutions .contacts .help-select__button {
+body.page-template-page-solutions .contacts .help-select__button,
+body.single-post .post__form .help-select__button,
+.modal .input-form,
+.modal .phone-field__input,
+.modal .contacts__form textarea,
+.modal .help-select__button {
     flex: 1 1 auto;
     min-width: 0;
     padding: 0 8px;
@@ -8888,34 +9068,50 @@ body.page-template-page-solutions .contacts .help-select__button {
 
 body.home .contacts .input-form::placeholder,
 body.page-template-page-solutions .contacts .input-form::placeholder,
+body.single-post .post__form .input-form::placeholder,
 body.home .contacts .phone-field__input::placeholder,
 body.page-template-page-solutions .contacts .phone-field__input::placeholder,
+body.single-post .post__form .phone-field__input::placeholder,
 body.home .contacts .contacts__form textarea::placeholder,
-body.page-template-page-solutions .contacts .contacts__form textarea::placeholder {
+body.page-template-page-solutions .contacts .contacts__form textarea::placeholder,
+body.single-post .post__form .contacts__form textarea::placeholder,
+.modal .input-form::placeholder,
+.modal .phone-field__input::placeholder,
+.modal .contacts__form textarea::placeholder {
     color: var(--nv-object-3);
 }
 
 body.home .contacts .help-select__button,
-body.page-template-page-solutions .contacts .help-select__button {
+body.page-template-page-solutions .contacts .help-select__button,
+body.single-post .post__form .help-select__button,
+.modal .help-select__button {
     text-align: left;
     cursor: pointer;
 }
 
 /* Плейсхолдер — отдельный элемент внутри кнопки, им управляет form.js. */
 body.home .contacts [data-help-select-placeholder],
-body.page-template-page-solutions .contacts [data-help-select-placeholder] {
+body.page-template-page-solutions .contacts [data-help-select-placeholder],
+body.single-post .post__form [data-help-select-placeholder],
+.modal [data-help-select-placeholder] {
     color: var(--nv-object-3);
 }
 
 body.home .contacts [data-help-select-value],
-body.page-template-page-solutions .contacts [data-help-select-value] {
+body.page-template-page-solutions .contacts [data-help-select-value],
+body.single-post .post__form [data-help-select-value],
+.modal [data-help-select-value] {
     color: var(--nv-object-1);
 }
 
 body.home .contacts .input-form-clear,
 body.page-template-page-solutions .contacts .input-form-clear,
+body.single-post .post__form .input-form-clear,
 body.home .contacts .phone-field__clear,
-body.page-template-page-solutions .contacts .phone-field__clear {
+body.page-template-page-solutions .contacts .phone-field__clear,
+body.single-post .post__form .phone-field__clear,
+.modal .input-form-clear,
+.modal .phone-field__clear {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8933,39 +9129,59 @@ body.page-template-page-solutions .contacts .phone-field__clear {
 
 body.home .contacts .input-form-clear svg,
 body.page-template-page-solutions .contacts .input-form-clear svg,
+body.single-post .post__form .input-form-clear svg,
 body.home .contacts .phone-field__clear svg,
-body.page-template-page-solutions .contacts .phone-field__clear svg {
+body.page-template-page-solutions .contacts .phone-field__clear svg,
+body.single-post .post__form .phone-field__clear svg,
+.modal .input-form-clear svg,
+.modal .phone-field__clear svg {
     display: block;
 }
 
 body.home .contacts .input-form-clear--disabled,
 body.page-template-page-solutions .contacts .input-form-clear--disabled,
+body.single-post .post__form .input-form-clear--disabled,
 body.home .contacts .input-form-clear:disabled,
-body.page-template-page-solutions .contacts .input-form-clear:disabled {
+body.page-template-page-solutions .contacts .input-form-clear:disabled,
+body.single-post .post__form .input-form-clear:disabled,
+.modal .input-form-clear--disabled,
+.modal .input-form-clear:disabled {
     opacity: 0.5;
     cursor: default;
 }
 
 body.home .contacts .input-form-clear:not(.input-form-clear--disabled):hover,
-body.page-template-page-solutions .contacts .input-form-clear:not(.input-form-clear--disabled):hover {
+body.page-template-page-solutions .contacts .input-form-clear:not(.input-form-clear--disabled):hover,
+body.single-post .post__form .input-form-clear:not(.input-form-clear--disabled):hover,
+.modal .input-form-clear:not(.input-form-clear--disabled):hover {
     background: var(--nv-surface-3);
 }
 
 body.home .contacts .input-form-clear:focus-visible,
 body.page-template-page-solutions .contacts .input-form-clear:focus-visible,
+body.single-post .post__form .input-form-clear:focus-visible,
 body.home .contacts .phone-field__clear:focus-visible,
 body.page-template-page-solutions .contacts .phone-field__clear:focus-visible,
+body.single-post .post__form .phone-field__clear:focus-visible,
 body.home .contacts .help-select__arrow:focus-visible,
 body.page-template-page-solutions .contacts .help-select__arrow:focus-visible,
+body.single-post .post__form .help-select__arrow:focus-visible,
 body.home .contacts .phone-field__country-btn:focus-visible,
-body.page-template-page-solutions .contacts .phone-field__country-btn:focus-visible {
+body.page-template-page-solutions .contacts .phone-field__country-btn:focus-visible,
+body.single-post .post__form .phone-field__country-btn:focus-visible,
+.modal .input-form-clear:focus-visible,
+.modal .phone-field__clear:focus-visible,
+.modal .help-select__arrow:focus-visible,
+.modal .phone-field__country-btn:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
 
 /* Кнопка выбора страны — внутри поля, слева от номера. */
 body.home .contacts .phone-field__country-btn,
-body.page-template-page-solutions .contacts .phone-field__country-btn {
+body.page-template-page-solutions .contacts .phone-field__country-btn,
+body.single-post .post__form .phone-field__country-btn,
+.modal .phone-field__country-btn {
     display: flex;
     align-items: center;
     gap: 4px;
@@ -8982,21 +9198,29 @@ body.page-template-page-solutions .contacts .phone-field__country-btn {
 }
 
 body.home .contacts .phone-field__country-btn svg,
-body.page-template-page-solutions .contacts .phone-field__country-btn svg {
+body.page-template-page-solutions .contacts .phone-field__country-btn svg,
+body.single-post .post__form .phone-field__country-btn svg,
+.modal .phone-field__country-btn svg {
     display: block;
 }
 
 /* Код страны наследовал белый цвет из тёмной темы. */
 body.home .contacts .phone-field__code,
 body.page-template-page-solutions .contacts .phone-field__code,
+body.single-post .post__form .phone-field__code,
 body.home .contacts [data-phone-field-code],
-body.page-template-page-solutions .contacts [data-phone-field-code] {
+body.page-template-page-solutions .contacts [data-phone-field-code],
+body.single-post .post__form [data-phone-field-code],
+.modal .phone-field__code,
+.modal [data-phone-field-code] {
     color: var(--nv-object-1);
 }
 
 /* Стрелка селекта — градиентная кнопка 28x28 из макета. */
 body.home .contacts .help-select__arrow,
-body.page-template-page-solutions .contacts .help-select__arrow {
+body.page-template-page-solutions .contacts .help-select__arrow,
+body.single-post .post__form .help-select__arrow,
+.modal .help-select__arrow {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9012,23 +9236,31 @@ body.page-template-page-solutions .contacts .help-select__arrow {
 }
 
 body.home .contacts .help-select__arrow svg,
-body.page-template-page-solutions .contacts .help-select__arrow svg {
+body.page-template-page-solutions .contacts .help-select__arrow svg,
+body.single-post .post__form .help-select__arrow svg,
+.modal .help-select__arrow svg {
     display: block;
     transition: transform .2s ease;
 }
 
 body.home .contacts .help-select--open .help-select__arrow svg,
-body.page-template-page-solutions .contacts .help-select--open .help-select__arrow svg {
+body.page-template-page-solutions .contacts .help-select--open .help-select__arrow svg,
+body.single-post .post__form .help-select--open .help-select__arrow svg,
+.modal .help-select--open .help-select__arrow svg {
     transform: scaleY(-1);
 }
 
 body.home .contacts .input-form-block--textarea,
-body.page-template-page-solutions .contacts .input-form-block--textarea {
+body.page-template-page-solutions .contacts .input-form-block--textarea,
+body.single-post .post__form .input-form-block--textarea,
+.modal .input-form-block--textarea {
     align-items: flex-start;
 }
 
 body.home .contacts .contacts__form textarea,
-body.page-template-page-solutions .contacts .contacts__form textarea {
+body.page-template-page-solutions .contacts .contacts__form textarea,
+body.single-post .post__form .contacts__form textarea,
+.modal .contacts__form textarea {
     min-height: 128px;
     resize: vertical;
 }
@@ -9036,7 +9268,9 @@ body.page-template-page-solutions .contacts .contacts__form textarea {
 /* ——— согласие ——— */
 
 body.home .contacts .input-form-item--privacy .ui-check,
-body.page-template-page-solutions .contacts .input-form-item--privacy .ui-check {
+body.page-template-page-solutions .contacts .input-form-item--privacy .ui-check,
+body.single-post .post__form .input-form-item--privacy .ui-check,
+.modal .input-form-item--privacy .ui-check {
     display: flex;
     align-items: flex-start;
     gap: 16px;
@@ -9044,26 +9278,34 @@ body.page-template-page-solutions .contacts .input-form-item--privacy .ui-check 
 }
 
 body.home .contacts .ui-check__box,
-body.page-template-page-solutions .contacts .ui-check__box {
+body.page-template-page-solutions .contacts .ui-check__box,
+body.single-post .post__form .ui-check__box,
+.modal .ui-check__box {
     border: 1px solid var(--nv-surface-4);
     background: transparent;
     margin-top: 0;
 }
 
 body.home .contacts .ui-check__input:checked + .ui-check__box,
-body.page-template-page-solutions .contacts .ui-check__input:checked + .ui-check__box {
+body.page-template-page-solutions .contacts .ui-check__input:checked + .ui-check__box,
+body.single-post .post__form .ui-check__input:checked + .ui-check__box,
+.modal .ui-check__input:checked + .ui-check__box {
     border-color: var(--nv-primary);
     background: var(--nv-primary);
 }
 
 body.home .contacts .ui-check__input:focus-visible + .ui-check__box,
-body.page-template-page-solutions .contacts .ui-check__input:focus-visible + .ui-check__box {
+body.page-template-page-solutions .contacts .ui-check__input:focus-visible + .ui-check__box,
+body.single-post .post__form .ui-check__input:focus-visible + .ui-check__box,
+.modal .ui-check__input:focus-visible + .ui-check__box {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
 
 body.home .contacts .ui-check__text,
-body.page-template-page-solutions .contacts .ui-check__text {
+body.page-template-page-solutions .contacts .ui-check__text,
+body.single-post .post__form .ui-check__text,
+.modal .ui-check__text {
     color: var(--nv-object-1);
     font-size: var(--Text-Body-Text-Size-Small, 14px);
     font-weight: 400;
@@ -9071,14 +9313,18 @@ body.page-template-page-solutions .contacts .ui-check__text {
 }
 
 body.home .contacts .ui-check__link,
-body.page-template-page-solutions .contacts .ui-check__link {
+body.page-template-page-solutions .contacts .ui-check__link,
+body.single-post .post__form .ui-check__link,
+.modal .ui-check__link {
     color: var(--nv-primary);
 }
 
 /* ——— ошибки ——— */
 
 body.home .contacts .input-form-error-text,
-body.page-template-page-solutions .contacts .input-form-error-text {
+body.page-template-page-solutions .contacts .input-form-error-text,
+body.single-post .post__form .input-form-error-text,
+.modal .input-form-error-text {
     color: var(--nv-primary-2);
     font-size: var(--Text-Body-Text-Size-Small, 14px);
     font-weight: 400;
@@ -9087,23 +9333,33 @@ body.page-template-page-solutions .contacts .input-form-error-text {
 
 body.home .contacts .is-error .input-form-block,
 body.page-template-page-solutions .contacts .is-error .input-form-block,
+body.single-post .post__form .is-error .input-form-block,
 body.home .contacts .is-error .phone-field__control,
 body.page-template-page-solutions .contacts .is-error .phone-field__control,
+body.single-post .post__form .is-error .phone-field__control,
 body.home .contacts .is-error .help-select__control,
-body.page-template-page-solutions .contacts .is-error .help-select__control {
+body.page-template-page-solutions .contacts .is-error .help-select__control,
+body.single-post .post__form .is-error .help-select__control,
+.modal .is-error .input-form-block,
+.modal .is-error .phone-field__control,
+.modal .is-error .help-select__control {
     border-color: var(--nv-primary-2);
 }
 
 /* ——— кнопка отправки ——— */
 
 body.home .contacts .input-form-action,
-body.page-template-page-solutions .contacts .input-form-action {
+body.page-template-page-solutions .contacts .input-form-action,
+body.single-post .post__form .input-form-action,
+.modal .input-form-action {
     display: flex;
     justify-content: flex-end;
 }
 
 body.home .contacts .btn-form,
-body.page-template-page-solutions .contacts .btn-form {
+body.page-template-page-solutions .contacts .btn-form,
+body.single-post .post__form .btn-form,
+.modal .btn-form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9121,12 +9377,16 @@ body.page-template-page-solutions .contacts .btn-form {
 }
 
 body.home .contacts .btn-form::before,
-body.page-template-page-solutions .contacts .btn-form::before {
+body.page-template-page-solutions .contacts .btn-form::before,
+body.single-post .post__form .btn-form::before,
+.modal .btn-form::before {
     content: none;
 }
 
 body.home .contacts .btn-form__icon,
-body.page-template-page-solutions .contacts .btn-form__icon {
+body.page-template-page-solutions .contacts .btn-form__icon,
+body.single-post .post__form .btn-form__icon,
+.modal .btn-form__icon {
     display: flex;
     width: 24px;
     height: 24px;
@@ -9135,12 +9395,16 @@ body.page-template-page-solutions .contacts .btn-form__icon {
 }
 
 body.home .contacts .btn-form__icon svg,
-body.page-template-page-solutions .contacts .btn-form__icon svg {
+body.page-template-page-solutions .contacts .btn-form__icon svg,
+body.single-post .post__form .btn-form__icon svg,
+.modal .btn-form__icon svg {
     display: block;
 }
 
 body.home .contacts .btn-form .btn__text,
-body.page-template-page-solutions .contacts .btn-form .btn__text {
+body.page-template-page-solutions .contacts .btn-form .btn__text,
+body.single-post .post__form .btn-form .btn__text,
+.modal .btn-form .btn__text {
     color: var(--nv-constant-1);
     font-size: var(--Text-Button-Size-Regular, 18px);
     font-weight: 700;
@@ -9148,20 +9412,28 @@ body.page-template-page-solutions .contacts .btn-form .btn__text {
 }
 
 body.home .contacts .btn-form:hover:not(:disabled),
-body.page-template-page-solutions .contacts .btn-form:hover:not(:disabled) {
+body.page-template-page-solutions .contacts .btn-form:hover:not(:disabled),
+body.single-post .post__form .btn-form:hover:not(:disabled),
+.modal .btn-form:hover:not(:disabled) {
     filter: brightness(1.05);
 }
 
 body.home .contacts .btn-form:focus-visible,
-body.page-template-page-solutions .contacts .btn-form:focus-visible {
+body.page-template-page-solutions .contacts .btn-form:focus-visible,
+body.single-post .post__form .btn-form:focus-visible,
+.modal .btn-form:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
 
 body.home .contacts .btn-form:disabled,
 body.page-template-page-solutions .contacts .btn-form:disabled,
+body.single-post .post__form .btn-form:disabled,
 body.home .contacts .btn-form.btn--disabled,
-body.page-template-page-solutions .contacts .btn-form.btn--disabled {
+body.page-template-page-solutions .contacts .btn-form.btn--disabled,
+body.single-post .post__form .btn-form.btn--disabled,
+.modal .btn-form:disabled,
+.modal .btn-form.btn--disabled {
     opacity: 0.6;
     cursor: default;
 }
@@ -9169,15 +9441,23 @@ body.page-template-page-solutions .contacts .btn-form.btn--disabled {
 /* Выпадающие списки не должны обрезаться карточкой формы. */
 body.home .contacts .phone-field,
 body.page-template-page-solutions .contacts .phone-field,
+body.single-post .post__form .phone-field,
 body.home .contacts .input-form-item.help-select,
-body.page-template-page-solutions .contacts .input-form-item.help-select {
+body.page-template-page-solutions .contacts .input-form-item.help-select,
+body.single-post .post__form .input-form-item.help-select,
+.modal .phone-field,
+.modal .input-form-item.help-select {
     position: relative;
 }
 
 body.home .contacts .phone-field__dropdown,
 body.page-template-page-solutions .contacts .phone-field__dropdown,
+body.single-post .post__form .phone-field__dropdown,
 body.home .contacts .help-select__dropdown,
-body.page-template-page-solutions .contacts .help-select__dropdown {
+body.page-template-page-solutions .contacts .help-select__dropdown,
+body.single-post .post__form .help-select__dropdown,
+.modal .phone-field__dropdown,
+.modal .help-select__dropdown {
     z-index: 20;
 }
 
@@ -9199,19 +9479,22 @@ body.page-template-page-solutions .contacts .help-select__dropdown {
  * правила нет, поэтому перекрываем тёмную заливку прежнего `.contacts`
  * здесь — как у остальных секций страницы.
  */
-body.page-template-page-solutions .contacts {
+body.page-template-page-solutions .contacts,
+body.single-post .post__form {
     background: var(--nv-surface-1);
 }
 
 /* Та же сетка, что у остальных блоков страницы. */
-body.page-template-page-solutions .contacts .container {
+body.page-template-page-solutions .contacts .container,
+body.single-post .post__form .container {
     max-width: 1920px;
     padding-left: 32px;
     padding-right: 32px;
 }
 
 /* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
-body.page-template-page-solutions .contacts .section__badge {
+body.page-template-page-solutions .contacts .section__badge,
+body.single-post .post__form .section__badge {
     padding: 3px 19px;
     border: 1px solid var(--nv-primary);
     background: var(--nv-primary-soft);
@@ -9220,16 +9503,19 @@ body.page-template-page-solutions .contacts .section__badge {
 }
 
 /* 2456:16689 — левая колонка 580, карточка формы забирает остаток. */
-body.page-template-page-solutions .contacts .contacts__content {
+body.page-template-page-solutions .contacts .contacts__content,
+body.single-post .post__form .contacts__content {
     grid-template-columns: 580px minmax(0, 1fr);
 }
 
-body.page-template-page-solutions .contacts .contacts__title-block {
+body.page-template-page-solutions .contacts .contacts__title-block,
+body.single-post .post__form .contacts__title-block {
     max-width: 580px;
 }
 
 /* 2456:16695 — поле 24, кнопки и разделителя в карточке нет. */
-body.page-template-page-solutions .contacts .contacts__card {
+body.page-template-page-solutions .contacts .contacts__card,
+body.single-post .post__form .contacts__card {
     gap: 0;
     padding: 24px;
 }
@@ -9238,7 +9524,8 @@ body.page-template-page-solutions .contacts .contacts__card {
  * Заголовок на всю ширину, под ним «Email us» и «Message us» в ряд.
  * Сетка вместо колонки — чтобы не добавлять обёртку в разметку.
  */
-body.page-template-page-solutions .contacts .contacts__card-info {
+body.page-template-page-solutions .contacts .contacts__card-info,
+body.single-post .post__form .contacts__card-info {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 52px;
@@ -9246,12 +9533,14 @@ body.page-template-page-solutions .contacts .contacts__card-info {
     width: 100%;
 }
 
-body.page-template-page-solutions .contacts .contacts__card-title {
+body.page-template-page-solutions .contacts .contacts__card-title,
+body.single-post .post__form .contacts__card-title {
     grid-column: 1 / -1;
 }
 
 /* 2456:16711 — скругление карточки формы 16, а не 24. */
-body.page-template-page-solutions .contacts .contacts__form-block {
+body.page-template-page-solutions .contacts .contacts__form-block,
+body.single-post .post__form .contacts__form-block {
     border-radius: 16px;
 }
 
@@ -9260,13 +9549,15 @@ body.page-template-page-solutions .contacts .contacts__form-block {
  * это сообщение и согласие. Высота правой колонки выровнена по левой:
  * иначе пришлось бы заводить второй вариант разметки формы.
  */
-body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea) {
+body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
+body.single-post .post__form .input-form-item:has(.input-form-block--textarea) {
     grid-column: 2;
     grid-row: 1 / 4;
     margin-top: 0;
 }
 
-body.page-template-page-solutions .contacts .input-form-item--privacy {
+body.page-template-page-solutions .contacts .input-form-item--privacy,
+body.single-post .post__form .input-form-item--privacy {
     grid-column: 2;
     grid-row: 4;
     align-self: end;
@@ -9274,7 +9565,8 @@ body.page-template-page-solutions .contacts .input-form-item--privacy {
 }
 
 /* Между содержимым формы и кнопкой в макете 24, а не шаг сетки 12. */
-body.page-template-page-solutions .contacts .input-form-action {
+body.page-template-page-solutions .contacts .input-form-action,
+body.single-post .post__form .input-form-action {
     margin-top: 12px;
 }
 
@@ -9284,23 +9576,27 @@ body.page-template-page-solutions .contacts .input-form-action {
      * за левый край экрана (в макете её x = -413 при контейнере 1376).
      */
     body.home .contacts .contacts__content,
-    body.page-template-page-solutions .contacts .contacts__content {
+    body.page-template-page-solutions .contacts .contacts__content,
+    body.single-post .post__form .contacts__content {
         grid-template-columns: 427px minmax(0, 1fr);
     }
 
     body.home .contacts .contacts__form-item-text br,
-    body.page-template-page-solutions .contacts .contacts__form-item-text br {
+    body.page-template-page-solutions .contacts .contacts__form-item-text br,
+    body.single-post .post__form .contacts__form-item-text br {
         display: none;
     }
 
     /* На Desktop макетная карточка выгоды 128 — зазор между значком и текстом возвращается. */
     body.home .contacts .contacts__form-item,
-    body.page-template-page-solutions .contacts .contacts__form-item {
+    body.page-template-page-solutions .contacts .contacts__form-item,
+    body.single-post .post__form .contacts__form-item {
         gap: 24px;
     }
 
     body.home .contacts .contacts__card,
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         margin-left: calc(-1 * var(--nv-bleed));
         width: calc(100% + var(--nv-bleed));
         border-radius: 0 var(--Frame-Card-Padding-Corner, 24px) var(--Frame-Card-Padding-Corner, 24px) 0;
@@ -9311,7 +9607,9 @@ body.page-template-page-solutions .contacts .input-form-action {
      * разделители между группами возвращаются.
      */
     body.home .contacts .contacts__form,
-    body.page-template-page-solutions .contacts .contacts__form {
+    body.page-template-page-solutions .contacts .contacts__form,
+    body.single-post .post__form .contacts__form,
+    .modal .contacts__form {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
@@ -9319,12 +9617,16 @@ body.page-template-page-solutions .contacts .input-form-action {
     }
 
     body.home .contacts .contacts__form > *,
-    body.page-template-page-solutions .contacts .contacts__form > * {
+    body.page-template-page-solutions .contacts .contacts__form > *,
+    body.single-post .post__form .contacts__form > *,
+    .modal .contacts__form > * {
         flex: 1 1 100%;
     }
 
     body.home .contacts .input-form-item--50,
-    body.page-template-page-solutions .contacts .input-form-item--50 {
+    body.page-template-page-solutions .contacts .input-form-item--50,
+    body.single-post .post__form .input-form-item--50,
+    .modal .input-form-item--50 {
         flex: 1 1 calc(50% - 12px);
         min-width: 300px;
         grid-column: auto;
@@ -9332,42 +9634,55 @@ body.page-template-page-solutions .contacts .input-form-action {
 
     body.home .contacts .input-form-item.help-select,
     body.page-template-page-solutions .contacts .input-form-item.help-select,
+    body.single-post .post__form .input-form-item.help-select,
     body.home .contacts .input-form-item:has(.input-form-block--textarea),
-    body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea) {
+    body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
+    body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
+    .modal .input-form-item.help-select,
+    .modal .input-form-item:has(.input-form-block--textarea) {
         grid-column: auto;
         grid-row: auto;
         margin-top: 0;
     }
 
     body.home .contacts .input-form-block--textarea textarea,
-    body.page-template-page-solutions .contacts .input-form-block--textarea textarea {
+    body.page-template-page-solutions .contacts .input-form-block--textarea textarea,
+    body.single-post .post__form .input-form-block--textarea textarea,
+    .modal .input-form-block--textarea textarea {
         height: auto;
         min-height: 128px;
         resize: vertical;
     }
 
     body.home .contacts .contacts__form-line,
-    body.page-template-page-solutions .contacts .contacts__form-line {
+    body.page-template-page-solutions .contacts .contacts__form-line,
+    body.single-post .post__form .contacts__form-line,
+    .modal .contacts__form-line {
         display: block;
     }
 
     body.home .contacts .input-form-item--privacy,
-    body.page-template-page-solutions .contacts .input-form-item--privacy {
+    body.page-template-page-solutions .contacts .input-form-item--privacy,
+    body.single-post .post__form .input-form-item--privacy,
+    .modal .input-form-item--privacy {
         margin-top: 0;
         padding-top: 0;
         border-top: 0;
     }
 
     /* 2398:25441 — левая колонка 443, вылета карточки за край экрана нет. */
-    body.page-template-page-solutions .contacts .contacts__content {
+    body.page-template-page-solutions .contacts .contacts__content,
+    body.single-post .post__form .contacts__content {
         grid-template-columns: 443px minmax(0, 1fr);
     }
 
-    body.page-template-page-solutions .contacts .contacts__title-block {
+    body.page-template-page-solutions .contacts .contacts__title-block,
+    body.single-post .post__form .contacts__title-block {
         max-width: 427px;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         margin-left: 0;
         width: 100%;
         border-radius: var(--Frame-Card-Padding-Corner, 24px);
@@ -9377,7 +9692,8 @@ body.page-template-page-solutions .contacts .input-form-action {
      * 2398:25267 / 2398:25270 — вокруг разделителей 24, а между полями
      * остаётся шаг сетки 12, поэтому добираем полями самого разделителя.
      */
-    body.page-template-page-solutions .contacts .contacts__form-line {
+    body.page-template-page-solutions .contacts .contacts__form-line,
+    body.single-post .post__form .contacts__form-line {
         margin: 12px 0;
     }
 
@@ -9413,58 +9729,67 @@ body.page-template-page-solutions .contacts .input-form-action {
 
     /* Карточки выгод 368×90 с зазорами 8 по обеим осям (2376:17626). */
     body.home .contacts .contacts__form-list,
-    body.page-template-page-solutions .contacts .contacts__form-list {
+    body.page-template-page-solutions .contacts .contacts__form-list,
+    body.single-post .post__form .contacts__form-list {
         gap: 8px;
     }
 
     body.home .contacts .contacts__form-item,
-    body.page-template-page-solutions .contacts .contacts__form-item {
+    body.page-template-page-solutions .contacts .contacts__form-item,
+    body.single-post .post__form .contacts__form-item {
         gap: 8px;
     }
 
     /* Вылета за край экрана на планшете в макете нет. */
     body.home .contacts .contacts__card,
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         margin-left: 0;
         width: 100%;
         border-radius: var(--Frame-Card-Padding-Corner, 24px);
     }
 
     body.home .contacts .contacts__content,
-    body.page-template-page-solutions .contacts .contacts__content {
+    body.page-template-page-solutions .contacts .contacts__content,
+    body.single-post .post__form .contacts__content {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
     body.home .contacts .contacts__title-block,
-    body.page-template-page-solutions .contacts .contacts__title-block {
+    body.page-template-page-solutions .contacts .contacts__title-block,
+    body.single-post .post__form .contacts__title-block {
         order: 1;
         max-width: none;
     }
 
     body.home .contacts .contacts__form-block,
-    body.page-template-page-solutions .contacts .contacts__form-block {
+    body.page-template-page-solutions .contacts .contacts__form-block,
+    body.single-post .post__form .contacts__form-block {
         order: 2;
         padding: 15px;
     }
 
     /* В колонке flex `align-self: end` из старых правил сжимал бы блок по контенту. */
     body.home .contacts .contacts__actions,
-    body.page-template-page-solutions .contacts .contacts__actions {
+    body.page-template-page-solutions .contacts .contacts__actions,
+    body.single-post .post__form .contacts__actions {
         order: 3;
         align-self: stretch;
         width: 100%;
     }
 
     body.home .contacts .contacts__form-list,
-    body.page-template-page-solutions .contacts .contacts__form-list {
+    body.page-template-page-solutions .contacts .contacts__form-list,
+    body.single-post .post__form .contacts__form-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     /* Карточка: слева контакты, справа снизу кнопка; разделителя в макете нет. */
     body.home .contacts .contacts__card,
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         align-items: end;
@@ -9474,20 +9799,24 @@ body.page-template-page-solutions .contacts .input-form-action {
 
     body.home .contacts .contacts__card-icon,
     body.page-template-page-solutions .contacts .contacts__card-icon,
+    body.single-post .post__form .contacts__card-icon,
     body.home .contacts .contacts__card-info,
-    body.page-template-page-solutions .contacts .contacts__card-info {
+    body.page-template-page-solutions .contacts .contacts__card-info,
+    body.single-post .post__form .contacts__card-info {
         grid-column: 1;
         width: auto;
     }
 
     body.home .contacts .contacts__card-line,
-    body.page-template-page-solutions .contacts .contacts__card-line {
+    body.page-template-page-solutions .contacts .contacts__card-line,
+    body.single-post .post__form .contacts__card-line {
         display: none;
     }
 
     /* `-1` без явных строк схлопывается в первую — считаем через span. */
     body.home .contacts .contacts__card-action,
-    body.page-template-page-solutions .contacts .contacts__card-action {
+    body.page-template-page-solutions .contacts .contacts__card-action,
+    body.single-post .post__form .contacts__card-action {
         grid-column: 2;
         grid-row: 1 / span 2;
         align-self: end;
@@ -9495,19 +9824,22 @@ body.page-template-page-solutions .contacts .input-form-action {
     }
 
     body.home .contacts .contacts__card-info,
-    body.page-template-page-solutions .contacts .contacts__card-info {
+    body.page-template-page-solutions .contacts .contacts__card-info,
+    body.single-post .post__form .contacts__card-info {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 16px 24px;
     }
 
     body.home .contacts .contacts__card-title,
-    body.page-template-page-solutions .contacts .contacts__card-title {
+    body.page-template-page-solutions .contacts .contacts__card-title,
+    body.single-post .post__form .contacts__card-title {
         flex: 1 1 100%;
     }
 
     body.home .contacts .contacts__card-item,
-    body.page-template-page-solutions .contacts .contacts__card-item {
+    body.page-template-page-solutions .contacts .contacts__card-item,
+    body.single-post .post__form .contacts__card-item {
         flex: 0 1 197px;
     }
 
@@ -9515,30 +9847,35 @@ body.page-template-page-solutions .contacts .input-form-action {
      * Tablet 2457:17398. Порядок блоков тот же, что на главной, но между
      * заголовком и формой 48, а между формой и карточкой 16.
      */
-    body.page-template-page-solutions .contacts .contacts__content {
+    body.page-template-page-solutions .contacts .contacts__content,
+    body.single-post .post__form .contacts__content {
         gap: 16px;
     }
 
-    body.page-template-page-solutions .contacts .contacts__title-block {
+    body.page-template-page-solutions .contacts .contacts__title-block,
+    body.single-post .post__form .contacts__title-block {
         margin-bottom: 32px;
     }
 
     /* 2457:17406 — поле 16, слева заголовок, справа контакты. */
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         display: block;
         /* Старое правило сдвигало карточку за край экрана — в макете этого нет. */
         transform: none;
         padding: 16px;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card-info {
+    body.page-template-page-solutions .contacts .contacts__card-info,
+    body.single-post .post__form .contacts__card-info {
         grid-template-columns: minmax(0, 1fr) auto auto;
         align-items: start;
         column-gap: 52px;
         row-gap: 0;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card-title {
+    body.page-template-page-solutions .contacts .contacts__card-title,
+    body.single-post .post__form .contacts__card-title {
         grid-column: 1;
         align-self: center;
     }
@@ -9569,81 +9906,96 @@ body.page-template-page-solutions .contacts .input-form-action {
 @media (max-width: 767.98px) {
     /* Мобильного макета нет: поля в одну колонку, карточка — колонкой. */
     body.home .contacts .input-form-item--50,
-    body.page-template-page-solutions .contacts .input-form-item--50 {
+    body.page-template-page-solutions .contacts .input-form-item--50,
+    body.single-post .post__form .input-form-item--50,
+    .modal .input-form-item--50 {
         flex: 1 1 100%;
         min-width: 0;
     }
 
     body.home .contacts .contacts__form-list,
-    body.page-template-page-solutions .contacts .contacts__form-list {
+    body.page-template-page-solutions .contacts .contacts__form-list,
+    body.single-post .post__form .contacts__form-list {
         grid-template-columns: minmax(0, 1fr);
     }
 
     body.home .contacts .contacts__card,
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         grid-template-columns: minmax(0, 1fr);
         padding: 16px;
     }
 
     body.home .contacts .contacts__card-action,
-    body.page-template-page-solutions .contacts .contacts__card-action {
+    body.page-template-page-solutions .contacts .contacts__card-action,
+    body.single-post .post__form .contacts__card-action {
         grid-column: 1;
         grid-row: auto;
         justify-content: flex-start;
     }
 
     body.home .contacts .contacts__card-info,
-    body.page-template-page-solutions .contacts .contacts__card-info {
+    body.page-template-page-solutions .contacts .contacts__card-info,
+    body.single-post .post__form .contacts__card-info {
         flex-direction: column;
     }
 
     /* Mobile 2467:18083 — поле секции 32, карточки 12, скругление 12. */
-    body.page-template-page-solutions .contacts {
+    body.page-template-page-solutions .contacts,
+    body.single-post .post__form {
         padding: 32px 0 0;
     }
 
-    body.page-template-page-solutions .contacts .container {
+    body.page-template-page-solutions .contacts .container,
+    body.single-post .post__form .container {
         padding-left: 16px;
         padding-right: 16px;
     }
 
     /* Бейдж 87x24: Body text/Regular 14/20. */
-    body.page-template-page-solutions .contacts .section__badge {
+    body.page-template-page-solutions .contacts .section__badge,
+    body.single-post .post__form .section__badge {
         padding: 1px 14px;
         font-size: 14px;
         line-height: 142.857%;
     }
 
     /* Title/H2 32/44, Title/H5 16/20. */
-    body.page-template-page-solutions .contacts .contacts__title-block .section__title {
+    body.page-template-page-solutions .contacts .contacts__title-block .section__title,
+    body.single-post .post__form .contacts__title-block .section__title {
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 137.5%;
     }
 
-    body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle {
+    body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
+    body.single-post .post__form .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
         line-height: 125%;
     }
 
-    body.page-template-page-solutions .contacts .contacts__form-block {
+    body.page-template-page-solutions .contacts .contacts__form-block,
+    body.single-post .post__form .contacts__form-block {
         padding: 11px;
         border-radius: 12px;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card {
+    body.page-template-page-solutions .contacts .contacts__card,
+    body.single-post .post__form .contacts__card {
         padding: 12px;
         border-radius: 12px;
     }
 
     /* 2467:18110 — заголовок сверху, под ним «Email us» и «Message us» в ряд. */
-    body.page-template-page-solutions .contacts .contacts__card-info {
+    body.page-template-page-solutions .contacts .contacts__card-info,
+    body.single-post .post__form .contacts__card-info {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: 60px;
         row-gap: 32px;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card-title {
+    body.page-template-page-solutions .contacts .contacts__card-title,
+    body.single-post .post__form .contacts__card-title {
         grid-column: 1 / -1;
         align-self: start;
         font-size: var(--Text-Title-Size-H5, 16px);
@@ -9651,12 +10003,14 @@ body.page-template-page-solutions .contacts .input-form-action {
     }
 
     /* Body text/Small 12/16 и Button/Regular 16/20. */
-    body.page-template-page-solutions .contacts .contacts__card-item-name {
+    body.page-template-page-solutions .contacts .contacts__card-item-name,
+    body.single-post .post__form .contacts__card-item-name {
         font-size: var(--Text-Body-Text-Size-Small, 12px);
         line-height: 133.333%;
     }
 
-    body.page-template-page-solutions .contacts .contacts__card-item-link {
+    body.page-template-page-solutions .contacts .contacts__card-item-link,
+    body.single-post .post__form .contacts__card-item-link {
         font-size: var(--Text-Button-Size-Regular, 16px);
         line-height: 125%;
     }
@@ -9671,34 +10025,46 @@ body.page-template-page-solutions .contacts .input-form-action {
 
 @media (max-width: 575.98px) {
     body.home .contacts .contacts__title-block .section__title,
-    body.page-template-page-solutions .contacts .contacts__title-block .section__title {
+    body.page-template-page-solutions .contacts .contacts__title-block .section__title,
+    body.single-post .post__form .contacts__title-block .section__title {
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 125%;
     }
 
     body.home .contacts .contacts__form-block,
-    body.page-template-page-solutions .contacts .contacts__form-block {
+    body.page-template-page-solutions .contacts .contacts__form-block,
+    body.single-post .post__form .contacts__form-block {
         padding: 11px;
     }
 
     body.home .contacts .input-form,
     body.page-template-page-solutions .contacts .input-form,
+    body.single-post .post__form .input-form,
     body.home .contacts .phone-field__input,
     body.page-template-page-solutions .contacts .phone-field__input,
+    body.single-post .post__form .phone-field__input,
     body.home .contacts .contacts__form textarea,
     body.page-template-page-solutions .contacts .contacts__form textarea,
+    body.single-post .post__form .contacts__form textarea,
     body.home .contacts .help-select__button,
-    body.page-template-page-solutions .contacts .help-select__button {
+    body.page-template-page-solutions .contacts .help-select__button,
+    body.single-post .post__form .help-select__button,
+    .modal .input-form,
+    .modal .phone-field__input,
+    .modal .contacts__form textarea,
+    .modal .help-select__button {
         font-size: var(--Text-Body-Text-Size-Regular, 16px);
         line-height: 150%;
     }
 
     /* Mobile 2467:18088 — заголовок 32/44, подзаголовок 16/20. */
-    body.page-template-page-solutions .contacts .contacts__title-block .section__title {
+    body.page-template-page-solutions .contacts .contacts__title-block .section__title,
+    body.single-post .post__form .contacts__title-block .section__title {
         line-height: 137.5%;
     }
 
-    body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle {
+    body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
+    body.single-post .post__form .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
         line-height: 125%;
     }
@@ -9945,16 +10311,20 @@ body.page-template-page-solutions .contacts .input-form-action {
  * Светлый тизер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
  * `2380:23846`, Tablet 840 — `2376:17671`.
  *
- * `template-parts/teaser.php` подключается на всех шаблонах темы, поэтому все
- * правила ниже — только под `body.home`; тёмная версия остальных страниц
- * остаётся на прежних правилах блока `teaser`.
+ * `template-parts/teaser.php` подключается на всех шаблонах темы, поэтому
+ * правила ниже ограничены светлыми шаблонами (`body.home`, `page-solutions.php`,
+ * `page-privacy.php`); тёмная версия остальных страниц остаётся на прежних
+ * правилах блока `teaser`.
  *
  * Вертикаль макета: Page edge 64 + отступ секции 64 + логотип 100 + 32 + текст,
  * снизу 64 до карточки футера.
  */
 
 body.home .teaser,
-body.page-template-page-solutions .teaser {
+body.page-template-page-solutions .teaser,
+body.page-template-page-privacy .teaser,
+body.page-template-page-price-matrix .teaser,
+body.single-post .teaser {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -9963,7 +10333,10 @@ body.page-template-page-solutions .teaser {
 
 /* «Page edge» из макета — скруглённый низ контентной области страницы. */
 body.home .teaser::before,
-body.page-template-page-solutions .teaser::before {
+body.page-template-page-solutions .teaser::before,
+body.page-template-page-privacy .teaser::before,
+body.page-template-page-price-matrix .teaser::before,
+body.single-post .teaser::before {
     content: '';
     position: absolute;
     top: 0;
@@ -9978,48 +10351,72 @@ body.page-template-page-solutions .teaser::before {
 
 /* Тёплое свечение тёмной темы в светлом макете не используется. */
 body.home .teaser::after,
-body.page-template-page-solutions .teaser::after {
+body.page-template-page-solutions .teaser::after,
+body.page-template-page-privacy .teaser::after,
+body.page-template-page-price-matrix .teaser::after,
+body.single-post .teaser::after {
     display: none;
 }
 
 body.home .teaser__wrapper,
-body.page-template-page-solutions .teaser__wrapper {
+body.page-template-page-solutions .teaser__wrapper,
+body.page-template-page-privacy .teaser__wrapper,
+body.page-template-page-price-matrix .teaser__wrapper,
+body.single-post .teaser__wrapper {
     gap: 32px;
     padding-bottom: 64px;
     padding-top: 128px;
 }
 
 body.home .teaser__logo,
-body.page-template-page-solutions .teaser__logo {
+body.page-template-page-solutions .teaser__logo,
+body.page-template-page-privacy .teaser__logo,
+body.page-template-page-price-matrix .teaser__logo,
+body.single-post .teaser__logo {
     border: 1px solid var(--nv-surface-4);
     background: var(--nv-surface-3);
 }
 
 body.home .teaser__logo-image,
-body.page-template-page-solutions .teaser__logo-image {
+body.page-template-page-solutions .teaser__logo-image,
+body.page-template-page-privacy .teaser__logo-image,
+body.page-template-page-price-matrix .teaser__logo-image,
+body.single-post .teaser__logo-image {
     background: var(--nv-surface-2);
 }
 
 body.home .teaser__info,
-body.page-template-page-solutions .teaser__info {
+body.page-template-page-solutions .teaser__info,
+body.page-template-page-privacy .teaser__info,
+body.page-template-page-price-matrix .teaser__info,
+body.single-post .teaser__info {
     width: 100%;
     gap: 16px;
 }
 
 body.home .teaser__title,
-body.page-template-page-solutions .teaser__title {
+body.page-template-page-solutions .teaser__title,
+body.page-template-page-privacy .teaser__title,
+body.page-template-page-price-matrix .teaser__title,
+body.single-post .teaser__title {
     max-width: none;
     color: var(--nv-object-1);
 }
 
 /* Full HD — заголовок в одну строку. */
 body.home .teaser__title br,
-body.page-template-page-solutions .teaser__title br {
+body.page-template-page-solutions .teaser__title br,
+body.page-template-page-privacy .teaser__title br,
+body.page-template-page-price-matrix .teaser__title br,
+body.single-post .teaser__title br {
     display: none;
 }
 
 body.home .teaser__subtitle,
-body.page-template-page-solutions .teaser__subtitle {
+body.page-template-page-solutions .teaser__subtitle,
+body.page-template-page-privacy .teaser__subtitle,
+body.page-template-page-price-matrix .teaser__subtitle,
+body.single-post .teaser__subtitle {
     color: var(--nv-primary);
     font-size: 16px;
     line-height: 150%;
@@ -10028,7 +10425,10 @@ body.page-template-page-solutions .teaser__subtitle {
 @media (max-width: 1599.98px) {
     /* Desktop 1440 — перенос после «Platform» из макета. */
     body.home .teaser__title br,
-    body.page-template-page-solutions .teaser__title br {
+    body.page-template-page-solutions .teaser__title br,
+    body.page-template-page-privacy .teaser__title br,
+    body.page-template-page-price-matrix .teaser__title br,
+    body.single-post .teaser__title br {
         display: inline;
     }
 }
@@ -10040,7 +10440,10 @@ body.page-template-page-solutions .teaser__subtitle {
 @media (max-width: 1199.98px) {
     /* Маскота в светлом футере нет — запас под него не нужен. */
     body.home .teaser__wrapper,
-    body.page-template-page-solutions .teaser__wrapper {
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
         padding-bottom: 64px;
     }
 }
@@ -10048,12 +10451,18 @@ body.page-template-page-solutions .teaser__subtitle {
 @media (max-width: 991.98px) {
     /* Tablet 840 — перенос по ширине контейнера. */
     body.home .teaser__title br,
-    body.page-template-page-solutions .teaser__title br {
+    body.page-template-page-solutions .teaser__title br,
+    body.page-template-page-privacy .teaser__title br,
+    body.page-template-page-price-matrix .teaser__title br,
+    body.single-post .teaser__title br {
         display: none;
     }
     /* В планшетном макете до карточки футера 128px, а не 64 (2376:17671). */
     body.home .teaser__wrapper,
-    body.page-template-page-solutions .teaser__wrapper {
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
         padding-bottom: 128px;
     }
 }
@@ -10061,19 +10470,28 @@ body.page-template-page-solutions .teaser__subtitle {
 @media (max-width: 767.98px) {
     /* Ниже 768 макета нет — возвращаем отступ темы. */
     body.home .teaser__wrapper,
-    body.page-template-page-solutions .teaser__wrapper {
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
         padding-top: 96px;
         padding-bottom: 64px;
     }
     body.home .teaser__title,
-    body.page-template-page-solutions .teaser__title {
+    body.page-template-page-solutions .teaser__title,
+    body.page-template-page-privacy .teaser__title,
+    body.page-template-page-price-matrix .teaser__title,
+    body.single-post .teaser__title {
         font-size: 32px;
     }
 }
 
 @media (max-width: 575.98px) {
     body.home .teaser__title,
-    body.page-template-page-solutions .teaser__title {
+    body.page-template-page-solutions .teaser__title,
+    body.page-template-page-privacy .teaser__title,
+    body.page-template-page-price-matrix .teaser__title,
+    body.single-post .teaser__title {
         font-size: 28px;
     }
 }
@@ -10391,16 +10809,21 @@ body.page-template-page-solutions .teaser__subtitle {
  * Светлый футер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
  * `2380:23846`, Tablet 840 — `2376:17671`, ховеры — `2386:37529`.
  *
- * Разметка — `template-parts/footer-home.php`, выводится только на главной.
- * Футер глобальный, поэтому каждый селектор начинается с `body.home .footer`:
- * тёмная версия на остальных страницах остаётся на правилах блока FOOTER выше.
+ * Разметка — `template-parts/footer-home.php`, выводится на светлых шаблонах
+ * (условие `nv_is_light_theme()`). Футер глобальный, поэтому каждый селектор
+ * ограничен `body.home` / `body.page-template-page-solutions` /
+ * `body.page-template-page-privacy`: тёмная версия на остальных страницах
+ * остаётся на правилах блока FOOTER выше.
  *
  * Базовый уровень — Full HD. Desktop — в `max-width: 1599.98px`, Tablet — в
  * `max-width: 991.98px`. Ниже 768 макета нет, раскладка подобрана по логике темы.
  */
 
 body.home .footer,
-body.page-template-page-solutions .footer {
+body.page-template-page-solutions .footer,
+body.page-template-page-privacy .footer,
+body.page-template-page-price-matrix .footer,
+body.single-post .footer {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -10409,7 +10832,10 @@ body.page-template-page-solutions .footer {
 
 /* Карточка футера. Обводка в Figma внутренняя, поэтому паддинг минус её ширина. */
 body.home .footer__wrapper,
-body.page-template-page-solutions .footer__wrapper {
+body.page-template-page-solutions .footer__wrapper,
+body.page-template-page-privacy .footer__wrapper,
+body.page-template-page-price-matrix .footer__wrapper,
+body.single-post .footer__wrapper {
     gap: 32px;
     padding: 63px 31px 32px;
     border-width: 1px 1px 0;
@@ -10420,7 +10846,10 @@ body.page-template-page-solutions .footer__wrapper {
 }
 
 body.home .footer__top,
-body.page-template-page-solutions .footer__top {
+body.page-template-page-solutions .footer__top,
+body.page-template-page-privacy .footer__top,
+body.page-template-page-price-matrix .footer__top,
+body.single-post .footer__top {
     align-items: flex-start;
     gap: 0;
 }
@@ -10428,7 +10857,10 @@ body.page-template-page-solutions .footer__top {
 /* --- Левая колонка: логотип, слоган, реквизиты, сертификаты --- */
 
 body.home .footer__info,
-body.page-template-page-solutions .footer__info {
+body.page-template-page-solutions .footer__info,
+body.page-template-page-privacy .footer__info,
+body.page-template-page-price-matrix .footer__info,
+body.single-post .footer__info {
     flex: 1 0 0;
     max-width: none;
     justify-content: flex-start;
@@ -10436,28 +10868,40 @@ body.page-template-page-solutions .footer__info {
 }
 
 body.home .footer__brand,
-body.page-template-page-solutions .footer__brand {
+body.page-template-page-solutions .footer__brand,
+body.page-template-page-privacy .footer__brand,
+body.page-template-page-price-matrix .footer__brand,
+body.single-post .footer__brand {
     display: flex;
     flex-direction: column;
     gap: 32px;
 }
 
 body.home .footer__logo-image,
-body.page-template-page-solutions .footer__logo-image {
+body.page-template-page-solutions .footer__logo-image,
+body.page-template-page-privacy .footer__logo-image,
+body.page-template-page-price-matrix .footer__logo-image,
+body.single-post .footer__logo-image {
     display: block;
     width: 302px;
     line-height: 0;
 }
 
 body.home .footer__logo-image img,
-body.page-template-page-solutions .footer__logo-image img {
+body.page-template-page-solutions .footer__logo-image img,
+body.page-template-page-privacy .footer__logo-image img,
+body.page-template-page-price-matrix .footer__logo-image img,
+body.single-post .footer__logo-image img {
     display: block;
     width: 100%;
     height: auto;
 }
 
 body.home .footer__tagline,
-body.page-template-page-solutions .footer__tagline {
+body.page-template-page-solutions .footer__tagline,
+body.page-template-page-privacy .footer__tagline,
+body.page-template-page-price-matrix .footer__tagline,
+body.single-post .footer__tagline {
     color: var(--nv-primary);
     font-size: 24px;
     font-weight: 700;
@@ -10465,21 +10909,30 @@ body.page-template-page-solutions .footer__tagline {
 }
 
 body.home .footer__details,
-body.page-template-page-solutions .footer__details {
+body.page-template-page-solutions .footer__details,
+body.page-template-page-privacy .footer__details,
+body.page-template-page-price-matrix .footer__details,
+body.single-post .footer__details {
     display: flex;
     align-items: flex-start;
     gap: 32px;
 }
 
 body.home .footer__legal,
-body.page-template-page-solutions .footer__legal {
+body.page-template-page-solutions .footer__legal,
+body.page-template-page-privacy .footer__legal,
+body.page-template-page-price-matrix .footer__legal,
+body.single-post .footer__legal {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
 body.home .footer__legal-name,
-body.page-template-page-solutions .footer__legal-name {
+body.page-template-page-solutions .footer__legal-name,
+body.page-template-page-privacy .footer__legal-name,
+body.page-template-page-price-matrix .footer__legal-name,
+body.single-post .footer__legal-name {
     color: var(--nv-object-1);
     font-size: 18px;
     font-weight: 500;
@@ -10487,7 +10940,10 @@ body.page-template-page-solutions .footer__legal-name {
 }
 
 body.home .footer__legal-address,
-body.page-template-page-solutions .footer__legal-address {
+body.page-template-page-solutions .footer__legal-address,
+body.page-template-page-privacy .footer__legal-address,
+body.page-template-page-price-matrix .footer__legal-address,
+body.single-post .footer__legal-address {
     color: var(--nv-object-2);
     font-size: 16px;
     font-weight: 400;
@@ -10496,7 +10952,10 @@ body.page-template-page-solutions .footer__legal-address {
 
 /* В Full HD значки стоят слева от реквизитов, ниже — под ними. */
 body.home .footer__badges,
-body.page-template-page-solutions .footer__badges {
+body.page-template-page-solutions .footer__badges,
+body.page-template-page-privacy .footer__badges,
+body.page-template-page-price-matrix .footer__badges,
+body.single-post .footer__badges {
     display: flex;
     align-items: center;
     order: -1;
@@ -10504,13 +10963,19 @@ body.page-template-page-solutions .footer__badges {
 }
 
 body.home .footer__badge,
-body.page-template-page-solutions .footer__badge {
+body.page-template-page-solutions .footer__badge,
+body.page-template-page-privacy .footer__badge,
+body.page-template-page-price-matrix .footer__badge,
+body.single-post .footer__badge {
     display: block;
     line-height: 0;
 }
 
 body.home .footer__badge img,
-body.page-template-page-solutions .footer__badge img {
+body.page-template-page-solutions .footer__badge img,
+body.page-template-page-privacy .footer__badge img,
+body.page-template-page-price-matrix .footer__badge img,
+body.single-post .footer__badge img {
     display: block;
     width: auto;
     height: 64px;
@@ -10518,7 +10983,10 @@ body.page-template-page-solutions .footer__badge img {
 
 /* Круглый значок в макете обрезан по окружности с небольшим зумом. */
 body.home .footer__badge--round,
-body.page-template-page-solutions .footer__badge--round {
+body.page-template-page-solutions .footer__badge--round,
+body.page-template-page-privacy .footer__badge--round,
+body.page-template-page-price-matrix .footer__badge--round,
+body.single-post .footer__badge--round {
     position: relative;
     width: 64px;
     height: 64px;
@@ -10527,7 +10995,10 @@ body.page-template-page-solutions .footer__badge--round {
 }
 
 body.home .footer__badge--round img,
-body.page-template-page-solutions .footer__badge--round img {
+body.page-template-page-solutions .footer__badge--round img,
+body.page-template-page-privacy .footer__badge--round img,
+body.page-template-page-price-matrix .footer__badge--round img,
+body.single-post .footer__badge--round img {
     position: absolute;
     top: -4.75%;
     left: -9.54%;
@@ -10538,19 +11009,28 @@ body.page-template-page-solutions .footer__badge--round img {
 /* --- Навигация --- */
 
 body.home .footer__navigation,
-body.page-template-page-solutions .footer__navigation {
+body.page-template-page-solutions .footer__navigation,
+body.page-template-page-privacy .footer__navigation,
+body.page-template-page-price-matrix .footer__navigation,
+body.single-post .footer__navigation {
     flex: 1 0 0;
     justify-content: flex-start;
     gap: 96px;
 }
 
 body.home .footer__nav,
-body.page-template-page-solutions .footer__nav {
+body.page-template-page-solutions .footer__nav,
+body.page-template-page-privacy .footer__nav,
+body.page-template-page-price-matrix .footer__nav,
+body.single-post .footer__nav {
     gap: 32px;
 }
 
 body.home .footer__nav-title,
-body.page-template-page-solutions .footer__nav-title {
+body.page-template-page-solutions .footer__nav-title,
+body.page-template-page-privacy .footer__nav-title,
+body.page-template-page-price-matrix .footer__nav-title,
+body.single-post .footer__nav-title {
     color: var(--nv-primary);
     font-size: 18px;
     font-weight: 500;
@@ -10558,7 +11038,10 @@ body.page-template-page-solutions .footer__nav-title {
 }
 
 body.home .footer__nav-list,
-body.page-template-page-solutions .footer__nav-list {
+body.page-template-page-solutions .footer__nav-list,
+body.page-template-page-privacy .footer__nav-list,
+body.page-template-page-price-matrix .footer__nav-list,
+body.single-post .footer__nav-list {
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 16px;
@@ -10566,7 +11049,10 @@ body.page-template-page-solutions .footer__nav-list {
 
 /* Шесть продуктов в макете разложены в две колонки по три. */
 body.home .footer__nav--products .footer__nav-list,
-body.page-template-page-solutions .footer__nav--products .footer__nav-list {
+body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+body.single-post .footer__nav--products .footer__nav-list {
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(3, auto);
@@ -10576,7 +11062,10 @@ body.page-template-page-solutions .footer__nav--products .footer__nav-list {
 }
 
 body.home .footer__nav-link,
-body.page-template-page-solutions .footer__nav-link {
+body.page-template-page-solutions .footer__nav-link,
+body.page-template-page-privacy .footer__nav-link,
+body.page-template-page-price-matrix .footer__nav-link,
+body.single-post .footer__nav-link {
     width: auto;
     color: var(--nv-object-1);
     font-size: 18px;
@@ -10588,15 +11077,24 @@ body.page-template-page-solutions .footer__nav-link {
 
 body.home .footer__nav-link:hover,
 body.page-template-page-solutions .footer__nav-link:hover,
+body.page-template-page-privacy .footer__nav-link:hover,
+body.page-template-page-price-matrix .footer__nav-link:hover,
+body.single-post .footer__nav-link:hover,
 body.home .footer__nav-link:focus-visible,
-body.page-template-page-solutions .footer__nav-link:focus-visible {
+body.page-template-page-solutions .footer__nav-link:focus-visible,
+body.page-template-page-privacy .footer__nav-link:focus-visible,
+body.page-template-page-price-matrix .footer__nav-link:focus-visible,
+body.single-post .footer__nav-link:focus-visible {
     color: var(--nv-primary);
 }
 
 /* --- Правая колонка: почта и соцсети --- */
 
 body.home .footer__aside,
-body.page-template-page-solutions .footer__aside {
+body.page-template-page-solutions .footer__aside,
+body.page-template-page-privacy .footer__aside,
+body.page-template-page-price-matrix .footer__aside,
+body.single-post .footer__aside {
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
@@ -10606,7 +11104,10 @@ body.page-template-page-solutions .footer__aside {
 }
 
 body.home .footer__contacts,
-body.page-template-page-solutions .footer__contacts {
+body.page-template-page-solutions .footer__contacts,
+body.page-template-page-privacy .footer__contacts,
+body.page-template-page-price-matrix .footer__contacts,
+body.single-post .footer__contacts {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -10614,8 +11115,14 @@ body.page-template-page-solutions .footer__contacts {
 
 body.home .footer__contacts-title,
 body.page-template-page-solutions .footer__contacts-title,
+body.page-template-page-privacy .footer__contacts-title,
+body.page-template-page-price-matrix .footer__contacts-title,
+body.single-post .footer__contacts-title,
 body.home .footer__social-title,
-body.page-template-page-solutions .footer__social-title {
+body.page-template-page-solutions .footer__social-title,
+body.page-template-page-privacy .footer__social-title,
+body.page-template-page-price-matrix .footer__social-title,
+body.single-post .footer__social-title {
     color: var(--nv-object-1);
     font-size: 18px;
     font-weight: 500;
@@ -10623,13 +11130,19 @@ body.page-template-page-solutions .footer__social-title {
 }
 
 body.home .footer__contacts-list,
-body.page-template-page-solutions .footer__contacts-list {
+body.page-template-page-solutions .footer__contacts-list,
+body.page-template-page-privacy .footer__contacts-list,
+body.page-template-page-price-matrix .footer__contacts-list,
+body.single-post .footer__contacts-list {
     display: flex;
     align-items: flex-start;
 }
 
 body.home .footer__mail,
-body.page-template-page-solutions .footer__mail {
+body.page-template-page-solutions .footer__mail,
+body.page-template-page-privacy .footer__mail,
+body.page-template-page-price-matrix .footer__mail,
+body.single-post .footer__mail {
     display: inline-flex;
     align-items: center;
     padding: 5px 5px 5px 11px;
@@ -10648,32 +11161,50 @@ body.page-template-page-solutions .footer__mail {
 
 body.home .footer__mail:hover,
 body.page-template-page-solutions .footer__mail:hover,
+body.page-template-page-privacy .footer__mail:hover,
+body.page-template-page-price-matrix .footer__mail:hover,
+body.single-post .footer__mail:hover,
 body.home .footer__mail:focus-visible,
-body.page-template-page-solutions .footer__mail:focus-visible {
+body.page-template-page-solutions .footer__mail:focus-visible,
+body.page-template-page-privacy .footer__mail:focus-visible,
+body.page-template-page-price-matrix .footer__mail:focus-visible,
+body.single-post .footer__mail:focus-visible {
     background: var(--nv-surface-3);
     color: var(--nv-primary);
 }
 
 body.home .footer__mail-icon,
-body.page-template-page-solutions .footer__mail-icon {
+body.page-template-page-solutions .footer__mail-icon,
+body.page-template-page-privacy .footer__mail-icon,
+body.page-template-page-price-matrix .footer__mail-icon,
+body.single-post .footer__mail-icon {
     display: flex;
     line-height: 0;
 }
 
 body.home .footer__social,
-body.page-template-page-solutions .footer__social {
+body.page-template-page-solutions .footer__social,
+body.page-template-page-privacy .footer__social,
+body.page-template-page-price-matrix .footer__social,
+body.single-post .footer__social {
     max-width: none;
     gap: 24px;
 }
 
 body.home .footer__social-list,
-body.page-template-page-solutions .footer__social-list {
+body.page-template-page-solutions .footer__social-list,
+body.page-template-page-privacy .footer__social-list,
+body.page-template-page-price-matrix .footer__social-list,
+body.single-post .footer__social-list {
     padding-right: 0;
     gap: 8px;
 }
 
 body.home .footer__social-item,
-body.page-template-page-solutions .footer__social-item {
+body.page-template-page-solutions .footer__social-item,
+body.page-template-page-privacy .footer__social-item,
+body.page-template-page-price-matrix .footer__social-item,
+body.single-post .footer__social-item {
     padding: 7px;
     border: 1px solid var(--nv-surface-4);
     border-radius: 8px;
@@ -10685,8 +11216,14 @@ body.page-template-page-solutions .footer__social-item {
 
 body.home .footer__social-item:hover,
 body.page-template-page-solutions .footer__social-item:hover,
+body.page-template-page-privacy .footer__social-item:hover,
+body.page-template-page-price-matrix .footer__social-item:hover,
+body.single-post .footer__social-item:hover,
 body.home .footer__social-item:focus-visible,
-body.page-template-page-solutions .footer__social-item:focus-visible {
+body.page-template-page-solutions .footer__social-item:focus-visible,
+body.page-template-page-privacy .footer__social-item:focus-visible,
+body.page-template-page-price-matrix .footer__social-item:focus-visible,
+body.single-post .footer__social-item:focus-visible {
     background: var(--nv-surface-3);
     color: var(--nv-primary);
 }
@@ -10694,12 +11231,18 @@ body.page-template-page-solutions .footer__social-item:focus-visible {
 /* --- Нижняя строка --- */
 
 body.home .footer__line,
-body.page-template-page-solutions .footer__line {
+body.page-template-page-solutions .footer__line,
+body.page-template-page-privacy .footer__line,
+body.page-template-page-price-matrix .footer__line,
+body.single-post .footer__line {
     background: var(--nv-surface-4);
 }
 
 body.home .footer__bottom,
-body.page-template-page-solutions .footer__bottom {
+body.page-template-page-solutions .footer__bottom,
+body.page-template-page-privacy .footer__bottom,
+body.page-template-page-price-matrix .footer__bottom,
+body.single-post .footer__bottom {
     flex-wrap: nowrap;
     align-items: flex-start;
     gap: 32px;
@@ -10707,18 +11250,30 @@ body.page-template-page-solutions .footer__bottom {
 
 body.home .footer__bottom-col--copy,
 body.page-template-page-solutions .footer__bottom-col--copy,
+body.page-template-page-privacy .footer__bottom-col--copy,
+body.page-template-page-price-matrix .footer__bottom-col--copy,
+body.single-post .footer__bottom-col--copy,
 body.home .footer__bottom-col--links,
-body.page-template-page-solutions .footer__bottom-col--links {
+body.page-template-page-solutions .footer__bottom-col--links,
+body.page-template-page-privacy .footer__bottom-col--links,
+body.page-template-page-price-matrix .footer__bottom-col--links,
+body.single-post .footer__bottom-col--links {
     flex: 0 0 auto;
 }
 
 body.home .footer__bottom-col--trademark,
-body.page-template-page-solutions .footer__bottom-col--trademark {
+body.page-template-page-solutions .footer__bottom-col--trademark,
+body.page-template-page-privacy .footer__bottom-col--trademark,
+body.page-template-page-price-matrix .footer__bottom-col--trademark,
+body.single-post .footer__bottom-col--trademark {
     flex: 1 1 auto;
 }
 
 body.home .footer__bottom p,
-body.page-template-page-solutions .footer__bottom p {
+body.page-template-page-solutions .footer__bottom p,
+body.page-template-page-privacy .footer__bottom p,
+body.page-template-page-price-matrix .footer__bottom p,
+body.single-post .footer__bottom p {
     color: var(--nv-object-3);
     font-size: 14px;
     font-weight: 400;
@@ -10726,13 +11281,19 @@ body.page-template-page-solutions .footer__bottom p {
 }
 
 body.home .footer__bottom-list,
-body.page-template-page-solutions .footer__bottom-list {
+body.page-template-page-solutions .footer__bottom-list,
+body.page-template-page-privacy .footer__bottom-list,
+body.page-template-page-price-matrix .footer__bottom-list,
+body.single-post .footer__bottom-list {
     align-items: center;
     gap: 16px;
 }
 
 body.home .footer__bottom-link,
-body.page-template-page-solutions .footer__bottom-link {
+body.page-template-page-solutions .footer__bottom-link,
+body.page-template-page-privacy .footer__bottom-link,
+body.page-template-page-price-matrix .footer__bottom-link,
+body.single-post .footer__bottom-link {
     color: var(--nv-object-2);
     font-size: 14px;
     font-weight: 400;
@@ -10742,13 +11303,22 @@ body.page-template-page-solutions .footer__bottom-link {
 
 body.home .footer__bottom-link:hover,
 body.page-template-page-solutions .footer__bottom-link:hover,
+body.page-template-page-privacy .footer__bottom-link:hover,
+body.page-template-page-price-matrix .footer__bottom-link:hover,
+body.single-post .footer__bottom-link:hover,
 body.home .footer__bottom-link:focus-visible,
-body.page-template-page-solutions .footer__bottom-link:focus-visible {
+body.page-template-page-solutions .footer__bottom-link:focus-visible,
+body.page-template-page-privacy .footer__bottom-link:focus-visible,
+body.page-template-page-price-matrix .footer__bottom-link:focus-visible,
+body.single-post .footer__bottom-link:focus-visible {
     color: var(--nv-primary);
 }
 
 body.home .footer__bottom-line,
-body.page-template-page-solutions .footer__bottom-line {
+body.page-template-page-solutions .footer__bottom-line,
+body.page-template-page-privacy .footer__bottom-line,
+body.page-template-page-price-matrix .footer__bottom-line,
+body.single-post .footer__bottom-line {
     width: 1px;
     height: 20px;
     background: var(--nv-surface-4);
@@ -10757,35 +11327,56 @@ body.page-template-page-solutions .footer__bottom-line {
 @media (max-width: 1599.98px) {
     /* Desktop 1440. */
     body.home .footer__navigation,
-    body.page-template-page-solutions .footer__navigation {
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
         gap: 80px;
     }
     body.home .footer__nav--products .footer__nav-list,
-    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
         grid-auto-flow: row;
         grid-template-rows: none;
         column-gap: 0;
     }
     body.home .footer__nav-link,
-    body.page-template-page-solutions .footer__nav-link {
+    body.page-template-page-solutions .footer__nav-link,
+    body.page-template-page-privacy .footer__nav-link,
+    body.page-template-page-price-matrix .footer__nav-link,
+    body.single-post .footer__nav-link {
         font-size: 14px;
         line-height: 142.857%;
     }
     body.home .footer__details,
-    body.page-template-page-solutions .footer__details {
+    body.page-template-page-solutions .footer__details,
+    body.page-template-page-privacy .footer__details,
+    body.page-template-page-price-matrix .footer__details,
+    body.single-post .footer__details {
         flex-direction: column;
         gap: 32px;
     }
     body.home .footer__badges,
-    body.page-template-page-solutions .footer__badges {
+    body.page-template-page-solutions .footer__badges,
+    body.page-template-page-privacy .footer__badges,
+    body.page-template-page-price-matrix .footer__badges,
+    body.single-post .footer__badges {
         order: 0;
     }
     body.home .footer__badge img,
-    body.page-template-page-solutions .footer__badge img {
+    body.page-template-page-solutions .footer__badge img,
+    body.page-template-page-privacy .footer__badge img,
+    body.page-template-page-price-matrix .footer__badge img,
+    body.single-post .footer__badge img {
         height: 48px;
     }
     body.home .footer__badge--round,
-    body.page-template-page-solutions .footer__badge--round {
+    body.page-template-page-solutions .footer__badge--round,
+    body.page-template-page-privacy .footer__badge--round,
+    body.page-template-page-price-matrix .footer__badge--round,
+    body.single-post .footer__badge--round {
         width: 48px;
         height: 48px;
     }
@@ -10797,7 +11388,10 @@ body.page-template-page-solutions .footer__bottom-line {
 
 @media (max-width: 1199.98px) {
     body.home .footer__navigation,
-    body.page-template-page-solutions .footer__navigation {
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
         gap: 32px;
     }
 }
@@ -10805,47 +11399,71 @@ body.page-template-page-solutions .footer__bottom-line {
 @media (max-width: 991.98px) {
     /* Tablet 840: три ряда — реквизиты, навигация, контакты. */
     body.home .footer__top,
-    body.page-template-page-solutions .footer__top {
+    body.page-template-page-solutions .footer__top,
+    body.page-template-page-privacy .footer__top,
+    body.page-template-page-price-matrix .footer__top,
+    body.single-post .footer__top {
         flex-direction: column;
         align-items: stretch;
         gap: 64px;
     }
     body.home .footer__info,
-    body.page-template-page-solutions .footer__info {
+    body.page-template-page-solutions .footer__info,
+    body.page-template-page-privacy .footer__info,
+    body.page-template-page-price-matrix .footer__info,
+    body.single-post .footer__info {
         flex: 0 0 auto;
         flex-direction: row;
         align-items: flex-start;
         gap: 0;
     }
     body.home .footer__brand,
-    body.page-template-page-solutions .footer__brand {
+    body.page-template-page-solutions .footer__brand,
+    body.page-template-page-privacy .footer__brand,
+    body.page-template-page-price-matrix .footer__brand,
+    body.single-post .footer__brand {
         flex: 0 0 44%;
     }
     body.home .footer__logo-image,
-    body.page-template-page-solutions .footer__logo-image {
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
         width: 207px;
     }
     body.home .footer__details,
-    body.page-template-page-solutions .footer__details {
+    body.page-template-page-solutions .footer__details,
+    body.page-template-page-privacy .footer__details,
+    body.page-template-page-price-matrix .footer__details,
+    body.single-post .footer__details {
         flex: 1 1 auto;
         gap: 24px;
     }
     /* В макете у ряда навигации справа 64px запаса — отсюда равные промежутки. */
     body.home .footer__navigation,
-    body.page-template-page-solutions .footer__navigation {
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
         flex: 0 0 auto;
         justify-content: space-between;
         padding-right: 64px;
         gap: 32px;
     }
     body.home .footer__nav--products .footer__nav-list,
-    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
         grid-auto-flow: column;
         grid-template-rows: repeat(3, auto);
         column-gap: 48px;
     }
     body.home .footer__aside,
-    body.page-template-page-solutions .footer__aside {
+    body.page-template-page-solutions .footer__aside,
+    body.page-template-page-privacy .footer__aside,
+    body.page-template-page-price-matrix .footer__aside,
+    body.single-post .footer__aside {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
@@ -10854,20 +11472,32 @@ body.page-template-page-solutions .footer__bottom-line {
     }
     body.home .footer__contacts,
     body.page-template-page-solutions .footer__contacts,
+    body.page-template-page-privacy .footer__contacts,
+    body.page-template-page-price-matrix .footer__contacts,
+    body.single-post .footer__contacts,
     body.home .footer__social,
-    body.page-template-page-solutions .footer__social {
+    body.page-template-page-solutions .footer__social,
+    body.page-template-page-privacy .footer__social,
+    body.page-template-page-price-matrix .footer__social,
+    body.single-post .footer__social {
         flex-direction: row;
         align-items: center;
         gap: 24px;
     }
     body.home .footer__bottom,
-    body.page-template-page-solutions .footer__bottom {
+    body.page-template-page-solutions .footer__bottom,
+    body.page-template-page-privacy .footer__bottom,
+    body.page-template-page-price-matrix .footer__bottom,
+    body.single-post .footer__bottom {
         flex-direction: column;
         flex-wrap: wrap;
         gap: 16px;
     }
     body.home .footer__bottom-col--trademark,
-    body.page-template-page-solutions .footer__bottom-col--trademark {
+    body.page-template-page-solutions .footer__bottom-col--trademark,
+    body.page-template-page-privacy .footer__bottom-col--trademark,
+    body.page-template-page-price-matrix .footer__bottom-col--trademark,
+    body.single-post .footer__bottom-col--trademark {
         flex: 0 0 auto;
     }
 }
@@ -10875,61 +11505,97 @@ body.page-template-page-solutions .footer__bottom-line {
 @media (max-width: 767.98px) {
     /* Макета нет — сохраняем логику темы: колонки распрямляются. */
     body.home .footer__wrapper,
-    body.page-template-page-solutions .footer__wrapper {
+    body.page-template-page-solutions .footer__wrapper,
+    body.page-template-page-privacy .footer__wrapper,
+    body.page-template-page-price-matrix .footer__wrapper,
+    body.single-post .footer__wrapper {
         padding: 31px 15px 32px;
     }
     body.home .footer__info,
-    body.page-template-page-solutions .footer__info {
+    body.page-template-page-solutions .footer__info,
+    body.page-template-page-privacy .footer__info,
+    body.page-template-page-price-matrix .footer__info,
+    body.single-post .footer__info {
         flex-direction: column;
         gap: 32px;
     }
     body.home .footer__brand,
-    body.page-template-page-solutions .footer__brand {
+    body.page-template-page-solutions .footer__brand,
+    body.page-template-page-privacy .footer__brand,
+    body.page-template-page-price-matrix .footer__brand,
+    body.single-post .footer__brand {
         flex: 0 0 auto;
     }
     body.home .footer__aside,
-    body.page-template-page-solutions .footer__aside {
+    body.page-template-page-solutions .footer__aside,
+    body.page-template-page-privacy .footer__aside,
+    body.page-template-page-price-matrix .footer__aside,
+    body.single-post .footer__aside {
         flex-direction: column;
         align-items: flex-start;
         gap: 32px;
     }
     body.home .footer__contacts,
     body.page-template-page-solutions .footer__contacts,
+    body.page-template-page-privacy .footer__contacts,
+    body.page-template-page-price-matrix .footer__contacts,
+    body.single-post .footer__contacts,
     body.home .footer__social,
-    body.page-template-page-solutions .footer__social {
+    body.page-template-page-solutions .footer__social,
+    body.page-template-page-privacy .footer__social,
+    body.page-template-page-price-matrix .footer__social,
+    body.single-post .footer__social {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
     }
     body.home .footer__navigation,
-    body.page-template-page-solutions .footer__navigation {
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
         gap: 24px;
     }
 }
 
 @media (max-width: 575.98px) {
     body.home .footer__navigation,
-    body.page-template-page-solutions .footer__navigation {
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
         flex-direction: column;
         gap: 32px;
     }
     body.home .footer__nav,
-    body.page-template-page-solutions .footer__nav {
+    body.page-template-page-solutions .footer__nav,
+    body.page-template-page-privacy .footer__nav,
+    body.page-template-page-price-matrix .footer__nav,
+    body.single-post .footer__nav {
         gap: 16px;
     }
     body.home .footer__nav--products .footer__nav-list,
-    body.page-template-page-solutions .footer__nav--products .footer__nav-list {
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
         column-gap: 32px;
     }
     body.home .footer__logo-image,
-    body.page-template-page-solutions .footer__logo-image {
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
         width: 240px;
     }
 }
 
 @media (max-width: 478.98px) {
     body.home .footer__logo-image,
-    body.page-template-page-solutions .footer__logo-image {
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
         width: 100%;
         max-width: 240px;
     }
@@ -11382,6 +12048,429 @@ body.page-template-page-solutions .footer__bottom-line {
 
 }
 
+
+/* ---------------------------------------------------------------------------
+ * Светлый редизайн всплывающих форм. Макеты Figma: большая 712:18528 /
+ * 722:22947 / 722:23483, малая 712:18887 / 722:23196 / 722:23516,
+ * успех 869:12476, ошибка 870:12694.
+ *
+ * Оформление полей целиком переиспользовано: правила светлой формы в регионе
+ * CONTACTS перечисляют третий контекст `.modal` (DECISIONS.md, Р-114).
+ * Здесь остаётся только то, что у модалки своё: подложка, габариты окна
+ * и раскладка — в секции текстовое поле стоит во второй колонке, а в
+ * модалке блоки идут в столбик с разделителями, как в макете.
+ * ------------------------------------------------------------------------- */
+
+/* 712:18600 — подложка светлая: Island/1 level с прозрачностью 80%. */
+.modal--form .modal__overlay,
+.modal--result .modal__overlay {
+    background: rgba(242, 242, 242, 0.8);
+}
+
+/* 712:18757 — окно: Island/1 level, рамка Primary, тень 0 8 24. */
+.modal--form .modal-window,
+.modal--result .modal-window {
+    border-color: var(--nv-primary);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+    /* Поля 24 за вычетом рамки: Figma рисует обводку внутрь габарита. */
+    padding: 23px;
+}
+
+.modal--large .modal__container {
+    max-width: 901px;
+}
+
+.modal--compact .modal__container {
+    max-width: 640px;
+}
+
+/* Раскладка модалки: блоки в столбик, разделители видны. */
+.modal .contacts__form {
+    row-gap: 12px;
+}
+
+.modal .contacts__form > * {
+    grid-column: 1 / -1;
+}
+
+/* Первые поля идут по две в ряд и сами переносятся, когда места мало. */
+.modal .input-form-item--50 {
+    grid-column: auto;
+}
+
+/* 712:18765 — селект на всю ширину, не во второй колонке, как в секции. */
+.modal .input-form-item.help-select {
+    grid-column: 1 / -1;
+    grid-row: auto;
+}
+
+/*
+ * 712:18768 — текстовое поле на всю ширину. Высота 216 в макете задана всему
+ * блоку вместе с подписью, поэтому ставим её элементу, а не самому полю.
+ */
+.modal .input-form-item:has(.input-form-block--textarea) {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: 216px;
+    margin-top: 0;
+}
+
+/*
+ * 712:18764 — разделители в модалке остаются. В макете у линии высота 0,
+ * в вёрстке это рамка в 1px, поэтому нижнее поле на неё уменьшено:
+ * 12 (зазор сетки) + 12 + 1 + 11 + 12 = 48, то есть по 24 с каждой стороны.
+ */
+.modal .contacts__form-line {
+    display: block;
+    margin: 12px 0 11px;
+    border: 0;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+/* Согласие без собственной черты: её роль играет разделитель выше. */
+.modal .input-form-item--privacy {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+/* 712:18773 — кнопка справа, блок отбит на 24. */
+.modal .input-form-action {
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+/* 712:18777 — кнопка 178x64. */
+.modal .btn-form {
+    min-width: 178px;
+    height: 64px;
+}
+
+/*
+ * 722:19927 — список стран шире узкого окна, поэтому в модалке он
+ * ограничен шириной самого поля: иначе на 320 уезжает за край.
+ */
+.modal--form .phone-field__dropdown {
+    max-width: 100%;
+}
+
+/*
+ * 722:19934 — светлый список стран. Панель 708:10707: Island/1 level,
+ * рамка Stroke 2, скругление 16, тень 0 8 24. Полоса прокрутки — из
+ * компонента Scrollbar: дорожка Island/2 level, бегунок оранжевый.
+ *
+ * Правила ограничены модалками: в секциях Contacts список пока остаётся
+ * тёмным, и менять их этой задачей нельзя (DECISIONS.md, Р-117).
+ */
+.modal--form .phone-field__dropdown {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+}
+
+.modal--form .phone-field__search {
+    border-color: var(--nv-surface-4);
+}
+
+.modal--form .phone-field__search-input {
+    color: var(--nv-object-1);
+}
+
+.modal--form .phone-field__search-input::placeholder {
+    color: var(--nv-object-3);
+}
+
+.modal--form .phone-field__search-btn {
+    border-color: var(--nv-surface-4);
+    color: var(--nv-object-1);
+}
+
+.modal--form .phone-field__search-btn:hover {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+}
+
+.modal--form .phone-field__option {
+    color: var(--nv-object-1);
+    border-top-color: var(--nv-surface-4);
+}
+
+.modal--form .phone-field__option:hover {
+    color: var(--nv-primary);
+}
+
+.modal--form .phone-field__empty {
+    color: var(--nv-object-3);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-track {
+    background: var(--nv-surface-3);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--nv-primary-2) 15%, var(--nv-primary) 100%);
+}
+
+/*
+ * 722:20952 — светлый список услуг: панель Island/1 level, рамка Stroke 2,
+ * текст Text 1. Ограничение то же, что у списка стран (Р-117).
+ */
+.modal--form .help-select__dropdown {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+}
+
+.modal--form .help-select__option {
+    color: var(--nv-object-1);
+    border-bottom-color: var(--nv-surface-4);
+}
+
+.modal--form .help-select__option:hover,
+.modal--form .help-select__option:focus-visible {
+    color: var(--nv-primary);
+}
+
+.modal--form .help-select__option:last-child {
+    border-bottom: 0;
+}
+
+/* Галочка согласия: обводка на видимом квадрате, а не на скрытом input. */
+.modal--form .ui-check__input:focus-visible + .ui-check__box {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Строки списка и кнопка поиска: обводка из палитры вместо системной. */
+.modal--form .phone-field__option:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: -2px;
+}
+
+.modal--form .phone-field__search-btn:focus-visible,
+.modal--form .phone-field__country-btn:focus-visible,
+.modal--form .phone-field__clear:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * Поиск по странам: фокус показываем рамкой обёртки, как у остальных полей,
+ * иначе браузер рисует своё синее кольцо поверх светлой панели.
+ */
+.modal--form .phone-field__search:focus-within {
+    border-color: var(--nv-primary);
+}
+
+.modal--form .phone-field__search-input:focus-visible {
+    outline: none;
+}
+
+/*
+ * У кнопки селекта не было своего :focus-visible, и браузер рисовал синее
+ * кольцо — чужое для палитры. Обводка как у остальных элементов формы.
+ */
+.modal--form .help-select__button:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Заголовок окна нужен только программам чтения: в макете его нет. */
+.modal__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/*
+ * Кнопка закрытия. В макетах её нет ни в одном фрейме, но окно обязано
+ * закрываться не только Escape и кликом по подложке, поэтому берём
+ * оформление кнопок очистки из той же системы: 28x28, рамка Stroke 2,
+ * скругление 6 (DECISIONS.md, Р-115). Стоит в поле окна, над первой
+ * строкой подписей, содержимое не перекрывает.
+ */
+.modal--form .modal__close,
+.modal--result .modal__close {
+    position: absolute;
+    background: var(--nv-surface-2);
+    top: 11px;
+    right: 11px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--nv-object-1);
+    backdrop-filter: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal--form .modal__close svg,
+.modal--result .modal__close svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.modal--form .modal__close:hover,
+.modal--result .modal__close:hover {
+    border-color: var(--nv-primary);
+    background: transparent;
+    color: var(--nv-primary);
+}
+
+.modal--form .modal__close:focus-visible,
+.modal--result .modal__close:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * 869:12477 / 870:12695 — окно результата: тот же светлый стиль.
+ * Маскот выходит за правый и нижний край карточки, поэтому обрезку
+ * с окна снимаем (базовое правило выше задаёт её по id).
+ */
+#thanks .modal-window,
+#error .modal-window {
+    overflow: visible;
+}
+
+/*
+ * Текстовая колонка не заезжает под маскота: в макете у окна успеха
+ * 869:12481 она шире, у окна ошибки 870:12697 — 190, потому что трубка
+ * занимает больше места слева.
+ */
+#thanks .modal__thanks-info {
+    max-width: 220px;
+}
+
+#error .modal__thanks-info {
+    max-width: 190px;
+}
+
+/* 869:12482 — картинка 294x231, выходит на 22 вправо и на 55 вниз. */
+.modal--result .modal__thanks-image {
+    right: -22px;
+    bottom: -55px;
+    width: 294px;
+}
+
+.modal--result .modal__thanks-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.modal__thanks-title {
+    color: var(--nv-primary);
+}
+
+.modal__thanks-description {
+    color: var(--nv-object-1);
+    font-weight: 400;
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 722:23079 и 722:23197 — оба окна 600, поля 16. */
+    .modal--large .modal__container,
+    .modal--compact .modal__container {
+        max-width: 600px;
+    }
+
+    .modal--form .modal-window,
+    .modal--result .modal-window {
+        padding: 15px;
+    }
+
+    .modal .contacts__form {
+        column-gap: 16px;
+    }
+
+    .modal .input-form-item--50 {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 722:23484 и 722:23517 — окно 360 при полях страницы 16. */
+    .modal--form .modal__overlay,
+    .modal--result .modal__overlay {
+        padding: 16px;
+    }
+
+    .modal--large .modal__container,
+    .modal--compact .modal__container {
+        max-width: 360px;
+    }
+
+    .modal--form .modal-window,
+    .modal--result .modal-window {
+        padding: 11px;
+        max-height: calc(100vh - 32px);
+    }
+
+    /* 722:23491 — у большой формы на мобильной вокруг линии по 16. */
+    .modal--large .contacts__form-line {
+        margin: 4px 0 3px;
+    }
+
+    /* 722:23523 — у малой формы макет оставляет прежние 24. */
+    .modal--compact .contacts__form-line {
+        margin: 12px 0 11px;
+    }
+
+    /* 722:23495 — у большой формы текстовое поле ниже, у малой прежнее. */
+    .modal--large .input-form-item:has(.input-form-block--textarea) {
+        height: 160px;
+    }
+
+    /* 722:23534 — кнопка 130x40. */
+    .modal .btn-form {
+        min-width: 130px;
+        height: 40px;
+    }
+
+    /*
+     * Окна результата на мобильной: отдельного фрейма нет. Маскот
+     * в ширину 360 не помещается рядом с текстом, поэтому он уходит
+     * под текст и не перекрывает его (DECISIONS.md, Р-116).
+     */
+    .modal--result .modal__thanks {
+        display: block;
+        padding-right: 0;
+        /* Прежний запас 160 под абсолютный маскот больше не нужен. */
+        padding-bottom: 0;
+    }
+
+    #thanks .modal__thanks-info,
+    #error .modal__thanks-info {
+        max-width: none;
+    }
+
+    .modal--result .modal__thanks-image {
+        position: static;
+        width: 200px;
+        margin: 12px auto 0;
+    }
+}
+
 /* MODAL END */
 
 /* SOLUTIONS-PAGE START */
@@ -11389,16 +12478,20 @@ body.page-template-page-solutions .footer__bottom-line {
 /* SOLUTIONS THEME START */
 
 /*
- * Светлая шапка страницы Solutions. Состав навигации, ссылки, порядок пунктов
- * и JS меню не меняются — повторяется только палитра макета (2456:16497).
- * Ограничено шаблоном страницы, шапка остальных страниц остаётся тёмной.
+ * Светлая шапка страниц Solutions и Pricing Matrix. Состав навигации, ссылки,
+ * порядок пунктов и JS меню не меняются — повторяется только палитра макета
+ * (Solutions 2456:16497, Pricing 2547:23060 / Mobile 2547:23253: шапка там
+ * та же самая, поэтому правила общие, а не продублированы отдельной секцией).
+ * Ограничено шаблонами страниц, шапка остальных страниц остаётся тёмной.
  */
 /*
  * Шапка встаёт в поток над первым экраном и красится в фон макета. Светлый фон
  * задаётся именно шапке, а не `body`: ниже первого экрана на странице пока
  * остаются тёмные секции прежнего дизайна.
  */
-body.page-template-page-solutions .header {
+body.page-template-page-solutions .header,
+body.page-template-page-price-matrix .header,
+body.single-post .header {
     position: relative;
     top: 0;
     padding-top: 32px;
@@ -11406,7 +12499,9 @@ body.page-template-page-solutions .header {
 }
 
 /* В макете логотип лежит внутри карточки первого экрана, в шапке его нет. */
-body.page-template-page-solutions .header__logo {
+body.page-template-page-solutions .header__logo,
+body.page-template-page-price-matrix .header__logo,
+body.single-post .header__logo {
     display: none;
 }
 
@@ -11415,58 +12510,62 @@ body.page-template-page-solutions .header__logo {
  * Общая лесенка `.container` (1560/1408/1140/960/754) оставила бы навигацию
  * в стороне от края карточки.
  */
-body.page-template-page-solutions .header .container {
+body.page-template-page-solutions .header .container,
+body.page-template-page-price-matrix .header .container,
+body.single-post .header .container {
     max-width: 1920px;
     padding-left: 32px;
     padding-right: 32px;
 }
 
-body.page-template-page-solutions .header__menu {
+body.page-template-page-solutions .header__menu,
+body.page-template-page-price-matrix .header__menu,
+body.single-post .header__menu {
     border-color: var(--nv-surface-4);
     background: var(--nv-surface-2);
     box-shadow: none;
 }
 
-body.page-template-page-solutions .header__nav-link {
+body.page-template-page-solutions .header__nav-link,
+body.page-template-page-price-matrix .header__nav-link,
+body.single-post .header__nav-link {
     color: var(--nv-object-1);
 }
 
-body.page-template-page-solutions .header__nav-toggle svg path {
+body.page-template-page-solutions .header__nav-toggle svg path,
+body.page-template-page-price-matrix .header__nav-toggle svg path,
+body.single-post .header__nav-toggle svg path {
     fill: var(--nv-object-1);
 }
 
-body.page-template-page-solutions .burger svg path {
+body.page-template-page-solutions .burger svg path,
+body.page-template-page-price-matrix .burger svg path,
+body.single-post .burger svg path {
     fill: var(--nv-object-1);
 }
 
-body.page-template-page-solutions .btn--header {
+body.page-template-page-solutions .btn--header,
+body.page-template-page-price-matrix .btn--header,
+body.single-post .btn--header {
     border: 0;
     border-radius: 8px;
     background: var(--nv-gradient);
     transition: filter .2s ease;
 }
 
-body.page-template-page-solutions .btn--header {
-    /*
-     * Стрелку рисует lottie (`arrow_right_black.json`): у её путей нет
-     * собственного `fill`, цвет берётся из CSS. Задаём его кнопке и пускаем
-     * через `currentColor` — тогда и анимация, и запасная inline-иконка
-     * белые. На остальных страницах цвет кнопки не менялся.
-     */
-    color: var(--nv-constant-1);
-}
 
-body.page-template-page-solutions .btn--header .btn__icon svg,
-body.page-template-page-solutions .btn--header .btn__icon svg path {
-    fill: currentColor;
-}
-
-body.page-template-page-solutions .btn--header .btn__text {
+body.page-template-page-solutions .btn--header .btn__text,
+body.page-template-page-price-matrix .btn--header .btn__text,
+body.single-post .btn--header .btn__text {
     color: var(--nv-constant-1);
 }
 
 body.page-template-page-solutions .btn--header:hover,
-body.page-template-page-solutions .btn--header:focus-visible {
+body.page-template-page-price-matrix .btn--header:hover,
+body.single-post .btn--header:hover,
+body.page-template-page-solutions .btn--header:focus-visible,
+body.page-template-page-price-matrix .btn--header:focus-visible,
+body.single-post .btn--header:focus-visible {
     background: var(--nv-primary);
 }
 
@@ -11488,23 +12587,31 @@ body.page-template-page-solutions .btn--header:focus-visible {
      * 40x40 без окружающей «пилюли», поэтому обёртку меню делаем прозрачной,
      * а рамку и подложку отдаём самому бургеру.
      */
-    body.page-template-page-solutions .header__menu {
+    body.page-template-page-solutions .header__menu,
+    body.page-template-page-price-matrix .header__menu,
+    body.single-post .header__menu {
         padding: 0;
         border: 0;
         background: none;
         box-shadow: none;
     }
 
-    body.page-template-page-solutions .burger {
+    body.page-template-page-solutions .burger,
+    body.page-template-page-price-matrix .burger,
+    body.single-post .burger {
         border-color: var(--nv-surface-4);
         background: var(--nv-surface-2);
     }
 
-    body.page-template-page-solutions .header__menu--open .burger {
+    body.page-template-page-solutions .header__menu--open .burger,
+    body.page-template-page-price-matrix .header__menu--open .burger,
+    body.single-post .header__menu--open .burger {
         background: var(--nv-primary);
     }
 
-    body.page-template-page-solutions .header__menu--open .burger svg path {
+    body.page-template-page-solutions .header__menu--open .burger svg path,
+    body.page-template-page-price-matrix .header__menu--open .burger svg path,
+    body.single-post .header__menu--open .burger svg path {
         fill: var(--nv-constant-1);
     }
 
@@ -11514,7 +12621,9 @@ body.page-template-page-solutions .btn--header:focus-visible {
      * и панель уезжала за него. (Главную не трогаем: там тот же дефект, он
      * записан в BACKLOG отдельно.)
      */
-    body.page-template-page-solutions .header__menu--open .header__nav {
+    body.page-template-page-solutions .header__menu--open .header__nav,
+    body.page-template-page-price-matrix .header__menu--open .header__nav,
+    body.single-post .header__menu--open .header__nav {
         left: auto;
         right: 0;
         border-color: var(--nv-surface-4);
@@ -11529,18 +12638,24 @@ body.page-template-page-solutions .btn--header:focus-visible {
      * этой ширине свой логотип не показывает. Тёмная версия логотипа подаётся
      * фоном, чтобы не трогать разметку header.php (BACKLOG: перенести в PHP).
      */
-    body.page-template-page-solutions .header__wrapper {
+    body.page-template-page-solutions .header__wrapper,
+    body.page-template-page-price-matrix .header__wrapper,
+    body.single-post .header__wrapper {
         flex-direction: row;
     }
 
     /* Тёмную версию логотипа подставляет header.php по `is_page_template`. */
-    body.page-template-page-solutions .header__logo {
+    body.page-template-page-solutions .header__logo,
+    body.page-template-page-price-matrix .header__logo,
+    body.single-post .header__logo {
         display: block;
         width: 168px;
         height: 32px;
     }
 
-    body.page-template-page-solutions .header .container {
+    body.page-template-page-solutions .header .container,
+    body.page-template-page-price-matrix .header .container,
+    body.single-post .header .container {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -12563,7 +13678,16 @@ body.page-template-page-solutions .btn--header:focus-visible {
 .solutions-why__board {
     --swhy-card: 116px;
     --swhy-card-open: 516px;
-    --swhy-tuck: 24px;
+    /*
+     * 2456:16533 — в макете у каждой карточки `margin-right: -400`: соседняя
+     * уходит под неё целиком, вместе со своими скруглениями. Поэтому слева
+     * у карточек углов не видно — видна только прямая кромка предыдущей.
+     * На ширину полоски величина нахлёста не влияет: ширина карточки
+     * считается как «видимая часть + нахлёст».
+     */
+    --swhy-tuck: 400px;
+    /* 2456:16532 — блок карточек заходит на фотографию на 112. */
+    --swhy-media-overlap: 112px;
 
     position: relative;
     display: flex;
@@ -12600,11 +13724,17 @@ body.page-template-page-solutions .btn--header:focus-visible {
     display: flex;
     flex: 0 0 auto;
     align-items: stretch;
+    /*
+     * Фотография начинается под карточками, а не встык с ними: иначе
+     * скруглённый правый угол последней карточки открывает подложку
+     * доски, а в макете там видна сама фотография.
+     */
+    margin-right: calc(var(--swhy-media-overlap) * -1);
 }
 
 /*
- * Карточки лежат внахлёст на 24: соседняя слева всегда выше по стопке,
- * поэтому её скруглённый край перекрывает следующую.
+ * Карточки лежат внахлёст: соседняя слева всегда выше по стопке и
+ * перекрывает следующую вместе с её левыми скруглениями.
  */
 .solutions-why__card {
     position: relative;
@@ -12869,6 +13999,7 @@ body.page-template-page-solutions .btn--header:focus-visible {
     .solutions-why__cards {
         flex-direction: column;
         width: 100%;
+        margin-right: 0;
     }
 
     .solutions-why__card,
@@ -17552,6 +18683,615 @@ body.page-template-page-solutions .faq__left {
 @media (max-width: 419.98px) {
 
 }
+
+
+/* LEGAL PAGE LIGHT START */
+
+/*
+ * Светлые юридические страницы: Terms of Use, Privacy Policy и Information
+ * Security Policy Statement. Все три сидят на одном шаблоне `page-privacy.php`,
+ * поэтому правила ограничены `body.page-template-page-privacy`: блоки
+ * `.content-page` и `.page__*` общие с 404 и прежними тёмными страницами,
+ * их база выше по файлу не менялась.
+ *
+ * Figma: Article page `751:13876`, ширина фрейма 1440. Макетов Full HD, Tablet
+ * и Mobile нет: выше 1440 колонка остаётся теми же 900px, ниже сохраняется
+ * адаптив темы (docs/FIGMA.md → «Работа с Desktop-only макетами»).
+ *
+ * Вертикаль макета: шапка absolute на 32, контент сверху 140 и снизу 64,
+ * колонка 900 в полях 32, дальше скруглённый «page edge» тизера высотой 64.
+ */
+
+body.page-template-page-privacy,
+body.page-template-page-price-matrix,
+body.single-post {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/*
+ * Шапка — тот же светлый компонент, что на главной и /solutions/: меняется
+ * только палитра, состав навигации и её JS остаются прежними. Отличие от
+ * /solutions/ одно: в макете юридической страницы логотип виден на всех
+ * ширинах, поэтому `.header__logo` не скрывается, а светлый файл подставляет
+ * `header.php` по `nv_is_light_theme()`.
+ */
+body.page-template-page-privacy .header__menu,
+body.page-template-page-price-matrix .header__menu,
+body.single-post .header__menu {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: none;
+}
+
+body.page-template-page-privacy .header__nav-link,
+body.page-template-page-price-matrix .header__nav-link,
+body.single-post .header__nav-link {
+    color: var(--nv-object-1);
+}
+
+body.page-template-page-privacy .header__nav-toggle svg path,
+body.page-template-page-price-matrix .header__nav-toggle svg path,
+body.single-post .header__nav-toggle svg path {
+    fill: var(--nv-object-1);
+}
+
+body.page-template-page-privacy .burger svg path,
+body.page-template-page-price-matrix .burger svg path,
+body.single-post .burger svg path {
+    fill: var(--nv-object-1);
+}
+
+body.page-template-page-privacy .btn--header,
+body.page-template-page-price-matrix .btn--header,
+body.single-post .btn--header {
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    transition: filter .2s ease;
+}
+
+body.page-template-page-privacy .btn--header .btn__text,
+body.page-template-page-price-matrix .btn--header .btn__text,
+body.single-post .btn--header .btn__text {
+    color: var(--nv-constant-1);
+}
+
+body.page-template-page-privacy .btn--header:hover,
+body.page-template-page-price-matrix .btn--header:hover,
+body.single-post .btn--header:hover,
+body.page-template-page-privacy .btn--header:focus-visible,
+body.page-template-page-price-matrix .btn--header:focus-visible,
+body.single-post .btn--header:focus-visible {
+    background: var(--nv-primary);
+}
+
+/*
+ * Контентная область. Скруглённый низ рисует `.teaser::before` из блока
+ * TEASER HOME, поэтому собственная рамка шаблона и вынос на -32 снимаются.
+ */
+body.page-template-page-privacy .content-page,
+body.page-template-page-price-matrix .content-page,
+body.single-post .content-page {
+    margin-bottom: 0;
+    padding-top: 140px;
+    padding-bottom: 64px;
+    border: 0;
+    border-radius: 0;
+    background: var(--nv-surface-1);
+}
+
+/* Читаемая колонка макета — 900px внутри полей 32 (`751:13894`). */
+body.page-template-page-privacy .container.small-container,
+body.page-template-page-price-matrix .container.small-container,
+body.single-post .container.small-container {
+    max-width: 964px;
+}
+
+body.page-template-page-privacy .page__wrapper,
+body.page-template-page-price-matrix .page__wrapper,
+body.single-post .page__wrapper {
+    gap: 40px;
+}
+
+body.page-template-page-privacy .page__header,
+body.page-template-page-price-matrix .page__header,
+body.single-post .page__header {
+    gap: 24px;
+}
+
+/* H1 выводит `the_title()`; из макета берётся только оформление (`751:13897`). */
+body.page-template-page-privacy .page__title,
+body.page-template-page-price-matrix .page__title,
+body.single-post .page__title {
+    color: var(--nv-object-1);
+    font-size: 52px;
+    line-height: 64px;
+}
+
+/* Плашка даты обновления — `751:13899`. */
+body.page-template-page-privacy .page__last,
+body.page-template-page-price-matrix .page__last,
+body.single-post .page__last {
+    padding: 8px 16px 8px 8px;
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+body.page-template-page-privacy .page__last-text,
+body.page-template-page-price-matrix .page__last-text,
+body.single-post .page__last-text {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 24px;
+}
+
+/*
+ * Вывод `the_content()`. Разметку генерирует WordPress, поэтому оформляются
+ * теги внутри `.page__content`, а не классы; сам контент не менялся.
+ * Вертикальные зазоры макета собираются схлопыванием соседних margin:
+ * раздел↔раздел 32, заголовок↔текст 28, подзаголовок↔текст 16, абзац↔абзац 20.
+ */
+body.page-template-page-privacy .page__content,
+body.page-template-page-price-matrix .page__content,
+body.single-post .page__content {
+    overflow-wrap: break-word;
+}
+
+body.page-template-page-privacy .page__content p,
+body.page-template-page-price-matrix .page__content p,
+body.single-post .page__content p {
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+body.page-template-page-privacy .page__content > p:last-child,
+body.page-template-page-price-matrix .page__content > p:last-child,
+body.single-post .page__content > p:last-child {
+    margin-bottom: 0;
+}
+
+/* Вводный абзац макета набран Satoshi Medium цветом основного текста (`751:13903`). */
+body.page-template-page-privacy .page__content p strong,
+body.page-template-page-price-matrix .page__content p strong,
+body.single-post .page__content p strong,
+body.page-template-page-privacy .page__content li strong,
+body.page-template-page-price-matrix .page__content li strong,
+body.single-post .page__content li strong {
+    color: var(--nv-object-1);
+    font-weight: 500;
+}
+
+body.page-template-page-privacy .page__content em,
+body.page-template-page-price-matrix .page__content em,
+body.single-post .page__content em {
+    font-style: italic;
+}
+
+/* Нумерованные разделы — `751:13907`. */
+body.page-template-page-privacy .page__content h2,
+body.page-template-page-price-matrix .page__content h2,
+body.single-post .page__content h2 {
+    color: var(--nv-primary);
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 700;
+    margin-top: 32px;
+    margin-bottom: 28px;
+}
+
+/* Подразделы — `1115:17688`. h4 в контенте не встречается, оформляем заодно. */
+body.page-template-page-privacy .page__content h3,
+body.page-template-page-price-matrix .page__content h3,
+body.single-post .page__content h3,
+body.page-template-page-privacy .page__content h4,
+body.page-template-page-price-matrix .page__content h4,
+body.single-post .page__content h4 {
+    color: var(--nv-object-1);
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    margin-top: 28px;
+    margin-bottom: 16px;
+}
+
+body.page-template-page-privacy .page__content > h2:first-child,
+body.page-template-page-price-matrix .page__content > h2:first-child,
+body.single-post .page__content > h2:first-child,
+body.page-template-page-privacy .page__content > h3:first-child,
+body.page-template-page-price-matrix .page__content > h3:first-child,
+body.single-post .page__content > h3:first-child,
+body.page-template-page-privacy .page__content > h4:first-child,
+body.page-template-page-price-matrix .page__content > h4:first-child,
+body.single-post .page__content > h4:first-child {
+    margin-top: 0;
+}
+
+/*
+ * Ссылок в макете нет — юридический текст показан там сплошным. Цвет берём
+ * тот же, что у остальных встроенных ссылок светлой темы (`--nv-primary`,
+ * как в `.ui-check__link`), а подчёркивание, в отличие от тёмной версии,
+ * держим постоянным: контраст оранжевого на `--nv-surface-1` — 2.72:1,
+ * и одного цвета для различения ссылки в сплошном юридическом тексте мало.
+ * `overflow-wrap: anywhere` держит длинные URL внутри колонки на узких экранах.
+ */
+body.page-template-page-privacy .page__content a,
+body.page-template-page-price-matrix .page__content a,
+body.single-post .page__content a {
+    color: var(--nv-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+    transition: color .2s ease;
+}
+
+body.page-template-page-privacy .page__content a:hover,
+body.page-template-page-price-matrix .page__content a:hover,
+body.single-post .page__content a:hover {
+    color: var(--nv-primary-2);
+}
+
+body.page-template-page-privacy .page__content a:focus-visible,
+body.page-template-page-price-matrix .page__content a:focus-visible,
+body.single-post .page__content a:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/*
+ * Списки. В Privacy Policy их нет, и в макете они не показаны, поэтому
+ * типографика взята от абзаца, а маркер — акцентом палитры. Нумерация `ol`
+ * остаётся штатной: правило возвращает списку браузерный `list-style`,
+ * который глобальный сброс темы (`ul { list-style: none }`) снимает.
+ */
+body.page-template-page-privacy .page__content ul,
+body.page-template-page-price-matrix .page__content ul,
+body.single-post .page__content ul,
+body.page-template-page-privacy .page__content ol,
+body.page-template-page-price-matrix .page__content ol,
+body.single-post .page__content ol {
+    margin: 0 0 20px;
+    padding-left: 24px;
+    color: var(--nv-object-2);
+}
+
+body.page-template-page-privacy .page__content ul,
+body.page-template-page-price-matrix .page__content ul,
+body.single-post .page__content ul {
+    list-style: disc;
+}
+
+body.page-template-page-privacy .page__content ol,
+body.page-template-page-price-matrix .page__content ol,
+body.single-post .page__content ol {
+    list-style: decimal;
+}
+
+body.page-template-page-privacy .page__content li,
+body.page-template-page-price-matrix .page__content li,
+body.single-post .page__content li {
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 8px;
+}
+
+body.page-template-page-privacy .page__content li:last-child,
+body.page-template-page-price-matrix .page__content li:last-child,
+body.single-post .page__content li:last-child {
+    margin-bottom: 0;
+}
+
+body.page-template-page-privacy .page__content li::marker,
+body.page-template-page-price-matrix .page__content li::marker,
+body.single-post .page__content li::marker {
+    color: var(--nv-primary);
+}
+
+body.page-template-page-privacy .page__content li > ul,
+body.page-template-page-price-matrix .page__content li > ul,
+body.single-post .page__content li > ul,
+body.page-template-page-privacy .page__content li > ol,
+body.page-template-page-price-matrix .page__content li > ol,
+body.single-post .page__content li > ol {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+/*
+ * Таблицы — `751:14731`: сетка 1fr/2fr, зазор 8, пунктирная рамка ячеек.
+ * Разметка Gutenberg (`figure.wp-block-table > table`) не меняется.
+ *
+ * Блок PAGE выше раскладывает ту же таблицу флексом (`tbody`/`tr` → flex).
+ * Здесь раскладка возвращается табличной: зазор 8 даёт `border-spacing`,
+ * пропорцию 1:2 — проценты при `table-layout: fixed`. Так ширина считается
+ * от контейнера, а не от min-content строки (флекс-версия на узких экранах
+ * растягивала таблицу до 700px и включала прокрутку внутри `.wp-block-table`),
+ * и у строк и ячеек остаются их табличные роли для скринридеров.
+ */
+body.page-template-page-privacy .page__content .wp-block-table,
+body.page-template-page-price-matrix .page__content .wp-block-table,
+body.single-post .page__content .wp-block-table {
+    margin: 32px 0;
+}
+
+/*
+ * `border-spacing` добавляет зазор и по краям таблицы — компенсируем выносом.
+ * `min-width` снимает запас 700px из `css/post.css`: он поставлен под таблицы
+ * блога, где нужна прокрутка, а здесь колонки должны считаться от контейнера.
+ */
+body.page-template-page-privacy .page__content .wp-block-table table,
+body.page-template-page-price-matrix .page__content .wp-block-table table,
+body.single-post .page__content .wp-block-table table {
+    width: calc(100% + 16px);
+    min-width: 0;
+    margin: 0 -8px;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 8px;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table tbody,
+body.page-template-page-price-matrix .page__content .wp-block-table tbody,
+body.single-post .page__content .wp-block-table tbody {
+    display: table-row-group;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table tbody tr,
+body.page-template-page-price-matrix .page__content .wp-block-table tbody tr,
+body.single-post .page__content .wp-block-table tbody tr {
+    display: table-row;
+    width: auto;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table td,
+body.page-template-page-price-matrix .page__content .wp-block-table td,
+body.single-post .page__content .wp-block-table td,
+body.page-template-page-privacy .page__content .wp-block-table th,
+body.page-template-page-price-matrix .page__content .wp-block-table th,
+body.single-post .page__content .wp-block-table th {
+    display: table-cell;
+    vertical-align: middle;
+    border-color: var(--nv-surface-4);
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 20px;
+    overflow-wrap: break-word;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table th,
+body.page-template-page-price-matrix .page__content .wp-block-table th,
+body.single-post .page__content .wp-block-table th {
+    color: var(--nv-object-1);
+    font-weight: 700;
+    text-align: left;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table tr td:first-child:nth-last-child(2),
+body.page-template-page-price-matrix .page__content .wp-block-table tr td:first-child:nth-last-child(2),
+body.single-post .page__content .wp-block-table tr td:first-child:nth-last-child(2) {
+    width: 33.3333%;
+}
+
+body.page-template-page-privacy .page__content .wp-block-table tr td:first-child:nth-last-child(2) ~ td,
+body.page-template-page-price-matrix .page__content .wp-block-table tr td:first-child:nth-last-child(2) ~ td,
+body.single-post .page__content .wp-block-table tr td:first-child:nth-last-child(2) ~ td {
+    width: 66.6667%;
+}
+
+/* Разделителей и цитат в текущем контенте нет — оформляем на запас. */
+body.page-template-page-privacy .page__content hr,
+body.page-template-page-price-matrix .page__content hr,
+body.single-post .page__content hr {
+    height: 0;
+    margin: 32px 0;
+    border: 0;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+body.page-template-page-privacy .page__content blockquote,
+body.page-template-page-price-matrix .page__content blockquote,
+body.single-post .page__content blockquote {
+    margin: 32px 0;
+    padding: 16px 24px;
+    border-left: 2px solid var(--nv-primary);
+    border-radius: 0 12px 12px 0;
+    background: var(--nv-surface-2);
+}
+
+body.page-template-page-privacy .page__content blockquote p:last-child,
+body.page-template-page-price-matrix .page__content blockquote p:last-child,
+body.single-post .page__content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Бургер-ширины. Светлая шапка повторяет решение /solutions/: обёртка меню
+     * прозрачная, рамку и подложку берёт сам бургер. Логотип здесь остаётся
+     * слева — в макете юридической страницы он виден всегда.
+     */
+    body.page-template-page-privacy .header__menu,
+    body.page-template-page-price-matrix .header__menu,
+    body.single-post .header__menu {
+        padding: 0;
+        border: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    body.page-template-page-privacy .burger,
+    body.page-template-page-price-matrix .burger,
+    body.single-post .burger {
+        border-color: var(--nv-surface-4);
+        background: var(--nv-surface-2);
+    }
+
+    body.page-template-page-privacy .header__menu--open .burger,
+    body.page-template-page-price-matrix .header__menu--open .burger,
+    body.single-post .header__menu--open .burger {
+        background: var(--nv-primary);
+    }
+
+    body.page-template-page-privacy .header__menu--open .burger svg path,
+    body.page-template-page-price-matrix .header__menu--open .burger svg path,
+    body.single-post .header__menu--open .burger svg path {
+        fill: var(--nv-constant-1);
+    }
+
+    /* Панель открывается от бургера влево — он стоит у правого края экрана. */
+    body.page-template-page-privacy .header__menu--open .header__nav,
+    body.page-template-page-price-matrix .header__menu--open .header__nav,
+    body.single-post .header__menu--open .header__nav {
+        left: auto;
+        right: 0;
+        border-color: var(--nv-surface-4);
+        background: var(--nv-surface-2);
+        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    /* Ниже 1440 макета нет — вертикаль ужимаем по логике темы. */
+    body.page-template-page-privacy .content-page,
+    body.page-template-page-price-matrix .content-page,
+    body.single-post .content-page {
+        padding-top: 128px;
+    }
+
+    body.page-template-page-privacy .page__title,
+    body.page-template-page-price-matrix .page__title,
+    body.single-post .page__title {
+        font-size: 44px;
+        line-height: 52px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-privacy .content-page,
+    body.page-template-page-price-matrix .content-page,
+    body.single-post .content-page {
+        padding-top: 112px;
+        padding-bottom: 48px;
+    }
+
+    body.page-template-page-privacy .page__wrapper,
+    body.page-template-page-price-matrix .page__wrapper,
+    body.single-post .page__wrapper {
+        gap: 32px;
+    }
+
+    body.page-template-page-privacy .page__title,
+    body.page-template-page-price-matrix .page__title,
+    body.single-post .page__title {
+        font-size: 36px;
+        line-height: 44px;
+    }
+
+    body.page-template-page-privacy .page__content p,
+    body.page-template-page-price-matrix .page__content p,
+    body.single-post .page__content p,
+    body.page-template-page-privacy .page__content li,
+    body.page-template-page-price-matrix .page__content li,
+    body.single-post .page__content li {
+        font-size: 16px;
+        line-height: 26px;
+    }
+
+    body.page-template-page-privacy .page__content h2,
+    body.page-template-page-price-matrix .page__content h2,
+    body.single-post .page__content h2 {
+        font-size: 22px;
+        line-height: 32px;
+    }
+
+    body.page-template-page-privacy .page__content h3,
+    body.page-template-page-price-matrix .page__content h3,
+    body.single-post .page__content h3,
+    body.page-template-page-privacy .page__content h4,
+    body.page-template-page-price-matrix .page__content h4,
+    body.single-post .page__content h4 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.page-template-page-privacy .page__title,
+    body.page-template-page-price-matrix .page__title,
+    body.single-post .page__title {
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    /*
+     * Макета на этой ширине нет. Поля ячеек ужимаем, а раскладку переводим
+     * на `auto`: при `fixed` доля 1/3 опускалась до ~70px и слова в первой
+     * колонке рвались посередине. На `auto` проценты остаются ориентиром,
+     * но колонка не становится уже своего min-content; таблица по-прежнему
+     * укладывается в контейнер и прокрутки не даёт.
+     */
+    body.page-template-page-privacy .page__content .wp-block-table table,
+    body.page-template-page-price-matrix .page__content .wp-block-table table,
+    body.single-post .page__content .wp-block-table table {
+        table-layout: auto;
+    }
+
+    /*
+     * Перенос внутри слова здесь выключается: он нужен был, чтобы длинное
+     * слово не вылезло из колонки фиксированной ширины, но при `auto` он же
+     * обнуляет min-content колонки, и она схлопывается обратно. Снимаем оба
+     * источника: `overflow-wrap` темы и `word-break` ядра WordPress
+     * (`.wp-block-table .has-fixed-layout td` в block-library). Длинные URL
+     * в ячейке по-прежнему переносит правило для `a` выше.
+     */
+    body.page-template-page-privacy .page__content .wp-block-table td,
+    body.page-template-page-price-matrix .page__content .wp-block-table td,
+    body.single-post .page__content .wp-block-table td,
+    body.page-template-page-privacy .page__content .wp-block-table th,
+    body.page-template-page-price-matrix .page__content .wp-block-table th,
+    body.single-post .page__content .wp-block-table th {
+        padding: 10px 12px;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+    body.page-template-page-privacy .page__title,
+    body.page-template-page-price-matrix .page__title,
+    body.single-post .page__title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    body.page-template-page-privacy .page__last-text,
+    body.page-template-page-price-matrix .page__last-text,
+    body.single-post .page__last-text {
+        font-size: 16px;
+    }
+}
+
+/* LEGAL PAGE LIGHT END */
+
 
 /* PAGE END */
 

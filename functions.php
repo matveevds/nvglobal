@@ -2148,11 +2148,28 @@ function nv_has_content($value): bool {
  * выводить прежнюю тёмную разметку — её не трогаем.
  *
  * Добавлять сюда шаблон можно только вместе с его CSS-контекстом:
- * стили светлой темы ограничены селекторами `body.home`
- * и `body.page-template-page-solutions`.
+ * стили светлой темы ограничены селекторами `body.home`,
+ * `body.page-template-page-solutions`, `body.page-template-page-privacy`
+ * и `body.page-template-page-price-matrix`.
+ *
+ * Юридические страницы (Terms of Use, Privacy Policy, Information Security
+ * Policy Statement) проверяются по шаблону, а не по слагу: все три сидят
+ * на `page-privacy.php`, и новая страница на том же шаблоне получит светлую
+ * тему автоматически (DECISIONS.md, Р-122).
+ *
+ * Страница тарифов проверяется так же по шаблону, а не по слагу
+ * `pricing-matrix`: слаг можно сменить в админке, шаблон — нет.
+ *
+ * Записи блога (`single.php`) — по `is_singular('post')`: шаблон у них один
+ * на все записи, отдельной проверки не нужно. Листинги блога, архивы и
+ * документация остаются тёмными (DECISIONS.md, Р-133).
  */
 function nv_is_light_theme(): bool {
-    return is_front_page() || is_page_template('page-solutions.php');
+    return is_front_page()
+        || is_page_template('page-solutions.php')
+        || is_page_template('page-privacy.php')
+        || is_page_template('page-price-matrix.php')
+        || is_singular('post');
 }
 
 

@@ -115,6 +115,18 @@
     return wrapper?.querySelector('.input-form-error-text') || null;
   }
 
+  /*
+   * Поля, которые должны получать aria-invalid и ссылку на текст ошибки.
+   * Скрытое поле селекта в расчёт не берём: его подменяет кнопка.
+   */
+  function getErrorTargets(wrapper) {
+    return Array.from(
+      wrapper.querySelectorAll('input.input-form, textarea, .phone-field__input, [data-help-select-button], input[type="checkbox"]')
+    );
+  }
+
+  let errorTextSeq = 0;
+
   function showError(wrapper, message) {
     if (!wrapper) return;
 
@@ -123,11 +135,23 @@
 
     if (errorText) {
       errorText.textContent = message;
+      if (!errorText.id) {
+        errorTextSeq += 1;
+        errorText.id = `form-error-${errorTextSeq}`;
+      }
+      errorText.setAttribute('role', 'alert');
     }
 
     if (errorBox) {
       errorBox.style.display = 'flex';
     }
+
+    getErrorTargets(wrapper).forEach((field) => {
+      field.setAttribute('aria-invalid', 'true');
+      if (errorText?.id) {
+        field.setAttribute('aria-describedby', errorText.id);
+      }
+    });
 
     wrapper.classList.add('is-error');
   }
@@ -145,6 +169,11 @@
     if (errorBox) {
       errorBox.style.display = '';
     }
+
+    getErrorTargets(wrapper).forEach((field) => {
+      field.removeAttribute('aria-invalid');
+      field.removeAttribute('aria-describedby');
+    });
 
     wrapper.classList.remove('is-error');
   }
@@ -623,14 +652,7 @@
           setHelpSelectValue(selectRoot, '');
         });
     
-        if (typeof MicroModal !== 'undefined') {
-          const parentModal = form.closest('.modal[aria-hidden="false"], .modal.is-open');
-          if (parentModal?.id) {
-            MicroModal.close(parentModal.id);
-          }
-    
-          MicroModal.show('thanks');
-        }
+        showResultModal(form, 'thanks');
       } catch (error) {
         console.error(error);
     
@@ -650,19 +672,37 @@
           showError(wrapper, 'Unable to submit the form. Please try again later.');
         }
     
-        if (typeof MicroModal !== 'undefined') {
-          const parentModal = form.closest('.modal[aria-hidden="false"], .modal.is-open');
-          if (parentModal?.id) {
-            MicroModal.close(parentModal.id);
-          }
-    
-          MicroModal.show('error');
-        }
+        showResultModal(form, 'error');
       } finally {
         state.submitting = false;
         stopButtonLoading(submitButton);
       }
     }
+
+  /*
+   * Окно результата. Сначала закрываем форму, потом в следующем кадре
+   * открываем результат: иначе MicroModal возвращает фокус на триггер
+   * формы уже после show и забирает его из диалога (DECISIONS.md, Р-118).
+   */
+  function showResultModal(form, modalId) {
+    if (typeof MicroModal === 'undefined') return;
+
+    const parentModal = form.closest('.modal[aria-hidden="false"], .modal.is-open');
+    if (parentModal?.id) {
+      MicroModal.close(parentModal.id);
+    }
+
+    requestAnimationFrame(() => {
+      MicroModal.show(modalId, {
+        openClass: 'is-open',
+        disableScroll: false,
+        disableFocus: false,
+        onShow: (modalEl) => {
+          modalEl.querySelector('.modal__close')?.focus({ preventScroll: true });
+        }
+      });
+    });
+  }
 
   /**
    * ------------------------------------------------------------
@@ -738,6 +778,7 @@
 
       const setSelectedDial = (dial) => {
         codeEl.textContent = String(dial);
+        options.forEach((o) => o.setAttribute('aria-selected', String(o.dataset.dial === String(dial))));
         close();
         phoneInput?.focus?.({ preventScroll: true });
       };
@@ -771,6 +812,60 @@
 
       search.addEventListener('input', (e) => filter(e.target.value));
       phoneInput?.addEventListener('input', syncClearState);
+
+      /*
+       * Клавиатура: список стран должен работать без мыши.
+       * Enter и Space на кнопке страны срабатывают сами — это <button>,
+       * здесь добавлены стрелки, Escape, Home и End.
+       */
+      const visibleOptions = () => options.filter((o) => !o.hidden);
+
+      const focusOption = (step, from) => {
+        const list = visibleOptions();
+        if (!list.length) return;
+        const current = list.indexOf(from);
+        let next;
+        if (step === 'first') next = 0;
+        else if (step === 'last') next = list.length - 1;
+        else next = current === -1 ? 0 : (current + step + list.length) % list.length;
+        list[next].focus({ preventScroll: true });
+      };
+
+      root.addEventListener('keydown', (e) => {
+        const onToggle = e.target.closest('.phone-field__country-btn');
+
+        if (onToggle && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+          e.preventDefault();
+          if (dropdown.hidden) open();
+          focusOption(e.key === 'ArrowDown' ? 'first' : 'last', null);
+          return;
+        }
+
+        if (dropdown.hidden) return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          /* Иначе Escape дойдёт до MicroModal и закроет всё окно. */
+          e.stopPropagation();
+          close();
+          btn.focus({ preventScroll: true });
+          return;
+        }
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const from = e.target.closest('.phone-field__option');
+          if (!from) focusOption(e.key === 'ArrowDown' ? 'first' : 'last', null);
+          else focusOption(e.key === 'ArrowDown' ? 1 : -1, from);
+          return;
+        }
+
+        if (e.key === 'Home' || e.key === 'End') {
+          if (!e.target.closest('.phone-field__option')) return;
+          e.preventDefault();
+          focusOption(e.key === 'Home' ? 'first' : 'last', null);
+        }
+      });
 
       instances.push({ root, dropdown, close });
     });
@@ -844,17 +939,20 @@
         root.classList.remove('help-select--has-value');
       };
 
-      const open = () => {
+      const open = (focusIndex = 0) => {
         dropdown.hidden = false;
         root.classList.add('help-select--open');
+        button.setAttribute('aria-expanded', 'true');
         options.forEach((o) => (o.tabIndex = -1));
-        options[0].tabIndex = 0;
-        options[0].focus({ preventScroll: true });
+        const target = options[focusIndex] || options[0];
+        target.tabIndex = 0;
+        target.focus({ preventScroll: true });
       };
 
       const close = () => {
         dropdown.hidden = true;
         root.classList.remove('help-select--open');
+        button.setAttribute('aria-expanded', 'false');
         options.forEach((o) => (o.tabIndex = -1));
       };
 
@@ -882,6 +980,54 @@
           clearSelected();
           close();
           button.focus({ preventScroll: true });
+        }
+      });
+
+      /*
+       * Клавиатура: Enter и Space на кнопке открывают список сами,
+       * здесь — стрелки, Escape, Home и End. Фокус после выбора и после
+       * Escape возвращается на кнопку.
+       */
+      root.addEventListener('keydown', (e) => {
+        const onTrigger = e.target.closest('[data-help-select-button], .help-select__arrow');
+
+        if (onTrigger && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+          e.preventDefault();
+          open(e.key === 'ArrowDown' ? 0 : options.length - 1);
+          return;
+        }
+
+        if (!isOpen()) return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          /* Иначе Escape дойдёт до MicroModal и закроет всё окно. */
+          e.stopPropagation();
+          close();
+          button.focus({ preventScroll: true });
+          return;
+        }
+
+        const from = e.target.closest('.help-select__option');
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const current = from ? options.indexOf(from) : -1;
+          const step = e.key === 'ArrowDown' ? 1 : -1;
+          const next = current === -1 ? (step === 1 ? 0 : options.length - 1)
+                                      : (current + step + options.length) % options.length;
+          options.forEach((o) => (o.tabIndex = -1));
+          options[next].tabIndex = 0;
+          options[next].focus({ preventScroll: true });
+          return;
+        }
+
+        if ((e.key === 'Home' || e.key === 'End') && from) {
+          e.preventDefault();
+          const next = e.key === 'Home' ? 0 : options.length - 1;
+          options.forEach((o) => (o.tabIndex = -1));
+          options[next].tabIndex = 0;
+          options[next].focus({ preventScroll: true });
         }
       });
 

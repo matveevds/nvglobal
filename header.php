@@ -76,10 +76,13 @@
             <div class="header__wrapper">
                 <?php
                 /*
-                 * На /solutions/ шапка светлая (DECISIONS.md, Р-45), поэтому логотип
-                 * выводится тёмной версией. Остальные страницы получают прежний файл.
+                 * На светлых шаблонах шапка светлая (DECISIONS.md, Р-45 / Р-126),
+                 * поэтому логотип выводится тёмной версией. Остальные страницы
+                 * получают прежний файл. Условие — общее `nv_is_light_theme()`:
+                 * на главной логотип в шапке скрыт стилями, на /solutions/ он виден
+                 * только на мобильных, на юридических страницах — всегда.
                  */
-                $nv_header_logo = is_page_template('page-solutions.php')
+                $nv_header_logo = nv_is_light_theme()
                     ? get_template_directory_uri() . '/img/logo-header-light.svg'
                     : get_template_directory_uri() . '/img/nvglobal_logo.png';
                 ?>
