@@ -293,28 +293,36 @@ ArrowLeft / ArrowRight работают, когда фокус внутри бл
 
 ---
 
-### Тизер и подвал — светлый вариант на двух страницах
+### Тизер и подвал — светлый вариант на светлых шаблонах
 
 Выбор варианта — одно условие на всю тему, `nv_is_light_theme()`
 в `functions.php`:
 
 ```php
 function nv_is_light_theme(): bool {
-    return is_front_page() || is_page_template('page-solutions.php');
+    return is_front_page()
+        || is_page_template('page-solutions.php')
+        || is_page_template('page-privacy.php');
 }
 ```
 
-Его читают два места:
+Его читают три места:
 
 | Файл | Что делает |
 |---|---|
 | `footer.php` | `if (nv_is_light_theme())` → `template-parts/footer-home.php`, иначе прежняя тёмная разметка |
 | `template-parts/teaser.php` | выбирает логотип: светлый `teaser_logo_primary.svg` или тёмный `teaser_logo.svg` |
+| `header.php` | выбирает логотип шапки: тёмный `logo-header-light.svg` под светлый фон или прежний `nvglobal_logo.png` |
+
+`page-privacy.php` обслуживает три юридические страницы, поэтому условие
+проверяет шаблон, а не слаг: новая страница на этом шаблоне получит
+светлую тему автоматически (DECISIONS.md, Р-122).
 
 Разметка тизера и подвала **общая**: отдельных `teaser-solutions.php` и
 `footer-solutions.php` нет. CSS — регионы `TEASER HOME` и `FOOTER HOME`:
-каждый селектор перечисляет оба контекста (`body.home` и
-`body.page-template-page-solutions`) с одними и теми же значениями.
+каждый селектор перечисляет все три контекста (`body.home`,
+`body.page-template-page-solutions`, `body.page-template-page-privacy`)
+с одними и теми же значениями.
 
 **Solutions-специфичных правил в этих регионах нет и быть не должно.**
 Шапка и подвал приняты при редизайне главной и являются общими
@@ -415,20 +423,105 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 ## 3. Pricing Matrix — `page-price-matrix.php` → `/pricing-matrix/`
 
 **Единственная по-настоящему ACF-управляемая страница.**
+С 2026-10-13 — светлый дизайн (DECISIONS.md, Р-127…Р-132).
 
-| # | Строка | Разметка | CSS-секция | Данные |
-|---|---|---|---|---|
-| 1 | 8 | `.intro` | `INTRO` (11023–11368) | статика |
-| 2 | 90 | `.calculator#kyc-calculator` | `CALCULATOR` (11370–12643) | цены в `data-`атрибутах, `js/calculate.js` |
-| 3 | 347 | `.overview` | `OVERVIEW` (13170–13433) | статика |
-| 4 | 443 | `.packages#packages` | `PACKAGES` (12645–13168) | ACF: тарифы, услуги, цены |
+| # | Разметка | CSS-секция | Данные |
+|---|---|---|---|
+| 1 | `.main.main--pricing` | `HERO` (18931–19076) | статика |
+| 2 | `.calculator#kyc-calculator` | `CALCULATOR` (19078–20556) | цены в `data-`атрибутах, `js/calculate.js` |
+| 3 | `.overview` | `OVERVIEW` (21186–21412) | статика |
+| 4 | `.packages#packages` | `PACKAGES` (20558–21184) | ACF: тарифы, услуги, цены |
 
-Обёрнуто `CALC PAGE START` (11021) … `END` (13435).
+Обёрнуто `CALC PAGE START` (18895) … `END` (21414).
+
+**Первый экран — общий блок `main`, а не свой.** Карточка-фотография та же, что
+на /solutions/ (`.main__card`, `.main__media`, `.main__body`, `.main__logo`,
+`.main__group`, `.main__content`, `.main__title`, `.main__actions`, `.main__btn`).
+Отличия страницы — в модификаторе `main--pricing`:
+
+| Что | Solutions | Pricing |
+|---|---|---|
+| Колонка текста | 600 / 372 ниже 1600 | 580 на всех десктопных ширинах |
+| Над заголовком | — | `.main__breadcrumbs` (ссылка + `/` + текущий раздел) |
+| Подзаголовок | `.main__subtitle` | нет |
+| Полоса фактов | `.main__facts` | нет |
+| Акцентная кнопка | текст, затем стрелка | `.main__btn--lead`: стрелка, затем текст |
+| Карточка на 840 | 872 (держала факты) | 560 |
+| Фото на мобильной | 360×248, затемнение есть | 360×360, затемнения нет |
+
+Блок `.intro` на странице больше не используется; его CSS-секция удалена
+вместе с тёмной версией `CALC PAGE` (Р-128).
 
 Калькулятор: три пакета — DOCUMENT, **LIVENESS**, BASIC. Цена LIVENESS **не вводится**,
 считается как BASIC − DOCUMENT в каждой из трёх опорных точек. При LIVENESS блок
 «Document Type in Package» скрывается классом `calculator--no-documents`,
 дополнительные документы остаются доступны и тарифицируются как доплата.
+
+### Карта компонентов калькулятора
+
+| Компонент | Класс / `id` | Нужен JS | Можно менять разметку |
+|---|---|---|---|
+| Спойлер | `.calculator__spoiler`, `--open` | да (`setSpoilerState`) | только обёртки |
+| Шапка спойлера | `.calculator__spoiler-header` | да (click/keydown, aria) | нет |
+| Кнопка спойлера | `.calculator__spoiler-icon` | нет (оформление) | да |
+| Содержимое спойлера | `.calculator__spoiler-content` | да (inline `height`) | нет |
+| Вкладки пакета | `#calculator-package button[data-pkg]` | да | нет |
+| Вкладки типа документа | `#calculator-document-type button[data-dt]` | да | нет |
+| Состояние вкладки | класс `.active` + `aria-pressed` | да | нет |
+| Поле объёма | `#calculator-volume-number` (`step`, `value`) | да | нет |
+| Шаг ±  | `.calculator-volume-step[data-volume-step]` | да | нет |
+| Ползунок | `#calculator-volume-range` | да (`--range-progress`) | нет |
+| Подпись ползунка | `#calculator-volume-range-value` | да (inline `left`) | нет |
+| Подписи диапазона | `.calculator-volume-range-limits` | нет | да |
+| Доп. документы | `input[name="extra_documents[]"][data-extra-doc]` | да | нет |
+| Междунар. скрининг | `#calculator-international-screening` | да | нет |
+| Цена за документ | `#calculator-doc-unit-price` | да (текст) | нет |
+| Итоги секций | `#calculator-extra-docs-total`, `#calculator-international-total` | да (текст) | нет |
+| Карточка итога | `.calculator__result`, `-default`, `-request` | да (классы состояний) | только обёртки |
+| Строки итога | `#calculator-result-*` (9 узлов) | да (текст) | нет |
+| Заголовок суммы | `.calculator__result-sum-title` | да (текст) | нет |
+| Плашка года | `.calculator__result-itog*` | да (текст) | да (обёртки) |
+| CTA | `[data-calculator-trigger]`, `.open-callForm2` | да (`data-calculator-json`) | только обёртки |
+| Состояния секции | `.calculator--below-min-volume`, `--above-max-volume`, `--no-documents` | да | нет |
+
+Данные о пакете уезжают в модалку через `data-calculator-json` на CTA —
+переименование `id` результатов сломает и это тоже.
+
+---
+
+## 3.1. Запись блога — `single.php` → `/<slug>/`
+
+Светлый дизайн с 2026-10-13 (DECISIONS.md, Р-133…Р-138).
+
+| Узел | Разметка | CSS |
+|---|---|---|
+| Секция статьи | `.post` | `css/post.css`, секция `BLOG POST LIGHT` |
+| Оглавление | `.post-sidebar` → блок `acf/toc` | `blocks/toc/toc.css` |
+| Шапка статьи | `.post__header`: `.post-title`, `.post__meta`, `.post__thumbnail` | `post.css` |
+| Лид | `.post-intro` (вывод `the_excerpt()`) | `post.css` |
+| Текст | `.post-text.entry-content` | `post.css` + CSS блоков |
+| Низ страницы | `.post-bottom`: карточка автора, его статьи, форма | `post.css` + `styles.css` |
+
+**Что нельзя сломать:**
+
+- **Светлые правила ограничены `body.single-post`.** `css/post.css` подключается
+  глобально, а классы `.post`, `.post-content`, `.post-text`, `.post__content`,
+  `.post-sidebar`, `.breadcrumbs` используют ещё `page-docs.php`
+  и `single-document.php`. Тёмная часть файла обслуживает документацию,
+  её трогать нельзя; светлая идёт ниже, отдельной секцией.
+- **Абзацы статьи — через дочерний комбинатор** `.post-text > p`. У него и
+  у правил врезок (`.post__content .warning__content p`) одинаковое число классов;
+  без `>` статья перекрывает цвет врезок.
+- **Форма под статьёй** переиспользует светлые правила формы секции Contacts:
+  селекторы `body.page-template-page-solutions .contacts X` имеют двойники
+  `body.single-post .post__form X`. Разметка форм совпадает — при правке одной
+  проверять вторую.
+- **Сетка:** сайдбар ровно 436, статья `flex: 0 1 1080px`. Ниже 1200 сайдбар
+  становится выдвижной панелью — поведение и классы (`is-open`, `.sidebar-overlay`,
+  `.post-sidebar-btn`, `.post-sidebar-btn-mobile`) менять нельзя, ими управляет
+  `js/main.js`.
+- **Обложка** выводится только если `blog_image()` вернул непустую строку:
+  у вложения должны быть размеры `blog_1x/2x/3x`.
 
 ---
 
@@ -451,12 +544,42 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 | `.page` | юр. страницы | `PAGE` (10736–11019) |
 
 ### Модалки в `footer.php`
-| id | Строка | Назначение |
-|---|---|---|
-| `callForm` | 113 | основная форма заявки |
-| `callForm2` | 425 | вторая форма — **164 строки расходятся** с `callForm`, остальное совпадает |
-| `review` | 625 | просмотр отзыва |
-| `thanks` | 668 | благодарность |
+
+| id | Модификаторы | Тема | Назначение |
+|---|---|---|---|
+| `callForm` | `modal--form modal--large` | светлая | большая форма: Name, Company, E-mail, Phone, услуга, сообщение |
+| `callForm2` | `modal--form modal--compact` | светлая | малая форма: Name, E-mail, Phone, сообщение |
+| `review` | — | **тёмная** | просмотр отзыва, редизайн его не касался |
+| `thanks` | `modal--result` | светлая | успешная отправка |
+| `error` | `modal--result` | светлая | ошибка отправки |
+
+Светлый дизайн модалок (2026-10-12) держится на модификаторах, а не на
+классе страницы: окна глобальные и выглядят одинаково на любом шаблоне.
+`#review` модификаторов не получает и поэтому остаётся тёмным.
+
+**Оформление полей не дублируется.** Разметка модалок использует тот же
+словарь классов, что и `template-parts/contacts-form.php`, поэтому правила
+светлой формы в регионе `CONTACTS` перечисляют три контекста:
+`body.home .contacts`, `body.page-template-page-solutions .contacts`
+и `.modal`. В регионе `MODAL` лежит только своё: подложка, габариты окна,
+раскладка в столбик с разделителями, светлые выпадающие списки, кнопка
+закрытия и мобильная раскладка окон результата.
+
+Токены `--nv-*` объявлены на `.modal--form` и `.modal--result` — иначе
+на тёмных шаблонах (`/pricing-matrix/`, `/docs/`, `/blog/`, 404) у модалки
+не было бы значений.
+
+Геометрия по макетам:
+
+| | Десктоп | Планшет | Мобильная |
+|---|---|---|---|
+| большая | 901x712, поле 24 | 600, поле 16 | 360, поле 12 |
+| малая | 640x676, поле 24 | 600, поле 16 | 360x644, поле 12 |
+| результат | 480 | 480 | 360, в столбик |
+
+**Что нельзя ломать:** `data-form-id` назначается в `js/form.js` по порядку
+форм в DOM (`contacts-form-N`), поэтому порядок форм на странице менять
+нельзя. hCaptcha живёт в `.captcha-holder`, стилизуется только обёртка.
 
 ---
 
@@ -498,6 +621,48 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 `about`, `callout`, `code`, `disclaimer`, `faq`, `note`, `pillar`, `quote`, `result`,
 `single-image`, `slider`, `spoiler`, `stages`, `steps`, `success`, `tabs`, `toc`,
 `two-images`, `warning`.
+
+Поля каждого блока, `field_`-ключи и форма `attrs.data` для импорта —
+в `docs/BLOG-IMPORT-GUIDE.md`.
+
+### Что нельзя сломать в блоках
+
+**Заглушка пустого блока.** Шаблоны выходят через `return`, когда поля не заполнены.
+В блочном редакторе такой блок получает нулевую высоту: его не видно и нельзя
+выделить, чтобы заполнить. Поэтому перед каждым `return` в ветке «нет данных»
+стоит `nv_block_placeholder($is_preview, 'Название', 'Подсказка')`
+(`inc/block-helpers.php`). На сайт заглушка не попадает: при `$is_preview === false`
+помощник возвращает пустую строку. Новый блок — заводить с таким же выходом.
+
+Оформление заглушки — `css/editor-blocks.css`, подключается через
+`add_editor_style()`. Через `enqueue_block_editor_assets` нельзя: с WordPress 6
+канва редактора — отдельный iframe, и такие стили в неё не попадают.
+
+**Шим quicktags.** `js/admin-blocks.js` обязателен, пока не обновлён ACF Pro:
+без него каждый блок с WYSIWYG-полем падает в редакторе с «Этот блок содержит
+ошибку и не может быть просмотрен» (`docs/BACKLOG.md`, B-27). Скрипт подключён
+с зависимостью от `quicktags` — без зависимости ядро перезаписывает функцию
+уже после шима, и он перестаёт работать.
+
+**Режим блока (`acf.mode` в `block.json`).** `preview` — поля редактируются
+в правой панели блока, канва показывает живой предпросмотр; `auto` — при выделении
+канва показывает форму полей. Выбор не косметический: TinyMCE работает только
+в родительском документе, то есть только в панели. Поэтому блоки, где WYSIWYG —
+основное поле (`spoiler`, `note`, `warning`, `success`, `disclaimer`, `quote`,
+`result`, `about`, `callout`), стоят в `preview`, а блоки с репитерами — в `auto`
+(репитер в узкой панели нечитаем). Подробности — `docs/DECISIONS.md`, Р-139, Р-140.
+
+**Стили формы в канве.** `functions.php` дописывает каждому блоку
+`editor_style_handles`: `acf-input`, `editor-buttons`, `buttons`. Без них поля
+в канве выглядят как голая HTML-форма — стили ACF и ядра в iframe не попадают.
+
+**Иконки врезок** `warning`, `success`, `disclaimer`, `note` выводятся inline-SVG
+с `fill="currentColor"`; цвет глифа задаёт `color` на `.<block>__icon` в CSS блока.
+
+**Поля, которых нет.** Шаблоны `single-image`, `two-images`, `slider` читают
+`nv_sourcelink`, `gallery_image_sourcelink`, `slider_sourcelink` — таких полей
+в группах ACF нет, ветка со ссылкой-источником не выполняется никогда
+(`docs/BACKLOG.md`, B-28).
 
 ---
 
@@ -1393,3 +1558,89 @@ LinkedIn 24×24 (путь тот же, что в тёмном футере).
   `border`, и доли уезжают на 7–15px. База задаётся через `calc()` от 100%.
 - **Паддинг минус толщина рамки** — Figma рисует обводку внутрь габарита,
   поэтому `padding: 15px` там, где в макете 16.
+
+---
+
+## 21. Юридические страницы — `page-privacy.php`
+
+Один шаблон на три страницы: Terms of Use (314), Privacy Policy (306),
+Information Security Policy Statement (582). Отдельных шаблонов и копий
+CSS под них нет и заводить не нужно (DECISIONS.md, Р-122).
+
+### Разметка
+
+```
+main.content-page
+└── .container.small-container
+    └── .page__wrapper
+        ├── .page__header
+        │   ├── h1.page__title        ← the_title()
+        │   └── .page__last           ← дата из get_the_modified_date()
+        └── .page__content            ← the_content()
+```
+
+Ниже шаблон подключает общий `template-parts/teaser.php` и `get_footer()`.
+
+**Контент идёт только из `the_content()`.** Текст юридических страниц
+в шаблон не переносится и не правится в коде — редактируется в админке.
+
+### Что общее, а что только здесь
+
+| Класс | Где ещё используется |
+|---|---|
+| `.content-page` | `404.php` (`content-page page-404`) — **базовые правила не трогать** |
+| `.page__wrapper`, `.page__header`, `.page__title`, `.page__last`, `.page__content` | только этот шаблон |
+| `.container`, `.small-container`, `.teaser`, `.footer`, `.header` | общие компоненты темы |
+
+Поэтому светлые правила собраны в регионе `LEGAL PAGE LIGHT` блока `PAGE`
+и целиком ограничены `body.page-template-page-privacy`. Базовые тёмные
+правила блока `PAGE` остались как были — их читает 404.
+
+### Геометрия (Figma `751:13876`, фрейм 1440)
+
+| Параметр | 1440 / 1920 | 840 | 392 |
+|---|---|---|---|
+| контент сверху | 140 | 128 | 112 |
+| контент снизу | 64 | 64 | 48 |
+| колонка | 900 | 776 | 360 |
+| поля | 32 | 32 | 16 |
+| H1 | 52/64 | 44/52 | 24/32 |
+| абзац | 18/28 | 18/28 | 16/26 |
+| H2 | 24/36 | 24/36 | 22/32 |
+| H3 | 20/28 | 20/28 | 18/26 |
+
+Колонку задаёт `body.page-template-page-privacy .container.small-container`
+с `max-width: 964px`: 900 макета плюс поля 32 с двух сторон.
+
+Макетов Full HD, Tablet и Mobile нет: выше 1440 колонка те же 900,
+ниже — вертикаль и типографика ужаты по логике темы.
+
+### Вертикальные зазоры контента
+
+Собираются схлопыванием соседних `margin`, а не обёртками:
+
+| Переход | Значение | Чем задано |
+|---|---|---|
+| раздел → раздел | 32 | `h2 { margin-top: 32px }` |
+| H2 → текст | 28 | `h2 { margin-bottom: 28px }` |
+| текст → H3 | 28 | `h3 { margin-top: 28px }` |
+| H3 → текст | 16 | `h3 { margin-bottom: 16px }` |
+| абзац → абзац | 20 | `p { margin-bottom: 20px }` |
+| текст → таблица | 32 | `.wp-block-table { margin: 32px 0 }` |
+
+### Таблицы
+
+Блок `PAGE` раскладывает `figure.wp-block-table` флексом; в светлой версии
+раскладка табличная — `border-spacing: 8px` вместо `gap`, пропорция 1:2
+процентами при `table-layout: fixed` (DECISIONS.md, Р-124).
+
+Ниже 576 — `table-layout: auto`, поля ячеек 10/12, снимается
+`word-break: break-word` ядра WordPress. У таблиц с неразрывным URL
+в ячейке остаётся прокрутка внутри `.wp-block-table`; страница не едет.
+
+### Чего в контенте пока нет
+
+`ol`, `h4`, `hr`, `blockquote`, `th` оформлены на запас — в текущих трёх
+страницах встречаются только `p`, `h2`, `h3`, `ul`, `li`, `strong`, `a`
+и таблицы. Правила стоят, чтобы редактор мог добавить такой блок
+в админке и не получить неоформленный вывод.
