@@ -873,6 +873,8 @@ body.single-post .container {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    max-width: 1888px;
+    margin: 0 auto;
     box-sizing: border-box;
     height: 64px;
     padding: 0 var(--header-pad);
