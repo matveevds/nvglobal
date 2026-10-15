@@ -118,6 +118,15 @@ $data = extract_toc_block_from_content($content);
 
                 </div>
                 <div class="post-bottom__right">
+                    <?php
+                    /*
+                     * Макет 2570:39540 — комментарии. Они выводятся, когда включены у записи
+                     * или уже есть; иначе остаётся прежняя форма обращения (Р-136, Р-142).
+                     */
+                    if (nv_post_comments_enabled()) :
+                        include get_template_directory() . '/template-parts/post-comments.php';
+                    else :
+                    ?>
                     <div class="post__form">
                         <form class="contacts__form" action="#">
 
@@ -424,6 +433,7 @@ $data = extract_toc_block_from_content($content);
 
                         </form>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

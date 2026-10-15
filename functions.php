@@ -2391,24 +2391,19 @@ function get_post_author_articles_html() {
                     ]
                 );
 
-                if (!$thumbnail) {
-                    $fallback = get_template_directory_uri() . '/assets/images/post-placeholder.jpg';
-
-                    $thumbnail = sprintf(
-                        '<img src="%s" alt="%s" loading="lazy" decoding="async">',
-                        esc_url($fallback),
-                        esc_attr($article_title)
-                    );
-                }
+                // Файла-заглушки в теме нет (assets/images/ не существует), поэтому без миниатюры
+                // карточка выводится без картинки, а не с битой ссылкой.
                 ?>
 
                 <div class="post__article-item">
 
                     <div class="post__article-image">
                         <?php echo $thumbnail; ?>
+                    <?php if ($thumbnail) : ?>
                     </div>
 
                     <a href="<?php echo esc_url($article_url); ?>" class="post__article-title">
+                    <?php endif; ?>
                         <?php echo esc_html($article_title); ?>
                     </a>
 
@@ -2566,3 +2561,77 @@ function nv_translate_yoast_slack_labels($data) {
 
     return $new_data;
 }
+
+
+/* ==========================================================================
+ * Комментарии записей блога (Figma 2570:39540, docs/DECISIONS.md, Р-142)
+ * ========================================================================== */
+
+/**
+ * Блок комментариев выводится, если они открыты у записи или уже есть.
+ * Иначе под статьёй остаётся прежняя форма (single.php).
+ */
+function nv_post_comments_enabled(): bool {
+    return comments_open() || get_comments_number() > 0;
+}
+
+/*
+ * В форме по макету нет поля e-mail, поэтому обязательность имени и e-mail
+ * из настроек обсуждения отключаем: имя проверяет атрибут `required` и сервер ниже.
+ */
+add_filter('pre_option_require_name_email', '__return_zero');
+
+/** Должность автора комментария. */
+add_action('comment_post', function ($comment_id) {
+    if (isset($_POST['nv_position'])) {
+        $position = sanitize_text_field(wp_unslash($_POST['nv_position']));
+        if ($position !== '') {
+            add_comment_meta($comment_id, 'nv_position', mb_substr($position, 0, 120), true);
+        }
+    }
+});
+
+/**
+ * Комментарии записей всегда идут на модерацию (анонимная форма без e-mail
+ * и капчи иначе публиковала бы всё сразу). Спам-статус и права модераторов не трогаем.
+ */
+add_filter('pre_comment_approved', function ($approved, $commentdata) {
+    if ('spam' === $approved || 'trash' === $approved) {
+        return $approved;
+    }
+    if (isset($commentdata['comment_post_ID']) && 'post' === get_post_type((int) $commentdata['comment_post_ID']) && !current_user_can('moderate_comments')) {
+        return 0;
+    }
+    return $approved;
+}, 10, 2);
+
+/** После отправки на модерацию — на форму с уведомлением (WordPress без e-mail параметр не добавляет). */
+add_filter('comment_post_redirect', function ($location, $comment) {
+    if ($comment && '0' === (string) $comment->comment_approved && 'post' === get_post_type((int) $comment->comment_post_ID)) {
+        return add_query_arg('unapproved', (int) $comment->comment_ID, get_permalink((int) $comment->comment_post_ID)) . '#comments';
+    }
+    return $location;
+}, 10, 2);
+
+/** Серверные проверки формы комментария: ловушка для ботов, согласие, имя и должность. */
+add_filter('preprocess_comment', function ($data) {
+    if (!isset($data['comment_post_ID']) || 'post' !== get_post_type((int) $data['comment_post_ID'])) {
+        return $data;
+    }
+
+    $fail = static function (string $message) {
+        wp_die(esc_html($message), 'Comment', ['response' => 400, 'back_link' => true]);
+    };
+
+    if (!empty($_POST['nv_website'])) {
+        $fail('Spam detected.');
+    }
+    if (empty($_POST['nv_consent'])) {
+        $fail('Please accept the privacy policy to publish a comment.');
+    }
+    if (trim((string) $data['comment_author']) === '' || empty(trim((string) ($_POST['nv_position'] ?? '')))) {
+        $fail('Please fill in your name and position.');
+    }
+
+    return $data;
+});

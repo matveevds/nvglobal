@@ -82,6 +82,11 @@
   }
 }
 
+.post__content .callout-btn svg {
+    flex-shrink: 0;
+    color: var(--nv-constant-1);
+}
+
 .callout-btn span {
     color: var(--nv-constant-1);
     font-size: 16px;

@@ -1315,6 +1315,29 @@ body.single-post .post__content ol.wp-block-list li::before {
 }
 
 /* ---------- Таблицы ---------- */
+/*
+ * Figma 2570:39092 / 39126 / 39150: ячейки — рамка 2px dashed Stroke 2, радиус 12,
+ * поля 8×16, текст 16/20 Text 2, по левому краю; заголовок — рамка 1px оранжевая,
+ * фон Island/1, оранжевый жирный текст; подпись «Table N. …» стоит НАД таблицей
+ * (Space Grotesk Medium 18/28 в макете, здесь шрифт темы). Выравнивание ячеек
+ * Gutenberg (`has-text-align-*`) сохраняется.
+ */
+body.single-post .post__content .wp-block-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.single-post .post__content .wp-block-table figcaption {
+    order: -1;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+}
+
 body.single-post .post__content .wp-block-table table {
     width: 100%;
     border-collapse: separate;
@@ -1325,9 +1348,11 @@ body.single-post .post__content .wp-block-table thead th {
     padding: 8px 16px;
     border: 1px solid var(--nv-primary);
     border-radius: 12px;
-    background: var(--nv-primary-soft);
+    background: var(--nv-surface-2);
     color: var(--nv-primary);
+    font-size: 16px;
     font-weight: 700;
+    line-height: 20px;
     text-align: center;
 }
 
@@ -1335,24 +1360,34 @@ body.single-post .post__content .wp-block-table thead th:first-child {
     text-align: left;
 }
 
-body.single-post .post__content .wp-block-table tbody td {
+body.single-post .post__content .wp-block-table tbody td,
+body.single-post .post__content .wp-block-table tfoot td {
     padding: 8px 16px;
-    border: 1px solid var(--nv-surface-4);
+    border: 2px dashed var(--nv-surface-4);
     border-radius: 12px;
-    background: var(--nv-surface-2);
+    background: transparent;
     color: var(--nv-object-2);
-    line-height: 142.857%;
-    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: middle;
 }
 
 body.single-post .post__content .wp-block-table tbody td:first-child {
-    color: var(--nv-object-1);
-    text-align: left;
+    color: var(--nv-object-2);
 }
 
-body.single-post .wp-block-table table th,
-body.single-post .wp-block-table table td {
-    border-width: 1px;
+body.single-post .post__content .wp-block-table .has-text-align-center {
+    text-align: center;
+}
+
+body.single-post .post__content .wp-block-table .has-text-align-right {
+    text-align: right;
+}
+
+body.single-post .post__content .wp-block-table .has-text-align-left {
+    text-align: left;
 }
 
 /* Узкая колонка — таблица прокручивается внутри своей обёртки. */
@@ -1676,15 +1711,15 @@ body.single-post .post__form {
 }
 
 /* ---------- Адаптив ---------- */
-body.single-post @media (max-width: 1599.98px) {
+@media (max-width: 1599.98px) {
 
 }
 
-body.single-post @media (max-width: 1399.98px) {
+@media (max-width: 1399.98px) {
 
 }
 
-body.single-post @media (max-width: 1199.98px) {/* Сайдбар уезжает в выдвижную панель — поведение темы сохраняем. */
+@media (max-width: 1199.98px) {/* Сайдбар уезжает в выдвижную панель — поведение темы сохраняем. */
     
     body.single-post .post-sidebar {
         position: fixed;
@@ -1745,7 +1780,7 @@ body.single-post .post-sidebar-btn-mobile.open svg {
     }
 }
 
-body.single-post @media (max-width: 991.98px) {/* Tablet 236:5552 — поля карточек 16, заголовки на ступень ниже. */
+@media (max-width: 991.98px) {/* Tablet 236:5552 — поля карточек 16, заголовки на ступень ниже. */
     
     body.single-post .post {
         padding-top: 32px;
@@ -1792,12 +1827,12 @@ body.single-post .post__form {
     }
 }
 
-body.single-post @media (max-width: 767.98px) {    body.single-post .post-sidebar {
+@media (max-width: 767.98px) {    body.single-post .post-sidebar {
         width: 460px;
     }
 }
 
-body.single-post @media (max-width: 575.98px) {/* Mobile 236:6388 — поля 12, H1 32/40. */
+@media (max-width: 575.98px) {/* Mobile 236:6388 — поля 12, H1 32/40. */
     
     body.single-post .post__thumbnail,
 body.single-post .wp-block-image {
@@ -1873,12 +1908,239 @@ body.single-post .post__form {
     }
 }
 
-body.single-post @media (max-width: 478.98px) {
+@media (max-width: 478.98px) {
 
 }
 
-body.single-post @media (max-width: 419.98px) {
+@media (max-width: 419.98px) {
 
+}
+
+/* ---------- Комментарии (Figma 2570:39540, Р-142) ---------- */
+body.single-post .post-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+body.single-post .post-comments__form-card {
+    padding: 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-1);
+}
+
+body.single-post .post-comments__title {
+    margin: 0 0 16px;
+    color: var(--nv-object-1);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+body.single-post .post-comments__notice {
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 12px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-object-1);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+body.single-post .post-comments__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+body.single-post .post-comments__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+body.single-post .post-comments__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.single-post .post-comments__label {
+    color: var(--nv-object-2);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+body.single-post .post-comments__req {
+    color: var(--nv-primary);
+}
+
+body.single-post .post-comments__control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 8px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+}
+
+body.single-post .post-comments__icon {
+    flex-shrink: 0;
+    box-sizing: content-box;
+    padding: 2px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+body.single-post .post-comments__control input,
+body.single-post .post-comments__textarea {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--nv-object-1);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+body.single-post .post-comments__control input {
+    height: 100%;
+    padding: 0;
+}
+
+body.single-post .post-comments__textarea {
+    box-sizing: border-box;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    resize: vertical;
+}
+
+body.single-post .post-comments__control input::placeholder,
+body.single-post .post-comments__textarea::placeholder {
+    color: var(--nv-object-3);
+}
+
+body.single-post .post-comments__control:focus-within,
+body.single-post .post-comments__textarea:focus {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+body.single-post .post-comments__control input:focus {
+    outline: 0;
+}
+
+body.single-post .post-comments__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--nv-object-2);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+body.single-post .post-comments__consent input {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--nv-primary);
+}
+
+body.single-post .post-comments__consent a {
+    color: var(--nv-primary);
+}
+
+/* Ловушка для ботов: за пределами экрана, не display:none (его боты распознают). */
+body.single-post .post-comments__trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+body.single-post .post-comments__actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+body.single-post .post-comments__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body.single-post .post-comments__item {
+    margin: 0;
+    padding: 12px 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-1);
+}
+
+body.single-post .post-comments__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+}
+
+body.single-post .post-comments__author {
+    color: var(--nv-object-1);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+body.single-post .post-comments__position {
+    color: var(--nv-primary);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+body.single-post .post-comments__date {
+    margin-left: auto;
+    color: var(--nv-object-3);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+body.single-post .post-comments__text {
+    margin-top: 8px;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+body.single-post .post-comments__text p {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+@media (max-width: 575.98px) {
+    body.single-post .post-comments__row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.single-post .post-comments__form-card {
+        padding: 16px;
+    }
 }
 
 /* ====================== BLOG POST LIGHT END ====================== */

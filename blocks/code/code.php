@@ -18,7 +18,7 @@ if ('' === trim((string) $html)) {
 <div class="code">
     <div class="code__wrapper">
         <div class="code__top">
-            <div class="code__top-title">Код</div>
+            <div class="code__top-title">Code</div>
             <div class="code__top-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M6.85694 8.78516L3 11.9989L6.85694 15.2137" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

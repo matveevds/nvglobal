@@ -4,7 +4,7 @@
 .post__content .result__wrapper {
   display: flex;
   flex-direction: column;
-  gap:28px;
+  gap: 16px;
   padding: 12px 32px;
   border-left: 4px solid var(--nv-primary);
 }
@@ -18,14 +18,16 @@
 .post__content .result__title {
   color: var(--nv-primary);
   font-size: 24px;
-  font-weight: 600;
-  line-height: 100%;
+  font-weight: 700;
+  line-height: 36px;
 }
+/* Цвет задаётся явно: общий `p` темы светлый (#FBFBFB 70%) и на светлой странице текст не виден. */
 .post__content .result__text p {
+  color: var(--nv-object-2);
   font-size: 18px;
   font-weight: 400;
-  line-height: 155.556%;
-  margin-bottom: 12px;
+  line-height: 28px;
+  margin-bottom: 20px;
 }
 
 .result__text p:last-of-type {

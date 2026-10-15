@@ -47,6 +47,7 @@
   margin-bottom: 0;
 }
 .about-block__btn.btn2 {
+  color: var(--nv-primary);
   align-self: flex-end;
   padding: 12px 12px 12px 20px;
   min-width: unset;
