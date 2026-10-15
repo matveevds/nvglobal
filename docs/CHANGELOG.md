@@ -7,6 +7,29 @@
 
 ---
 
+## 2026-10-15 — страница KYC (`page-kyc.php`, `/kyc/`)
+
+Задание «NV Global — новая страница KYC». Решения и расхождения макета — `DECISIONS.md`, Р-144.
+**Не закоммичено — ждёт приёмки.** Перед работой дерево разобрано на два коммита
+(Header; блог и блоки) по решению пользователя.
+
+**Новые файлы:** `page-kyc.php`, `inc/kyc-data.php` (тексты и состояния), `inc/kyc-icons.php`
+(`nv_kyc_icon()`), `template-parts/{integration,faq,contacts}-section.php` (вынесены из
+`page-solutions.php`, разметка не менялась — HTML /solutions/ сверен до и после, отличаются только пробелы),
+`img/kyc-*` (растр WebP 1x/2x и SVG из Figma: герой ×4 кропа, процесс, шаги, риск, ноутбук FHD/Desktop,
+телефон FHD/Desktop, значки сертификатов, флаги, карта мира, слои карты ЮВА, маркеры).
+
+**Правки:** `functions.php` (`nv_is_light_theme()` + `page-kyc.php`), `page-solutions.php` (три
+`get_template_part`), `css/styles.css` (в селекторы токенов, `.container`, Contacts, тизера, футера и FAQ добавлен
+`body.page-template-page-kyc` — 362 строки; новый регион `KYC-PAGE` с секциями `KYC BASE/HERO/CERTS/PROCESS/
+STEPS/RISK/PLATFORM/COMPLIANCE/SEA/ONBOARDING/INDUSTRIES/PRICING/ABOUT`), `js/main.js` (`initKycPage()`).
+Локально создана страница WP «KYC» (ID 1209, slug `kyc`, шаблон `page-kyc.php`).
+
+**Проверено (Playwright):** высоты секций совпадают с Figma на 1920 и 1440 (±2 px, кроме Contacts +2);
+нет горизонтальной прокрутки на 1920…375; функционал 1440/768/392 — все состояния Process 1–5, Steps 1–4,
+Risk 1–3 (+клавиатура), Compliance (клик, hover, focus), SEA 6 стран (+клавиатура), FAQ 11 вопросов,
+дубликатов `id` нет, один `h1`, ошибок консоли нет.
+
 ## 2026-10-14 — доработка страницы записи блога и блоков
 
 Проверка на статье `/2026/10/14/h1-from-article_final-md/` и временной записи со всеми 19 блоками

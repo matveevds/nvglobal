@@ -46,6 +46,7 @@
 | `/` | main (420) | **`main-page.php`** | 200 | 582 KB |
 | `/solutions/` | solutions (429) | `page-solutions.php` | 200 | 426 KB |
 | `/pricing-matrix/` | pricing-matrix (939) | `page-price-matrix.php` | 200 | 398 KB |
+| `/kyc/` | KYC (1209, создана локально) | **`page-kyc.php`** | 200 | — |
 | `/docs/` | docs (586) | `page-docs.php` | 200 | 242 KB |
 | `/privacy-policy/` | 306 | `page-privacy.php` | 200 | — |
 | `/terms-of-use/` | 314 | `page-privacy.php` | 200 | — |
@@ -467,6 +468,7 @@ simple-user-avatar, Yoast SEO.
 | Страница | Full HD 1920 | Desktop 1440 | Tablet 840 | Mobile |
 |---|---|---|---|---|
 | Главная | `2380:22854` | `291:5735` | `2376:16686` | ❌ нет |
+| KYC | `2561:30912` | `2492:14440` | ❌ нет (`2553:24034` — FAQ 1440) | `2558:28451` (392) |
 | Solutions | `2456:16495` | `499:6129` | `2457:17206` | `2467:17893` |
 | Pricing Matrix | — | `1680:26979` | `1687:15573` | `1687:24170` |
 | **Запись блога** | `2570:37654` | `198:2964` | `236:5552` | `236:6388` |

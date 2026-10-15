@@ -420,6 +420,25 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
   раскладка в столбик и мобильная типографика из фрейма 392.
   Прежние тёмные `.faq*` без скоупа остались для других шаблонов.
 
+## 2.1. KYC — `page-kyc.php` → `/kyc/`
+
+Тексты — `inc/kyc-data.php`, иконки — `inc/kyc-icons.php`, JS — `initKycPage()` (состояния в `data-kyc-states`).
+
+| Секция | Класс | Откуда | Состояния |
+|---|---|---|---|
+| Первый экран | `.main.main--solutions.main--kyc` | `/solutions/` + модификатор | — |
+| Сертификации | `.kyc-certs` | новое | — |
+| Process | `.solutions-why.solutions-why--kyc` | `.solutions-why`, 5 карточек | 1–5, `initSolutionsWhy()` |
+| How KYC Works | `.kyc-steps` в `.solutions-products__panel` | новое | Step 1–4 (окно / лента) |
+| Risk-Based KYC | `.kyc-risk` | новое, tablist | 3 |
+| Platform | `.kyc-platform` | новое, `.kyc-card` | — |
+| Compliance | `.kyc-compliance` + `.kyc-marker` | новое | FATF + 4 страны |
+| Southeast Asia | `.kyc-sea` | новое, tablist, карта из слоёв | 6 стран |
+| Onboarding / Industries / Pricing / About | `.kyc-onboarding`, `.kyc-industries`, `.kyc-pricing`, `.kyc-about` | новое, `.kyc-card` | — |
+| Integration / Contacts / FAQ | `template-parts/*-section.php` | общие со `/solutions/` | FAQ 11 |
+
+Общие примитивы: `.kyc-card` (`--filled`, `--accent`), `.kyc-token`, `.kyc-icon-box`, `.kyc-btn`, `.kyc-title`, `.kyc-lead`.
+
 ## 3. Pricing Matrix — `page-price-matrix.php` → `/pricing-matrix/`
 
 **Единственная по-настоящему ACF-управляемая страница.**

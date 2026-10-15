@@ -4510,6 +4510,229 @@ function initSolutionsWhy() {
 }
 
 
+/**
+ * Страница /kyc/ (page-kyc.php): один контроллер на четыре интерактивных блока.
+ *   [data-kyc-steps]      — How KYC Verification Works: кнопки Step 1–4 и окно со списком карточек;
+ *   [data-kyc-risk]       — Risk-Based KYC: tablist из трёх вкладок, один tabpanel;
+ *   [data-kyc-compliance] — KYC Compliance: маркеры-кнопки на карте, одна карточка с описанием;
+ *   [data-kyc-sea]        — eKYC in Southeast Asia: tablist стран, карта из слоёв, одна карточка.
+ * Содержимое состояний лежит в data-kyc-states (JSON из inc/kyc-data.php), копий разметки нет.
+ * Аккордеон Process, Integration и FAQ — общие initSolutionsWhy / initIntegrationSlider / initFaq.
+ */
+function initKycPage() {
+    const hasHover = window.matchMedia('(hover: hover)');
+
+    function readStates(root) {
+        try {
+            return JSON.parse(root.getAttribute('data-kyc-states') || 'null');
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function setSlots(root, values) {
+        Object.keys(values).forEach((key) => {
+            const slot = root.querySelector(`[data-slot="${key}"]`);
+            if (slot) slot.textContent = values[key];
+        });
+    }
+
+    /* Tablist по WAI-ARIA: roving tabindex, стрелки, Home/End. */
+    function bindTabs(tabs, select) {
+        function activate(index, focus) {
+            tabs.forEach((tab, i) => {
+                const on = i === index;
+                tab.classList.toggle('is-active', on);
+                tab.setAttribute('aria-selected', on ? 'true' : 'false');
+                tab.tabIndex = on ? 0 : -1;
+            });
+            if (focus) tabs[index].focus();
+            select(index);
+        }
+
+        tabs.forEach((tab, i) => {
+            tab.addEventListener('click', () => activate(i, false));
+            tab.addEventListener('keydown', (e) => {
+                let target = null;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') target = (i + 1) % tabs.length;
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') target = (i - 1 + tabs.length) % tabs.length;
+                else if (e.key === 'Home') target = 0;
+                else if (e.key === 'End') target = tabs.length - 1;
+                if (target === null) return;
+                e.preventDefault();
+                activate(target, true);
+            });
+        });
+    }
+
+    /* ---------- How KYC Verification Works ---------- */
+    const steps = document.querySelector('[data-kyc-steps]');
+    if (steps) {
+        const buttons = Array.from(steps.querySelectorAll('.kyc-steps__btn'));
+        const cards = Array.from(steps.querySelectorAll('[data-step-card]'));
+        const viewport = steps.querySelector('[data-steps-viewport]');
+        const list = steps.querySelector('[data-steps-list]');
+        const wide = window.matchMedia('(min-width: 1600px)');
+        const stacked = window.matchMedia('(max-width: 991.98px)');
+        let current = 0;
+        let scrollTimer = null;
+
+        function layout(smooth) {
+            if (!viewport || !list || !cards[current]) return;
+            const card = cards[current];
+
+            if (wide.matches) {
+                list.style.transform = '';
+            } else if (stacked.matches) {
+                list.style.transform = '';
+                const pad = parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+                viewport.scrollTo({ left: card.offsetLeft - pad, behavior: smooth ? 'smooth' : 'auto' });
+            } else {
+                /* Выбранная карточка по центру окна — как в Figma (2553:23453: y = 58 при окне 440 и карточке 324). */
+                const shift = (viewport.clientHeight - card.offsetHeight) / 2 - card.offsetTop;
+                list.style.transform = `translateY(${Math.round(shift)}px)`;
+            }
+        }
+
+        function setStep(index, smooth) {
+            current = Math.min(cards.length - 1, Math.max(0, index));
+            buttons.forEach((btn, i) => {
+                btn.classList.toggle('is-active', i === current);
+                btn.setAttribute('aria-pressed', i === current ? 'true' : 'false');
+            });
+            layout(smooth);
+        }
+
+        buttons.forEach((btn, i) => btn.addEventListener('click', () => setStep(i, true)));
+
+        /* Свайп ленты на узких экранах: активной становится ближайшая к левому краю карточка. */
+        if (viewport) {
+            viewport.addEventListener('scroll', () => {
+                if (!stacked.matches) return;
+                window.clearTimeout(scrollTimer);
+                scrollTimer = window.setTimeout(() => {
+                    const left = viewport.scrollLeft + (parseFloat(getComputedStyle(viewport).paddingLeft) || 0);
+                    let nearest = 0;
+                    cards.forEach((card, i) => {
+                        if (Math.abs(card.offsetLeft - left) < Math.abs(cards[nearest].offsetLeft - left)) nearest = i;
+                    });
+                    if (nearest !== current) {
+                        current = nearest;
+                        buttons.forEach((btn, i) => {
+                            btn.classList.toggle('is-active', i === current);
+                            btn.setAttribute('aria-pressed', i === current ? 'true' : 'false');
+                        });
+                    }
+                }, 80);
+            }, { passive: true });
+        }
+
+        window.addEventListener('resize', () => layout(false));
+        wide.addEventListener('change', () => layout(false));
+        stacked.addEventListener('change', () => layout(false));
+        window.addEventListener('load', () => layout(false));
+        setStep(0, false);
+    }
+
+    /* ---------- Risk-Based KYC ---------- */
+    const risk = document.querySelector('[data-kyc-risk]');
+    if (risk) {
+        const states = readStates(risk);
+        const tabs = Array.from(risk.querySelectorAll('[role="tab"]'));
+        const panel = risk.querySelector('[role="tabpanel"]');
+        const checks = risk.querySelector('[data-slot="checks"]');
+
+        if (states && tabs.length && panel && checks) {
+            bindTabs(tabs, (i) => {
+                const state = states[i];
+                if (!state) return;
+                setSlots(risk, { title: state.title, text: state.text, when: state.when });
+                checks.textContent = '';
+                state.checks.forEach((label) => {
+                    const li = document.createElement('li');
+                    li.className = 'kyc-token';
+                    li.textContent = label;
+                    checks.appendChild(li);
+                });
+                panel.setAttribute('aria-labelledby', tabs[i].id);
+            });
+        }
+    }
+
+    /* ---------- KYC Compliance ---------- */
+    const compliance = document.querySelector('[data-kyc-compliance]');
+    if (compliance) {
+        const states = readStates(compliance);
+        const markers = Array.from(compliance.querySelectorAll('.kyc-marker'));
+        let selected = 'world';
+
+        function render() {
+            const shown = selected;
+            const state = states && states[shown];
+            if (!state) return;
+            setSlots(compliance, { title: state.title, text: state.text });
+            markers.forEach((marker) => {
+                const on = marker.dataset.country === shown;
+                marker.classList.toggle('is-active', on);
+                marker.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+
+        if (states) {
+            markers.forEach((marker) => {
+                const id = marker.dataset.country;
+
+                /* Наведение и фокус выбирают страну и оставляют её, пока не наведут на другую; на тач-экранах — нажатие. */
+                marker.addEventListener('mouseenter', () => {
+                    if (!hasHover.matches) return;
+                    selected = id;
+                    render();
+                });
+                marker.addEventListener('focus', () => {
+                    selected = id;
+                    render();
+                });
+                marker.addEventListener('click', () => {
+                    selected = id;
+                    render();
+                });
+            });
+            render();
+        }
+    }
+
+    /* ---------- eKYC in Southeast Asia ---------- */
+    const sea = document.querySelector('[data-kyc-sea]');
+    if (sea) {
+        const states = readStates(sea);
+        const tabs = Array.from(sea.querySelectorAll('[role="tab"]'));
+        const panel = sea.querySelector('[role="tabpanel"]');
+        const layers = Array.from(sea.querySelectorAll('.kyc-sea__layer[data-country]'));
+        const zoom = sea.querySelector('[data-sea-zoom]');
+
+        if (states && tabs.length && panel) {
+            /* Оранжевые слои подгружаем заранее, чтобы при переключении карта не мигала. */
+            layers.forEach((layer) => {
+                const img = new Image();
+                img.src = layer.dataset.srcOn;
+            });
+
+            bindTabs(tabs, (i) => {
+                const id = tabs[i].dataset.country;
+                const state = states[id];
+                if (!state) return;
+                setSlots(sea, { title: state.title, text: state.text, regulator: state.regulator, id_doc: state.id_doc });
+                layers.forEach((layer) => {
+                    layer.src = layer.dataset.country === id ? layer.dataset.srcOn : layer.dataset.src;
+                });
+                if (zoom) zoom.hidden = id !== 'singapore';
+                panel.setAttribute('aria-labelledby', tabs[i].id);
+            });
+        }
+    }
+}
+
+
 // ==================== ГЛАВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ====================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -4532,6 +4755,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBenefitsSlider();
     initFeaturesBlock();
     initSolutionsWhy();
+    initKycPage();
     initFlowSlider();
     initIndustriesSlider();
     initIntegrationSlider();

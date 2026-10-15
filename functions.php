@@ -2169,6 +2169,7 @@ function nv_has_content($value): bool {
 function nv_is_light_theme(): bool {
     return is_front_page()
         || is_page_template('page-solutions.php')
+        || is_page_template('page-kyc.php')
         || is_page_template('page-privacy.php')
         || is_page_template('page-price-matrix.php')
         || is_singular('post');

@@ -5,6 +5,13 @@
 
 ---
 
+## KYC — `/kyc/` (2026-10-15)
+
+Playwright: `scrollWidth == clientWidth` на 1920 / 1600 / 1440 / 1200 / 1024 / 992 / 840 / 768 / 576 / 478 / 420 / 392 / 375;
+высоты секций на 1920 и 1440 сверены с Figma; состояния: Process 1–5, Steps 1–4, Risk 1–3, Compliance (клик / hover / focus),
+SEA 6 стран, FAQ 11; клавиатура — стрелки у Risk и SEA; регрессия: `/`, `/solutions/` (HTML до и после выноса partials
+совпадает с точностью до пробелов), `/pricing-matrix/`, юридические страницы, `/docs/`, 404. Ошибки `hcaptcha.com/logo.png` — внешние.
+
 ## 1. PHP-синтаксис — обязательно
 
 ```bash

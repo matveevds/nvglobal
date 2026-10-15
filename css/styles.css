@@ -673,6 +673,7 @@ body.home .top__widget-btn:focus-visible {
  */
 
 body.home,
+body.page-template-page-kyc,
 body.page-template-page-solutions,
 body.page-template-page-privacy,
 body.page-template-page-price-matrix,
@@ -762,6 +763,7 @@ body.home .section__title-block {
  * задают `.container` сами и идут ниже по файлу — их это не затрагивает.
  */
 body.home .container,
+body.page-template-page-kyc .container,
 body.page-template-page-solutions .container,
 body.page-template-page-privacy .container,
 body.page-template-page-price-matrix .container,
@@ -790,6 +792,7 @@ body.single-post .container {
 @media (max-width: 767.98px) {
     /* Макета мобильной версии нет — сохраняем поля темы (docs/DECISIONS.md, Р-1 / BACKLOG R-01). */
     body.home .container,
+    body.page-template-page-kyc .container,
     body.page-template-page-solutions .container,
     body.page-template-page-privacy .container,
     body.page-template-page-price-matrix .container,
@@ -867,14 +870,15 @@ body.single-post .container {
     top: 32px;
 }
 
+/* Тот же потолок, что у `.container` (1920 с боковыми 16): на сверхшироких экранах шапка не растягивается. */
 .header__shell {
     position: relative;
+    max-width: 1888px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    max-width: 1888px;
-    margin: 0 auto;
     box-sizing: border-box;
     height: 64px;
     padding: 0 var(--header-pad);
@@ -9478,6 +9482,7 @@ body.home .clients__top-info .section__title-block {
  * ============================================================
  */
 body.home .contacts,
+body.page-template-page-kyc .contacts,
 body.page-template-page-solutions .contacts,
 body.single-post .post__form {
     /* Вылет оранжевой карточки к левому краю экрана. */
@@ -9492,6 +9497,7 @@ body.single-post .post__form {
 }
 
 body.home .contacts .contacts__wrapper,
+body.page-template-page-kyc .contacts .contacts__wrapper,
 body.page-template-page-solutions .contacts .contacts__wrapper,
 body.single-post .post__form .contacts__wrapper {
     display: flex;
@@ -9507,6 +9513,7 @@ body.single-post .post__form .contacts__wrapper {
  * она прижата к низу через `align-self: end`, как в макете.
  */
 body.home .contacts .contacts__content,
+body.page-template-page-kyc .contacts .contacts__content,
 body.page-template-page-solutions .contacts .contacts__content,
 body.single-post .post__form .contacts__content {
     display: grid;
@@ -9517,6 +9524,7 @@ body.single-post .post__form .contacts__content {
 }
 
 body.home .contacts .contacts__title-block,
+body.page-template-page-kyc .contacts .contacts__title-block,
 body.page-template-page-solutions .contacts .contacts__title-block,
 body.single-post .post__form .contacts__title-block {
     grid-column: 1;
@@ -9528,6 +9536,7 @@ body.single-post .post__form .contacts__title-block {
 }
 
 body.home .contacts .contacts__title-block .section__title,
+body.page-template-page-kyc .contacts .contacts__title-block .section__title,
 body.page-template-page-solutions .contacts .contacts__title-block .section__title,
 body.single-post .post__form .contacts__title-block .section__title {
     margin: 0;
@@ -9538,6 +9547,7 @@ body.single-post .post__form .contacts__title-block .section__title {
 }
 
 body.home .contacts .contacts__title-block .section__subtitle,
+body.page-template-page-kyc .contacts .contacts__title-block .section__subtitle,
 body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
 body.single-post .post__form .contacts__title-block .section__subtitle {
     margin: 0;
@@ -9548,6 +9558,7 @@ body.single-post .post__form .contacts__title-block .section__subtitle {
 }
 
 body.home .contacts .contacts__actions,
+body.page-template-page-kyc .contacts .contacts__actions,
 body.page-template-page-solutions .contacts .contacts__actions,
 body.single-post .post__form .contacts__actions {
     grid-column: 1;
@@ -9556,6 +9567,7 @@ body.single-post .post__form .contacts__actions {
 }
 
 body.home .contacts .contacts__form-block,
+body.page-template-page-kyc .contacts .contacts__form-block,
 body.page-template-page-solutions .contacts .contacts__form-block,
 body.single-post .post__form .contacts__form-block {
     grid-column: 2;
@@ -9570,6 +9582,7 @@ body.single-post .post__form .contacts__form-block {
  * Здесь карточка в потоке, вылет считается от контейнера.
  */
 body.home .contacts .contacts__card,
+body.page-template-page-kyc .contacts .contacts__card,
 body.page-template-page-solutions .contacts .contacts__card,
 body.single-post .post__form .contacts__card {
     position: static;
@@ -9587,15 +9600,19 @@ body.single-post .post__form .contacts__card {
 }
 
 body.home .contacts .contacts__card-icon,
+body.page-template-page-kyc .contacts .contacts__card-icon,
 body.page-template-page-solutions .contacts .contacts__card-icon,
 body.single-post .post__form .contacts__card-icon,
 body.home .contacts .contacts__card-info,
+body.page-template-page-kyc .contacts .contacts__card-info,
 body.page-template-page-solutions .contacts .contacts__card-info,
 body.single-post .post__form .contacts__card-info,
 body.home .contacts .contacts__card-line,
+body.page-template-page-kyc .contacts .contacts__card-line,
 body.page-template-page-solutions .contacts .contacts__card-line,
 body.single-post .post__form .contacts__card-line,
 body.home .contacts .contacts__card-action,
+body.page-template-page-kyc .contacts .contacts__card-action,
 body.page-template-page-solutions .contacts .contacts__card-action,
 body.single-post .post__form .contacts__card-action {
     width: 395px;
@@ -9603,6 +9620,7 @@ body.single-post .post__form .contacts__card-action {
 }
 
 body.home .contacts .contacts__card-icon,
+body.page-template-page-kyc .contacts .contacts__card-icon,
 body.page-template-page-solutions .contacts .contacts__card-icon,
 body.single-post .post__form .contacts__card-icon {
     display: flex;
@@ -9610,6 +9628,7 @@ body.single-post .post__form .contacts__card-icon {
 }
 
 body.home .contacts .contacts__card-info,
+body.page-template-page-kyc .contacts .contacts__card-info,
 body.page-template-page-solutions .contacts .contacts__card-info,
 body.single-post .post__form .contacts__card-info {
     display: flex;
@@ -9618,6 +9637,7 @@ body.single-post .post__form .contacts__card-info {
 }
 
 body.home .contacts .contacts__card-title,
+body.page-template-page-kyc .contacts .contacts__card-title,
 body.page-template-page-solutions .contacts .contacts__card-title,
 body.single-post .post__form .contacts__card-title {
     color: var(--nv-constant-1);
@@ -9627,6 +9647,7 @@ body.single-post .post__form .contacts__card-title {
 }
 
 body.home .contacts .contacts__card-item,
+body.page-template-page-kyc .contacts .contacts__card-item,
 body.page-template-page-solutions .contacts .contacts__card-item,
 body.single-post .post__form .contacts__card-item {
     display: flex;
@@ -9635,12 +9656,14 @@ body.single-post .post__form .contacts__card-item {
 }
 
 body.home .contacts .contacts__card-item--social,
+body.page-template-page-kyc .contacts .contacts__card-item--social,
 body.page-template-page-solutions .contacts .contacts__card-item--social,
 body.single-post .post__form .contacts__card-item--social {
     gap: 12px;
 }
 
 body.home .contacts .contacts__card-item-name,
+body.page-template-page-kyc .contacts .contacts__card-item-name,
 body.page-template-page-solutions .contacts .contacts__card-item-name,
 body.single-post .post__form .contacts__card-item-name {
     color: var(--nv-constant-1);
@@ -9650,6 +9673,7 @@ body.single-post .post__form .contacts__card-item-name {
 }
 
 body.home .contacts .contacts__card-item-link,
+body.page-template-page-kyc .contacts .contacts__card-item-link,
 body.page-template-page-solutions .contacts .contacts__card-item-link,
 body.single-post .post__form .contacts__card-item-link {
     display: inline-flex;
@@ -9664,15 +9688,18 @@ body.single-post .post__form .contacts__card-item-link {
 }
 
 body.home .contacts .contacts__card-item-link:hover,
+body.page-template-page-kyc .contacts .contacts__card-item-link:hover,
 body.page-template-page-solutions .contacts .contacts__card-item-link:hover,
 body.single-post .post__form .contacts__card-item-link:hover,
 body.home .contacts .contacts__card-item-link:focus-visible,
+body.page-template-page-kyc .contacts .contacts__card-item-link:focus-visible,
 body.page-template-page-solutions .contacts .contacts__card-item-link:focus-visible,
 body.single-post .post__form .contacts__card-item-link:focus-visible {
     text-decoration: underline;
 }
 
 body.home .contacts .contacts__card-social-list,
+body.page-template-page-kyc .contacts .contacts__card-social-list,
 body.page-template-page-solutions .contacts .contacts__card-social-list,
 body.single-post .post__form .contacts__card-social-list {
     display: flex;
@@ -9680,6 +9707,7 @@ body.single-post .post__form .contacts__card-social-list {
 }
 
 body.home .contacts .contacts__card-social-link,
+body.page-template-page-kyc .contacts .contacts__card-social-link,
 body.page-template-page-solutions .contacts .contacts__card-social-link,
 body.single-post .post__form .contacts__card-social-link {
     display: flex;
@@ -9690,24 +9718,29 @@ body.single-post .post__form .contacts__card-social-link {
 }
 
 body.home .contacts .contacts__card-social-link:hover,
+body.page-template-page-kyc .contacts .contacts__card-social-link:hover,
 body.page-template-page-solutions .contacts .contacts__card-social-link:hover,
 body.single-post .post__form .contacts__card-social-link:hover {
     opacity: 0.8;
 }
 
 body.home .contacts .contacts__card-icon svg,
+body.page-template-page-kyc .contacts .contacts__card-icon svg,
 body.page-template-page-solutions .contacts .contacts__card-icon svg,
 body.single-post .post__form .contacts__card-icon svg,
 body.home .contacts .contacts__card-social-link svg,
+body.page-template-page-kyc .contacts .contacts__card-social-link svg,
 body.page-template-page-solutions .contacts .contacts__card-social-link svg,
 body.single-post .post__form .contacts__card-social-link svg,
 body.home .contacts .contacts__card-item-link svg,
+body.page-template-page-kyc .contacts .contacts__card-item-link svg,
 body.page-template-page-solutions .contacts .contacts__card-item-link svg,
 body.single-post .post__form .contacts__card-item-link svg {
     display: block;
 }
 
 body.home .contacts .contacts__card-line,
+body.page-template-page-kyc .contacts .contacts__card-line,
 body.page-template-page-solutions .contacts .contacts__card-line,
 body.single-post .post__form .contacts__card-line {
     height: 1px;
@@ -9715,6 +9748,7 @@ body.single-post .post__form .contacts__card-line {
 }
 
 body.home .contacts .contacts__card-action,
+body.page-template-page-kyc .contacts .contacts__card-action,
 body.page-template-page-solutions .contacts .contacts__card-action,
 body.single-post .post__form .contacts__card-action {
     display: flex;
@@ -9722,6 +9756,7 @@ body.single-post .post__form .contacts__card-action {
 }
 
 body.home .contacts .contacts__card-action .btn,
+body.page-template-page-kyc .contacts .contacts__card-action .btn,
 body.page-template-page-solutions .contacts .contacts__card-action .btn,
 body.single-post .post__form .contacts__card-action .btn {
     display: flex;
@@ -9743,6 +9778,7 @@ body.single-post .post__form .contacts__card-action .btn {
 }
 
 body.home .contacts .contacts__card-action .btn:hover,
+body.page-template-page-kyc .contacts .contacts__card-action .btn:hover,
 body.page-template-page-solutions .contacts .contacts__card-action .btn:hover,
 body.single-post .post__form .contacts__card-action .btn:hover {
     background: #000;
@@ -9750,6 +9786,7 @@ body.single-post .post__form .contacts__card-action .btn:hover {
 
 /* Контейнер lottie-стрелки без размеров схлопывался. */
 body.home .contacts .contacts__card-action .btn__icon,
+body.page-template-page-kyc .contacts .contacts__card-action .btn__icon,
 body.page-template-page-solutions .contacts .contacts__card-action .btn__icon,
 body.single-post .post__form .contacts__card-action .btn__icon {
     display: flex;
@@ -9761,6 +9798,7 @@ body.single-post .post__form .contacts__card-action .btn__icon {
 }
 
 body.home .contacts .contacts__card-action .btn__icon svg,
+body.page-template-page-kyc .contacts .contacts__card-action .btn__icon svg,
 body.page-template-page-solutions .contacts .contacts__card-action .btn__icon svg,
 body.single-post .post__form .contacts__card-action .btn__icon svg {
     display: block;
@@ -9769,6 +9807,7 @@ body.single-post .post__form .contacts__card-action .btn__icon svg {
 }
 
 body.home .contacts .contacts__card-action .btn:focus-visible,
+body.page-template-page-kyc .contacts .contacts__card-action .btn:focus-visible,
 body.page-template-page-solutions .contacts .contacts__card-action .btn:focus-visible,
 body.single-post .post__form .contacts__card-action .btn:focus-visible {
     outline: 2px solid var(--nv-constant-1);
@@ -9778,6 +9817,7 @@ body.single-post .post__form .contacts__card-action .btn:focus-visible {
 /* ——— карточка формы ——— */
 
 body.home .contacts .contacts__form-block,
+body.page-template-page-kyc .contacts .contacts__form-block,
 body.page-template-page-solutions .contacts .contacts__form-block,
 body.single-post .post__form .contacts__form-block {
     display: flex;
@@ -9791,6 +9831,7 @@ body.single-post .post__form .contacts__form-block {
 
 /* 2380:23800 — заголовок списка в основном цвете. */
 body.home .contacts .contacts__form-title,
+body.page-template-page-kyc .contacts .contacts__form-title,
 body.page-template-page-solutions .contacts .contacts__form-title,
 body.single-post .post__form .contacts__form-title {
     color: var(--nv-primary);
@@ -9800,6 +9841,7 @@ body.single-post .post__form .contacts__form-title {
 }
 
 body.home .contacts .contacts__form-list,
+body.page-template-page-kyc .contacts .contacts__form-list,
 body.page-template-page-solutions .contacts .contacts__form-list,
 body.single-post .post__form .contacts__form-list {
     display: grid;
@@ -9809,12 +9851,14 @@ body.single-post .post__form .contacts__form-list {
 
 /* Перенос в карточке — только Full HD, где карточка 319 (I2380:23802;147:2709). */
 body.home .contacts .contacts__form-item-text br,
+body.page-template-page-kyc .contacts .contacts__form-item-text br,
 body.page-template-page-solutions .contacts .contacts__form-item-text br,
 body.single-post .post__form .contacts__form-item-text br {
     display: inline;
 }
 
 body.home .contacts .contacts__form-item,
+body.page-template-page-kyc .contacts .contacts__form-item,
 body.page-template-page-solutions .contacts .contacts__form-item,
 body.single-post .post__form .contacts__form-item {
     /* Старое правило задавало width: calc(25% - 12px) — в сетке это ломает колонку. */
@@ -9834,6 +9878,7 @@ body.single-post .post__form .contacts__form-item {
 }
 
 body.home .contacts .contacts__form-item-icon,
+body.page-template-page-kyc .contacts .contacts__form-item-icon,
 body.page-template-page-solutions .contacts .contacts__form-item-icon,
 body.single-post .post__form .contacts__form-item-icon {
     display: flex;
@@ -9847,12 +9892,14 @@ body.single-post .post__form .contacts__form-item-icon {
 }
 
 body.home .contacts .contacts__form-item-icon svg,
+body.page-template-page-kyc .contacts .contacts__form-item-icon svg,
 body.page-template-page-solutions .contacts .contacts__form-item-icon svg,
 body.single-post .post__form .contacts__form-item-icon svg {
     display: block;
 }
 
 body.home .contacts .contacts__form-item-text,
+body.page-template-page-kyc .contacts .contacts__form-item-text,
 body.page-template-page-solutions .contacts .contacts__form-item-text,
 body.single-post .post__form .contacts__form-item-text {
     width: 100%;
@@ -9863,9 +9910,11 @@ body.single-post .post__form .contacts__form-item-text {
 }
 
 body.home .contacts .contacts__form-line,
+body.page-template-page-kyc .contacts .contacts__form-line,
 body.page-template-page-solutions .contacts .contacts__form-line,
 body.single-post .post__form .contacts__form-line,
 body.home .contacts .contacts__form-line--orange,
+body.page-template-page-kyc .contacts .contacts__form-line--orange,
 body.page-template-page-solutions .contacts .contacts__form-line--orange,
 body.single-post .post__form .contacts__form-line--orange,
 .modal .contacts__form-line,
@@ -9888,6 +9937,7 @@ body.single-post .post__form .contacts__form-line--orange,
  * появление текста ошибки раскладку не ломает.
  */
 body.home .contacts .contacts__form,
+body.page-template-page-kyc .contacts .contacts__form,
 body.page-template-page-solutions .contacts .contacts__form,
 body.single-post .post__form .contacts__form,
 .modal .contacts__form {
@@ -9899,6 +9949,7 @@ body.single-post .post__form .contacts__form,
 }
 
 body.home .contacts .contacts__form > *,
+body.page-template-page-kyc .contacts .contacts__form > *,
 body.page-template-page-solutions .contacts .contacts__form > *,
 body.single-post .post__form .contacts__form > *,
 .modal .contacts__form > * {
@@ -9907,6 +9958,7 @@ body.single-post .post__form .contacts__form > *,
 
 /* Четыре поля занимают левую колонку, строки раздаются автоматически. */
 body.home .contacts .input-form-item--50,
+body.page-template-page-kyc .contacts .input-form-item--50,
 body.page-template-page-solutions .contacts .input-form-item--50,
 body.single-post .post__form .input-form-item--50,
 .modal .input-form-item--50 {
@@ -9916,6 +9968,7 @@ body.single-post .post__form .input-form-item--50,
 }
 
 body.home .contacts .input-form-item.help-select,
+body.page-template-page-kyc .contacts .input-form-item.help-select,
 body.page-template-page-solutions .contacts .input-form-item.help-select,
 body.single-post .post__form .input-form-item.help-select,
 .modal .input-form-item.help-select {
@@ -9928,6 +9981,7 @@ body.single-post .post__form .input-form-item.help-select,
  * минус верхний отступ 12 даёт ровно 192 из макета, начало на y = 84.
  */
 body.home .contacts .input-form-item:has(.input-form-block--textarea),
+body.page-template-page-kyc .contacts .input-form-item:has(.input-form-block--textarea),
 body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
 body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
 .modal .input-form-item:has(.input-form-block--textarea) {
@@ -9938,6 +9992,7 @@ body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
 }
 
 body.home .contacts .input-form-block--textarea,
+body.page-template-page-kyc .contacts .input-form-block--textarea,
 body.page-template-page-solutions .contacts .input-form-block--textarea,
 body.single-post .post__form .input-form-block--textarea,
 .modal .input-form-block--textarea {
@@ -9946,6 +10001,7 @@ body.single-post .post__form .input-form-block--textarea,
 }
 
 body.home .contacts .input-form-block--textarea textarea,
+body.page-template-page-kyc .contacts .input-form-block--textarea textarea,
 body.page-template-page-solutions .contacts .input-form-block--textarea textarea,
 body.single-post .post__form .input-form-block--textarea textarea,
 .modal .input-form-block--textarea textarea {
@@ -9955,6 +10011,7 @@ body.single-post .post__form .input-form-block--textarea textarea,
 }
 
 body.home .contacts .contacts__form-line,
+body.page-template-page-kyc .contacts .contacts__form-line,
 body.page-template-page-solutions .contacts .contacts__form-line,
 body.single-post .post__form .contacts__form-line,
 .modal .contacts__form-line {
@@ -9962,6 +10019,7 @@ body.single-post .post__form .contacts__form-line,
 }
 
 body.home .contacts .input-form-item--privacy,
+body.page-template-page-kyc .contacts .input-form-item--privacy,
 body.page-template-page-solutions .contacts .input-form-item--privacy,
 body.single-post .post__form .input-form-item--privacy,
 .modal .input-form-item--privacy {
@@ -9972,9 +10030,11 @@ body.single-post .post__form .input-form-item--privacy,
 }
 
 body.home .contacts .captcha-holder,
+body.page-template-page-kyc .contacts .captcha-holder,
 body.page-template-page-solutions .contacts .captcha-holder,
 body.single-post .post__form .captcha-holder,
 body.home .contacts .input-form-action,
+body.page-template-page-kyc .contacts .input-form-action,
 body.page-template-page-solutions .contacts .input-form-action,
 body.single-post .post__form .input-form-action,
 .modal .captcha-holder,
@@ -9983,9 +10043,11 @@ body.single-post .post__form .input-form-action,
 }
 
 body.home .contacts .input-form-item,
+body.page-template-page-kyc .contacts .input-form-item,
 body.page-template-page-solutions .contacts .input-form-item,
 body.single-post .post__form .input-form-item,
 body.home .contacts .phone-field,
+body.page-template-page-kyc .contacts .phone-field,
 body.page-template-page-solutions .contacts .phone-field,
 body.single-post .post__form .phone-field,
 .modal .input-form-item,
@@ -9996,12 +10058,15 @@ body.single-post .post__form .phone-field,
 }
 
 body.home .contacts .input-form-label,
+body.page-template-page-kyc .contacts .input-form-label,
 body.page-template-page-solutions .contacts .input-form-label,
 body.single-post .post__form .input-form-label,
 body.home .contacts .help-select__label,
+body.page-template-page-kyc .contacts .help-select__label,
 body.page-template-page-solutions .contacts .help-select__label,
 body.single-post .post__form .help-select__label,
 body.home .contacts .phone-field__label,
+body.page-template-page-kyc .contacts .phone-field__label,
 body.page-template-page-solutions .contacts .phone-field__label,
 body.single-post .post__form .phone-field__label,
 .modal .input-form-label,
@@ -10014,12 +10079,15 @@ body.single-post .post__form .phone-field__label,
 }
 
 body.home .contacts .input-form-label span,
+body.page-template-page-kyc .contacts .input-form-label span,
 body.page-template-page-solutions .contacts .input-form-label span,
 body.single-post .post__form .input-form-label span,
 body.home .contacts .help-select__label span,
+body.page-template-page-kyc .contacts .help-select__label span,
 body.page-template-page-solutions .contacts .help-select__label span,
 body.single-post .post__form .help-select__label span,
 body.home .contacts .phone-field__label span,
+body.page-template-page-kyc .contacts .phone-field__label span,
 body.page-template-page-solutions .contacts .phone-field__label span,
 body.single-post .post__form .phone-field__label span,
 .modal .input-form-label span,
@@ -10030,12 +10098,15 @@ body.single-post .post__form .phone-field__label span,
 
 /* Отступы уменьшены на 1px рамки — в макете обводка внутри габарита. */
 body.home .contacts .input-form-block,
+body.page-template-page-kyc .contacts .input-form-block,
 body.page-template-page-solutions .contacts .input-form-block,
 body.single-post .post__form .input-form-block,
 body.home .contacts .phone-field__control,
+body.page-template-page-kyc .contacts .phone-field__control,
 body.page-template-page-solutions .contacts .phone-field__control,
 body.single-post .post__form .phone-field__control,
 body.home .contacts .help-select__control,
+body.page-template-page-kyc .contacts .help-select__control,
 body.page-template-page-solutions .contacts .help-select__control,
 body.single-post .post__form .help-select__control,
 .modal .input-form-block,
@@ -10056,12 +10127,15 @@ body.single-post .post__form .help-select__control,
  * селекторов. Меняется только цвет рамки — габариты и скругление прежние.
  */
 body.home .contacts .input-form-block:focus-within,
+body.page-template-page-kyc .contacts .input-form-block:focus-within,
 body.page-template-page-solutions .contacts .input-form-block:focus-within,
 body.single-post .post__form .input-form-block:focus-within,
 body.home .contacts .phone-field__control:focus-within,
+body.page-template-page-kyc .contacts .phone-field__control:focus-within,
 body.page-template-page-solutions .contacts .phone-field__control:focus-within,
 body.single-post .post__form .phone-field__control:focus-within,
 body.home .contacts .help-select__control:focus-within,
+body.page-template-page-kyc .contacts .help-select__control:focus-within,
 body.page-template-page-solutions .contacts .help-select__control:focus-within,
 body.single-post .post__form .help-select__control:focus-within,
 .modal .input-form-block:focus-within,
@@ -10071,9 +10145,11 @@ body.single-post .post__form .help-select__control:focus-within,
 }
 
 body.home .contacts .input-form-icon,
+body.page-template-page-kyc .contacts .input-form-icon,
 body.page-template-page-solutions .contacts .input-form-icon,
 body.single-post .post__form .input-form-icon,
 body.home .contacts .phone-field__icon,
+body.page-template-page-kyc .contacts .phone-field__icon,
 body.page-template-page-solutions .contacts .phone-field__icon,
 body.single-post .post__form .phone-field__icon,
 .modal .input-form-icon,
@@ -10091,9 +10167,11 @@ body.single-post .post__form .phone-field__icon,
 }
 
 body.home .contacts .input-form-icon svg,
+body.page-template-page-kyc .contacts .input-form-icon svg,
 body.page-template-page-solutions .contacts .input-form-icon svg,
 body.single-post .post__form .input-form-icon svg,
 body.home .contacts .phone-field__icon svg,
+body.page-template-page-kyc .contacts .phone-field__icon svg,
 body.page-template-page-solutions .contacts .phone-field__icon svg,
 body.single-post .post__form .phone-field__icon svg,
 .modal .input-form-icon svg,
@@ -10102,15 +10180,19 @@ body.single-post .post__form .phone-field__icon svg,
 }
 
 body.home .contacts .input-form,
+body.page-template-page-kyc .contacts .input-form,
 body.page-template-page-solutions .contacts .input-form,
 body.single-post .post__form .input-form,
 body.home .contacts .phone-field__input,
+body.page-template-page-kyc .contacts .phone-field__input,
 body.page-template-page-solutions .contacts .phone-field__input,
 body.single-post .post__form .phone-field__input,
 body.home .contacts .contacts__form textarea,
+body.page-template-page-kyc .contacts .contacts__form textarea,
 body.page-template-page-solutions .contacts .contacts__form textarea,
 body.single-post .post__form .contacts__form textarea,
 body.home .contacts .help-select__button,
+body.page-template-page-kyc .contacts .help-select__button,
 body.page-template-page-solutions .contacts .help-select__button,
 body.single-post .post__form .help-select__button,
 .modal .input-form,
@@ -10130,12 +10212,15 @@ body.single-post .post__form .help-select__button,
 }
 
 body.home .contacts .input-form::placeholder,
+body.page-template-page-kyc .contacts .input-form::placeholder,
 body.page-template-page-solutions .contacts .input-form::placeholder,
 body.single-post .post__form .input-form::placeholder,
 body.home .contacts .phone-field__input::placeholder,
+body.page-template-page-kyc .contacts .phone-field__input::placeholder,
 body.page-template-page-solutions .contacts .phone-field__input::placeholder,
 body.single-post .post__form .phone-field__input::placeholder,
 body.home .contacts .contacts__form textarea::placeholder,
+body.page-template-page-kyc .contacts .contacts__form textarea::placeholder,
 body.page-template-page-solutions .contacts .contacts__form textarea::placeholder,
 body.single-post .post__form .contacts__form textarea::placeholder,
 .modal .input-form::placeholder,
@@ -10145,6 +10230,7 @@ body.single-post .post__form .contacts__form textarea::placeholder,
 }
 
 body.home .contacts .help-select__button,
+body.page-template-page-kyc .contacts .help-select__button,
 body.page-template-page-solutions .contacts .help-select__button,
 body.single-post .post__form .help-select__button,
 .modal .help-select__button {
@@ -10154,6 +10240,7 @@ body.single-post .post__form .help-select__button,
 
 /* Плейсхолдер — отдельный элемент внутри кнопки, им управляет form.js. */
 body.home .contacts [data-help-select-placeholder],
+body.page-template-page-kyc .contacts [data-help-select-placeholder],
 body.page-template-page-solutions .contacts [data-help-select-placeholder],
 body.single-post .post__form [data-help-select-placeholder],
 .modal [data-help-select-placeholder] {
@@ -10161,6 +10248,7 @@ body.single-post .post__form [data-help-select-placeholder],
 }
 
 body.home .contacts [data-help-select-value],
+body.page-template-page-kyc .contacts [data-help-select-value],
 body.page-template-page-solutions .contacts [data-help-select-value],
 body.single-post .post__form [data-help-select-value],
 .modal [data-help-select-value] {
@@ -10168,9 +10256,11 @@ body.single-post .post__form [data-help-select-value],
 }
 
 body.home .contacts .input-form-clear,
+body.page-template-page-kyc .contacts .input-form-clear,
 body.page-template-page-solutions .contacts .input-form-clear,
 body.single-post .post__form .input-form-clear,
 body.home .contacts .phone-field__clear,
+body.page-template-page-kyc .contacts .phone-field__clear,
 body.page-template-page-solutions .contacts .phone-field__clear,
 body.single-post .post__form .phone-field__clear,
 .modal .input-form-clear,
@@ -10191,9 +10281,11 @@ body.single-post .post__form .phone-field__clear,
 }
 
 body.home .contacts .input-form-clear svg,
+body.page-template-page-kyc .contacts .input-form-clear svg,
 body.page-template-page-solutions .contacts .input-form-clear svg,
 body.single-post .post__form .input-form-clear svg,
 body.home .contacts .phone-field__clear svg,
+body.page-template-page-kyc .contacts .phone-field__clear svg,
 body.page-template-page-solutions .contacts .phone-field__clear svg,
 body.single-post .post__form .phone-field__clear svg,
 .modal .input-form-clear svg,
@@ -10202,9 +10294,11 @@ body.single-post .post__form .phone-field__clear svg,
 }
 
 body.home .contacts .input-form-clear--disabled,
+body.page-template-page-kyc .contacts .input-form-clear--disabled,
 body.page-template-page-solutions .contacts .input-form-clear--disabled,
 body.single-post .post__form .input-form-clear--disabled,
 body.home .contacts .input-form-clear:disabled,
+body.page-template-page-kyc .contacts .input-form-clear:disabled,
 body.page-template-page-solutions .contacts .input-form-clear:disabled,
 body.single-post .post__form .input-form-clear:disabled,
 .modal .input-form-clear--disabled,
@@ -10214,6 +10308,7 @@ body.single-post .post__form .input-form-clear:disabled,
 }
 
 body.home .contacts .input-form-clear:not(.input-form-clear--disabled):hover,
+body.page-template-page-kyc .contacts .input-form-clear:not(.input-form-clear--disabled):hover,
 body.page-template-page-solutions .contacts .input-form-clear:not(.input-form-clear--disabled):hover,
 body.single-post .post__form .input-form-clear:not(.input-form-clear--disabled):hover,
 .modal .input-form-clear:not(.input-form-clear--disabled):hover {
@@ -10221,15 +10316,19 @@ body.single-post .post__form .input-form-clear:not(.input-form-clear--disabled):
 }
 
 body.home .contacts .input-form-clear:focus-visible,
+body.page-template-page-kyc .contacts .input-form-clear:focus-visible,
 body.page-template-page-solutions .contacts .input-form-clear:focus-visible,
 body.single-post .post__form .input-form-clear:focus-visible,
 body.home .contacts .phone-field__clear:focus-visible,
+body.page-template-page-kyc .contacts .phone-field__clear:focus-visible,
 body.page-template-page-solutions .contacts .phone-field__clear:focus-visible,
 body.single-post .post__form .phone-field__clear:focus-visible,
 body.home .contacts .help-select__arrow:focus-visible,
+body.page-template-page-kyc .contacts .help-select__arrow:focus-visible,
 body.page-template-page-solutions .contacts .help-select__arrow:focus-visible,
 body.single-post .post__form .help-select__arrow:focus-visible,
 body.home .contacts .phone-field__country-btn:focus-visible,
+body.page-template-page-kyc .contacts .phone-field__country-btn:focus-visible,
 body.page-template-page-solutions .contacts .phone-field__country-btn:focus-visible,
 body.single-post .post__form .phone-field__country-btn:focus-visible,
 .modal .input-form-clear:focus-visible,
@@ -10242,6 +10341,7 @@ body.single-post .post__form .phone-field__country-btn:focus-visible,
 
 /* Кнопка выбора страны — внутри поля, слева от номера. */
 body.home .contacts .phone-field__country-btn,
+body.page-template-page-kyc .contacts .phone-field__country-btn,
 body.page-template-page-solutions .contacts .phone-field__country-btn,
 body.single-post .post__form .phone-field__country-btn,
 .modal .phone-field__country-btn {
@@ -10261,6 +10361,7 @@ body.single-post .post__form .phone-field__country-btn,
 }
 
 body.home .contacts .phone-field__country-btn svg,
+body.page-template-page-kyc .contacts .phone-field__country-btn svg,
 body.page-template-page-solutions .contacts .phone-field__country-btn svg,
 body.single-post .post__form .phone-field__country-btn svg,
 .modal .phone-field__country-btn svg {
@@ -10269,9 +10370,11 @@ body.single-post .post__form .phone-field__country-btn svg,
 
 /* Код страны наследовал белый цвет из тёмной темы. */
 body.home .contacts .phone-field__code,
+body.page-template-page-kyc .contacts .phone-field__code,
 body.page-template-page-solutions .contacts .phone-field__code,
 body.single-post .post__form .phone-field__code,
 body.home .contacts [data-phone-field-code],
+body.page-template-page-kyc .contacts [data-phone-field-code],
 body.page-template-page-solutions .contacts [data-phone-field-code],
 body.single-post .post__form [data-phone-field-code],
 .modal .phone-field__code,
@@ -10281,6 +10384,7 @@ body.single-post .post__form [data-phone-field-code],
 
 /* Стрелка селекта — градиентная кнопка 28x28 из макета. */
 body.home .contacts .help-select__arrow,
+body.page-template-page-kyc .contacts .help-select__arrow,
 body.page-template-page-solutions .contacts .help-select__arrow,
 body.single-post .post__form .help-select__arrow,
 .modal .help-select__arrow {
@@ -10299,6 +10403,7 @@ body.single-post .post__form .help-select__arrow,
 }
 
 body.home .contacts .help-select__arrow svg,
+body.page-template-page-kyc .contacts .help-select__arrow svg,
 body.page-template-page-solutions .contacts .help-select__arrow svg,
 body.single-post .post__form .help-select__arrow svg,
 .modal .help-select__arrow svg {
@@ -10307,6 +10412,7 @@ body.single-post .post__form .help-select__arrow svg,
 }
 
 body.home .contacts .help-select--open .help-select__arrow svg,
+body.page-template-page-kyc .contacts .help-select--open .help-select__arrow svg,
 body.page-template-page-solutions .contacts .help-select--open .help-select__arrow svg,
 body.single-post .post__form .help-select--open .help-select__arrow svg,
 .modal .help-select--open .help-select__arrow svg {
@@ -10314,6 +10420,7 @@ body.single-post .post__form .help-select--open .help-select__arrow svg,
 }
 
 body.home .contacts .input-form-block--textarea,
+body.page-template-page-kyc .contacts .input-form-block--textarea,
 body.page-template-page-solutions .contacts .input-form-block--textarea,
 body.single-post .post__form .input-form-block--textarea,
 .modal .input-form-block--textarea {
@@ -10321,6 +10428,7 @@ body.single-post .post__form .input-form-block--textarea,
 }
 
 body.home .contacts .contacts__form textarea,
+body.page-template-page-kyc .contacts .contacts__form textarea,
 body.page-template-page-solutions .contacts .contacts__form textarea,
 body.single-post .post__form .contacts__form textarea,
 .modal .contacts__form textarea {
@@ -10331,6 +10439,7 @@ body.single-post .post__form .contacts__form textarea,
 /* ——— согласие ——— */
 
 body.home .contacts .input-form-item--privacy .ui-check,
+body.page-template-page-kyc .contacts .input-form-item--privacy .ui-check,
 body.page-template-page-solutions .contacts .input-form-item--privacy .ui-check,
 body.single-post .post__form .input-form-item--privacy .ui-check,
 .modal .input-form-item--privacy .ui-check {
@@ -10341,6 +10450,7 @@ body.single-post .post__form .input-form-item--privacy .ui-check,
 }
 
 body.home .contacts .ui-check__box,
+body.page-template-page-kyc .contacts .ui-check__box,
 body.page-template-page-solutions .contacts .ui-check__box,
 body.single-post .post__form .ui-check__box,
 .modal .ui-check__box {
@@ -10350,6 +10460,7 @@ body.single-post .post__form .ui-check__box,
 }
 
 body.home .contacts .ui-check__input:checked + .ui-check__box,
+body.page-template-page-kyc .contacts .ui-check__input:checked + .ui-check__box,
 body.page-template-page-solutions .contacts .ui-check__input:checked + .ui-check__box,
 body.single-post .post__form .ui-check__input:checked + .ui-check__box,
 .modal .ui-check__input:checked + .ui-check__box {
@@ -10358,6 +10469,7 @@ body.single-post .post__form .ui-check__input:checked + .ui-check__box,
 }
 
 body.home .contacts .ui-check__input:focus-visible + .ui-check__box,
+body.page-template-page-kyc .contacts .ui-check__input:focus-visible + .ui-check__box,
 body.page-template-page-solutions .contacts .ui-check__input:focus-visible + .ui-check__box,
 body.single-post .post__form .ui-check__input:focus-visible + .ui-check__box,
 .modal .ui-check__input:focus-visible + .ui-check__box {
@@ -10366,6 +10478,7 @@ body.single-post .post__form .ui-check__input:focus-visible + .ui-check__box,
 }
 
 body.home .contacts .ui-check__text,
+body.page-template-page-kyc .contacts .ui-check__text,
 body.page-template-page-solutions .contacts .ui-check__text,
 body.single-post .post__form .ui-check__text,
 .modal .ui-check__text {
@@ -10376,6 +10489,7 @@ body.single-post .post__form .ui-check__text,
 }
 
 body.home .contacts .ui-check__link,
+body.page-template-page-kyc .contacts .ui-check__link,
 body.page-template-page-solutions .contacts .ui-check__link,
 body.single-post .post__form .ui-check__link,
 .modal .ui-check__link {
@@ -10385,6 +10499,7 @@ body.single-post .post__form .ui-check__link,
 /* ——— ошибки ——— */
 
 body.home .contacts .input-form-error-text,
+body.page-template-page-kyc .contacts .input-form-error-text,
 body.page-template-page-solutions .contacts .input-form-error-text,
 body.single-post .post__form .input-form-error-text,
 .modal .input-form-error-text {
@@ -10395,12 +10510,15 @@ body.single-post .post__form .input-form-error-text,
 }
 
 body.home .contacts .is-error .input-form-block,
+body.page-template-page-kyc .contacts .is-error .input-form-block,
 body.page-template-page-solutions .contacts .is-error .input-form-block,
 body.single-post .post__form .is-error .input-form-block,
 body.home .contacts .is-error .phone-field__control,
+body.page-template-page-kyc .contacts .is-error .phone-field__control,
 body.page-template-page-solutions .contacts .is-error .phone-field__control,
 body.single-post .post__form .is-error .phone-field__control,
 body.home .contacts .is-error .help-select__control,
+body.page-template-page-kyc .contacts .is-error .help-select__control,
 body.page-template-page-solutions .contacts .is-error .help-select__control,
 body.single-post .post__form .is-error .help-select__control,
 .modal .is-error .input-form-block,
@@ -10412,6 +10530,7 @@ body.single-post .post__form .is-error .help-select__control,
 /* ——— кнопка отправки ——— */
 
 body.home .contacts .input-form-action,
+body.page-template-page-kyc .contacts .input-form-action,
 body.page-template-page-solutions .contacts .input-form-action,
 body.single-post .post__form .input-form-action,
 .modal .input-form-action {
@@ -10420,6 +10539,7 @@ body.single-post .post__form .input-form-action,
 }
 
 body.home .contacts .btn-form,
+body.page-template-page-kyc .contacts .btn-form,
 body.page-template-page-solutions .contacts .btn-form,
 body.single-post .post__form .btn-form,
 .modal .btn-form {
@@ -10440,6 +10560,7 @@ body.single-post .post__form .btn-form,
 }
 
 body.home .contacts .btn-form::before,
+body.page-template-page-kyc .contacts .btn-form::before,
 body.page-template-page-solutions .contacts .btn-form::before,
 body.single-post .post__form .btn-form::before,
 .modal .btn-form::before {
@@ -10447,6 +10568,7 @@ body.single-post .post__form .btn-form::before,
 }
 
 body.home .contacts .btn-form__icon,
+body.page-template-page-kyc .contacts .btn-form__icon,
 body.page-template-page-solutions .contacts .btn-form__icon,
 body.single-post .post__form .btn-form__icon,
 .modal .btn-form__icon {
@@ -10458,6 +10580,7 @@ body.single-post .post__form .btn-form__icon,
 }
 
 body.home .contacts .btn-form__icon svg,
+body.page-template-page-kyc .contacts .btn-form__icon svg,
 body.page-template-page-solutions .contacts .btn-form__icon svg,
 body.single-post .post__form .btn-form__icon svg,
 .modal .btn-form__icon svg {
@@ -10465,6 +10588,7 @@ body.single-post .post__form .btn-form__icon svg,
 }
 
 body.home .contacts .btn-form .btn__text,
+body.page-template-page-kyc .contacts .btn-form .btn__text,
 body.page-template-page-solutions .contacts .btn-form .btn__text,
 body.single-post .post__form .btn-form .btn__text,
 .modal .btn-form .btn__text {
@@ -10475,6 +10599,7 @@ body.single-post .post__form .btn-form .btn__text,
 }
 
 body.home .contacts .btn-form:hover:not(:disabled),
+body.page-template-page-kyc .contacts .btn-form:hover:not(:disabled),
 body.page-template-page-solutions .contacts .btn-form:hover:not(:disabled),
 body.single-post .post__form .btn-form:hover:not(:disabled),
 .modal .btn-form:hover:not(:disabled) {
@@ -10482,6 +10607,7 @@ body.single-post .post__form .btn-form:hover:not(:disabled),
 }
 
 body.home .contacts .btn-form:focus-visible,
+body.page-template-page-kyc .contacts .btn-form:focus-visible,
 body.page-template-page-solutions .contacts .btn-form:focus-visible,
 body.single-post .post__form .btn-form:focus-visible,
 .modal .btn-form:focus-visible {
@@ -10490,9 +10616,11 @@ body.single-post .post__form .btn-form:focus-visible,
 }
 
 body.home .contacts .btn-form:disabled,
+body.page-template-page-kyc .contacts .btn-form:disabled,
 body.page-template-page-solutions .contacts .btn-form:disabled,
 body.single-post .post__form .btn-form:disabled,
 body.home .contacts .btn-form.btn--disabled,
+body.page-template-page-kyc .contacts .btn-form.btn--disabled,
 body.page-template-page-solutions .contacts .btn-form.btn--disabled,
 body.single-post .post__form .btn-form.btn--disabled,
 .modal .btn-form:disabled,
@@ -10503,9 +10631,11 @@ body.single-post .post__form .btn-form.btn--disabled,
 
 /* Выпадающие списки не должны обрезаться карточкой формы. */
 body.home .contacts .phone-field,
+body.page-template-page-kyc .contacts .phone-field,
 body.page-template-page-solutions .contacts .phone-field,
 body.single-post .post__form .phone-field,
 body.home .contacts .input-form-item.help-select,
+body.page-template-page-kyc .contacts .input-form-item.help-select,
 body.page-template-page-solutions .contacts .input-form-item.help-select,
 body.single-post .post__form .input-form-item.help-select,
 .modal .phone-field,
@@ -10514,9 +10644,11 @@ body.single-post .post__form .input-form-item.help-select,
 }
 
 body.home .contacts .phone-field__dropdown,
+body.page-template-page-kyc .contacts .phone-field__dropdown,
 body.page-template-page-solutions .contacts .phone-field__dropdown,
 body.single-post .post__form .phone-field__dropdown,
 body.home .contacts .help-select__dropdown,
+body.page-template-page-kyc .contacts .help-select__dropdown,
 body.page-template-page-solutions .contacts .help-select__dropdown,
 body.single-post .post__form .help-select__dropdown,
 .modal .phone-field__dropdown,
@@ -10541,12 +10673,14 @@ body.single-post .post__form .help-select__dropdown,
  * правила нет, поэтому перекрываем тёмную заливку прежнего `.contacts`
  * здесь — как у остальных секций страницы.
  */
+body.page-template-page-kyc .contacts,
 body.page-template-page-solutions .contacts,
 body.single-post .post__form {
     background: var(--nv-surface-1);
 }
 
 /* Та же сетка, что у остальных блоков страницы. */
+body.page-template-page-kyc .contacts .container,
 body.page-template-page-solutions .contacts .container,
 body.single-post .post__form .container {
     max-width: 1920px;
@@ -10555,6 +10689,7 @@ body.single-post .post__form .container {
 }
 
 /* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+body.page-template-page-kyc .contacts .section__badge,
 body.page-template-page-solutions .contacts .section__badge,
 body.single-post .post__form .section__badge {
     padding: 3px 19px;
@@ -10565,17 +10700,20 @@ body.single-post .post__form .section__badge {
 }
 
 /* 2456:16689 — левая колонка 580, карточка формы забирает остаток. */
+body.page-template-page-kyc .contacts .contacts__content,
 body.page-template-page-solutions .contacts .contacts__content,
 body.single-post .post__form .contacts__content {
     grid-template-columns: 580px minmax(0, 1fr);
 }
 
+body.page-template-page-kyc .contacts .contacts__title-block,
 body.page-template-page-solutions .contacts .contacts__title-block,
 body.single-post .post__form .contacts__title-block {
     max-width: 580px;
 }
 
 /* 2456:16695 — поле 24, кнопки и разделителя в карточке нет. */
+body.page-template-page-kyc .contacts .contacts__card,
 body.page-template-page-solutions .contacts .contacts__card,
 body.single-post .post__form .contacts__card {
     gap: 0;
@@ -10586,6 +10724,7 @@ body.single-post .post__form .contacts__card {
  * Заголовок на всю ширину, под ним «Email us» и «Message us» в ряд.
  * Сетка вместо колонки — чтобы не добавлять обёртку в разметку.
  */
+body.page-template-page-kyc .contacts .contacts__card-info,
 body.page-template-page-solutions .contacts .contacts__card-info,
 body.single-post .post__form .contacts__card-info {
     display: grid;
@@ -10595,12 +10734,14 @@ body.single-post .post__form .contacts__card-info {
     width: 100%;
 }
 
+body.page-template-page-kyc .contacts .contacts__card-title,
 body.page-template-page-solutions .contacts .contacts__card-title,
 body.single-post .post__form .contacts__card-title {
     grid-column: 1 / -1;
 }
 
 /* 2456:16711 — скругление карточки формы 16, а не 24. */
+body.page-template-page-kyc .contacts .contacts__form-block,
 body.page-template-page-solutions .contacts .contacts__form-block,
 body.single-post .post__form .contacts__form-block {
     border-radius: 16px;
@@ -10611,6 +10752,7 @@ body.single-post .post__form .contacts__form-block {
  * это сообщение и согласие. Высота правой колонки выровнена по левой:
  * иначе пришлось бы заводить второй вариант разметки формы.
  */
+body.page-template-page-kyc .contacts .input-form-item:has(.input-form-block--textarea),
 body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
 body.single-post .post__form .input-form-item:has(.input-form-block--textarea) {
     grid-column: 2;
@@ -10618,6 +10760,7 @@ body.single-post .post__form .input-form-item:has(.input-form-block--textarea) {
     margin-top: 0;
 }
 
+body.page-template-page-kyc .contacts .input-form-item--privacy,
 body.page-template-page-solutions .contacts .input-form-item--privacy,
 body.single-post .post__form .input-form-item--privacy {
     grid-column: 2;
@@ -10627,6 +10770,7 @@ body.single-post .post__form .input-form-item--privacy {
 }
 
 /* Между содержимым формы и кнопкой в макете 24, а не шаг сетки 12. */
+body.page-template-page-kyc .contacts .input-form-action,
 body.page-template-page-solutions .contacts .input-form-action,
 body.single-post .post__form .input-form-action {
     margin-top: 12px;
@@ -10638,12 +10782,14 @@ body.single-post .post__form .input-form-action {
      * за левый край экрана (в макете её x = -413 при контейнере 1376).
      */
     body.home .contacts .contacts__content,
+    body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
     body.single-post .post__form .contacts__content {
         grid-template-columns: 427px minmax(0, 1fr);
     }
 
     body.home .contacts .contacts__form-item-text br,
+    body.page-template-page-kyc .contacts .contacts__form-item-text br,
     body.page-template-page-solutions .contacts .contacts__form-item-text br,
     body.single-post .post__form .contacts__form-item-text br {
         display: none;
@@ -10651,12 +10797,14 @@ body.single-post .post__form .input-form-action {
 
     /* На Desktop макетная карточка выгоды 128 — зазор между значком и текстом возвращается. */
     body.home .contacts .contacts__form-item,
+    body.page-template-page-kyc .contacts .contacts__form-item,
     body.page-template-page-solutions .contacts .contacts__form-item,
     body.single-post .post__form .contacts__form-item {
         gap: 24px;
     }
 
     body.home .contacts .contacts__card,
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         margin-left: calc(-1 * var(--nv-bleed));
@@ -10669,6 +10817,7 @@ body.single-post .post__form .input-form-action {
      * разделители между группами возвращаются.
      */
     body.home .contacts .contacts__form,
+    body.page-template-page-kyc .contacts .contacts__form,
     body.page-template-page-solutions .contacts .contacts__form,
     body.single-post .post__form .contacts__form,
     .modal .contacts__form {
@@ -10679,6 +10828,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form > *,
+    body.page-template-page-kyc .contacts .contacts__form > *,
     body.page-template-page-solutions .contacts .contacts__form > *,
     body.single-post .post__form .contacts__form > *,
     .modal .contacts__form > * {
@@ -10686,6 +10836,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .input-form-item--50,
+    body.page-template-page-kyc .contacts .input-form-item--50,
     body.page-template-page-solutions .contacts .input-form-item--50,
     body.single-post .post__form .input-form-item--50,
     .modal .input-form-item--50 {
@@ -10695,9 +10846,11 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .input-form-item.help-select,
+    body.page-template-page-kyc .contacts .input-form-item.help-select,
     body.page-template-page-solutions .contacts .input-form-item.help-select,
     body.single-post .post__form .input-form-item.help-select,
     body.home .contacts .input-form-item:has(.input-form-block--textarea),
+    body.page-template-page-kyc .contacts .input-form-item:has(.input-form-block--textarea),
     body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
     body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
     .modal .input-form-item.help-select,
@@ -10708,6 +10861,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .input-form-block--textarea textarea,
+    body.page-template-page-kyc .contacts .input-form-block--textarea textarea,
     body.page-template-page-solutions .contacts .input-form-block--textarea textarea,
     body.single-post .post__form .input-form-block--textarea textarea,
     .modal .input-form-block--textarea textarea {
@@ -10717,6 +10871,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form-line,
+    body.page-template-page-kyc .contacts .contacts__form-line,
     body.page-template-page-solutions .contacts .contacts__form-line,
     body.single-post .post__form .contacts__form-line,
     .modal .contacts__form-line {
@@ -10724,6 +10879,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .input-form-item--privacy,
+    body.page-template-page-kyc .contacts .input-form-item--privacy,
     body.page-template-page-solutions .contacts .input-form-item--privacy,
     body.single-post .post__form .input-form-item--privacy,
     .modal .input-form-item--privacy {
@@ -10733,16 +10889,19 @@ body.single-post .post__form .input-form-action {
     }
 
     /* 2398:25441 — левая колонка 443, вылета карточки за край экрана нет. */
+    body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
     body.single-post .post__form .contacts__content {
         grid-template-columns: 443px minmax(0, 1fr);
     }
 
+    body.page-template-page-kyc .contacts .contacts__title-block,
     body.page-template-page-solutions .contacts .contacts__title-block,
     body.single-post .post__form .contacts__title-block {
         max-width: 427px;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         margin-left: 0;
@@ -10754,6 +10913,7 @@ body.single-post .post__form .input-form-action {
      * 2398:25267 / 2398:25270 — вокруг разделителей 24, а между полями
      * остаётся шаг сетки 12, поэтому добираем полями самого разделителя.
      */
+    body.page-template-page-kyc .contacts .contacts__form-line,
     body.page-template-page-solutions .contacts .contacts__form-line,
     body.single-post .post__form .contacts__form-line {
         margin: 12px 0;
@@ -10791,12 +10951,14 @@ body.single-post .post__form .input-form-action {
 
     /* Карточки выгод 368×90 с зазорами 8 по обеим осям (2376:17626). */
     body.home .contacts .contacts__form-list,
+    body.page-template-page-kyc .contacts .contacts__form-list,
     body.page-template-page-solutions .contacts .contacts__form-list,
     body.single-post .post__form .contacts__form-list {
         gap: 8px;
     }
 
     body.home .contacts .contacts__form-item,
+    body.page-template-page-kyc .contacts .contacts__form-item,
     body.page-template-page-solutions .contacts .contacts__form-item,
     body.single-post .post__form .contacts__form-item {
         gap: 8px;
@@ -10804,6 +10966,7 @@ body.single-post .post__form .input-form-action {
 
     /* Вылета за край экрана на планшете в макете нет. */
     body.home .contacts .contacts__card,
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         margin-left: 0;
@@ -10812,6 +10975,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__content,
+    body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
     body.single-post .post__form .contacts__content {
         display: flex;
@@ -10820,6 +10984,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__title-block,
+    body.page-template-page-kyc .contacts .contacts__title-block,
     body.page-template-page-solutions .contacts .contacts__title-block,
     body.single-post .post__form .contacts__title-block {
         order: 1;
@@ -10827,6 +10992,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form-block,
+    body.page-template-page-kyc .contacts .contacts__form-block,
     body.page-template-page-solutions .contacts .contacts__form-block,
     body.single-post .post__form .contacts__form-block {
         order: 2;
@@ -10835,6 +11001,7 @@ body.single-post .post__form .input-form-action {
 
     /* В колонке flex `align-self: end` из старых правил сжимал бы блок по контенту. */
     body.home .contacts .contacts__actions,
+    body.page-template-page-kyc .contacts .contacts__actions,
     body.page-template-page-solutions .contacts .contacts__actions,
     body.single-post .post__form .contacts__actions {
         order: 3;
@@ -10843,6 +11010,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form-list,
+    body.page-template-page-kyc .contacts .contacts__form-list,
     body.page-template-page-solutions .contacts .contacts__form-list,
     body.single-post .post__form .contacts__form-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10850,6 +11018,7 @@ body.single-post .post__form .input-form-action {
 
     /* Карточка: слева контакты, справа снизу кнопка; разделителя в макете нет. */
     body.home .contacts .contacts__card,
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         display: grid;
@@ -10860,9 +11029,11 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-icon,
+    body.page-template-page-kyc .contacts .contacts__card-icon,
     body.page-template-page-solutions .contacts .contacts__card-icon,
     body.single-post .post__form .contacts__card-icon,
     body.home .contacts .contacts__card-info,
+    body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
     body.single-post .post__form .contacts__card-info {
         grid-column: 1;
@@ -10870,6 +11041,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-line,
+    body.page-template-page-kyc .contacts .contacts__card-line,
     body.page-template-page-solutions .contacts .contacts__card-line,
     body.single-post .post__form .contacts__card-line {
         display: none;
@@ -10877,6 +11049,7 @@ body.single-post .post__form .input-form-action {
 
     /* `-1` без явных строк схлопывается в первую — считаем через span. */
     body.home .contacts .contacts__card-action,
+    body.page-template-page-kyc .contacts .contacts__card-action,
     body.page-template-page-solutions .contacts .contacts__card-action,
     body.single-post .post__form .contacts__card-action {
         grid-column: 2;
@@ -10886,6 +11059,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-info,
+    body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
     body.single-post .post__form .contacts__card-info {
         flex-direction: row;
@@ -10894,12 +11068,14 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-title,
+    body.page-template-page-kyc .contacts .contacts__card-title,
     body.page-template-page-solutions .contacts .contacts__card-title,
     body.single-post .post__form .contacts__card-title {
         flex: 1 1 100%;
     }
 
     body.home .contacts .contacts__card-item,
+    body.page-template-page-kyc .contacts .contacts__card-item,
     body.page-template-page-solutions .contacts .contacts__card-item,
     body.single-post .post__form .contacts__card-item {
         flex: 0 1 197px;
@@ -10909,17 +11085,20 @@ body.single-post .post__form .input-form-action {
      * Tablet 2457:17398. Порядок блоков тот же, что на главной, но между
      * заголовком и формой 48, а между формой и карточкой 16.
      */
+    body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
     body.single-post .post__form .contacts__content {
         gap: 16px;
     }
 
+    body.page-template-page-kyc .contacts .contacts__title-block,
     body.page-template-page-solutions .contacts .contacts__title-block,
     body.single-post .post__form .contacts__title-block {
         margin-bottom: 32px;
     }
 
     /* 2457:17406 — поле 16, слева заголовок, справа контакты. */
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         display: block;
@@ -10928,6 +11107,7 @@ body.single-post .post__form .input-form-action {
         padding: 16px;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
     body.single-post .post__form .contacts__card-info {
         grid-template-columns: minmax(0, 1fr) auto auto;
@@ -10936,6 +11116,7 @@ body.single-post .post__form .input-form-action {
         row-gap: 0;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card-title,
     body.page-template-page-solutions .contacts .contacts__card-title,
     body.single-post .post__form .contacts__card-title {
         grid-column: 1;
@@ -10968,6 +11149,7 @@ body.single-post .post__form .input-form-action {
 @media (max-width: 767.98px) {
     /* Мобильного макета нет: поля в одну колонку, карточка — колонкой. */
     body.home .contacts .input-form-item--50,
+    body.page-template-page-kyc .contacts .input-form-item--50,
     body.page-template-page-solutions .contacts .input-form-item--50,
     body.single-post .post__form .input-form-item--50,
     .modal .input-form-item--50 {
@@ -10976,12 +11158,14 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form-list,
+    body.page-template-page-kyc .contacts .contacts__form-list,
     body.page-template-page-solutions .contacts .contacts__form-list,
     body.single-post .post__form .contacts__form-list {
         grid-template-columns: minmax(0, 1fr);
     }
 
     body.home .contacts .contacts__card,
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         grid-template-columns: minmax(0, 1fr);
@@ -10989,6 +11173,7 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-action,
+    body.page-template-page-kyc .contacts .contacts__card-action,
     body.page-template-page-solutions .contacts .contacts__card-action,
     body.single-post .post__form .contacts__card-action {
         grid-column: 1;
@@ -10997,17 +11182,20 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__card-info,
+    body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
     body.single-post .post__form .contacts__card-info {
         flex-direction: column;
     }
 
     /* Mobile 2467:18083 — поле секции 32, карточки 12, скругление 12. */
+    body.page-template-page-kyc .contacts,
     body.page-template-page-solutions .contacts,
     body.single-post .post__form {
         padding: 32px 0 0;
     }
 
+    body.page-template-page-kyc .contacts .container,
     body.page-template-page-solutions .contacts .container,
     body.single-post .post__form .container {
         padding-left: 16px;
@@ -11015,6 +11203,7 @@ body.single-post .post__form .input-form-action {
     }
 
     /* Бейдж 87x24: Body text/Regular 14/20. */
+    body.page-template-page-kyc .contacts .section__badge,
     body.page-template-page-solutions .contacts .section__badge,
     body.single-post .post__form .section__badge {
         padding: 1px 14px;
@@ -11023,24 +11212,28 @@ body.single-post .post__form .input-form-action {
     }
 
     /* Title/H2 32/44, Title/H5 16/20. */
+    body.page-template-page-kyc .contacts .contacts__title-block .section__title,
     body.page-template-page-solutions .contacts .contacts__title-block .section__title,
     body.single-post .post__form .contacts__title-block .section__title {
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 137.5%;
     }
 
+    body.page-template-page-kyc .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
     body.single-post .post__form .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
         line-height: 125%;
     }
 
+    body.page-template-page-kyc .contacts .contacts__form-block,
     body.page-template-page-solutions .contacts .contacts__form-block,
     body.single-post .post__form .contacts__form-block {
         padding: 11px;
         border-radius: 12px;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
     body.single-post .post__form .contacts__card {
         padding: 12px;
@@ -11048,6 +11241,7 @@ body.single-post .post__form .input-form-action {
     }
 
     /* 2467:18110 — заголовок сверху, под ним «Email us» и «Message us» в ряд. */
+    body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
     body.single-post .post__form .contacts__card-info {
         display: grid;
@@ -11056,6 +11250,7 @@ body.single-post .post__form .input-form-action {
         row-gap: 32px;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card-title,
     body.page-template-page-solutions .contacts .contacts__card-title,
     body.single-post .post__form .contacts__card-title {
         grid-column: 1 / -1;
@@ -11065,12 +11260,14 @@ body.single-post .post__form .input-form-action {
     }
 
     /* Body text/Small 12/16 и Button/Regular 16/20. */
+    body.page-template-page-kyc .contacts .contacts__card-item-name,
     body.page-template-page-solutions .contacts .contacts__card-item-name,
     body.single-post .post__form .contacts__card-item-name {
         font-size: var(--Text-Body-Text-Size-Small, 12px);
         line-height: 133.333%;
     }
 
+    body.page-template-page-kyc .contacts .contacts__card-item-link,
     body.page-template-page-solutions .contacts .contacts__card-item-link,
     body.single-post .post__form .contacts__card-item-link {
         font-size: var(--Text-Button-Size-Regular, 16px);
@@ -11087,6 +11284,7 @@ body.single-post .post__form .input-form-action {
 
 @media (max-width: 575.98px) {
     body.home .contacts .contacts__title-block .section__title,
+    body.page-template-page-kyc .contacts .contacts__title-block .section__title,
     body.page-template-page-solutions .contacts .contacts__title-block .section__title,
     body.single-post .post__form .contacts__title-block .section__title {
         font-size: var(--Text-Title-Size-H3, 32px);
@@ -11094,21 +11292,26 @@ body.single-post .post__form .input-form-action {
     }
 
     body.home .contacts .contacts__form-block,
+    body.page-template-page-kyc .contacts .contacts__form-block,
     body.page-template-page-solutions .contacts .contacts__form-block,
     body.single-post .post__form .contacts__form-block {
         padding: 11px;
     }
 
     body.home .contacts .input-form,
+    body.page-template-page-kyc .contacts .input-form,
     body.page-template-page-solutions .contacts .input-form,
     body.single-post .post__form .input-form,
     body.home .contacts .phone-field__input,
+    body.page-template-page-kyc .contacts .phone-field__input,
     body.page-template-page-solutions .contacts .phone-field__input,
     body.single-post .post__form .phone-field__input,
     body.home .contacts .contacts__form textarea,
+    body.page-template-page-kyc .contacts .contacts__form textarea,
     body.page-template-page-solutions .contacts .contacts__form textarea,
     body.single-post .post__form .contacts__form textarea,
     body.home .contacts .help-select__button,
+    body.page-template-page-kyc .contacts .help-select__button,
     body.page-template-page-solutions .contacts .help-select__button,
     body.single-post .post__form .help-select__button,
     .modal .input-form,
@@ -11120,11 +11323,13 @@ body.single-post .post__form .input-form-action {
     }
 
     /* Mobile 2467:18088 — заголовок 32/44, подзаголовок 16/20. */
+    body.page-template-page-kyc .contacts .contacts__title-block .section__title,
     body.page-template-page-solutions .contacts .contacts__title-block .section__title,
     body.single-post .post__form .contacts__title-block .section__title {
         line-height: 137.5%;
     }
 
+    body.page-template-page-kyc .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
     body.single-post .post__form .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
@@ -11380,6 +11585,7 @@ body.single-post .post__form .input-form-action {
  */
 
 body.home .teaser,
+body.page-template-page-kyc .teaser,
 body.page-template-page-solutions .teaser,
 body.page-template-page-privacy .teaser,
 body.page-template-page-price-matrix .teaser,
@@ -11392,6 +11598,7 @@ body.single-post .teaser {
 
 /* «Page edge» из макета — скруглённый низ контентной области страницы. */
 body.home .teaser::before,
+body.page-template-page-kyc .teaser::before,
 body.page-template-page-solutions .teaser::before,
 body.page-template-page-privacy .teaser::before,
 body.page-template-page-price-matrix .teaser::before,
@@ -11410,6 +11617,7 @@ body.single-post .teaser::before {
 
 /* Тёплое свечение тёмной темы в светлом макете не используется. */
 body.home .teaser::after,
+body.page-template-page-kyc .teaser::after,
 body.page-template-page-solutions .teaser::after,
 body.page-template-page-privacy .teaser::after,
 body.page-template-page-price-matrix .teaser::after,
@@ -11418,6 +11626,7 @@ body.single-post .teaser::after {
 }
 
 body.home .teaser__wrapper,
+body.page-template-page-kyc .teaser__wrapper,
 body.page-template-page-solutions .teaser__wrapper,
 body.page-template-page-privacy .teaser__wrapper,
 body.page-template-page-price-matrix .teaser__wrapper,
@@ -11428,6 +11637,7 @@ body.single-post .teaser__wrapper {
 }
 
 body.home .teaser__logo,
+body.page-template-page-kyc .teaser__logo,
 body.page-template-page-solutions .teaser__logo,
 body.page-template-page-privacy .teaser__logo,
 body.page-template-page-price-matrix .teaser__logo,
@@ -11437,6 +11647,7 @@ body.single-post .teaser__logo {
 }
 
 body.home .teaser__logo-image,
+body.page-template-page-kyc .teaser__logo-image,
 body.page-template-page-solutions .teaser__logo-image,
 body.page-template-page-privacy .teaser__logo-image,
 body.page-template-page-price-matrix .teaser__logo-image,
@@ -11445,6 +11656,7 @@ body.single-post .teaser__logo-image {
 }
 
 body.home .teaser__info,
+body.page-template-page-kyc .teaser__info,
 body.page-template-page-solutions .teaser__info,
 body.page-template-page-privacy .teaser__info,
 body.page-template-page-price-matrix .teaser__info,
@@ -11454,6 +11666,7 @@ body.single-post .teaser__info {
 }
 
 body.home .teaser__title,
+body.page-template-page-kyc .teaser__title,
 body.page-template-page-solutions .teaser__title,
 body.page-template-page-privacy .teaser__title,
 body.page-template-page-price-matrix .teaser__title,
@@ -11464,6 +11677,7 @@ body.single-post .teaser__title {
 
 /* Full HD — заголовок в одну строку. */
 body.home .teaser__title br,
+body.page-template-page-kyc .teaser__title br,
 body.page-template-page-solutions .teaser__title br,
 body.page-template-page-privacy .teaser__title br,
 body.page-template-page-price-matrix .teaser__title br,
@@ -11472,6 +11686,7 @@ body.single-post .teaser__title br {
 }
 
 body.home .teaser__subtitle,
+body.page-template-page-kyc .teaser__subtitle,
 body.page-template-page-solutions .teaser__subtitle,
 body.page-template-page-privacy .teaser__subtitle,
 body.page-template-page-price-matrix .teaser__subtitle,
@@ -11484,6 +11699,7 @@ body.single-post .teaser__subtitle {
 @media (max-width: 1599.98px) {
     /* Desktop 1440 — перенос после «Platform» из макета. */
     body.home .teaser__title br,
+    body.page-template-page-kyc .teaser__title br,
     body.page-template-page-solutions .teaser__title br,
     body.page-template-page-privacy .teaser__title br,
     body.page-template-page-price-matrix .teaser__title br,
@@ -11499,6 +11715,7 @@ body.single-post .teaser__subtitle {
 @media (max-width: 1199.98px) {
     /* Маскота в светлом футере нет — запас под него не нужен. */
     body.home .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
     body.page-template-page-solutions .teaser__wrapper,
     body.page-template-page-privacy .teaser__wrapper,
     body.page-template-page-price-matrix .teaser__wrapper,
@@ -11510,6 +11727,7 @@ body.single-post .teaser__subtitle {
 @media (max-width: 991.98px) {
     /* Tablet 840 — перенос по ширине контейнера. */
     body.home .teaser__title br,
+    body.page-template-page-kyc .teaser__title br,
     body.page-template-page-solutions .teaser__title br,
     body.page-template-page-privacy .teaser__title br,
     body.page-template-page-price-matrix .teaser__title br,
@@ -11518,6 +11736,7 @@ body.single-post .teaser__subtitle {
     }
     /* В планшетном макете до карточки футера 128px, а не 64 (2376:17671). */
     body.home .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
     body.page-template-page-solutions .teaser__wrapper,
     body.page-template-page-privacy .teaser__wrapper,
     body.page-template-page-price-matrix .teaser__wrapper,
@@ -11529,6 +11748,7 @@ body.single-post .teaser__subtitle {
 @media (max-width: 767.98px) {
     /* Ниже 768 макета нет — возвращаем отступ темы. */
     body.home .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
     body.page-template-page-solutions .teaser__wrapper,
     body.page-template-page-privacy .teaser__wrapper,
     body.page-template-page-price-matrix .teaser__wrapper,
@@ -11537,6 +11757,7 @@ body.single-post .teaser__subtitle {
         padding-bottom: 64px;
     }
     body.home .teaser__title,
+    body.page-template-page-kyc .teaser__title,
     body.page-template-page-solutions .teaser__title,
     body.page-template-page-privacy .teaser__title,
     body.page-template-page-price-matrix .teaser__title,
@@ -11547,6 +11768,7 @@ body.single-post .teaser__subtitle {
 
 @media (max-width: 575.98px) {
     body.home .teaser__title,
+    body.page-template-page-kyc .teaser__title,
     body.page-template-page-solutions .teaser__title,
     body.page-template-page-privacy .teaser__title,
     body.page-template-page-price-matrix .teaser__title,
@@ -11876,6 +12098,7 @@ body.single-post .teaser__subtitle {
  */
 
 body.home .footer,
+body.page-template-page-kyc .footer,
 body.page-template-page-solutions .footer,
 body.page-template-page-privacy .footer,
 body.page-template-page-price-matrix .footer,
@@ -11888,6 +12111,7 @@ body.single-post .footer {
 
 /* Карточка футера. Обводка в Figma внутренняя, поэтому паддинг минус её ширина. */
 body.home .footer__wrapper,
+body.page-template-page-kyc .footer__wrapper,
 body.page-template-page-solutions .footer__wrapper,
 body.page-template-page-privacy .footer__wrapper,
 body.page-template-page-price-matrix .footer__wrapper,
@@ -11902,6 +12126,7 @@ body.single-post .footer__wrapper {
 }
 
 body.home .footer__top,
+body.page-template-page-kyc .footer__top,
 body.page-template-page-solutions .footer__top,
 body.page-template-page-privacy .footer__top,
 body.page-template-page-price-matrix .footer__top,
@@ -11913,6 +12138,7 @@ body.single-post .footer__top {
 /* --- Левая колонка: логотип, слоган, реквизиты, сертификаты --- */
 
 body.home .footer__info,
+body.page-template-page-kyc .footer__info,
 body.page-template-page-solutions .footer__info,
 body.page-template-page-privacy .footer__info,
 body.page-template-page-price-matrix .footer__info,
@@ -11924,6 +12150,7 @@ body.single-post .footer__info {
 }
 
 body.home .footer__brand,
+body.page-template-page-kyc .footer__brand,
 body.page-template-page-solutions .footer__brand,
 body.page-template-page-privacy .footer__brand,
 body.page-template-page-price-matrix .footer__brand,
@@ -11934,6 +12161,7 @@ body.single-post .footer__brand {
 }
 
 body.home .footer__logo-image,
+body.page-template-page-kyc .footer__logo-image,
 body.page-template-page-solutions .footer__logo-image,
 body.page-template-page-privacy .footer__logo-image,
 body.page-template-page-price-matrix .footer__logo-image,
@@ -11944,6 +12172,7 @@ body.single-post .footer__logo-image {
 }
 
 body.home .footer__logo-image img,
+body.page-template-page-kyc .footer__logo-image img,
 body.page-template-page-solutions .footer__logo-image img,
 body.page-template-page-privacy .footer__logo-image img,
 body.page-template-page-price-matrix .footer__logo-image img,
@@ -11954,6 +12183,7 @@ body.single-post .footer__logo-image img {
 }
 
 body.home .footer__tagline,
+body.page-template-page-kyc .footer__tagline,
 body.page-template-page-solutions .footer__tagline,
 body.page-template-page-privacy .footer__tagline,
 body.page-template-page-price-matrix .footer__tagline,
@@ -11965,6 +12195,7 @@ body.single-post .footer__tagline {
 }
 
 body.home .footer__details,
+body.page-template-page-kyc .footer__details,
 body.page-template-page-solutions .footer__details,
 body.page-template-page-privacy .footer__details,
 body.page-template-page-price-matrix .footer__details,
@@ -11975,6 +12206,7 @@ body.single-post .footer__details {
 }
 
 body.home .footer__legal,
+body.page-template-page-kyc .footer__legal,
 body.page-template-page-solutions .footer__legal,
 body.page-template-page-privacy .footer__legal,
 body.page-template-page-price-matrix .footer__legal,
@@ -11985,6 +12217,7 @@ body.single-post .footer__legal {
 }
 
 body.home .footer__legal-name,
+body.page-template-page-kyc .footer__legal-name,
 body.page-template-page-solutions .footer__legal-name,
 body.page-template-page-privacy .footer__legal-name,
 body.page-template-page-price-matrix .footer__legal-name,
@@ -11996,6 +12229,7 @@ body.single-post .footer__legal-name {
 }
 
 body.home .footer__legal-address,
+body.page-template-page-kyc .footer__legal-address,
 body.page-template-page-solutions .footer__legal-address,
 body.page-template-page-privacy .footer__legal-address,
 body.page-template-page-price-matrix .footer__legal-address,
@@ -12008,6 +12242,7 @@ body.single-post .footer__legal-address {
 
 /* В Full HD значки стоят слева от реквизитов, ниже — под ними. */
 body.home .footer__badges,
+body.page-template-page-kyc .footer__badges,
 body.page-template-page-solutions .footer__badges,
 body.page-template-page-privacy .footer__badges,
 body.page-template-page-price-matrix .footer__badges,
@@ -12019,6 +12254,7 @@ body.single-post .footer__badges {
 }
 
 body.home .footer__badge,
+body.page-template-page-kyc .footer__badge,
 body.page-template-page-solutions .footer__badge,
 body.page-template-page-privacy .footer__badge,
 body.page-template-page-price-matrix .footer__badge,
@@ -12028,6 +12264,7 @@ body.single-post .footer__badge {
 }
 
 body.home .footer__badge img,
+body.page-template-page-kyc .footer__badge img,
 body.page-template-page-solutions .footer__badge img,
 body.page-template-page-privacy .footer__badge img,
 body.page-template-page-price-matrix .footer__badge img,
@@ -12039,6 +12276,7 @@ body.single-post .footer__badge img {
 
 /* Круглый значок в макете обрезан по окружности с небольшим зумом. */
 body.home .footer__badge--round,
+body.page-template-page-kyc .footer__badge--round,
 body.page-template-page-solutions .footer__badge--round,
 body.page-template-page-privacy .footer__badge--round,
 body.page-template-page-price-matrix .footer__badge--round,
@@ -12051,6 +12289,7 @@ body.single-post .footer__badge--round {
 }
 
 body.home .footer__badge--round img,
+body.page-template-page-kyc .footer__badge--round img,
 body.page-template-page-solutions .footer__badge--round img,
 body.page-template-page-privacy .footer__badge--round img,
 body.page-template-page-price-matrix .footer__badge--round img,
@@ -12065,6 +12304,7 @@ body.single-post .footer__badge--round img {
 /* --- Навигация --- */
 
 body.home .footer__navigation,
+body.page-template-page-kyc .footer__navigation,
 body.page-template-page-solutions .footer__navigation,
 body.page-template-page-privacy .footer__navigation,
 body.page-template-page-price-matrix .footer__navigation,
@@ -12075,6 +12315,7 @@ body.single-post .footer__navigation {
 }
 
 body.home .footer__nav,
+body.page-template-page-kyc .footer__nav,
 body.page-template-page-solutions .footer__nav,
 body.page-template-page-privacy .footer__nav,
 body.page-template-page-price-matrix .footer__nav,
@@ -12083,6 +12324,7 @@ body.single-post .footer__nav {
 }
 
 body.home .footer__nav-title,
+body.page-template-page-kyc .footer__nav-title,
 body.page-template-page-solutions .footer__nav-title,
 body.page-template-page-privacy .footer__nav-title,
 body.page-template-page-price-matrix .footer__nav-title,
@@ -12094,6 +12336,7 @@ body.single-post .footer__nav-title {
 }
 
 body.home .footer__nav-list,
+body.page-template-page-kyc .footer__nav-list,
 body.page-template-page-solutions .footer__nav-list,
 body.page-template-page-privacy .footer__nav-list,
 body.page-template-page-price-matrix .footer__nav-list,
@@ -12105,6 +12348,7 @@ body.single-post .footer__nav-list {
 
 /* Шесть продуктов в макете разложены в две колонки по три. */
 body.home .footer__nav--products .footer__nav-list,
+body.page-template-page-kyc .footer__nav--products .footer__nav-list,
 body.page-template-page-solutions .footer__nav--products .footer__nav-list,
 body.page-template-page-privacy .footer__nav--products .footer__nav-list,
 body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
@@ -12118,6 +12362,7 @@ body.single-post .footer__nav--products .footer__nav-list {
 }
 
 body.home .footer__nav-link,
+body.page-template-page-kyc .footer__nav-link,
 body.page-template-page-solutions .footer__nav-link,
 body.page-template-page-privacy .footer__nav-link,
 body.page-template-page-price-matrix .footer__nav-link,
@@ -12132,11 +12377,13 @@ body.single-post .footer__nav-link {
 }
 
 body.home .footer__nav-link:hover,
+body.page-template-page-kyc .footer__nav-link:hover,
 body.page-template-page-solutions .footer__nav-link:hover,
 body.page-template-page-privacy .footer__nav-link:hover,
 body.page-template-page-price-matrix .footer__nav-link:hover,
 body.single-post .footer__nav-link:hover,
 body.home .footer__nav-link:focus-visible,
+body.page-template-page-kyc .footer__nav-link:focus-visible,
 body.page-template-page-solutions .footer__nav-link:focus-visible,
 body.page-template-page-privacy .footer__nav-link:focus-visible,
 body.page-template-page-price-matrix .footer__nav-link:focus-visible,
@@ -12147,6 +12394,7 @@ body.single-post .footer__nav-link:focus-visible {
 /* --- Правая колонка: почта и соцсети --- */
 
 body.home .footer__aside,
+body.page-template-page-kyc .footer__aside,
 body.page-template-page-solutions .footer__aside,
 body.page-template-page-privacy .footer__aside,
 body.page-template-page-price-matrix .footer__aside,
@@ -12160,6 +12408,7 @@ body.single-post .footer__aside {
 }
 
 body.home .footer__contacts,
+body.page-template-page-kyc .footer__contacts,
 body.page-template-page-solutions .footer__contacts,
 body.page-template-page-privacy .footer__contacts,
 body.page-template-page-price-matrix .footer__contacts,
@@ -12170,11 +12419,13 @@ body.single-post .footer__contacts {
 }
 
 body.home .footer__contacts-title,
+body.page-template-page-kyc .footer__contacts-title,
 body.page-template-page-solutions .footer__contacts-title,
 body.page-template-page-privacy .footer__contacts-title,
 body.page-template-page-price-matrix .footer__contacts-title,
 body.single-post .footer__contacts-title,
 body.home .footer__social-title,
+body.page-template-page-kyc .footer__social-title,
 body.page-template-page-solutions .footer__social-title,
 body.page-template-page-privacy .footer__social-title,
 body.page-template-page-price-matrix .footer__social-title,
@@ -12186,6 +12437,7 @@ body.single-post .footer__social-title {
 }
 
 body.home .footer__contacts-list,
+body.page-template-page-kyc .footer__contacts-list,
 body.page-template-page-solutions .footer__contacts-list,
 body.page-template-page-privacy .footer__contacts-list,
 body.page-template-page-price-matrix .footer__contacts-list,
@@ -12195,6 +12447,7 @@ body.single-post .footer__contacts-list {
 }
 
 body.home .footer__mail,
+body.page-template-page-kyc .footer__mail,
 body.page-template-page-solutions .footer__mail,
 body.page-template-page-privacy .footer__mail,
 body.page-template-page-price-matrix .footer__mail,
@@ -12216,11 +12469,13 @@ body.single-post .footer__mail {
 }
 
 body.home .footer__mail:hover,
+body.page-template-page-kyc .footer__mail:hover,
 body.page-template-page-solutions .footer__mail:hover,
 body.page-template-page-privacy .footer__mail:hover,
 body.page-template-page-price-matrix .footer__mail:hover,
 body.single-post .footer__mail:hover,
 body.home .footer__mail:focus-visible,
+body.page-template-page-kyc .footer__mail:focus-visible,
 body.page-template-page-solutions .footer__mail:focus-visible,
 body.page-template-page-privacy .footer__mail:focus-visible,
 body.page-template-page-price-matrix .footer__mail:focus-visible,
@@ -12230,6 +12485,7 @@ body.single-post .footer__mail:focus-visible {
 }
 
 body.home .footer__mail-icon,
+body.page-template-page-kyc .footer__mail-icon,
 body.page-template-page-solutions .footer__mail-icon,
 body.page-template-page-privacy .footer__mail-icon,
 body.page-template-page-price-matrix .footer__mail-icon,
@@ -12239,6 +12495,7 @@ body.single-post .footer__mail-icon {
 }
 
 body.home .footer__social,
+body.page-template-page-kyc .footer__social,
 body.page-template-page-solutions .footer__social,
 body.page-template-page-privacy .footer__social,
 body.page-template-page-price-matrix .footer__social,
@@ -12248,6 +12505,7 @@ body.single-post .footer__social {
 }
 
 body.home .footer__social-list,
+body.page-template-page-kyc .footer__social-list,
 body.page-template-page-solutions .footer__social-list,
 body.page-template-page-privacy .footer__social-list,
 body.page-template-page-price-matrix .footer__social-list,
@@ -12257,6 +12515,7 @@ body.single-post .footer__social-list {
 }
 
 body.home .footer__social-item,
+body.page-template-page-kyc .footer__social-item,
 body.page-template-page-solutions .footer__social-item,
 body.page-template-page-privacy .footer__social-item,
 body.page-template-page-price-matrix .footer__social-item,
@@ -12271,11 +12530,13 @@ body.single-post .footer__social-item {
 }
 
 body.home .footer__social-item:hover,
+body.page-template-page-kyc .footer__social-item:hover,
 body.page-template-page-solutions .footer__social-item:hover,
 body.page-template-page-privacy .footer__social-item:hover,
 body.page-template-page-price-matrix .footer__social-item:hover,
 body.single-post .footer__social-item:hover,
 body.home .footer__social-item:focus-visible,
+body.page-template-page-kyc .footer__social-item:focus-visible,
 body.page-template-page-solutions .footer__social-item:focus-visible,
 body.page-template-page-privacy .footer__social-item:focus-visible,
 body.page-template-page-price-matrix .footer__social-item:focus-visible,
@@ -12287,6 +12548,7 @@ body.single-post .footer__social-item:focus-visible {
 /* --- Нижняя строка --- */
 
 body.home .footer__line,
+body.page-template-page-kyc .footer__line,
 body.page-template-page-solutions .footer__line,
 body.page-template-page-privacy .footer__line,
 body.page-template-page-price-matrix .footer__line,
@@ -12295,6 +12557,7 @@ body.single-post .footer__line {
 }
 
 body.home .footer__bottom,
+body.page-template-page-kyc .footer__bottom,
 body.page-template-page-solutions .footer__bottom,
 body.page-template-page-privacy .footer__bottom,
 body.page-template-page-price-matrix .footer__bottom,
@@ -12305,11 +12568,13 @@ body.single-post .footer__bottom {
 }
 
 body.home .footer__bottom-col--copy,
+body.page-template-page-kyc .footer__bottom-col--copy,
 body.page-template-page-solutions .footer__bottom-col--copy,
 body.page-template-page-privacy .footer__bottom-col--copy,
 body.page-template-page-price-matrix .footer__bottom-col--copy,
 body.single-post .footer__bottom-col--copy,
 body.home .footer__bottom-col--links,
+body.page-template-page-kyc .footer__bottom-col--links,
 body.page-template-page-solutions .footer__bottom-col--links,
 body.page-template-page-privacy .footer__bottom-col--links,
 body.page-template-page-price-matrix .footer__bottom-col--links,
@@ -12318,6 +12583,7 @@ body.single-post .footer__bottom-col--links {
 }
 
 body.home .footer__bottom-col--trademark,
+body.page-template-page-kyc .footer__bottom-col--trademark,
 body.page-template-page-solutions .footer__bottom-col--trademark,
 body.page-template-page-privacy .footer__bottom-col--trademark,
 body.page-template-page-price-matrix .footer__bottom-col--trademark,
@@ -12326,6 +12592,7 @@ body.single-post .footer__bottom-col--trademark {
 }
 
 body.home .footer__bottom p,
+body.page-template-page-kyc .footer__bottom p,
 body.page-template-page-solutions .footer__bottom p,
 body.page-template-page-privacy .footer__bottom p,
 body.page-template-page-price-matrix .footer__bottom p,
@@ -12337,6 +12604,7 @@ body.single-post .footer__bottom p {
 }
 
 body.home .footer__bottom-list,
+body.page-template-page-kyc .footer__bottom-list,
 body.page-template-page-solutions .footer__bottom-list,
 body.page-template-page-privacy .footer__bottom-list,
 body.page-template-page-price-matrix .footer__bottom-list,
@@ -12346,6 +12614,7 @@ body.single-post .footer__bottom-list {
 }
 
 body.home .footer__bottom-link,
+body.page-template-page-kyc .footer__bottom-link,
 body.page-template-page-solutions .footer__bottom-link,
 body.page-template-page-privacy .footer__bottom-link,
 body.page-template-page-price-matrix .footer__bottom-link,
@@ -12358,11 +12627,13 @@ body.single-post .footer__bottom-link {
 }
 
 body.home .footer__bottom-link:hover,
+body.page-template-page-kyc .footer__bottom-link:hover,
 body.page-template-page-solutions .footer__bottom-link:hover,
 body.page-template-page-privacy .footer__bottom-link:hover,
 body.page-template-page-price-matrix .footer__bottom-link:hover,
 body.single-post .footer__bottom-link:hover,
 body.home .footer__bottom-link:focus-visible,
+body.page-template-page-kyc .footer__bottom-link:focus-visible,
 body.page-template-page-solutions .footer__bottom-link:focus-visible,
 body.page-template-page-privacy .footer__bottom-link:focus-visible,
 body.page-template-page-price-matrix .footer__bottom-link:focus-visible,
@@ -12371,6 +12642,7 @@ body.single-post .footer__bottom-link:focus-visible {
 }
 
 body.home .footer__bottom-line,
+body.page-template-page-kyc .footer__bottom-line,
 body.page-template-page-solutions .footer__bottom-line,
 body.page-template-page-privacy .footer__bottom-line,
 body.page-template-page-price-matrix .footer__bottom-line,
@@ -12383,6 +12655,7 @@ body.single-post .footer__bottom-line {
 @media (max-width: 1599.98px) {
     /* Desktop 1440. */
     body.home .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
     body.page-template-page-solutions .footer__navigation,
     body.page-template-page-privacy .footer__navigation,
     body.page-template-page-price-matrix .footer__navigation,
@@ -12390,6 +12663,7 @@ body.single-post .footer__bottom-line {
         gap: 80px;
     }
     body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
     body.page-template-page-solutions .footer__nav--products .footer__nav-list,
     body.page-template-page-privacy .footer__nav--products .footer__nav-list,
     body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
@@ -12399,6 +12673,7 @@ body.single-post .footer__bottom-line {
         column-gap: 0;
     }
     body.home .footer__nav-link,
+    body.page-template-page-kyc .footer__nav-link,
     body.page-template-page-solutions .footer__nav-link,
     body.page-template-page-privacy .footer__nav-link,
     body.page-template-page-price-matrix .footer__nav-link,
@@ -12407,6 +12682,7 @@ body.single-post .footer__bottom-line {
         line-height: 142.857%;
     }
     body.home .footer__details,
+    body.page-template-page-kyc .footer__details,
     body.page-template-page-solutions .footer__details,
     body.page-template-page-privacy .footer__details,
     body.page-template-page-price-matrix .footer__details,
@@ -12415,6 +12691,7 @@ body.single-post .footer__bottom-line {
         gap: 32px;
     }
     body.home .footer__badges,
+    body.page-template-page-kyc .footer__badges,
     body.page-template-page-solutions .footer__badges,
     body.page-template-page-privacy .footer__badges,
     body.page-template-page-price-matrix .footer__badges,
@@ -12422,6 +12699,7 @@ body.single-post .footer__bottom-line {
         order: 0;
     }
     body.home .footer__badge img,
+    body.page-template-page-kyc .footer__badge img,
     body.page-template-page-solutions .footer__badge img,
     body.page-template-page-privacy .footer__badge img,
     body.page-template-page-price-matrix .footer__badge img,
@@ -12429,6 +12707,7 @@ body.single-post .footer__bottom-line {
         height: 48px;
     }
     body.home .footer__badge--round,
+    body.page-template-page-kyc .footer__badge--round,
     body.page-template-page-solutions .footer__badge--round,
     body.page-template-page-privacy .footer__badge--round,
     body.page-template-page-price-matrix .footer__badge--round,
@@ -12444,6 +12723,7 @@ body.single-post .footer__bottom-line {
 
 @media (max-width: 1199.98px) {
     body.home .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
     body.page-template-page-solutions .footer__navigation,
     body.page-template-page-privacy .footer__navigation,
     body.page-template-page-price-matrix .footer__navigation,
@@ -12455,6 +12735,7 @@ body.single-post .footer__bottom-line {
 @media (max-width: 991.98px) {
     /* Tablet 840: три ряда — реквизиты, навигация, контакты. */
     body.home .footer__top,
+    body.page-template-page-kyc .footer__top,
     body.page-template-page-solutions .footer__top,
     body.page-template-page-privacy .footer__top,
     body.page-template-page-price-matrix .footer__top,
@@ -12464,6 +12745,7 @@ body.single-post .footer__bottom-line {
         gap: 64px;
     }
     body.home .footer__info,
+    body.page-template-page-kyc .footer__info,
     body.page-template-page-solutions .footer__info,
     body.page-template-page-privacy .footer__info,
     body.page-template-page-price-matrix .footer__info,
@@ -12474,6 +12756,7 @@ body.single-post .footer__bottom-line {
         gap: 0;
     }
     body.home .footer__brand,
+    body.page-template-page-kyc .footer__brand,
     body.page-template-page-solutions .footer__brand,
     body.page-template-page-privacy .footer__brand,
     body.page-template-page-price-matrix .footer__brand,
@@ -12481,6 +12764,7 @@ body.single-post .footer__bottom-line {
         flex: 0 0 44%;
     }
     body.home .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
     body.page-template-page-solutions .footer__logo-image,
     body.page-template-page-privacy .footer__logo-image,
     body.page-template-page-price-matrix .footer__logo-image,
@@ -12488,6 +12772,7 @@ body.single-post .footer__bottom-line {
         width: 207px;
     }
     body.home .footer__details,
+    body.page-template-page-kyc .footer__details,
     body.page-template-page-solutions .footer__details,
     body.page-template-page-privacy .footer__details,
     body.page-template-page-price-matrix .footer__details,
@@ -12497,6 +12782,7 @@ body.single-post .footer__bottom-line {
     }
     /* В макете у ряда навигации справа 64px запаса — отсюда равные промежутки. */
     body.home .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
     body.page-template-page-solutions .footer__navigation,
     body.page-template-page-privacy .footer__navigation,
     body.page-template-page-price-matrix .footer__navigation,
@@ -12507,6 +12793,7 @@ body.single-post .footer__bottom-line {
         gap: 32px;
     }
     body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
     body.page-template-page-solutions .footer__nav--products .footer__nav-list,
     body.page-template-page-privacy .footer__nav--products .footer__nav-list,
     body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
@@ -12516,6 +12803,7 @@ body.single-post .footer__bottom-line {
         column-gap: 48px;
     }
     body.home .footer__aside,
+    body.page-template-page-kyc .footer__aside,
     body.page-template-page-solutions .footer__aside,
     body.page-template-page-privacy .footer__aside,
     body.page-template-page-price-matrix .footer__aside,
@@ -12527,11 +12815,13 @@ body.single-post .footer__bottom-line {
         gap: 96px;
     }
     body.home .footer__contacts,
+    body.page-template-page-kyc .footer__contacts,
     body.page-template-page-solutions .footer__contacts,
     body.page-template-page-privacy .footer__contacts,
     body.page-template-page-price-matrix .footer__contacts,
     body.single-post .footer__contacts,
     body.home .footer__social,
+    body.page-template-page-kyc .footer__social,
     body.page-template-page-solutions .footer__social,
     body.page-template-page-privacy .footer__social,
     body.page-template-page-price-matrix .footer__social,
@@ -12541,6 +12831,7 @@ body.single-post .footer__bottom-line {
         gap: 24px;
     }
     body.home .footer__bottom,
+    body.page-template-page-kyc .footer__bottom,
     body.page-template-page-solutions .footer__bottom,
     body.page-template-page-privacy .footer__bottom,
     body.page-template-page-price-matrix .footer__bottom,
@@ -12550,6 +12841,7 @@ body.single-post .footer__bottom-line {
         gap: 16px;
     }
     body.home .footer__bottom-col--trademark,
+    body.page-template-page-kyc .footer__bottom-col--trademark,
     body.page-template-page-solutions .footer__bottom-col--trademark,
     body.page-template-page-privacy .footer__bottom-col--trademark,
     body.page-template-page-price-matrix .footer__bottom-col--trademark,
@@ -12561,6 +12853,7 @@ body.single-post .footer__bottom-line {
 @media (max-width: 767.98px) {
     /* Макета нет — сохраняем логику темы: колонки распрямляются. */
     body.home .footer__wrapper,
+    body.page-template-page-kyc .footer__wrapper,
     body.page-template-page-solutions .footer__wrapper,
     body.page-template-page-privacy .footer__wrapper,
     body.page-template-page-price-matrix .footer__wrapper,
@@ -12568,6 +12861,7 @@ body.single-post .footer__bottom-line {
         padding: 31px 15px 32px;
     }
     body.home .footer__info,
+    body.page-template-page-kyc .footer__info,
     body.page-template-page-solutions .footer__info,
     body.page-template-page-privacy .footer__info,
     body.page-template-page-price-matrix .footer__info,
@@ -12576,6 +12870,7 @@ body.single-post .footer__bottom-line {
         gap: 32px;
     }
     body.home .footer__brand,
+    body.page-template-page-kyc .footer__brand,
     body.page-template-page-solutions .footer__brand,
     body.page-template-page-privacy .footer__brand,
     body.page-template-page-price-matrix .footer__brand,
@@ -12583,6 +12878,7 @@ body.single-post .footer__bottom-line {
         flex: 0 0 auto;
     }
     body.home .footer__aside,
+    body.page-template-page-kyc .footer__aside,
     body.page-template-page-solutions .footer__aside,
     body.page-template-page-privacy .footer__aside,
     body.page-template-page-price-matrix .footer__aside,
@@ -12592,11 +12888,13 @@ body.single-post .footer__bottom-line {
         gap: 32px;
     }
     body.home .footer__contacts,
+    body.page-template-page-kyc .footer__contacts,
     body.page-template-page-solutions .footer__contacts,
     body.page-template-page-privacy .footer__contacts,
     body.page-template-page-price-matrix .footer__contacts,
     body.single-post .footer__contacts,
     body.home .footer__social,
+    body.page-template-page-kyc .footer__social,
     body.page-template-page-solutions .footer__social,
     body.page-template-page-privacy .footer__social,
     body.page-template-page-price-matrix .footer__social,
@@ -12606,6 +12904,7 @@ body.single-post .footer__bottom-line {
         gap: 16px;
     }
     body.home .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
     body.page-template-page-solutions .footer__navigation,
     body.page-template-page-privacy .footer__navigation,
     body.page-template-page-price-matrix .footer__navigation,
@@ -12616,6 +12915,7 @@ body.single-post .footer__bottom-line {
 
 @media (max-width: 575.98px) {
     body.home .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
     body.page-template-page-solutions .footer__navigation,
     body.page-template-page-privacy .footer__navigation,
     body.page-template-page-price-matrix .footer__navigation,
@@ -12624,6 +12924,7 @@ body.single-post .footer__bottom-line {
         gap: 32px;
     }
     body.home .footer__nav,
+    body.page-template-page-kyc .footer__nav,
     body.page-template-page-solutions .footer__nav,
     body.page-template-page-privacy .footer__nav,
     body.page-template-page-price-matrix .footer__nav,
@@ -12631,6 +12932,7 @@ body.single-post .footer__bottom-line {
         gap: 16px;
     }
     body.home .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
     body.page-template-page-solutions .footer__nav--products .footer__nav-list,
     body.page-template-page-privacy .footer__nav--products .footer__nav-list,
     body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
@@ -12638,6 +12940,7 @@ body.single-post .footer__bottom-line {
         column-gap: 32px;
     }
     body.home .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
     body.page-template-page-solutions .footer__logo-image,
     body.page-template-page-privacy .footer__logo-image,
     body.page-template-page-price-matrix .footer__logo-image,
@@ -12648,6 +12951,7 @@ body.single-post .footer__bottom-line {
 
 @media (max-width: 478.98px) {
     body.home .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
     body.page-template-page-solutions .footer__logo-image,
     body.page-template-page-privacy .footer__logo-image,
     body.page-template-page-price-matrix .footer__logo-image,
@@ -18424,11 +18728,13 @@ body.single-post .footer__bottom-line {
  * (`initFaq`), новых обработчиков не добавлялось.
  */
 body.home .faq,
+body.page-template-page-kyc .faq,
 body.page-template-page-solutions .faq {
     padding: 64px 0;
 }
 
 body.home .faq__wrapper,
+body.page-template-page-kyc .faq__wrapper,
 body.page-template-page-solutions .faq__wrapper {
     display: flex;
     align-items: flex-start;
@@ -18437,6 +18743,7 @@ body.page-template-page-solutions .faq__wrapper {
 
 /* Левая колонка фиксированной ширины 440 и на Full HD, и на Desktop. */
 body.home .faq__left,
+body.page-template-page-kyc .faq__left,
 body.page-template-page-solutions .faq__left {
     flex: 0 0 440px;
     width: 440px;
@@ -18447,6 +18754,7 @@ body.page-template-page-solutions .faq__left {
 }
 
 body.home .faq__title-block,
+body.page-template-page-kyc .faq__title-block,
 body.page-template-page-solutions .faq__title-block {
     display: flex;
     flex-direction: column;
@@ -18454,6 +18762,7 @@ body.page-template-page-solutions .faq__title-block {
 }
 
 body.home .faq__title-text,
+body.page-template-page-kyc .faq__title-text,
 body.page-template-page-solutions .faq__title-text {
     display: flex;
     flex-direction: column;
@@ -18461,6 +18770,7 @@ body.page-template-page-solutions .faq__title-text {
 }
 
 body.home .faq__title,
+body.page-template-page-kyc .faq__title,
 body.page-template-page-solutions .faq__title {
     margin: 0;
     color: var(--nv-object-1);
@@ -18470,6 +18780,7 @@ body.page-template-page-solutions .faq__title {
 }
 
 body.home .faq__description,
+body.page-template-page-kyc .faq__description,
 body.page-template-page-solutions .faq__description {
     margin: 0;
     color: var(--nv-object-2);
@@ -18479,6 +18790,7 @@ body.page-template-page-solutions .faq__description {
 }
 
 body.home .faq__cta,
+body.page-template-page-kyc .faq__cta,
 body.page-template-page-solutions .faq__cta {
     display: flex;
     flex-direction: column;
@@ -18487,6 +18799,7 @@ body.page-template-page-solutions .faq__cta {
 }
 
 body.home .faq__cta-text,
+body.page-template-page-kyc .faq__cta-text,
 body.page-template-page-solutions .faq__cta-text {
     margin: 0;
     color: var(--nv-object-1);
@@ -18496,6 +18809,7 @@ body.page-template-page-solutions .faq__cta-text {
 }
 
 body.home .faq__cta-btn,
+body.page-template-page-kyc .faq__cta-btn,
 body.page-template-page-solutions .faq__cta-btn {
     display: flex;
     align-items: center;
@@ -18513,6 +18827,7 @@ body.page-template-page-solutions .faq__cta-btn {
 }
 
 body.home .faq__cta-btn .btn__text,
+body.page-template-page-kyc .faq__cta-btn .btn__text,
 body.page-template-page-solutions .faq__cta-btn .btn__text {
     color: var(--nv-object-1);
     font-size: var(--Text-Button-Size-Regular, 18px);
@@ -18521,6 +18836,7 @@ body.page-template-page-solutions .faq__cta-btn .btn__text {
 }
 
 body.home .faq__cta-btn .btn__icon,
+body.page-template-page-kyc .faq__cta-btn .btn__icon,
 body.page-template-page-solutions .faq__cta-btn .btn__icon {
     display: flex;
     width: 24px;
@@ -18530,6 +18846,7 @@ body.page-template-page-solutions .faq__cta-btn .btn__icon {
 }
 
 body.home .faq__cta-btn .btn__icon svg,
+body.page-template-page-kyc .faq__cta-btn .btn__icon svg,
 body.page-template-page-solutions .faq__cta-btn .btn__icon svg {
     display: block;
     width: 100%;
@@ -18537,17 +18854,20 @@ body.page-template-page-solutions .faq__cta-btn .btn__icon svg {
 }
 
 body.home .faq__cta-btn:hover,
+body.page-template-page-kyc .faq__cta-btn:hover,
 body.page-template-page-solutions .faq__cta-btn:hover {
     background: var(--nv-surface-3);
 }
 
 body.home .faq__cta-btn:focus-visible,
+body.page-template-page-kyc .faq__cta-btn:focus-visible,
 body.page-template-page-solutions .faq__cta-btn:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
 
 body.home .faq__right,
+body.page-template-page-kyc .faq__right,
 body.page-template-page-solutions .faq__right {
     flex: 1 1 auto;
     min-width: 0;
@@ -18555,6 +18875,7 @@ body.page-template-page-solutions .faq__right {
 }
 
 body.home .faq__list,
+body.page-template-page-kyc .faq__list,
 body.page-template-page-solutions .faq__list {
     display: flex;
     flex-direction: column;
@@ -18567,6 +18888,7 @@ body.page-template-page-solutions .faq__list {
  * в макете — 16, а не 16 + рамка. Так закрытая строка выходит ровно 88px.
  */
 body.home .faq__item,
+body.page-template-page-kyc .faq__item,
 body.page-template-page-solutions .faq__item {
     padding: 15px;
     border: 1px solid var(--nv-surface-4);
@@ -18576,12 +18898,14 @@ body.page-template-page-solutions .faq__item {
 }
 
 body.home .faq__item-wrapper,
+body.page-template-page-kyc .faq__item-wrapper,
 body.page-template-page-solutions .faq__item-wrapper {
     border: 1px dashed var(--nv-surface-4);
     border-radius: 12px;
 }
 
 body.home .faq__item-question,
+body.page-template-page-kyc .faq__item-question,
 body.page-template-page-solutions .faq__item-question {
     display: flex;
     align-items: center;
@@ -18604,33 +18928,39 @@ body.page-template-page-solutions .faq__item-question {
  * держится такой же, как у строки с шевроном (12 + 32 + 12).
  */
 body.home .faq__item--static .faq__item-question,
+body.page-template-page-kyc .faq__item--static .faq__item-question,
 body.page-template-page-solutions .faq__item--static .faq__item-question {
     min-height: 54px;
     cursor: default;
 }
 
 body.home .faq__item-question:hover,
+body.page-template-page-kyc .faq__item-question:hover,
 body.page-template-page-solutions .faq__item-question:hover {
     background: var(--nv-surface-3);
 }
 
 body.home .faq__item--static .faq__item-question:hover,
+body.page-template-page-kyc .faq__item--static .faq__item-question:hover,
 body.page-template-page-solutions .faq__item--static .faq__item-question:hover {
     background: transparent;
 }
 
 body.home .faq__item-question:focus-visible,
+body.page-template-page-kyc .faq__item-question:focus-visible,
 body.page-template-page-solutions .faq__item-question:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: -2px;
 }
 
 body.home .faq__item--open .faq__item-question,
+body.page-template-page-kyc .faq__item--open .faq__item-question,
 body.page-template-page-solutions .faq__item--open .faq__item-question {
     border-radius: 12px 12px 0 0;
 }
 
 body.home .faq__item-question-text,
+body.page-template-page-kyc .faq__item-question-text,
 body.page-template-page-solutions .faq__item-question-text {
     flex: 1 1 auto;
     min-width: 0;
@@ -18642,6 +18972,7 @@ body.page-template-page-solutions .faq__item-question-text {
 
 /* В макете кнопка ровно 32x32, обводка внутри — поэтому фиксируем размер. */
 body.home .faq__item-question-icon,
+body.page-template-page-kyc .faq__item-question-icon,
 body.page-template-page-solutions .faq__item-question-icon {
     display: flex;
     align-items: center;
@@ -18659,6 +18990,7 @@ body.page-template-page-solutions .faq__item-question-icon {
 }
 
 body.home .faq__item-question-icon svg,
+body.page-template-page-kyc .faq__item-question-icon svg,
 body.page-template-page-solutions .faq__item-question-icon svg {
     display: block;
     transition: transform .35s ease;
@@ -18666,6 +18998,7 @@ body.page-template-page-solutions .faq__item-question-icon svg {
 }
 
 body.home .faq__item--open .faq__item-question-icon svg,
+body.page-template-page-kyc .faq__item--open .faq__item-question-icon svg,
 body.page-template-page-solutions .faq__item--open .faq__item-question-icon svg {
     transform: scaleY(-1);
 }
@@ -18676,6 +19009,7 @@ body.page-template-page-solutions .faq__item--open .faq__item-question-icon svg 
  * через padding панели — иначе расчёт разъедется.
  */
 body.home .faq__item-answer,
+body.page-template-page-kyc .faq__item-answer,
 body.page-template-page-solutions .faq__item-answer {
     box-sizing: border-box;
     height: 0;
@@ -18687,11 +19021,13 @@ body.page-template-page-solutions .faq__item-answer {
 }
 
 body.home .faq__item--open .faq__item-answer,
+body.page-template-page-kyc .faq__item--open .faq__item-answer,
 body.page-template-page-solutions .faq__item--open .faq__item-answer {
     border-top: 1px dashed var(--nv-surface-4);
 }
 
 body.home .faq__item-answer-text,
+body.page-template-page-kyc .faq__item-answer-text,
 body.page-template-page-solutions .faq__item-answer-text {
     display: flex;
     flex-direction: column;
@@ -18704,6 +19040,7 @@ body.page-template-page-solutions .faq__item-answer-text {
 }
 
 body.home .faq__item-answer-text p,
+body.page-template-page-kyc .faq__item-answer-text p,
 body.page-template-page-solutions .faq__item-answer-text p {
     margin: 0;
 }
@@ -18712,7 +19049,9 @@ body.page-template-page-solutions .faq__item-answer-text p {
 @media (prefers-reduced-motion: reduce) {
     body.home .faq__item-answer,
     body.home .faq__item-question-icon svg,
+    body.page-template-page-kyc .faq__item-answer,
     body.page-template-page-solutions .faq__item-answer,
+    body.page-template-page-kyc .faq__item-question-icon svg,
     body.page-template-page-solutions .faq__item-question-icon svg {
         transition: none;
     }
@@ -18723,11 +19062,13 @@ body.page-template-page-solutions .faq__item-answer-text p {
  * даёт `body.home .section` / `body.home .container`, здесь — своё правило,
  * как у остальных секций страницы.
  */
+body.page-template-page-kyc .faq,
 body.page-template-page-solutions .faq {
     background: var(--nv-surface-1);
 }
 
 /* Та же сетка, что у остальных блоков страницы. */
+body.page-template-page-kyc .faq .container,
 body.page-template-page-solutions .faq .container {
     max-width: 1920px;
     padding-left: 32px;
@@ -18735,6 +19076,7 @@ body.page-template-page-solutions .faq .container {
 }
 
 /* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+body.page-template-page-kyc .faq .section__badge,
 body.page-template-page-solutions .faq .section__badge {
     padding: 3px 19px;
     border: 1px solid var(--nv-primary);
@@ -18744,6 +19086,7 @@ body.page-template-page-solutions .faq .section__badge {
 }
 
 /* 2456:16672 — на Full HD левая колонка шире, чем на главной: 600 + 48 + 1208. */
+body.page-template-page-kyc .faq__left,
 body.page-template-page-solutions .faq__left {
     flex: 0 0 600px;
     width: 600px;
@@ -18751,6 +19094,7 @@ body.page-template-page-solutions .faq__left {
 
 @media (max-width: 1599.98px) {
     /* Desktop 2398:25092 — левая колонка та же, что на главной: 440 + 48 + 888. */
+    body.page-template-page-kyc .faq__left,
     body.page-template-page-solutions .faq__left {
         flex: 0 0 440px;
         width: 440px;
@@ -18812,17 +19156,21 @@ body.page-template-page-solutions .faq__left {
      * your answer?» уходит под текст, а не вправо от него. Поля между блоками
      * 24, между бейджем и текстом остаются 48.
      */
+    body.page-template-page-kyc .faq__wrapper,
     body.page-template-page-solutions .faq__wrapper {
         flex-direction: column;
         gap: 24px;
     }
 
+    body.page-template-page-kyc .faq__left,
     body.page-template-page-solutions .faq__left,
+    body.page-template-page-kyc .faq__right,
     body.page-template-page-solutions .faq__right {
         flex: 1 1 auto;
         width: 100%;
     }
 
+    body.page-template-page-kyc .faq__left,
     body.page-template-page-solutions .faq__left {
         display: flex;
         flex-direction: column;
@@ -18830,6 +19178,7 @@ body.page-template-page-solutions .faq__left {
     }
 
     /* Скругление спойлера на планшете 16, а не 24. */
+    body.page-template-page-kyc .faq__item,
     body.page-template-page-solutions .faq__item {
         border-radius: 16px;
     }
@@ -18880,16 +19229,19 @@ body.page-template-page-solutions .faq__left {
      * Mobile Solutions 2467:18067. У главной мобильного макета нет, поэтому
      * её значения ниже 768 не трогаем, а эти берём прямо из фрейма 392.
      */
+    body.page-template-page-kyc .faq,
     body.page-template-page-solutions .faq {
         padding: 32px 0;
     }
 
+    body.page-template-page-kyc .faq .container,
     body.page-template-page-solutions .faq .container {
         padding-left: 16px;
         padding-right: 16px;
     }
 
     /* Бейдж 59x24: Body text/Regular 14/20. */
+    body.page-template-page-kyc .faq .section__badge,
     body.page-template-page-solutions .faq .section__badge {
         padding: 1px 14px;
         font-size: 14px;
@@ -18897,45 +19249,53 @@ body.page-template-page-solutions .faq__left {
     }
 
     /* Title/H2 32/44. */
+    body.page-template-page-kyc .faq__title,
     body.page-template-page-solutions .faq__title {
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 137.5%;
     }
 
     /* Body text/Medium Medium 16/24. */
+    body.page-template-page-kyc .faq__description,
     body.page-template-page-solutions .faq__description {
         font-size: var(--Text-Body-Text-Size-Regular, 16px);
         line-height: 150%;
     }
 
     /* Title/H6 14/20. */
+    body.page-template-page-kyc .faq__cta-text,
     body.page-template-page-solutions .faq__cta-text {
         font-size: 14px;
         line-height: 142.857%;
     }
 
     /* Button/Regular 16/20, кнопка 194x36: стрелка тоже 20, по высоте строки. */
+    body.page-template-page-kyc .faq__cta-btn,
     body.page-template-page-solutions .faq__cta-btn {
         min-height: 36px;
     }
 
+    body.page-template-page-kyc .faq__cta-btn .btn__text,
     body.page-template-page-solutions .faq__cta-btn .btn__text {
         font-size: var(--Text-Button-Size-Regular, 16px);
         line-height: 125%;
     }
 
+    body.page-template-page-kyc .faq__cta-btn .btn__icon,
     body.page-template-page-solutions .faq__cta-btn .btn__icon {
         width: 20px;
         height: 20px;
     }
 
     /* Поле спойлера 8 с обводкой внутрь, скругление 20. */
+    body.page-template-page-kyc .faq__item,
     body.page-template-page-solutions .faq__item {
         padding: 7px;
         border-radius: 20px;
     }
 
     /* Title/H6 14/20. */
+    body.page-template-page-kyc .faq__item-question-text,
     body.page-template-page-solutions .faq__item-question-text {
         font-size: 14px;
         line-height: 142.857%;
@@ -18946,6 +19306,7 @@ body.page-template-page-solutions .faq__left {
      * в мобильном фрейме остался 64 — из-за него часть вопросов переносится
      * на вторую строку ровно так же, как в макете.
      */
+    body.page-template-page-kyc .faq__item-question,
     body.page-template-page-solutions .faq__item-question {
         padding: 11px 11px 11px 15px;
     }
@@ -18954,11 +19315,13 @@ body.page-template-page-solutions .faq__left {
      * initFaq ниже 768 прибавляет к высоте 32px вместо 48 — поля текста
      * должны совпадать с этим числом, иначе ответ обрежется.
      */
+    body.page-template-page-kyc .faq__item-answer,
     body.page-template-page-solutions .faq__item-answer {
         padding: 0 16px;
     }
 
     /* Body text/Medium Regular 16/24. */
+    body.page-template-page-kyc .faq__item-answer-text,
     body.page-template-page-solutions .faq__item-answer-text {
         margin: 16px 0;
         font-size: var(--Text-Body-Text-Size-Regular, 16px);
@@ -19267,6 +19630,2846 @@ body.page-template-page-solutions .faq__left {
 /* CTA END */
 
 /* SOLUTIONS-PAGE END */
+
+/* KYC-PAGE START */
+
+/*
+ * Страница /kyc/ (page-kyc.php). Figma ISDh0vGDZPe3CsGvR4ZaIn: Full HD 2561:30912, Desktop 2492:14440,
+ * Mobile 2558:28451 (392). Макета Tablet нет — 992–768 собраны из десктопных блоков в колонки
+ * (DECISIONS.md, запись по KYC). Токены `--nv-*`, сетка `.container`, светлые тизер и подвал берутся
+ * из общих правил `body.page-template-page-kyc` (HOME THEME, CONTACTS, FOOTER HOME, FAQ).
+ * Первый экран, аккордеон Process, Integration, Contacts, FAQ — общие со /solutions/.
+ */
+
+/* KYC BASE START */
+
+body.page-template-page-kyc {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+.kyc-section {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+/* Бейдж секции: Figma «Component 2» — поле 4/20, обводка внутрь, высота 32. */
+.kyc-section .section__badge,
+.kyc-panel .section__badge {
+    align-self: flex-start;
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* Title/H2 40/52. */
+.kyc-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+}
+
+/* Body text/Regular Medium 16/24. */
+.kyc-lead {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+/* Body text/Medium Medium 18/28. */
+.kyc-lead--md {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+/* Title/H5 20/28, оранжевый. */
+.kyc-subtitle {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+/*
+ * Карточка: обводка 1px рисуется внутрь, поэтому поле 23 при макетных 24.
+ * Модификаторы — только подложка: `--filled` (Island/1), `--accent` (градиент).
+ */
+.kyc-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-card--filled {
+    background: var(--nv-surface-2);
+}
+
+.kyc-card--accent {
+    background: var(--nv-gradient);
+}
+
+.kyc-card--overflow {
+    overflow: hidden;
+}
+
+/* Title/H4 24/36. */
+.kyc-card__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+/* Title/H3 32/48. */
+.kyc-card__title--lg {
+    font-size: var(--Text-Title-Size-H3, 32px);
+}
+
+/* Title/H5 20/28. */
+.kyc-card__title--md {
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+}
+
+/* Body text/Regular 16/24. */
+.kyc-card__text {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+}
+
+/* Body text/Medium 18/28. */
+.kyc-card__text--md {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+.kyc-card--accent .kyc-card__title {
+    color: var(--nv-constant-1);
+}
+
+.kyc-card--accent .kyc-card__text {
+    color: var(--nv-constant-85);
+}
+
+/* Поле 4 с обводкой внутрь: 3 + 1 + иконка 24 + 1 + 3 = 32. */
+.kyc-icon-box {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.kyc-icon-box svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* Токен: Body text/Small Medium 16/24 на Island/Surface 1. */
+.kyc-token {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+/* Оранжевый токен: Body text/Small 14/20, Stroke/Orange. */
+.kyc-token--orange {
+    padding: 3px 11px;
+    border-color: var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+}
+
+/* Кнопки секций: те же размеры, что у `.main__btn`; классы локальные (общие `.btn` — тёмная тема). */
+.kyc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.kyc-btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+}
+
+.kyc-btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-btn--primary:hover,
+.kyc-btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Button/Small 14/20: поле 6/6/6/12, радиус 6, светлая подложка с обводкой. */
+.kyc-btn--small {
+    min-height: 32px;
+    padding: 5px 5px 5px 11px;
+    gap: 4px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.kyc-btn--small .kyc-btn__text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+}
+
+.kyc-btn--small .kyc-btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-btn--small:hover,
+.kyc-btn--small:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.kyc-btn:focus-visible,
+.kyc-token:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Подложка-панель (как `.solutions-products`): светлый фон по краям, серая панель со скруглением 32. */
+.kyc-steps,
+.kyc-sea,
+.kyc-pricing {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+.kyc-panel {
+    overflow: hidden;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-section,
+    .kyc-steps,
+    .kyc-sea,
+    .kyc-pricing {
+        padding: 32px 0;
+    }
+
+    .kyc-panel {
+        padding: 32px 0;
+    }
+
+    .kyc-title {
+        font-size: 32px;
+    }
+
+    .kyc-card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .kyc-card__title--lg {
+        font-size: var(--Text-Title-Size-H4, 24px);
+    }
+}
+
+@media (max-width: 478.98px) {
+    .kyc-title {
+        font-size: 28px;
+    }
+}
+
+/* KYC BASE END */
+
+/* KYC HERO START */
+
+/*
+ * Первый экран: та же разметка и правила, что у /solutions/ (`.main--solutions`). Отличия KYC:
+ * левая колонка 500 на обоих широких фреймах, высота карточки 872 на Full HD, подзаголовок
+ * Body Regular 16/24, а не H6, и никакого затемнения поверх фото — тень уже в самом снимке.
+ */
+.main--kyc .main__card {
+    min-height: 872px;
+}
+
+.main--kyc .main__body {
+    width: 500px;
+}
+
+.main--kyc .main__subtitle {
+    width: 428px;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.main--kyc .main__media::after {
+    display: none;
+}
+
+/* Подписи фактов в макете KYC тёмные (Text 1), а не оранжевые, как на /solutions/. */
+.main--kyc .main__fact-title {
+    color: var(--nv-object-1);
+}
+
+@media (max-width: 1599.98px) {
+    .main--kyc .main__card {
+        min-height: 732px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Макета Tablet нет: раскладка — как у /solutions/ (колонка, ниже — полоса фактов). */
+    .main--kyc .main__card {
+        min-height: 872px;
+    }
+
+    .main--kyc .main__body {
+        width: 100%;
+    }
+
+    .main--kyc .main__media::after {
+        display: block;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2560:30238: заголовок и описание вне карточки; описание — Title/H6 18/24 Bold, тёмное. */
+    .main--kyc .main__card {
+        min-height: 0;
+    }
+
+    .main--kyc .main__subtitle {
+        width: 100%;
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+        font-weight: 700;
+    }
+}
+
+/* KYC HERO END */
+
+/* KYC CERTS START */
+
+/* 2495:24360 — заголовок Title/H5 и четыре чипа Body Medium 18/28, поле секции 64. */
+.kyc-certs {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+.kyc-certs .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.kyc-certs__title {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+    text-align: center;
+}
+
+.kyc-certs__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kyc-certs__chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 15px 3px 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 400;
+}
+
+.kyc-certs__chip svg {
+    display: block;
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28483: чипы переносятся, зазор 8. */
+    .kyc-certs {
+        padding: 32px 0;
+    }
+
+    .kyc-certs__list {
+        gap: 8px;
+    }
+
+    .kyc-certs__title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+}
+
+/* KYC CERTS END */
+
+/* KYC PROCESS START */
+
+/*
+ * The Complete KYC Process on One Platform: тот же аккордеон `.solutions-why`, пять карточек вместо
+ * четырёх и высота доски 440. Цвет карточки задаёт номер: 01 оранжевая, 02 персиковая (primary_2),
+ * 03 Island/2, 04 Island/1, 05 фон. initSolutionsWhy() не менялся.
+ */
+.solutions-why--kyc {
+    padding: 64px 0;
+}
+
+.solutions-why__head-text {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.solutions-why__lead {
+    width: 864px;
+    max-width: 100%;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+    text-align: center;
+}
+
+.solutions-why--kyc .solutions-why__board {
+    height: 440px;
+}
+
+/*
+ * Фото не должно тянуться, пока одна карточка раскрывается, а другая сворачивается (суммарная ширина стопки
+ * в этот момент меняется). Поэтому его ширина считается от итоговой ширины стопки в покое: раскрытая + 4 свёрнутые
+ * − нахлёст — и не зависит от текущей ширины карточек.
+ */
+@media (min-width: 992px) {
+    .solutions-why--kyc .solutions-why__media {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: calc(100% - var(--swhy-card-open) - 4 * var(--swhy-card) + var(--swhy-media-overlap));
+    }
+}
+
+.solutions-why--kyc .solutions-why__card--level-1 { z-index: 5; }
+.solutions-why--kyc .solutions-why__card--level-2 { z-index: 4; background: var(--nv-primary-tint); }
+.solutions-why--kyc .solutions-why__card--level-3 { z-index: 3; background: var(--nv-surface-3); }
+.solutions-why--kyc .solutions-why__card--level-4 { z-index: 2; background: var(--nv-surface-2); }
+.solutions-why--kyc .solutions-why__card--level-5 { z-index: 1; background: var(--nv-surface-1); }
+
+.solutions-why--kyc .solutions-why__card--level-2 .solutions-why__card-number {
+    color: var(--nv-primary);
+}
+
+.solutions-why--kyc .solutions-why__card--level-3 .solutions-why__card-number {
+    color: var(--nv-constant-85);
+}
+
+.solutions-why--kyc .solutions-why__card--level-2 .solutions-why__card-text {
+    color: var(--nv-object-1);
+}
+
+@media (max-width: 991.98px) {
+    .solutions-why--kyc .solutions-why__board {
+        height: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .solutions-why--kyc {
+        padding: 32px 0;
+    }
+
+    .solutions-why__lead {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+}
+
+/* KYC PROCESS END */
+
+/* KYC STEPS START */
+
+/*
+ * How KYC Verification Works: 2495:24452 (Desktop 1376, содержимое 440), шаги 2553:23453 / 23505 / 23557.
+ * Окно списка высотой 440, карточки 640x324 с зазором 16; выбранная карточка по центру окна
+ * (сдвиг считает initKycPage). Full HD 2561:31154 — четыре карточки в ряд с подписями «Step N»,
+ * кнопок слева нет. Ниже 992 — лента карточек со свайпом (Mobile 2558:28524).
+ */
+.kyc-steps__grid {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 48px;
+    min-height: 440px;
+}
+
+.kyc-steps__left {
+    display: flex;
+    flex: 0 0 548px;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 300px;
+}
+
+.kyc-steps__text {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.kyc-steps__head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kyc-steps__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+}
+
+.kyc-steps__lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-steps__note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+.kyc-steps__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Button/Small 14/20: неактивная — Island/1 с обводкой, радиус 6; активная — градиент, радиус 8. */
+.kyc-steps__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.kyc-steps__btn-text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-steps__btn-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-steps__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-steps__btn:hover {
+    background: var(--nv-surface-3);
+}
+
+.kyc-steps__btn.is-active {
+    border-radius: 8px;
+    border-color: transparent;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-steps__btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-steps__right {
+    flex: 0 0 640px;
+    min-width: 0;
+}
+
+.kyc-steps__viewport {
+    height: 440px;
+    overflow: hidden;
+}
+
+.kyc-steps__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform .45s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Карточка 640x324: поле 24, картинка 200 по центру сверху, заголовок и описание по центру. */
+.kyc-steps__card {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.kyc-steps__chip {
+    display: none;
+}
+
+.kyc-steps__image {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.kyc-steps__card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.kyc-steps__card-title {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-steps__card-desc {
+    margin: 0;
+    color: var(--nv-object-3);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kyc-steps__list {
+        transition: none;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31154: четыре карточки в ряд, подписи «Step N» вместо кнопок слева. */
+    .kyc-steps__right {
+        flex: 1 1 auto;
+    }
+
+    .kyc-steps__viewport {
+        height: auto;
+        overflow: visible;
+    }
+
+    .kyc-steps__list {
+        flex-direction: row;
+        transform: none !important;
+    }
+
+    .kyc-steps__card {
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+
+    .kyc-steps__chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 11px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 6px;
+        background: var(--nv-surface-1);
+        color: var(--nv-object-1);
+        font-size: var(--Text-Button-Size-Small, 14px);
+        line-height: 142.857%;
+        font-weight: 700;
+    }
+
+    .kyc-steps__nav {
+        display: none;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    .kyc-steps__left {
+        flex-basis: 548px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-steps__left {
+        flex-basis: 420px;
+    }
+
+    .kyc-steps__right {
+        flex: 1 1 0;
+        max-width: 640px;
+    }
+
+    .kyc-steps__card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: текст, кнопки, под ними лента карточек (свайп). */
+    .kyc-steps__grid {
+        flex-direction: column;
+        gap: 32px;
+        min-height: 0;
+    }
+
+    .kyc-steps__left {
+        flex: 0 0 auto;
+        gap: 48px;
+        min-width: 0;
+    }
+
+    .kyc-steps__right {
+        flex: 0 0 auto;
+    }
+
+    .kyc-steps__viewport {
+        height: auto;
+        margin: 0 -32px;
+        padding: 0 32px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .kyc-steps__viewport::-webkit-scrollbar {
+        display: none;
+    }
+
+    .kyc-steps__list {
+        flex-direction: row;
+        transform: none !important;
+    }
+
+    .kyc-steps__card {
+        flex: 0 0 min(520px, 80%);
+        justify-content: flex-start;
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-steps__viewport {
+        margin: 0 -16px;
+        padding: 0 16px;
+    }
+
+    .kyc-steps__card {
+        flex-basis: 85%;
+    }
+
+    .kyc-steps__title {
+        font-size: 32px;
+    }
+
+    .kyc-steps__nav {
+        gap: 8px;
+    }
+}
+
+/* KYC STEPS END */
+
+/* KYC RISK START */
+
+/*
+ * Risk-Based KYC: 2492:14501 (Desktop: левая колонка 420, боковая карточка 280, ряд 532);
+ * Full HD 2561:31026 — колонка 480, карточка 440, ряд 476. Один tabpanel, содержимое подставляет JS.
+ */
+.kyc-risk > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-risk__row {
+    display: flex;
+    align-items: stretch;
+    gap: 48px;
+    min-height: 532px;
+}
+
+.kyc-risk__left {
+    display: flex;
+    flex: 0 0 420px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.kyc-risk__text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-risk__tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Button/Regular 18/24 на всю ширину колонки: текст слева, стрелка справа. */
+.kyc-risk__tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 42px;
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.kyc-risk__tab-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-risk__tab-icon {
+    display: flex;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+}
+
+.kyc-risk__tab-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-risk__tab:hover {
+    background: var(--nv-surface-3);
+}
+
+.kyc-risk__tab.is-active {
+    border-color: transparent;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-risk__tab:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-risk__right {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 16px;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* Основная карточка: Island/1, радиус 24, внутри — серая подложка Island/2 с двумя блоками. */
+.kyc-risk__main {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.kyc-risk__title {
+    margin: 0;
+    padding: 0 8px;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-risk__inner {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    border-radius: 24px;
+    background: var(--nv-surface-3);
+}
+
+.kyc-risk__summary {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    overflow: hidden;
+}
+
+.kyc-risk__summary .kyc-icon-box {
+    align-self: flex-start;
+}
+
+.kyc-risk__summary-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-risk__details {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 232px;
+    padding: 24px;
+}
+
+.kyc-risk__row-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.kyc-risk__row-item--checks {
+    padding-top: 24px;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+.kyc-risk__label {
+    flex: 0 0 80px;
+    color: var(--nv-primary);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.kyc-risk__when {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-risk__checks {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Боковая карточка: заголовок H4 и текст 16/24, картинка прижата к низу справа. */
+.kyc-risk__side {
+    flex: 0 0 280px;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.kyc-risk__side-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kyc-risk__side-image {
+    position: absolute;
+    right: 15px;
+    bottom: 22px;
+    width: 245px;
+    height: auto;
+    max-width: calc(100% - 15px);
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31026: колонка 480, боковая карточка 440, ряд 476, блок проверок 200. */
+    .kyc-risk__row {
+        min-height: 476px;
+    }
+
+    .kyc-risk__left {
+        flex-basis: 480px;
+    }
+
+    .kyc-risk__side {
+        flex-basis: 440px;
+    }
+
+    .kyc-risk__side-image {
+        right: 71px;
+        bottom: 14px;
+        width: 296px;
+    }
+
+    .kyc-risk__details {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-risk__right {
+        flex-direction: column;
+    }
+
+    .kyc-risk__side {
+        flex: 0 0 auto;
+        min-height: 200px;
+        padding-right: 240px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-risk__left {
+        flex-basis: 360px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-risk__row {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .kyc-risk__left {
+        flex: 0 0 auto;
+    }
+
+    .kyc-risk__tabs {
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28561: колонка, под панелью — карточка с картинкой в правом нижнем углу. */
+    .kyc-risk > .container {
+        gap: 32px;
+    }
+
+    .kyc-risk__tabs {
+        max-width: none;
+    }
+
+    .kyc-risk__tab-text {
+        font-size: 16px;
+    }
+
+    .kyc-risk__main {
+        padding: 15px;
+    }
+
+    .kyc-risk__summary {
+        padding: 15px;
+        gap: 32px;
+    }
+
+    .kyc-risk__details {
+        padding: 16px;
+        min-height: 0;
+    }
+
+    .kyc-risk__row-item {
+        gap: 16px;
+    }
+
+    .kyc-risk__side {
+        min-height: 220px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+    }
+
+    .kyc-risk__side-text {
+        max-width: 60%;
+    }
+
+    .kyc-risk__side-image {
+        right: 0;
+        bottom: 0;
+        width: 190px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .kyc-risk__row-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .kyc-risk__label {
+        flex-basis: auto;
+    }
+
+    .kyc-risk__side-text {
+        max-width: none;
+    }
+
+    .kyc-risk__side {
+        padding-bottom: 200px;
+    }
+}
+
+/* KYC RISK END */
+
+/* KYC PLATFORM START */
+
+/*
+ * 2502:24611: слева колонка карточек (Case management; ниже Audit trail и две карточки справа),
+ * справа серая панель с ноутбуком шириной 360. Фото ноутбука — единый растр (кадр и экран из Figma).
+ */
+.kyc-platform > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-platform__grid {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    margin-top: -24px;
+}
+
+.kyc-platform__col {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.kyc-platform__case {
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+}
+
+.kyc-platform__case-text {
+    display: flex;
+    flex: 0 0 585px;
+    max-width: 585px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-platform__note {
+    display: flex;
+    flex: 1 1 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 24px;
+    min-width: 0;
+    padding: 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-platform__note-text {
+    flex: 1 1 0;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-platform__row {
+    display: flex;
+    gap: 12px;
+    min-height: 344px;
+}
+
+.kyc-platform__audit {
+    flex: 1 1 0;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.kyc-platform__audit .kyc-card__text {
+    max-width: 272px;
+}
+
+.kyc-platform__audit .kyc-card__title {
+    max-width: 100%;
+}
+
+.kyc-platform__audit-image {
+    position: absolute;
+    right: -1px;
+    bottom: -33px;
+    width: 255px;
+    height: 255px;
+}
+
+.kyc-platform__pair {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.kyc-platform__screen {
+    display: flex;
+    flex: 0 0 360px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 23px 0 23px 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-3);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-platform__laptop {
+    display: block;
+    flex: 0 0 auto;
+    width: 400px;
+    height: 489px;
+    max-width: none;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-platform__case {
+        gap: 32px;
+    }
+
+    .kyc-platform__case-text {
+        flex-basis: 50%;
+    }
+
+    .kyc-platform__screen {
+        flex-basis: 280px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-platform__grid {
+        flex-direction: column;
+    }
+
+    .kyc-platform__screen {
+        flex: 0 0 auto;
+        justify-content: center;
+        padding: 23px 23px 0;
+        height: 420px;
+        align-items: flex-end;
+    }
+
+    .kyc-platform__laptop {
+        margin-right: 0;
+        height: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28594: всё в одну колонку, ноутбук — в серой карточке, кадр обрезан справа. */
+    .kyc-platform > .container {
+        gap: 24px;
+    }
+
+    .kyc-platform__grid {
+        margin-top: 0;
+    }
+
+    .kyc-platform__case {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .kyc-platform__case-text {
+        flex: 0 0 auto;
+        max-width: none;
+    }
+
+    .kyc-platform__row {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .kyc-platform__audit {
+        min-height: 0;
+    }
+
+    .kyc-platform__audit-image {
+        position: static;
+        align-self: flex-end;
+        width: 255px;
+        height: 255px;
+        margin: -16px -15px -15px 0;
+    }
+
+    .kyc-platform__audit .kyc-card__text {
+        max-width: none;
+    }
+
+    .kyc-platform__screen {
+        height: 420px;
+        padding: 15px 0 0 15px;
+        justify-content: flex-start;
+    }
+
+    .kyc-platform__laptop {
+        width: 520px;
+        height: auto;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31059: ряд 496, правая карточка с ноутбуком 600, слот ноутбука 555x431. */
+    .kyc-platform__screen picture,
+    .kyc-onboarding__retakes picture {
+        display: contents;
+    }
+
+    .kyc-platform__case {
+        min-height: 168px;
+    }
+
+    .kyc-platform__row {
+        min-height: 316px;
+    }
+
+    .kyc-platform__screen {
+        flex: 0 0 600px;
+        min-height: 496px;
+    }
+
+    .kyc-platform__laptop {
+        width: 555px;
+        height: 431px;
+    }
+
+    .kyc-platform__audit .kyc-card__text {
+        max-width: 369px;
+    }
+}
+
+/* KYC PLATFORM END */
+
+/* KYC COMPLIANCE START */
+
+/* Нижнее поле 1: следом идёт панель SEA, её верхние 64 — «page edge» из Figma (2504:24910, pb-px). */
+.kyc-compliance {
+    padding-bottom: 1px;
+}
+
+/*
+ * KYC Compliance Worldwide: 2504:24910, страны 2513:31315 / 31448 / 31544 / 31640. Заголовок лежит поверх
+ * карты (mb −264), карточка с описанием заходит на карту на 200. Маркеры — настоящие кнопки,
+ * позиции в долях области карты 738x630 (в Figma — от центра, left: 50% ± px). Остальное — JS.
+ */
+.kyc-compliance > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-compliance__stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.kyc-compliance__head {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 416px;
+    margin-bottom: -264px;
+}
+
+.kyc-compliance__row {
+    display: flex;
+    align-items: flex-end;
+}
+
+.kyc-compliance__info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex: 0 0 788px;
+    flex-direction: column;
+    margin-right: -200px;
+    padding: 0 0 64px 64px;
+    pointer-events: none;
+}
+
+.kyc-compliance__card {
+    pointer-events: auto;
+}
+
+.kyc-compliance__map-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    height: 680px;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-compliance__map {
+    position: relative;
+    flex: 0 0 auto;
+    width: min(100%, 738px);
+    aspect-ratio: 738 / 630;
+}
+
+/* Карта: inset 0 7.3% — квадрат 630x630 по центру области. */
+.kyc-compliance__world {
+    position: absolute;
+    top: 0;
+    left: 7.3%;
+    display: block;
+    width: 85.4%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+}
+
+/* Маркер 60x60, радиус 12; «булавка» 68x83 выступает на 4 за рамку. */
+.kyc-marker {
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.kyc-marker__pin {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    display: block;
+    width: 68px;
+    height: 83px;
+    max-width: none;
+}
+
+.kyc-marker__pin--on {
+    opacity: 0;
+}
+
+.kyc-marker__plate {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    display: block;
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    background: var(--nv-surface-4);
+}
+
+.kyc-marker__face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--nv-surface-2);
+    box-shadow: inset 0 2px 4.2px rgba(255, 255, 255, .05);
+}
+
+.kyc-marker__face img {
+    display: block;
+    width: 44px;
+    height: 44px;
+}
+
+.kyc-marker.is-active .kyc-marker__pin:not(.kyc-marker__pin--on) {
+    opacity: 0;
+}
+
+.kyc-marker.is-active .kyc-marker__pin--on {
+    opacity: 1;
+}
+
+.kyc-marker.is-active .kyc-marker__plate {
+    background: var(--nv-gradient);
+}
+
+.kyc-marker:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 6px;
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-compliance__info {
+        flex-basis: 640px;
+    }
+
+    .kyc-compliance__head {
+        width: 360px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-compliance__info {
+        flex-basis: 560px;
+        padding-left: 24px;
+    }
+
+    .kyc-compliance__map-card {
+        height: 620px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: заголовок, карта, под ней карточка с описанием выбранной страны. */
+    .kyc-compliance__head {
+        width: auto;
+        margin-bottom: 32px;
+    }
+
+    .kyc-compliance__row {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .kyc-compliance__info {
+        flex: 0 0 auto;
+        margin-right: 0;
+        padding: 0;
+        pointer-events: auto;
+    }
+
+    .kyc-compliance__map-card {
+        flex: 0 0 auto;
+        height: auto;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28624: карта по ширине карточки, маркеры уменьшены вместе с ней. */
+    .kyc-compliance > .container {
+        gap: 24px;
+    }
+
+    .kyc-compliance__map-card {
+        padding: 7px;
+        border-radius: 16px;
+    }
+
+    .kyc-compliance__map {
+        width: 100%;
+    }
+
+    .kyc-marker {
+        width: 48px;
+        height: 48px;
+    }
+
+    .kyc-marker__pin {
+        top: -3px;
+        left: -3px;
+        width: 54px;
+        height: 66px;
+    }
+
+    .kyc-marker__plate {
+        top: -3px;
+        left: -3px;
+        width: 54px;
+        height: 54px;
+    }
+
+    .kyc-marker__face img {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* KYC COMPLIANCE END */
+
+/* KYC SEA START */
+
+/*
+ * eKYC in Southeast Asia: 2492:14522, страны 2538:15792 / 16413 / 17034 / 17655 / 18276. Карта 604x520
+ * собрана из слоёв-стран (позиции — Figma, доли), у активной страны подменяется слой. Увеличительный круг
+ * Сингапура с выносками — только в его состоянии. Вкладки — tablist, одна панель.
+ */
+.kyc-sea__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.kyc-sea__head {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.kyc-sea__head .kyc-lead {
+    width: 700px;
+    max-width: 100%;
+}
+
+.kyc-sea .section__badge {
+    align-self: center;
+}
+
+.kyc-sea__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.kyc-sea__map {
+    position: relative;
+    flex: 0 0 604px;
+    width: 604px;
+    height: 520px;
+    overflow: hidden;
+}
+
+/* Слой растягивается на свою рамку (left/top/width/height в долях карты); SVG — без сохранения пропорций, как в Figma. */
+.kyc-sea__layer {
+    position: absolute;
+    display: block;
+    max-width: none;
+}
+
+.kyc-sea__zoom {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.kyc-sea__zoom[hidden] {
+    display: none;
+}
+
+.kyc-sea__ellipse {
+    position: absolute;
+    left: 27.8%;
+    top: 66%;
+    width: 3.97%;
+    height: auto;
+}
+
+.kyc-sea__line {
+    position: absolute;
+    height: 1px;
+    transform-origin: center;
+}
+
+.kyc-sea__line--a {
+    left: 35.35%;
+    top: 45.4%;
+    width: 41.76%;
+    transform: translate(-50%, -50%) rotate(-69.34deg);
+}
+
+.kyc-sea__line--b {
+    left: 47.35%;
+    top: 55.86%;
+    width: 40.1%;
+    transform: translate(-50%, -50%) rotate(-36.78deg);
+}
+
+.kyc-sea__circle {
+    position: absolute;
+    left: 41.4%;
+    top: 12.9%;
+    width: 27.8%;
+    height: 32.1%;
+    border: 1px solid var(--nv-primary);
+    border-radius: 50%;
+    background: var(--nv-surface-1);
+}
+
+.kyc-sea__circle img {
+    position: absolute;
+    left: 5.36%;
+    top: 26.35%;
+    display: block;
+    width: 89.03%;
+    height: 47.49%;
+}
+
+.kyc-sea__side {
+    display: flex;
+    flex: 0 0 640px;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.kyc-sea__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 8px;
+}
+
+/* Tabs: Body Regular 16/24, поле 4/16; неактивная — Island/2 и серый текст, активная — градиент. */
+.kyc-sea__tab {
+    padding: 4px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.kyc-sea__tab:hover {
+    background: var(--nv-surface-4);
+    color: var(--nv-object-1);
+}
+
+.kyc-sea__tab.is-active {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-sea__tab:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-sea__card {
+    gap: 32px;
+    min-height: 0;
+}
+
+.kyc-sea__text {
+    min-height: 120px;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 400;
+}
+
+.kyc-sea__card > .kyc-card__title {
+    margin-bottom: -20px;
+}
+
+.kyc-sea__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+}
+
+.kyc-sea__fact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.kyc-sea__fact dt {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 500;
+}
+
+.kyc-sea__fact dd {
+    margin: 0;
+}
+
+.kyc-sea__tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-sea__side {
+        flex-basis: 560px;
+    }
+
+    .kyc-sea__map {
+        flex-basis: 520px;
+        width: 520px;
+        height: 448px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-sea__side {
+        flex-basis: 480px;
+    }
+
+    .kyc-sea__map {
+        flex-basis: 440px;
+        width: 440px;
+        height: 379px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: карта, под ней вкладки и карточка. */
+    .kyc-sea__row {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .kyc-sea__side {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 640px;
+    }
+
+    .kyc-sea__map {
+        flex: 0 0 auto;
+        width: min(100%, 604px);
+        height: auto;
+        aspect-ratio: 604 / 520;
+    }
+
+    .kyc-sea__tabs {
+        justify-content: center;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28688: вкладки в две строки по центру, карточка на всю ширину. */
+    .kyc-sea__inner {
+        gap: 32px;
+    }
+
+    .kyc-sea__text {
+        min-height: 0;
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-sea__card > .kyc-card__title {
+        margin-bottom: 0;
+    }
+
+    .kyc-sea__card {
+        gap: 16px;
+    }
+
+    .kyc-sea__fact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:31154: слева колонка 362 (бейдж и текст), справа в одной полосе карта и вкладки с карточкой 720.
+     * Карта и слои — те же 604x520, что на Desktop.
+     */
+    .kyc-sea__inner {
+        display: grid;
+        grid-template-columns: 362px minmax(0, 1fr);
+        column-gap: 48px;
+        row-gap: 48px;
+        align-items: start;
+        justify-items: start;
+    }
+
+    .kyc-sea .section__badge {
+        grid-column: 1;
+        align-self: start;
+    }
+
+    .kyc-sea__head {
+        grid-column: 1;
+        align-items: flex-start;
+        text-align: left;
+        width: 362px;
+    }
+
+    .kyc-sea__head .kyc-lead {
+        width: 100%;
+    }
+
+    .kyc-sea__row {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        /* Поля 120 из Figma есть только на ширине 1920; на 1600 карта и карточка занимают всю полосу. */
+        padding: 0 clamp(0px, calc((100vw - 1700px) / 1.83), 120px);
+    }
+
+    .kyc-sea__side {
+        flex: 0 1 720px;
+    }
+}
+
+/* KYC SEA END */
+
+/* KYC ONBOARDING START */
+
+/* Верхнее поле 1: над секцией — нижние 64 панели SEA (2538:18915, pt-px). */
+.kyc-onboarding {
+    padding-top: 1px;
+}
+
+/*
+ * 2538:18915: заголовок с оранжевым подзаголовком, ниже сетка — широкая карточка с ноутбуком, телефон
+ * и две правые карточки. Ноутбук лежит поверх верхней грани карточки (top −108 в Figma).
+ */
+.kyc-onboarding > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-onboarding__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-onboarding__head .kyc-subtitle {
+    max-width: 859px;
+}
+
+.kyc-onboarding__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kyc-onboarding__auto {
+    grid-column: 1 / -1;
+    gap: 16px;
+    padding-right: 560px;
+    justify-content: center;
+}
+
+.kyc-onboarding__auto > * {
+    max-width: 600px;
+}
+
+.kyc-onboarding__laptop {
+    position: absolute;
+    top: -108px;
+    right: 32px;
+    width: 443px;
+    height: 323px;
+    max-width: none;
+}
+
+.kyc-onboarding__retakes {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    min-height: 388px;
+    overflow: hidden;
+}
+
+.kyc-onboarding__phone {
+    display: block;
+    flex: 0 0 auto;
+    width: 158px;
+    height: 326px;
+}
+
+.kyc-onboarding__retakes-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.kyc-onboarding__side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.kyc-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kyc-flags__item img {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-onboarding__auto {
+        padding-right: 420px;
+    }
+
+    .kyc-onboarding__laptop {
+        width: 360px;
+        height: auto;
+        top: -60px;
+        right: 16px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-onboarding__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .kyc-onboarding__auto {
+        padding-right: 23px;
+        padding-bottom: 260px;
+    }
+
+    .kyc-onboarding__laptop {
+        top: auto;
+        bottom: 0;
+        right: 24px;
+        width: 360px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29304: одна колонка; телефон — под текстом по центру, ноутбук — внизу справа. */
+    .kyc-onboarding > .container {
+        gap: 24px;
+    }
+
+    .kyc-onboarding__auto {
+        padding-right: 15px;
+        padding-bottom: 240px;
+    }
+
+    .kyc-onboarding__laptop {
+        right: 0;
+        width: 300px;
+    }
+
+    .kyc-onboarding__retakes {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        min-height: 0;
+    }
+
+    .kyc-onboarding__retakes-text {
+        order: -1;
+    }
+
+    .kyc-onboarding__phone {
+        align-self: center;
+        width: 236px;
+        height: auto;
+        margin-bottom: -110px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:31770: три колонки 624 / 572 / 636, ряд 402. Телефон слева от текста,
+     * картинка в широкой карточке прижата к низу справа (bottom −1, right −28).
+     */
+    .kyc-onboarding__grid {
+        grid-template-columns: 624px 572px minmax(0, 1fr);
+        grid-template-rows: 402px;
+    }
+
+    .kyc-onboarding__auto {
+        grid-column: auto;
+        justify-content: flex-start;
+        padding-right: 23px;
+    }
+
+    .kyc-onboarding__auto .kyc-card__title {
+        max-width: 600px;
+    }
+
+    .kyc-onboarding__auto .kyc-card__text {
+        max-width: 311px;
+    }
+
+    .kyc-onboarding__laptop {
+        top: auto;
+        bottom: -1px;
+        right: -28px;
+        width: 411px;
+        height: 300px;
+    }
+
+    .kyc-onboarding__retakes {
+        min-height: 0;
+    }
+
+    .kyc-onboarding__phone {
+        width: 172px;
+        height: 354px;
+    }
+
+    .kyc-onboarding__retakes-text {
+        flex: 0 0 295px;
+    }
+}
+
+/* KYC ONBOARDING END */
+
+/* KYC INDUSTRIES START */
+
+/* 2538:19117: сетка 2x3, зазор 16. Карточка: иконка справа сверху, текст, блок «Typical requirements» внизу. */
+.kyc-industries > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-industries > .container > .section__badge {
+    margin-bottom: 24px;
+}
+
+.kyc-industries__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    min-height: 980px;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kyc-industries__card {
+    justify-content: space-between;
+    gap: 24px;
+    min-width: 0;
+}
+
+.kyc-industries__top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+}
+
+.kyc-industries__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 0 4px;
+}
+
+.kyc-industries__req {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 12px;
+    background: var(--nv-surface-2);
+}
+
+.kyc-industries__req-label {
+    color: var(--nv-primary);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+}
+
+.kyc-industries__req-text {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 500;
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29347: одна колонка. */
+    .kyc-industries__grid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+        min-height: 0;
+        gap: 12px;
+    }
+
+    .kyc-industries > .container > .section__badge {
+        margin-bottom: 8px;
+    }
+
+    .kyc-industries__req-text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31813: сетка 3x2, карточки 608 на 315. */
+    .kyc-industries__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        min-height: 647px;
+    }
+}
+
+/* KYC INDUSTRIES END */
+
+/* KYC PRICING START */
+
+/* 2539:19468: слева карточка с ценой 620x310, справа два плана в колонке. */
+.kyc-pricing .section__badge {
+    margin-bottom: 48px;
+}
+
+.kyc-pricing__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-pricing__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 980px;
+}
+
+.kyc-pricing__grid {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    min-height: 310px;
+}
+
+.kyc-pricing__main {
+    flex: 0 0 620px;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+}
+
+.kyc-pricing__main-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.kyc-pricing__price {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+}
+
+.kyc-pricing__price span {
+    color: var(--nv-primary);
+}
+
+.kyc-pricing__desc {
+    max-width: 540px;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-pricing__side {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.kyc-pricing__plan {
+    flex: 1 1 0;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+}
+
+.kyc-pricing__plan-text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.kyc-pricing__plan .kyc-btn {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-pricing__main {
+        flex-basis: 50%;
+    }
+
+    .kyc-pricing__price {
+        font-size: 44px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-pricing__grid {
+        flex-direction: column;
+    }
+
+    .kyc-pricing__main {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29424: карточки в колонку, описание цены Title/H4. */
+    .kyc-pricing .section__badge {
+        margin-bottom: 32px;
+    }
+
+    .kyc-pricing__price {
+        font-size: 30px;
+        line-height: 133%;
+    }
+
+    .kyc-pricing__desc {
+        font-size: 20px;
+        line-height: 150%;
+    }
+
+    .kyc-pricing__plan {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .kyc-pricing__plan .kyc-btn {
+        align-self: flex-end;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31913: слева колонка 412 (бейдж и заголовок), справа группа карточек высотой 310. */
+    .kyc-pricing > .kyc-panel > .container {
+        display: grid;
+        grid-template-columns: 412px minmax(0, 1fr);
+        column-gap: 48px;
+        row-gap: 48px;
+        align-items: start;
+    }
+
+    .kyc-pricing .section__badge {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+
+    .kyc-pricing__inner {
+        display: contents;
+    }
+
+    .kyc-pricing__head {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .kyc-pricing__grid {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+
+    .kyc-pricing__main {
+        flex: 1 1 0;
+    }
+}
+
+/* KYC PRICING END */
+
+/* KYC ABOUT START */
+
+/* Верхнее поле 1: над секцией — нижние 64 панели Pricing (2539:19578, pt-px). */
+.kyc-about {
+    padding-top: 1px;
+}
+
+/* 2539:19578: заголовок, две карточки с цифрами (680 + 680), широкая карточка с сертификатами. */
+.kyc-about > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-about > .container > .section__badge {
+    margin-bottom: 24px;
+}
+
+.kyc-about__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 1048px;
+}
+
+.kyc-about__stats {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.kyc-about__accuracy,
+.kyc-about__documents {
+    flex: 1 1 0;
+    gap: 24px;
+}
+
+.kyc-about__documents {
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 15px 23px;
+}
+
+.kyc-about__figures {
+    display: flex;
+    gap: 40px;
+}
+
+.kyc-about__figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.kyc-about__value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-about__caption {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-about__divider {
+    flex: 0 0 1px;
+    align-self: stretch;
+    background: var(--nv-surface-4);
+}
+
+.kyc-about__documents-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-about__documents-text span {
+    color: var(--nv-primary);
+}
+
+@media (max-width: 767.98px) {
+    .kyc-about__br {
+        display: none;
+    }
+}
+
+.kyc-about__certs {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+}
+
+.kyc-about__certs-text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.kyc-about__certs-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-about__certs-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Ссылок-сертификатов в проекте нет: плашки статичные, оформление как у кнопки Small. */
+.kyc-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+    font-weight: 700;
+}
+
+.kyc-tag svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-about__badges {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 24px;
+}
+
+.kyc-about__badges img {
+    display: block;
+    width: auto;
+    height: 120px;
+}
+
+.kyc-about__badge-round {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-about__figures {
+        gap: 24px;
+    }
+
+    .kyc-about__value {
+        font-size: 32px;
+    }
+
+    .kyc-about__documents-text {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-about__stats,
+    .kyc-about__certs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .kyc-about__badges {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29453: всё в колонку, цифры друг под другом. */
+    .kyc-about > .container > .section__badge {
+        margin-bottom: 8px;
+    }
+
+    .kyc-about__figures {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .kyc-about__divider {
+        display: none;
+    }
+
+    .kyc-about__documents-text {
+        font-size: 24px;
+    }
+
+    .kyc-about__badges {
+        gap: 12px;
+    }
+
+    .kyc-about__badges img {
+        height: 88px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:36904: три карточки в одном ряду 2fr / 2fr / 3fr высотой 220; в карточке с цифрами обе пары
+     * друг под другом, в карточке сертификатов — подписи слева, значки 72 справа.
+     */
+    .kyc-about {
+        padding-top: 64px;
+    }
+
+    .kyc-about > .container {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+        column-gap: 16px;
+        row-gap: 24px;
+        align-items: stretch;
+    }
+
+    .kyc-about > .container > .section__badge,
+    .kyc-about__head {
+        grid-column: 1 / -1;
+    }
+
+    .kyc-about__head {
+        max-width: 1389px;
+    }
+
+    .kyc-about__stats {
+        display: contents;
+    }
+
+    .kyc-about__accuracy,
+    .kyc-about__documents,
+    .kyc-about__certs {
+        height: 220px;
+        justify-content: flex-end;
+    }
+
+    .kyc-about__figures {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .kyc-about__figure {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 24px;
+    }
+
+    .kyc-about__value {
+        flex: 0 0 148px;
+    }
+
+    .kyc-about__divider {
+        flex: 0 0 1px;
+        align-self: stretch;
+        width: auto;
+        height: 1px;
+    }
+
+    .kyc-about__certs {
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .kyc-about__certs-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Подпись по Figma — H6 588 в ряду 220: на меньших размерах она не помещается, поэтому 16/24 и ширина 588. */
+    .kyc-about__certs-text {
+        flex: 0 1 633px;
+        gap: 16px;
+    }
+
+    .kyc-about__certs-title {
+        max-width: 588px;
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-about__badges img {
+        height: 72px;
+    }
+}
+
+/* KYC ABOUT END */
+
+/* Почта в оранжевой карточке Contacts — белая: общее правило `.contacts__card-item-link span` красит текст в тёмный. */
+body.page-template-page-kyc .contacts .contacts__card-item-link span {
+    color: var(--nv-constant-1);
+}
+
+/* Contacts идёт перед FAQ: нижнее поле 64 (2492:14632), у /solutions/ секция стоит последней. */
+body.page-template-page-kyc .contacts {
+    padding-bottom: 64px;
+}
+
+/* FAQ последний перед тизером: нижнее поле 1 (2492:14616, pb-px), верхнее и боковые — общие правила FAQ. */
+body.page-template-page-kyc .faq {
+    padding-bottom: 1px;
+}
+
+/* KYC-PAGE END */
+
 
 /* PAGE START */
 
