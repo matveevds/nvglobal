@@ -71,8 +71,6 @@ body.modal-open {
     width: 100%;
 }
 
-
-
 /* body.no-scroll {
     overflow: hidden !important;
     position: fixed !important;
@@ -108,7 +106,6 @@ input {
 .small-container {
     max-width: 900px;
 }
-
 
 ul {
     list-style: none;
@@ -317,7 +314,6 @@ h1,h2,h3,h4,h5 {
     background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
 }
 
-
 .section__description {
     color: rgba(251, 251, 251, 0.70);
     font-size: 18px;
@@ -398,8 +394,6 @@ h1,h2,h3,h4,h5 {
     fill: #fff;
 }
 
-
-
 .btn-hero .btn__text {
     font-size: 18px;
 }
@@ -437,25 +431,9 @@ h1,h2,h3,h4,h5 {
     display: none;
 }
 
-.btn--header {
-    padding: 5px 5px 5px 11px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Orange, #F9AA66);
-    cursor: pointer;
-    text-decoration: none;
-    max-width: fit-content;
-    backdrop-filter: blur(10px);
-}
-
 .btn-with-lottie-arrow-orange:hover .lottie-container-arrow-orange svg {
     filter: brightness(0) saturate(100%) invert(67%) sepia(67%) saturate(1234%) hue-rotate(340deg) brightness(102%) contrast(101%);
 }
-
 
 .text-center {
     text-align: center;
@@ -674,8 +652,6 @@ body.home .top__widget-btn:focus-visible {
 
 }
 
-
-
 /* HOME THEME START */
 
 /*
@@ -701,6 +677,7 @@ body.page-template-page-solutions,
 body.page-template-page-privacy,
 body.page-template-page-price-matrix,
 body.single-post,
+.header,
 .modal--form,
 .modal--result {
     --nv-primary: #FD6B01;
@@ -836,407 +813,1624 @@ body.single-post .container {
 
 /* HOME THEME END */
 
-/* MENU =========================================== START */
+/* HEADER START */
+
+/*
+ * Глобальная шапка (header.php). Figma NV Global, Header: Full HD 2580:50483…,
+ * Desktop 2580:45386 / 2580:47102, Tablet 2580:48317…, Mobile 2580:49995…,
+ * sticky 2580:48215 (docs/DECISIONS.md, Р-141).
+ *
+ * Шапка одна на весь сайт и светлая. Токены --nv-* объявлены на `.header`
+ * (см. HOME THEME), поэтому она не зависит от класса body.
+ *
+ * Схема: `.header` — плейсхолдер высотой 80px (64px на мобильном), реальная
+ * панель `.header__bar` всегда `position: fixed`. Контент под шапкой не
+ * смещается при скролле. `position: sticky` не годится: у html и body
+ * стоит overflow-x: hidden.
+ *
+ * Состояния задаёт один контроллер (initHeaderMenu в js/main.js):
+ *   .header.is-scrolled     — страница прокручена (sticky: нижняя линия);
+ *   .header.is-open         — открыта панель десктопа/планшета;
+ *   .header__item.is-open   — какая именно;
+ *   .header.is-menu-open    — открыто мобильное меню;
+ *   data-view="root|product|industries|resources" — экран мобильного меню.
+ */
 
 .header {
-    position: absolute;
-    top: 32px;
-    left: 0;
-    width: 100%;
-    z-index: 18;
+    --header-h: 80px;
+    --header-radius: 24px;
+    --header-pad: 24px;
+    position: relative;
+    height: var(--header-h);
+    font-family: inherit;
 }
-.header.header--fixed {
+
+.header__bar {
     position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 900;
+    box-sizing: border-box;
+    height: var(--header-h);
+    padding: 16px 16px 0;
+    border-bottom: 1px solid transparent;
+    background: var(--nv-surface-1);
+}
+
+/* Sticky-состояние (Figma 2580:48215): нижняя линия surface_4 на всю ширину. */
+.header.is-scrolled .header__bar {
+    border-bottom-color: var(--nv-surface-4);
+}
+
+.admin-bar .header__bar {
     top: 32px;
 }
 
-.header__wrapper {
+.header__shell {
+    position: relative;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    gap: 16px;
+    gap: 24px;
+    box-sizing: border-box;
+    height: 64px;
+    padding: 0 var(--header-pad);
+    border-bottom: 1px solid transparent;
+    border-radius: var(--header-radius) var(--header-radius) 0 0;
+    background: var(--nv-surface-1);
 }
 
-.header__menu {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Black, #212121);
-    box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
-    padding: 11px 15px;
+.header.is-open .header__shell {
+    border-bottom-color: var(--nv-surface-3);
 }
 
+/* Логотип: в макете Desktop/Tablet его в шапке нет, знак «N» — только на Mobile. */
 .header__logo {
-    line-height: 0;
-    width: 192px;
-    height: 36px;
+    display: none;
     flex-shrink: 0;
+    line-height: 0;
 }
 
 .header__logo img {
-    width: 100%;
-}
-
-.burger {
-  display: none;
-  width: 32px;
-  height: 24px;
-  flex-direction: column;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.burger__line {
-  height: 2px;
-  width: 100%;
-  background: #FBFBFB;
-  border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s;
+    display: block;
+    width: 46px;
+    height: 32px;
 }
 
 .header__nav {
-    position: relative;
-    border-radius: 8px;
-}
-  
-.header__nav-list {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 24px;
-    padding: 0;
+    min-width: 0;
 }
 
-.header__nav-item {
+:where(.header__list, .header__list li, .mega ul, .mega li, .header-language ul, .header-language li) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header__list {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.header__item {
+    display: flex;
+    align-items: center;
+}
+
+.header__trigger,
+.header__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nv-object-1);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .2s ease;
+}
+
+.header__trigger:hover,
+.header__link:hover,
+.header__item.is-open > .header__trigger,
+.header__item.is-current > .header__link,
+.header__item.is-current > .header__trigger {
+    color: var(--nv-primary);
+}
+
+.header__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    padding: 2px;
+    border: .5px solid var(--nv-surface-3);
+    border-radius: 8px;
+    color: var(--nv-object-1);
+    transition: transform .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.header__item.is-open > .header__trigger .header__chevron {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+    transform: rotate(180deg);
+}
+
+.header__trigger:hover .header__chevron {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+}
+
+.header__chevron .header__icon {
+    width: 12px;
+    height: 12px;
+}
+
+.header__chevron .header__icon--m {
+    display: none;
+}
+
+.header__trigger:focus-visible,
+.header__link:focus-visible,
+.header__burger:focus-visible,
+.header__back:focus-visible,
+.header-btn:focus-visible,
+.header-language__trigger:focus-visible,
+.header-language__option:focus-visible,
+.mega a:focus-visible,
+.mega button:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.header__actions {
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative;
-    cursor: pointer;
+    flex-shrink: 0;
 }
 
-.header__nav-link {
-    color: var(--Text-White, #FBFBFB);
-    font-size: 14px;
-    line-height: 128.571%;
-    text-decoration: none;
-    cursor: pointer;
-    white-space: nowrap;
+.header__mobile-cta,
+.header__burger,
+.header__back {
+    display: none;
 }
 
-.header__nav-toggle {
-    display: flex;
-    width: 16px;
-    height: 16px;
-    padding: 1px;
+.header__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 899;
+    background: rgba(33, 33, 33, .6);
+    backdrop-filter: blur(4px);
+}
+
+.header.is-open .header__overlay {
+    display: block;
+}
+
+/* ---------- Кнопки ---------- */
+
+.header-btn {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-sizing: border-box;
+    border: 1px solid rgba(251, 251, 251, .15);
     border-radius: 8px;
-    border: 0.5px solid var(--Stroke-White, #FBFBFB);
-    background: none;
+    font-family: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: filter .2s ease, background-color .2s ease;
 }
 
-.submenu {
+.header-btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.header-btn--primary:hover {
+    filter: brightness(1.06);
+}
+
+.header-btn--secondary {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.header-btn--secondary:hover {
+    background: var(--nv-surface-3);
+}
+
+/* Размеры по Figma включают рамку: 32px (small) и 44px (regular); иконка 24px высоту не увеличивает. */
+.header-btn--small {
+    padding: 5px 5px 5px 11px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.header-btn--regular {
+    width: 100%;
+    padding: 11px 7px 11px 15px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.header-btn--small .header-btn__icon,
+.header-btn--regular .header-btn__icon {
+    margin: -2px 0;
+}
+
+.header-btn__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+/* ---------- Язык (UI без мультиязычности) ---------- */
+
+.header-language {
+    position: relative;
+}
+
+.header-language__trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+    width: 62px;
+    height: 32px;
+    padding: 4px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 10px;
+    background: var(--nv-surface-2);
+    color: #1C1C1C;
+    cursor: pointer;
+}
+
+.header-language__flag {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.header-language__chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform .2s ease;
+}
+
+.header-language.is-open .header-language__chevron {
+    transform: rotate(180deg);
+}
+
+.header-language__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    z-index: 3;
+    box-sizing: border-box;
+    width: 200px;
+    max-height: 240px;
+    padding: 8px;
+    overflow-y: auto;
+    border: 1px solid var(--nv-surface-3);
+    border-radius: 10px;
+    background: var(--nv-surface-2);
+}
+
+.header-language.is-open .header-language__dropdown {
+    display: block;
+}
+
+.header-language__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header-language__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 4px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: #777777;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    cursor: default;
+}
+
+.header-language__option.is-current {
+    background: var(--nv-surface-3);
+    color: #1C1C1C;
+}
+
+.header-language__option-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-language__option-flag {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.header-language__check {
+    width: 20px;
+    height: 20px;
+    color: #FE7338;
+}
+
+/* ---------- Панели (mega-menu) ---------- */
+
+.header__panel {
+    display: none;
     position: absolute;
     top: 100%;
-    padding-top: 32px;
-    visibility: hidden;
-    z-index: 5;
+    right: 0;
+    left: 0;
+    margin-top: 1px;
+    overflow: hidden;
+    border-radius: 0 0 var(--header-radius) var(--header-radius);
+    background: var(--nv-surface-1);
 }
 
-.submenu__widget {
+.header__item.is-open > .header__panel {
+    display: block;
+}
+
+.mega {
+    box-sizing: border-box;
+    color: var(--nv-object-1);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega a,
+.mega button {
+    font-family: inherit;
+}
+
+.mega__link,
+.mega__nav-link,
+.mega__group-title,
+.mega__item {
+    color: var(--nv-object-1);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.mega__link:hover,
+.mega__nav-link:hover,
+.mega__group-title:hover,
+.mega__item:hover,
+.mega__item.is-active,
+.mega__nav-link.is-current {
+    color: var(--nv-primary);
+}
+
+.mega__link {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+/* --- Products --- */
+
+.mega--products {
+    display: grid;
+    grid-template-columns: 304px minmax(0, 1fr) 624px;
+    min-height: 440px;
+    padding: 0 var(--header-pad);
+}
+
+.mega__col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--header-pad) 0;
+}
+
+.mega__col--list {
+    justify-content: space-between;
+    gap: 24px;
+    padding-right: 24px;
+}
+
+.mega__col--detail,
+.mega__col--promo {
+    padding-right: 0;
+    padding-left: 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__col--detail {
+    padding-right: 24px;
+}
+
+.mega__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mega__item-icon {
+    display: none;
+    width: 24px;
+    height: 24px;
+}
+
+.mega__cta {
+    align-self: flex-start;
+}
+
+.mega__pane {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.mega__pane.is-active {
+    display: flex;
+}
+
+.mega__card {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.mega__card-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.mega__card-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.mega__card-desc {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__card-btn {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.mega__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 24px;
+    padding: 0 16px;
+}
+
+.mega__col--promo {
+    justify-content: center;
+    gap: 32px;
+}
+
+.mega__promo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 32px;
+    min-height: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mega__promo-media {
     position: relative;
     display: flex;
-    width: 240px;
-    height: 248px;
-    padding: 16px;
-    flex-direction: column;
-    justify-content: flex-end;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Background-Pattern-Logo-pattern, #212121);
-    box-shadow: 4px 4px 20px 0 rgba(0, 0, 0, 0.20) inset;
-    background-image: url('../img/n_logo.svg');
-    background-repeat: repeat;
-    background-size: 139px 100px;
-    background-position: 0 0;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    overflow: hidden;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
 }
 
-.submenu__bg {
+.mega__promo-media img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
-.submenu__content {
+.mega__promo-play {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.widget__text--default {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 128.571%;
-}
-
-.widget__text--dynamic {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 120%;
-}
-
-.submenu__widget .widget__text--default {
-  display: block;
-}
-
-.submenu__widget .widget__text--dynamic, .submenu__widget .widget__cta {
-  display: none;
-}
-
-.submenu__widget.item-hovered .widget__text--default {
-  display: none;
-}
-
-.submenu__widget.item-hovered .widget__text--dynamic, .submenu__widget.item-hovered .widget__cta {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.widget__btn {
-    display: flex;
-    padding: 6px 6px 6px 12px;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    gap: 4px;
-    border-radius: 8px;
-    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-    background: var(--Island-Orange, #F9AA66);
-    height: auto!important;
+    box-sizing: border-box;
+    width: 64px;
+    height: 56px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 12px;
+    background: var(--nv-primary);
+    color: var(--nv-constant-1);
+    filter: drop-shadow(0 8px 8px rgba(0, 0, 0, .3));
+    backdrop-filter: blur(10px);
 }
 
-.header__nav-item:first-child .submenu {
-    left: 0;
+.mega__promo-play .header__icon {
+    width: 36px;
+    height: 36px;
 }
 
-.submenu__list {
+.mega__promo-text {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 12px 16px;
+    gap: 12px;
+    padding-right: 8px;
+    text-align: center;
 }
 
-.submenu__wrapper {
+.mega__promo-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.mega__promo-desc {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* --- Industries --- */
+
+.mega--industries {
+    display: grid;
+    grid-template-columns: 304px minmax(0, 1fr) 532px;
+    min-height: 440px;
+    padding: 0 var(--header-pad);
+}
+
+.mega--industries.mega--no-aside {
+    grid-template-columns: 304px minmax(0, 1fr);
+}
+
+.mega__intro {
     display: flex;
-    align-items: center;
-    gap: 27px;
-    border-radius: 16px;
-    border: 1px solid rgba(251, 251, 251, 0.15);
-    background-color: #2a2a2a;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: var(--header-pad) 24px var(--header-pad) 0;
 }
 
-.submenu__wrapper--style {
-    padding: 16px;
+.mega__intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.submenu__list--secondtype {
+.mega__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+.mega__desc {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__intro-btn {
+    align-self: flex-start;
+}
+
+.mega__groups {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-content: start;
+    gap: 48px 24px;
+    padding: var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__group-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.mega__group .mega__links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     padding: 0;
 }
 
-.submenu__item {
+.mega__aside {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    padding: var(--header-pad) 0 var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__aside-title {
+    margin: 0;
+    padding: 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.mega__posts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mega__post {
+    display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.submenu__link {
-    color: var(--Text-White, #FBFBFB);
-    font-size: 16px;
-    line-height: 125%;
+    gap: 16px;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+    color: inherit;
     text-decoration: none;
+    backdrop-filter: blur(4px);
 }
 
-.submenu__toggle {
+.mega__post-thumb {
+    flex-shrink: 0;
+    align-self: stretch;
+    width: 132px;
+    border: 1px solid var(--nv-surface-3);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.mega__post-text {
     display: flex;
-    width: 24px;
-    height: 24px;
-    padding: 2px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 8px 0;
+}
+
+.mega__post-date {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__post-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+/* --- Resources --- */
+
+.mega--resources {
+    display: grid;
+    grid-template-columns: 680px 220px minmax(0, 1fr);
+    grid-template-areas: "banner nav latest";
+    min-height: 280px;
+}
+
+.mega--resources.mega--no-latest {
+    grid-template-columns: 680px 220px;
+}
+
+.mega__banner {
+    position: relative;
+    grid-area: banner;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
-    aspect-ratio: 1/1;
-    border-radius: 16px;
-    border: 0.5px solid var(--Stroke-White, #FBFBFB);
-    background: none;
+    overflow: hidden;
+    padding: var(--header-pad);
+    background: var(--nv-surface-3);
+    text-align: center;
 }
 
-.header__nav-item:hover .header__nav-link, .header__nav-item.is-active .header__nav-link{
-    color: var(--Text-Orange, #F9AA66);
-    text-decoration: underline;
+.mega__banner-texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: soft-light;
+    opacity: .5;
 }
 
-.header__nav-item--has-submenu:hover .submenu, .header__nav-item--has-submenu.is-active .submenu {
-    visibility: visible;
-}
-
-.header__nav-item:hover .header__nav-toggle, .header__nav-item.is-active .header__nav-toggle{
-    border-color: #F9AA66;
-}
-
-.header__nav-item:hover .header__nav-toggle svg path, .header__nav-item.is-active .header__nav-toggle svg path {
-    fill: #F9AA66;
-}
-
-.header__nav-item:hover .header__nav-toggle svg, .header__nav-item.is-active .header__nav-toggle svg {
-    transform: rotate(180deg);
-}
-
-.header__nav-item:hover .header__nav-link--underline, .header__nav-item.is-active .header__nav-link--underline {
-    text-decoration: underline;
-}
-
-.submenu__item:hover .submenu__link, .submenu__item.is-active .submenu__link {
-    color: var(--Text-Orange, #F9AA66);
-}
-
-.submenu__item:hover .submenu__toggle, .submenu__item.is-active .submenu__toggle {
-    border-color: #F9AA66;
-}
-
-.submenu__item:hover .submenu__toggle svg path, .submenu__item.is-active .submenu__toggle svg path {
-    fill: #F9AA66;
-}
-
-
-
-/*
- * Светлая шапка главной страницы (docs/DECISIONS.md, Р-10: меняем только палитру,
- * состав навигации остаётся прежним). Ограничено `body.home` — на остальных
- * страницах шапка остаётся тёмной.
- */
-body.home .header {
+.mega__banner-title {
     position: relative;
-    top: 0;
-    padding-top: 32px;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-family: Martel, Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 52px;
 }
 
-body.home .header__logo {
-    display: none;
+.mega__banner-title span {
+    color: var(--nv-primary);
 }
 
-body.home .header__menu {
-    border-color: var(--nv-surface-4);
+.mega__banner-text {
+    position: relative;
+    z-index: 1;
+    max-width: 380px;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__banner-mascot {
+    position: absolute;
+    bottom: -12px;
+    left: calc(50% - .5px);
+    width: 187px;
+    height: auto;
+    transform: translateX(-50%);
+}
+
+.mega__nav {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--header-pad) 16px;
+}
+
+.mega__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__nav-link {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.mega__social {
+    display: flex;
+    gap: 8px;
+    opacity: .7;
+}
+
+.mega__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 6px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
     background: var(--nv-surface-2);
-    box-shadow: none;
-}
-
-body.home .header__nav-link {
     color: var(--nv-object-1);
 }
 
-body.home .burger svg path {
-    fill: var(--nv-object-1);
+.mega__social-link .header__icon {
+    width: 20px;
+    height: 20px;
 }
 
-body.home .btn--header {
-    border: 0;
+.mega__latest {
+    grid-area: latest;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: var(--header-pad) var(--header-pad) var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__latest-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__cards {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.mega__card-post {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mega__card-post-thumb {
+    flex: 1;
+    min-height: 80px;
+    width: 100%;
+    border: 1px solid var(--nv-surface-3);
     border-radius: 8px;
-    background: var(--nv-gradient);
-    transition: filter .2s ease;
+    object-fit: cover;
 }
 
-body.home .btn--header .btn__text {
-    color: var(--nv-constant-1);
+.mega__card-post-title {
+    padding: 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
 }
 
-/*
- * Стрелка в кнопке шапки. Её рисует lottie из `arrow_right_black.json`,
- * и цвет там задан атрибутом `stroke="rgb(0,0,0)"` прямо на путях —
- * заливки у них нет вовсе (`fill-opacity="0"`). Поэтому одного `fill`
- * не хватало и стрелка оставалась чёрной.
- *
- * Атрибут презентации перебивается любым правилом CSS, так что цвет
- * ведём через `currentColor` кнопки: он же красит и запасную
- * inline-иконку, которая видна до инициализации lottie.
- *
- * Только светлые страницы: там кнопка оранжевая с белой подписью.
- * На тёмных шаблонах у кнопки подпись тёмная, и стрелка остаётся тёмной.
- */
-body.home .btn--header,
-body.page-template-page-solutions .btn--header,
-body.page-template-page-privacy .btn--header,
-body.page-template-page-price-matrix .btn--header,
-body.single-post .btn--header {
-    color: var(--nv-constant-1);
-}
-
-body.home .btn--header .btn__icon svg,
-body.home .btn--header .btn__icon svg path,
-body.page-template-page-solutions .btn--header .btn__icon svg,
-body.page-template-page-solutions .btn--header .btn__icon svg path,
-body.page-template-page-privacy .btn--header .btn__icon svg,
-body.page-template-page-price-matrix .btn--header .btn__icon svg,
-body.single-post .btn--header .btn__icon svg,
-body.page-template-page-privacy .btn--header .btn__icon svg path,
-body.page-template-page-price-matrix .btn--header .btn__icon svg path,
-body.single-post .btn--header .btn__icon svg path {
-    fill: currentColor;
-}
-
-body.home .btn--header .lottie-container-arrow svg path,
-body.page-template-page-solutions .btn--header .lottie-container-arrow svg path,
-body.page-template-page-privacy .btn--header .lottie-container-arrow svg path,
-body.page-template-page-price-matrix .btn--header .lottie-container-arrow svg path,
-body.single-post .btn--header .lottie-container-arrow svg path {
-    stroke: currentColor;
-}
-
-body.home .btn--header:hover,
-body.home .btn--header:focus-visible {
-    background: var(--nv-primary);
-}
+/* ---------- Desktop (Figma 1440) ---------- */
 
 @media (max-width: 1599.98px) {
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr) 384px;
+    }
 
-}
+    .mega--industries {
+        grid-template-columns: 264px minmax(0, 1fr) 404px;
+    }
 
-@media (max-width: 1399.98px) {
+    .mega--industries.mega--no-aside {
+        grid-template-columns: 264px minmax(0, 1fr);
+    }
 
+    .mega--resources {
+        grid-template-columns: 520px 220px minmax(0, 1fr);
+    }
+
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 520px 220px;
+    }
+
+    .mega__links {
+        gap: 16px 24px;
+    }
 }
 
 @media (max-width: 1199.98px) {
+    .header__list {
+        gap: 24px;
+    }
 
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr) 304px;
+    }
+
+    .mega--industries {
+        grid-template-columns: 244px minmax(0, 1fr) 324px;
+    }
+
+    .mega--industries.mega--no-aside {
+        grid-template-columns: 244px minmax(0, 1fr);
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega__links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega--resources {
+        grid-template-columns: 420px 200px minmax(0, 1fr);
+    }
+
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 420px 200px;
+    }
+
+    .mega__cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega__cards li:nth-child(n + 3) {
+        display: none;
+    }
 }
+
+/* ---------- Tablet (Figma 840) ---------- */
 
 @media (max-width: 991.98px) {
+    .header {
+        --header-radius: 16px;
+        --header-pad: 32px;
+    }
 
+    .header__list {
+        gap: 24px;
+    }
+
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr);
+        grid-template-areas:
+            "list detail"
+            "promo promo";
+        padding: 0 var(--header-pad);
+        min-height: 0;
+    }
+
+    .mega--products .mega__col--list {
+        grid-area: list;
+    }
+
+    .mega--products .mega__col--detail {
+        grid-area: detail;
+        padding-right: 0;
+    }
+
+    .mega--products .mega__col--list,
+    .mega--products .mega__col--detail {
+        padding-top: 16px;
+    }
+
+    .mega--products .mega__col--promo {
+        grid-area: promo;
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+        padding: var(--header-pad) 0;
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega__promo {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+
+    .mega__promo-media {
+        flex: 0 0 360px;
+        aspect-ratio: 360 / 214;
+        min-height: 0;
+    }
+
+    .mega__promo-text {
+        flex: 1;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .mega--industries,
+    .mega--industries.mega--no-aside {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+        padding: 0;
+    }
+
+    .mega__intro {
+        padding: var(--header-pad) var(--header-pad) 24px;
+    }
+
+    .mega__intro-text {
+        max-width: 580px;
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: var(--header-pad);
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega__aside {
+        padding: var(--header-pad);
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega--resources,
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 220px minmax(0, 1fr);
+        grid-template-rows: auto minmax(284px, auto);
+        grid-template-areas:
+            "banner banner"
+            "nav latest";
+        min-height: 0;
+    }
+
+    .mega__banner {
+        align-items: flex-start;
+        min-height: 164px;
+        padding: var(--header-pad);
+        text-align: left;
+    }
+
+    .mega__banner-text {
+        max-width: 320px;
+    }
+
+    .mega__banner-mascot {
+        right: 56px;
+        left: auto;
+        transform: none;
+    }
+
+    .mega__nav {
+        padding: var(--header-pad);
+    }
+
+    .mega__latest {
+        padding: var(--header-pad) var(--header-pad) var(--header-pad) 24px;
+    }
 }
 
-@media (max-width: 767.98px) {
+/* ---------- Mobile (Figma 392) ---------- */
 
+@media (max-width: 767.98px) {
+    .header {
+        --header-h: 64px;
+        --header-pad: 0px;
+        --header-radius: 0px;
+    }
+
+    .header__bar {
+        padding: 0 16px;
+    }
+
+    .header__shell {
+        gap: 12px;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .header__logo,
+    .header__burger {
+        display: flex;
+    }
+
+    .header__actions .header__cta {
+        display: none;
+    }
+
+    .header__actions {
+        gap: 12px;
+        margin-left: auto;
+    }
+
+    .header__burger {
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        border: 1px solid rgba(251, 251, 251, .15);
+        border-radius: 6px;
+        background: var(--nv-surface-2);
+        color: var(--nv-object-1);
+        cursor: pointer;
+    }
+
+    .header__burger .header__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__burger-close,
+    .header.is-menu-open .header__burger-open {
+        display: none;
+    }
+
+    .header.is-menu-open .header__burger-close {
+        display: block;
+    }
+
+    .header.is-menu-open .header-language {
+        display: none;
+    }
+
+    .header.is-open .header__overlay {
+        display: none;
+    }
+
+    .header.is-open .header__shell {
+        border-bottom-color: transparent;
+    }
+
+    /* Меню — экран под панелью шапки. */
+    .header__nav {
+        position: fixed;
+        top: var(--header-h);
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        box-sizing: border-box;
+        padding: 24px 16px 32px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: var(--nv-surface-1);
+    }
+
+    .admin-bar .header__nav {
+        top: calc(var(--header-h) + 46px);
+    }
+
+    .header.is-menu-open .header__nav {
+        display: flex;
+    }
+
+    .header__list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+    }
+
+    .header__item {
+        display: block;
+        border-top: 1px solid var(--nv-surface-3);
+    }
+
+    .header__item:last-child {
+        border-bottom: 1px solid var(--nv-surface-3);
+    }
+
+    .header__trigger,
+    .header__link {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px 0;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 32px;
+        white-space: normal;
+    }
+
+    .header__trigger:hover,
+    .header__link:hover {
+        color: var(--nv-object-1);
+    }
+
+    .header__item.is-open > .header__trigger,
+    .header__item.is-current > .header__link,
+    .header__item.is-current > .header__trigger {
+        color: var(--nv-object-1);
+    }
+
+    /* Кнопка раскрытия: 32×32, как в макете. */
+    .header__chevron {
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 6px;
+        background: var(--nv-surface-2);
+    }
+
+    .header__chevron .header__icon {
+        display: none;
+    }
+
+    .header__chevron .header__icon--m {
+        display: block;
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__item.is-open > .header__trigger .header__chevron {
+        border-color: var(--nv-surface-4);
+        color: var(--nv-object-1);
+    }
+
+    /* Industries и Resources открываются отдельным экраном — шеврон смотрит вправо. */
+    .header__item[data-menu="industries"] .header__chevron,
+    .header__item[data-menu="resources"] .header__chevron {
+        transform: rotate(-90deg);
+    }
+
+    .header__item[data-menu="industries"].is-open > .header__trigger .header__chevron,
+    .header__item[data-menu="resources"].is-open > .header__trigger .header__chevron {
+        transform: rotate(-90deg);
+    }
+
+    .header__panel {
+        position: static;
+        margin-top: 0;
+        border-radius: 0;
+        background: none;
+    }
+
+    .mega {
+        color: var(--nv-object-1);
+    }
+
+    /* Products: аккордеон со списком, подэкран — выбранный продукт. */
+    .mega--products {
+        display: block;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .mega__col {
+        padding: 0;
+    }
+
+    .mega__col--detail,
+    .mega__col--promo {
+        padding: 0;
+        border-left: 0;
+    }
+
+    .mega__col--promo,
+    .mega__cta {
+        display: none;
+    }
+
+    .mega__col--detail {
+        display: none;
+    }
+
+    .mega__col--list {
+        padding: 0 8px 16px;
+    }
+
+    .mega__list {
+        gap: 24px;
+    }
+
+    .mega__item {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .mega__item-icon {
+        display: block;
+    }
+
+    .mega__item:hover {
+        color: var(--nv-object-1);
+    }
+
+    .mega__item.is-active {
+        color: var(--nv-object-1);
+    }
+
+    .header__back {
+        display: none;
+        align-items: center;
+        align-self: flex-start;
+        gap: 8px;
+        box-sizing: border-box;
+        padding: 8px 16px 8px 8px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 8px;
+        background: var(--nv-surface-2);
+        color: var(--nv-object-1);
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+    }
+
+    .header__back-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Подэкраны: видим только выбранный пункт, остальное скрыто. */
+    .header:not([data-view="root"]) .header__mobile-cta,
+    .header:not([data-view="root"]) .header__item:not(.is-open) {
+        display: none;
+    }
+
+    .header:not([data-view="root"]) .header__item.is-open {
+        border: 0;
+    }
+
+    .header:not([data-view="root"]) .header__item.is-open > .header__trigger {
+        display: none;
+    }
+
+    .header:not([data-view="root"]) .header__nav {
+        justify-content: flex-start;
+    }
+
+    .header[data-view="product"] .mega__col--list {
+        display: none;
+    }
+
+    .header[data-view="product"] .mega__col--detail {
+        display: flex;
+    }
+
+    .header[data-view="product"] .mega__pane.is-active,
+    .header[data-view="industries"] .header__panel,
+    .header[data-view="resources"] .header__panel {
+        gap: 32px;
+    }
+
+    .header:not([data-view="root"]) .header__back {
+        display: inline-flex;
+    }
+
+    .mega__pane {
+        gap: 32px;
+    }
+
+    .mega__card {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 16px;
+        padding: 0;
+        border: 0;
+        background: none;
+        backdrop-filter: none;
+    }
+
+    .mega__card-text {
+        gap: 8px;
+        align-self: stretch;
+    }
+
+    .mega__card-title {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .mega__card-btn {
+        align-self: flex-end;
+        padding: 8px 8px 8px 16px;
+        font-size: 16px;
+    }
+
+    .mega__links {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 0 8px;
+    }
+
+    .mega__link {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    /* Industries */
+    .mega--industries,
+    .mega--industries.mega--no-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .mega__intro {
+        gap: 24px;
+        padding: 0;
+    }
+
+    .mega__intro-text {
+        max-width: none;
+    }
+
+    .mega__title {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .mega__intro-btn {
+        align-self: flex-end;
+        padding: 8px 8px 8px 16px;
+        font-size: 16px;
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px 24px;
+        padding: 24px 8px 0;
+        border-top: 1px solid var(--nv-surface-3);
+    }
+
+    .mega__group-title {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .mega__group .mega__links {
+        padding: 0;
+    }
+
+    .mega__aside {
+        display: none;
+    }
+
+    /* Resources */
+    .mega--resources,
+    .mega--resources.mega--no-latest {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .mega__banner {
+        align-items: center;
+        min-height: 240px;
+        margin: 0 -16px;
+        text-align: center;
+    }
+
+    .mega__banner-text {
+        max-width: 320px;
+    }
+
+    .mega__banner-mascot {
+        right: auto;
+        left: calc(50% - .5px);
+        transform: translateX(-50%);
+    }
+
+    .mega__nav {
+        gap: 32px;
+        padding: 0 8px;
+    }
+
+    .mega__nav-link {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .mega__nav-list {
+        gap: 24px;
+    }
+
+    .mega__social {
+        justify-content: flex-end;
+        padding-right: 32px;
+    }
+
+    .mega__latest {
+        display: none;
+    }
+
+    .header__mobile-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
 }
 
 @media (max-width: 575.98px) {
-
+    .mega__banner-title {
+        font-size: 40px;
+        line-height: 48px;
+    }
 }
 
 @media (max-width: 478.98px) {
-
+    .header-language__dropdown {
+        max-height: 224px;
+    }
 }
 
 @media (max-width: 419.98px) {
-
+    .mega__groups {
+        gap: 32px 16px;
+    }
 }
 
-/* HEADER MENU =========================================== END */
+/* Без JS: панели десктопа открываются по наведению и фокусу, мобильное меню видно всегда. */
+html:not(.has-js) .header__item:hover > .header__panel,
+html:not(.has-js) .header__item:focus-within > .header__panel {
+    display: block;
+}
+
+html:not(.has-js) .mega__pane:first-child {
+    display: flex;
+}
+
+@media (max-width: 767.98px) {
+    html:not(.has-js) .header__nav {
+        position: static;
+        display: flex;
+        padding: 0 0 16px;
+    }
+
+    html:not(.has-js) .header {
+        height: auto;
+    }
+
+    html:not(.has-js) .header__bar {
+        position: static;
+        height: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header *,
+    .header *::before,
+    .header *::after {
+        transition: none !important;
+    }
+}
+
+/* HEADER END */
 
 .hero {
     position: relative;
@@ -1314,14 +2508,6 @@ body.home .btn--header:focus-visible {
     object-fit: cover;
 }
 
-
-
-
-
-
-
-
-
 /* Отключаем блокировку скролла от Locomotive Scroll */
 html.has-scroll-smooth {
     overflow: auto !important;
@@ -1370,8 +2556,6 @@ html.has-scroll-smooth body {
         transparent 100%
     );
 }
-
-
 
 .hero__wrapper {
     display: flex;
@@ -1424,8 +2608,6 @@ html.has-scroll-smooth body {
     gap: 16px;
     flex-shrink: 0;
 }
-
-
 
 /* Full HD 2380:22876 — Title/H4 24/36; Desktop 2363:34993 — Title/H6 18/24. */
 .verify {
@@ -1659,117 +2841,46 @@ body.home .btn-hero:focus-visible {
     }
 }
 
-
-
-
 @media (max-width: 991.98px) {
-    .header__wrapper {
-        flex-direction: row-reverse;
-    }
+    
     .hero {
         /* height: 900px; */
     }
-    .header__nav-list{
-        padding: 0 16px;
-    }
-    .header__nav {
-        display: none;
-        /* max-width: 137px; */
-        width: fit-content;
-    }
+    
+    
 
-    .header__nav-link {
-        font-size: 18px;
-    }
+    
 
     .hero__content {
         padding-top: 200px;
     }
 
-    .burger {
-        display: flex;
-        width: 40px;
-        height: 40px;
-        padding: 8px;
-        justify-content: center;
-        align-items: center;
-        border-radius: 8px;
-        border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-        background: var(--island-white-5, rgba(251, 251, 251, 0.05));
-        backdrop-filter: blur(10px);
-    }
+    
 
-    .header__menu {
-        position: relative;
-        /* padding: 7px 12px 7px 7px; */
-        padding: 7px;
-        gap: 12px;
-    }
+    
 
-    .header__menu--open .burger {
-        background: var(--Island-Orange, #F9AA66);
-    }
+    
 
-    .header__menu--open .burger svg path {
-        fill: var(--Icon-Dark-blue, #2B323B);
-    }
-    .header__menu--open .header__nav {
-        display: flex;
-        padding: 16px 0 16px 16px;
-        position: absolute;
-        top: calc(100% + 12px);
-        left: 0;
-        border-radius: 16px;
-        border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
-        background: var(--Island-Black, #212121);
-        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
-    }
+    
+    
 
-    .header__nav-list {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        gap: 16px;
-        border: none;
-        background: none;
-        align-items: flex-start;
-        padding: 0;
-    }
+    
 
-    .header__nav-item {
-        position: unset;
-        padding-right: 16px;
-        width: 100%;
-    }
+    
 
-    .header__nav-link {
+    
 
-    }
+    
 
-    .submenu, .header__nav-item:first-child .submenu {
-        left: 100%;
-        top: 0;
-        padding: 0;
-        padding-left: 12px;
-    }
-
-    .submenu {
-        margin-top: 0;
-    }
+    
 
     .hero::after {
         height: 300px;
         display: block;
     }
 
-    .header__nav-item { cursor: default; }
-    .header__nav-link,
-    .header__nav-toggle,
-    .submenu__link,
-    .submenu__toggle,
-    .submenu__item {
-        cursor: pointer;
-    }
+    
+    
     
 }
 
@@ -1779,14 +2890,8 @@ body.home .btn-hero:focus-visible {
         font-size: 16px;
         line-height: 150%;
     }
-    .submenu__wrapper--first {
-        flex-direction: column;
-        gap: 12px;
-    }
-    .submenu__wrapper--style {
-        padding-bottom: 64px;
-        position: relative;
-    }
+    
+    
     .btn-back-menu2 {
         position: absolute;
         right: 0;
@@ -1799,22 +2904,13 @@ body.home .btn-hero:focus-visible {
 
 @media (max-width: 620px) {
 
-    .submenu {
-        display: none;
-    }
+    
 
-    .header__menu.show-submenu .header__nav {
-        visibility: hidden;
-    }
+    
 
-    .header__menu.show-submenu .submenu {
-        display: block;
-    }
+    
 
-    .submenu, .header__nav-item:first-child .submenu {
-        left: 0;
-        padding: 0;
-    }
+    
     .btn-back-menu {
         display: flex;
     }
@@ -1874,21 +2970,11 @@ body.home .btn-hero:focus-visible {
     .hero {
         padding-bottom: 40px;
     }
-    .submenu__wrapper--style {
-        flex-direction: column;
-    }
+    
 
-    .submenu__list--secondtype {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-items: flex-start;
-        width: 100%;
-        padding: 12px 0;
-    }
+    
 
-    .submenu__widget {
-        height: auto;
-    }
+    
 
     .hero {
         /* height: 800px; */
@@ -1940,7 +3026,6 @@ body.home .btn-hero:focus-visible {
     }
 }
 
-
 /*
  * Кнопка «View our prices» в первом экране. `.btn` и `.btn--gray` — общие классы,
  * используются на /solutions/, /pricing-matrix/ и в блоге, поэтому правило ограничено
@@ -1990,7 +3075,6 @@ body.home .btn-hero:focus-visible {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
-
 
 @media (max-width: 1599.98px) {
     /* Desktop-фрейм Figma 1440: карточка 1376x732. */
@@ -2074,7 +3158,6 @@ body.home .btn-hero:focus-visible {
 /* HERO END */
 
 /* PAGE-NAV START */
-
 
 .page-nav {
     padding: 16px 0 15px;
@@ -2312,7 +3395,6 @@ body.home .btn-hero:focus-visible {
 }
 
 /* PAGE-NAV END */
-
 
 /* ABOUT START */
 
@@ -2658,7 +3740,6 @@ body.home .btn-hero:focus-visible {
 .about__card-actions .btn--gray:focus-visible {
     background: var(--nv-surface-3);
 }
-
 
 @media (max-width: 1599.98px) {
     /* Desktop 291:5892: две карточки в ряд, третья на всю ширину под ними. */
@@ -3442,8 +4523,6 @@ body.home .btn-hero:focus-visible {
 .solutions__item-action {
 }
 
-
-
 @media (max-width: 1599.98px) {
 
 }
@@ -3530,7 +4609,6 @@ body.home .btn-hero:focus-visible {
 }
 
 /* SOLUTIONS END */
-
 
 /* PRODUCTS START */
 
@@ -4033,8 +5111,6 @@ body.home .btn-hero:focus-visible {
 }
 
 /* PRODUCTS END */
-
-
 
 /* HOW START */
 
@@ -4862,7 +5938,6 @@ body.home .btn-hero:focus-visible {
 
 /* advantages END */
 
-
 /* CLIENTS START */
 
 /*
@@ -5385,7 +6460,6 @@ body.home .clients__top-info .section__title-block {
     align-self: flex-end;
     }
 
-
 }
 
 @media (max-width: 478.98px) {
@@ -5393,7 +6467,6 @@ body.home .clients__top-info .section__title-block {
     .company__item {
     height: 100px;
     }
-
 
 }
 
@@ -5556,7 +6629,6 @@ body.home .clients__top-info .section__title-block {
     text-align: center;
 }
 
-
 @media (max-width: 1599.98px) {
 
 }
@@ -5636,7 +6708,6 @@ body.home .clients__top-info .section__title-block {
 @media (max-width: 419.98px) {
 
 }
-
 
 /* TESTIMONIALS END */
 
@@ -5831,7 +6902,6 @@ body.home .clients__top-info .section__title-block {
 
 .cases__slide-btn {}
 
-
 .btn--gray {
     display: flex;
     padding: 7px 7px 7px 15px;
@@ -5919,7 +6989,6 @@ body.home .clients__top-info .section__title-block {
     white-space: nowrap;
 }
 
-
 /* 1) Слайд растягиваем по высоте контейнера */
 .cases__slider,
 .cases__slider-wrapper,
@@ -5956,7 +7025,6 @@ body.home .clients__top-info .section__title-block {
 .cases__slider .swiper-slide > * {
     flex: 1;               /* карточка внутри растягивается */
 }
-
 
 @media (max-width: 1599.98px) {
 
@@ -6983,7 +8051,6 @@ body.home .clients__top-info .section__title-block {
 
 /* DOC END */
 
-
 /* NEWS START */
 
 /*
@@ -7699,7 +8766,6 @@ body.home .clients__top-info .section__title-block {
 
 /* PROMO END */
 
-
 /* CONTACTS START */
 
 .contacts {
@@ -8236,8 +9302,6 @@ body.home .clients__top-info .section__title-block {
     margin-bottom: 12px;
 }
 
-
-
 .input-form-block--textarea {
     padding: 0;
     width: 100%;
@@ -8270,7 +9334,6 @@ body.home .clients__top-info .section__title-block {
     box-shadow: none;
     outline: none;
 }
-
 
 /* контейнер строки (как тёмная плашка на скрине) */
 .privacy-consent{
@@ -8395,8 +9458,6 @@ body.home .clients__top-info .section__title-block {
 }
 
 .tag {}
-
-
 
 /*
  * ============================================================
@@ -9461,7 +10522,6 @@ body.single-post .post__form .help-select__dropdown,
     z-index: 20;
 }
 
-
 /*
  * ============================================================
  * Отличия Solutions. Макеты: Full HD 2456:16687, Desktop 2398:25244,
@@ -10103,9 +11163,7 @@ body.single-post .post__form .input-form-action {
 
 }
 
-
 /* CONTACTS END */
-
 
 /* teaser START */
 
@@ -10301,7 +11359,6 @@ body.single-post .post__form .input-form-action {
         padding-left: 32px;
     }
 }
-
 
 /* teaser END */
 
@@ -10505,9 +11562,6 @@ body.single-post .teaser__subtitle {
 }
 
 /* TEASER HOME END */
-
-
-
 
 /* FOOTER START */
 
@@ -11607,8 +12661,6 @@ body.single-post .footer__bottom-line {
 
 /* FOOTER HOME END */
 
-
-
 /* COOCKIE START */
 
 .cookie-banner {
@@ -11745,9 +12797,7 @@ body.single-post .footer__bottom-line {
 
 }
 
-
 /* COOCKIE END */
-
 
 /* MODAL START */
 
@@ -11823,7 +12873,6 @@ body.single-post .footer__bottom-line {
   height: 79px;
   overflow: hidden;
 }
-
 
 .modal__container--thanks {
     max-width: 480px;
@@ -11970,7 +13019,6 @@ body.single-post .footer__bottom-line {
     display: none;
 }
 
-
 @media (max-width: 1199.98px) {
 
 }
@@ -12047,7 +13095,6 @@ body.single-post .footer__bottom-line {
 @media (max-width: 419.98px) {
 
 }
-
 
 /* ---------------------------------------------------------------------------
  * Светлый редизайн всплывающих форм. Макеты Figma: большая 712:18528 /
@@ -12484,90 +13531,6 @@ body.single-post .footer__bottom-line {
  * та же самая, поэтому правила общие, а не продублированы отдельной секцией).
  * Ограничено шаблонами страниц, шапка остальных страниц остаётся тёмной.
  */
-/*
- * Шапка встаёт в поток над первым экраном и красится в фон макета. Светлый фон
- * задаётся именно шапке, а не `body`: ниже первого экрана на странице пока
- * остаются тёмные секции прежнего дизайна.
- */
-body.page-template-page-solutions .header,
-body.page-template-page-price-matrix .header,
-body.single-post .header {
-    position: relative;
-    top: 0;
-    padding-top: 32px;
-    background: var(--nv-surface-1);
-}
-
-/* В макете логотип лежит внутри карточки первого экрана, в шапке его нет. */
-body.page-template-page-solutions .header__logo,
-body.page-template-page-price-matrix .header__logo,
-body.single-post .header__logo {
-    display: none;
-}
-
-/*
- * Шапка живёт на той же сетке, что и первый экран: поле 32, контент = экран − 64.
- * Общая лесенка `.container` (1560/1408/1140/960/754) оставила бы навигацию
- * в стороне от края карточки.
- */
-body.page-template-page-solutions .header .container,
-body.page-template-page-price-matrix .header .container,
-body.single-post .header .container {
-    max-width: 1920px;
-    padding-left: 32px;
-    padding-right: 32px;
-}
-
-body.page-template-page-solutions .header__menu,
-body.page-template-page-price-matrix .header__menu,
-body.single-post .header__menu {
-    border-color: var(--nv-surface-4);
-    background: var(--nv-surface-2);
-    box-shadow: none;
-}
-
-body.page-template-page-solutions .header__nav-link,
-body.page-template-page-price-matrix .header__nav-link,
-body.single-post .header__nav-link {
-    color: var(--nv-object-1);
-}
-
-body.page-template-page-solutions .header__nav-toggle svg path,
-body.page-template-page-price-matrix .header__nav-toggle svg path,
-body.single-post .header__nav-toggle svg path {
-    fill: var(--nv-object-1);
-}
-
-body.page-template-page-solutions .burger svg path,
-body.page-template-page-price-matrix .burger svg path,
-body.single-post .burger svg path {
-    fill: var(--nv-object-1);
-}
-
-body.page-template-page-solutions .btn--header,
-body.page-template-page-price-matrix .btn--header,
-body.single-post .btn--header {
-    border: 0;
-    border-radius: 8px;
-    background: var(--nv-gradient);
-    transition: filter .2s ease;
-}
-
-
-body.page-template-page-solutions .btn--header .btn__text,
-body.page-template-page-price-matrix .btn--header .btn__text,
-body.single-post .btn--header .btn__text {
-    color: var(--nv-constant-1);
-}
-
-body.page-template-page-solutions .btn--header:hover,
-body.page-template-page-price-matrix .btn--header:hover,
-body.single-post .btn--header:hover,
-body.page-template-page-solutions .btn--header:focus-visible,
-body.page-template-page-price-matrix .btn--header:focus-visible,
-body.single-post .btn--header:focus-visible {
-    background: var(--nv-primary);
-}
 
 @media (max-width: 1599.98px) {
 
@@ -12579,86 +13542,6 @@ body.single-post .btn--header:focus-visible {
 
 @media (max-width: 1199.98px) {
 
-}
-
-@media (max-width: 991.98px) {
-    /*
-     * На бургер-ширинах макет (2467:18538) показывает отдельную светлую кнопку
-     * 40x40 без окружающей «пилюли», поэтому обёртку меню делаем прозрачной,
-     * а рамку и подложку отдаём самому бургеру.
-     */
-    body.page-template-page-solutions .header__menu,
-    body.page-template-page-price-matrix .header__menu,
-    body.single-post .header__menu {
-        padding: 0;
-        border: 0;
-        background: none;
-        box-shadow: none;
-    }
-
-    body.page-template-page-solutions .burger,
-    body.page-template-page-price-matrix .burger,
-    body.single-post .burger {
-        border-color: var(--nv-surface-4);
-        background: var(--nv-surface-2);
-    }
-
-    body.page-template-page-solutions .header__menu--open .burger,
-    body.page-template-page-price-matrix .header__menu--open .burger,
-    body.single-post .header__menu--open .burger {
-        background: var(--nv-primary);
-    }
-
-    body.page-template-page-solutions .header__menu--open .burger svg path,
-    body.page-template-page-price-matrix .header__menu--open .burger svg path,
-    body.single-post .header__menu--open .burger svg path {
-        fill: var(--nv-constant-1);
-    }
-
-    /*
-     * Панель открывается от бургера влево: в теме она привязана к левому краю
-     * обёртки (`left: 0`), а на Solutions бургер стоит у правого края экрана —
-     * и панель уезжала за него. (Главную не трогаем: там тот же дефект, он
-     * записан в BACKLOG отдельно.)
-     */
-    body.page-template-page-solutions .header__menu--open .header__nav,
-    body.page-template-page-price-matrix .header__menu--open .header__nav,
-    body.single-post .header__menu--open .header__nav {
-        left: auto;
-        right: 0;
-        border-color: var(--nv-surface-4);
-        background: var(--nv-surface-2);
-        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.12);
-    }
-}
-
-@media (max-width: 767.98px) {
-    /*
-     * Mobile 2467:18538: логотип слева в шапке, бургер справа. Первый экран на
-     * этой ширине свой логотип не показывает. Тёмная версия логотипа подаётся
-     * фоном, чтобы не трогать разметку header.php (BACKLOG: перенести в PHP).
-     */
-    body.page-template-page-solutions .header__wrapper,
-    body.page-template-page-price-matrix .header__wrapper,
-    body.single-post .header__wrapper {
-        flex-direction: row;
-    }
-
-    /* Тёмную версию логотипа подставляет header.php по `is_page_template`. */
-    body.page-template-page-solutions .header__logo,
-    body.page-template-page-price-matrix .header__logo,
-    body.single-post .header__logo {
-        display: block;
-        width: 168px;
-        height: 32px;
-    }
-
-    body.page-template-page-solutions .header .container,
-    body.page-template-page-price-matrix .header .container,
-    body.single-post .header .container {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
 }
 
 @media (max-width: 575.98px) {
@@ -13361,7 +14244,6 @@ body.single-post .btn--header:focus-visible {
     width: 80px;
     height: 71px;
 }
-
 
 .benefits__section-content {
 }
@@ -14612,14 +15494,10 @@ body.single-post .btn--header:focus-visible {
         flex-direction: row;
     }
 
-
-
     .features__tab--maskot.features__tab.features__tab--active {
         border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
         background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
     }
-
-
 
     .features__tab--maskot.features__tab--active .features__tab-content {
         background: transparent;
@@ -14716,7 +15594,6 @@ body.single-post .btn--header:focus-visible {
         line-height: 1.6;
     }
 
-
 }
 
 @media (max-width: 767.98px) {
@@ -14766,7 +15643,6 @@ body.single-post .btn--header:focus-visible {
     .features__content {
         padding: 16px;
     }
-
 
     .features__tab {
         gap: 12px;
@@ -15161,7 +16037,6 @@ body.single-post .btn--header:focus-visible {
 
 /* FLOW START */
 
-
 .flow {
     overflow: hidden;
     margin-top: -32px;
@@ -15252,7 +16127,6 @@ body.single-post .btn--header:focus-visible {
     font-weight: 500;
 }
 
-
 .flow__slider {
     width: 100%;
     height: 680px;
@@ -15275,7 +16149,6 @@ body.single-post .btn--header:focus-visible {
     align-items: center;
     gap: 24px;
 }
-
 
 .flow__slide-top {
     display: flex;
@@ -15338,7 +16211,6 @@ body.single-post .btn--header:focus-visible {
 .flow__slide--center {
     justify-content: center;
 }
-
 
 @media (max-width: 1599.98px) {
 
@@ -17501,8 +18373,6 @@ body.single-post .btn--header:focus-visible {
     line-height: 0;
 }
 
-
-
 .faq__item-answer {
     box-sizing: border-box;
     height: 0;
@@ -17846,7 +18716,6 @@ body.page-template-page-solutions .faq__item-answer-text p {
     }
 }
 
-
 /*
  * Отличия Solutions. Фон и сетку общие правила не задают: на главной их
  * даёт `body.home .section` / `body.home .container`, здесь — своё правило,
@@ -18156,7 +19025,6 @@ body.page-template-page-solutions .faq__left {
 
 }
 
-
 /* FAQ END */
 
 /* CTA START */
@@ -18396,10 +19264,7 @@ body.page-template-page-solutions .faq__left {
 
 /* CTA END */
 
-
 /* SOLUTIONS-PAGE END */
-
-
 
 /* PAGE START */
 
@@ -18684,7 +19549,6 @@ body.page-template-page-solutions .faq__left {
 
 }
 
-
 /* LEGAL PAGE LIGHT START */
 
 /*
@@ -18707,63 +19571,6 @@ body.page-template-page-price-matrix,
 body.single-post {
     background: var(--nv-surface-1);
     color: var(--nv-object-1);
-}
-
-/*
- * Шапка — тот же светлый компонент, что на главной и /solutions/: меняется
- * только палитра, состав навигации и её JS остаются прежними. Отличие от
- * /solutions/ одно: в макете юридической страницы логотип виден на всех
- * ширинах, поэтому `.header__logo` не скрывается, а светлый файл подставляет
- * `header.php` по `nv_is_light_theme()`.
- */
-body.page-template-page-privacy .header__menu,
-body.page-template-page-price-matrix .header__menu,
-body.single-post .header__menu {
-    border-color: var(--nv-surface-4);
-    background: var(--nv-surface-2);
-    box-shadow: none;
-}
-
-body.page-template-page-privacy .header__nav-link,
-body.page-template-page-price-matrix .header__nav-link,
-body.single-post .header__nav-link {
-    color: var(--nv-object-1);
-}
-
-body.page-template-page-privacy .header__nav-toggle svg path,
-body.page-template-page-price-matrix .header__nav-toggle svg path,
-body.single-post .header__nav-toggle svg path {
-    fill: var(--nv-object-1);
-}
-
-body.page-template-page-privacy .burger svg path,
-body.page-template-page-price-matrix .burger svg path,
-body.single-post .burger svg path {
-    fill: var(--nv-object-1);
-}
-
-body.page-template-page-privacy .btn--header,
-body.page-template-page-price-matrix .btn--header,
-body.single-post .btn--header {
-    border: 0;
-    border-radius: 8px;
-    background: var(--nv-gradient);
-    transition: filter .2s ease;
-}
-
-body.page-template-page-privacy .btn--header .btn__text,
-body.page-template-page-price-matrix .btn--header .btn__text,
-body.single-post .btn--header .btn__text {
-    color: var(--nv-constant-1);
-}
-
-body.page-template-page-privacy .btn--header:hover,
-body.page-template-page-price-matrix .btn--header:hover,
-body.single-post .btn--header:hover,
-body.page-template-page-privacy .btn--header:focus-visible,
-body.page-template-page-price-matrix .btn--header:focus-visible,
-body.single-post .btn--header:focus-visible {
-    background: var(--nv-primary);
 }
 
 /*
@@ -19122,49 +19929,16 @@ body.single-post .page__content blockquote p:last-child {
 }
 
 @media (max-width: 991.98px) {
-    /*
-     * Бургер-ширины. Светлая шапка повторяет решение /solutions/: обёртка меню
-     * прозрачная, рамку и подложку берёт сам бургер. Логотип здесь остаётся
-     * слева — в макете юридической страницы он виден всегда.
-     */
-    body.page-template-page-privacy .header__menu,
-    body.page-template-page-price-matrix .header__menu,
-    body.single-post .header__menu {
-        padding: 0;
-        border: 0;
-        background: none;
-        box-shadow: none;
-    }
+    
 
-    body.page-template-page-privacy .burger,
-    body.page-template-page-price-matrix .burger,
-    body.single-post .burger {
-        border-color: var(--nv-surface-4);
-        background: var(--nv-surface-2);
-    }
+    
 
-    body.page-template-page-privacy .header__menu--open .burger,
-    body.page-template-page-price-matrix .header__menu--open .burger,
-    body.single-post .header__menu--open .burger {
-        background: var(--nv-primary);
-    }
+    
 
-    body.page-template-page-privacy .header__menu--open .burger svg path,
-    body.page-template-page-price-matrix .header__menu--open .burger svg path,
-    body.single-post .header__menu--open .burger svg path {
-        fill: var(--nv-constant-1);
-    }
+    
 
     /* Панель открывается от бургера влево — он стоит у правого края экрана. */
-    body.page-template-page-privacy .header__menu--open .header__nav,
-    body.page-template-page-price-matrix .header__menu--open .header__nav,
-    body.single-post .header__menu--open .header__nav {
-        left: auto;
-        right: 0;
-        border-color: var(--nv-surface-4);
-        background: var(--nv-surface-2);
-        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.12);
-    }
+    
 
     /* Ниже 1440 макета нет — вертикаль ужимаем по логике темы. */
     body.page-template-page-privacy .content-page,
@@ -19291,7 +20065,6 @@ body.single-post .page__content blockquote p:last-child {
 }
 
 /* LEGAL PAGE LIGHT END */
-
 
 /* PAGE END */
 

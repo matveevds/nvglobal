@@ -5,6 +5,149 @@
 
 ---
 
+## 2026-10-14 — доработка страницы записи блога и блоков
+
+### Р-142. Комментарии по макету 2570:39540 — включаются на записи, прежняя форма остаётся запасной
+Закрывает вопрос приёмки Р-136. Реализован блок комментариев из макета: форма «Comment»
+(имя, должность, сообщение, согласие, «Publish») и список комментариев
+(`template-parts/post-comments.php`). Он выводится, когда комментарии у записи **открыты**
+(«Обсуждение → Разрешить комментарии» в редакторе) или уже есть. Если комментарии закрыты
+(сейчас так у всех записей), под статьёй остаётся прежняя лид-форма — её функциональность
+не теряется. Исключение логики WordPress нет: используется штатный `wp-comments-post.php`.
+
+Решения по обработке (`functions.php`, секция «Комментарии записей блога»):
+- e-mail в макете нет → `pre_option_require_name_email = 0`;
+- должность хранится в мете комментария `nv_position`;
+- на сервере: ловушка `nv_website`, обязательное согласие `nv_consent`, имя и должность
+  (обход `required` через DevTools не проходит);
+- **все новые комментарии записей идут на модерацию** (`pre_comment_approved`), потому что
+  форма анонимная и без капчи; модераторы и спам-статус не затронуты;
+- после отправки — возврат на форму с уведомлением «awaiting moderation»;
+- даты выводятся по-английски независимо от локали WP (она `ru_RU`).
+
+Дополнительно исправлено: карточка «Check out other articles» без миниатюры больше не
+ссылается на несуществующий `assets/images/post-placeholder.jpg`.
+
+### Р-143. Таблицы статьи — по Figma 2570:39092 / 39126 / 39150
+Ячейки — рамка `2px dashed Stroke 2`, радиус 12, поля 8×16, текст 16/20 слева (выравнивание
+Gutenberg `has-text-align-*` сохраняется); заголовок — рамка 1px оранжевая, фон Island/1,
+оранжевый жирный; подпись «Table N. …» над таблицей. Раньше ячейки были сплошные и центрированные.
+
+---
+
+## 2026-10-14 — глобальная шапка (Header) по новому Figma
+
+### Р-141. Одна светлая шапка на весь сайт, меню Products / Industries / Resources / Docs / Pricing
+Решение пользователя (задание «NV Global — полный redesign глобального Header»,
+правка `header.php` и стилей шапки разрешена явно). Шапка остаётся одним
+shared-компонентом: `header.php` + `inc/header-menu.php` (данные) +
+`inc/header-icons.php` (inline-SVG) + секция `HEADER` в `css/styles.css` +
+`initHeaderMenu()` в `js/main.js`. Отдельных шапок под Home/Solutions/Pricing нет;
+тёмного варианта нет — шапка светлая на всех шаблонах, включая тёмные
+(Docs, 404, блог): страницы не ломаются, шапка просто светлая полоса сверху.
+Старые правила шапки (`.header__menu`, `.burger`, `.submenu`, `.btn--header`
+и их светлые копии в `HOME THEME`, `SOLUTIONS THEME`, `LEGAL PAGE LIGHT`)
+удалены, а не перекрыты. `header_24.06.26.php` — бэкап, не тронут.
+
+**Figma (прочитаны через MCP).** Full HD: закрытый `2580:50483`, Products
+`2580:50536`, Industries `2580:52503`, Resources `2580:53083`. Desktop: закрытый
+`2580:45386`, язык `2386:28441`, Products/KYC `2580:47102`. Sticky `2580:48215`
+(Menu `2580:48265`). Tablet: `2580:48317`, меню `2580:48368`, Industries
+`2580:48912`, Resources `2580:49112`, язык `2580:50326`. Mobile: закрытый
+`2580:49995`, язык `2580:50198`, меню `2577:43141`, Products `2580:43334`, подраздел
+`2580:43430`, Industries `2580:43708`, Resources `2580:43893`.
+
+**Узел `2580:47102` указан в задании трижды (Products, Industries, Resources).**
+Проверено: это один кадр, в нём только панель Products с открытым KYC; панелей
+Industries и Resources для Desktop в Figma нет. Они собраны по Full HD-кадрам
+`2580:52503` / `2580:53083` и адаптированы под ширины 1200–1599 (колонки
+сужены: 264/404 вместо 304/532 у Industries, 520 вместо 680 у баннера Resources).
+
+**Развилки, решённые пользователем:**
+1. Вместо «Lorem Ipsum» из Figma — реальные пункты сайта: у KYC — 8 страниц
+   документации `/docs/products/kyc/…`, у индустрий — продукты из чипов страницы
+   Solutions (KYC, AML, KYT, Liveness, Face). Где данных нет — колонка не выводится.
+2. Верхний уровень: Products, Industries, Resources, Docs, Pricing. В четырёх
+   кадрах Figma (закрытые Full HD и Desktop, sticky, язык) вместо «Docs» стоит
+   «Company» с шевроном; панели у него в макете нет — не реализовано.
+3. Логотипа в шапке Desktop/Tablet нет (он внутри hero-карточки). На Mobile —
+   знак «N» (`img/header-logo-mark.svg`, SVG из Figma).
+
+**Типографика.** Закрытая шапка — Satoshi Regular 14/18, как на закрытых
+Full HD/Desktop/Tablet. Открытые кадры Full HD показывают 16/24 Medium —
+расхождение внутри макета, принято 14/18 (4 кадра из 7); подробнее — BACKLOG H-04.
+Мобильное меню: заголовки 20/32, кнопки 16/20 — по более новым кадрам
+`2580:43334` / `2580:43430`; в `2577:43141` те же элементы 24/36 и 18/24.
+
+**Поведение.** Desktop и Tablet: hover открывает панель (без задержки открытия,
+закрытие через 160 мс — «мёртвой зоны» между кнопкой и панелью нет), клик
+закрепляет, второй клик закрывает; Enter/Space/ArrowDown открывают, Escape
+закрывает и возвращает фокус, стрелки ←/→ ходят по верхнему уровню, Tab из
+панели наружу закрывает. Одновременно открыто одно меню из четырёх (Products,
+Industries, Resources, язык). Затемнение страницы — как в Figma:
+`rgba(33,33,33,.6)` + `blur(4px)`. Mobile (≤767.98px): отдельный UX — бургер,
+экран меню, аккордеон Products → подэкран продукта с «Back», Industries и
+Resources — отдельные экраны, фокус уходит внутрь и зациклен, Escape закрывает,
+скролл страницы блокируется и позиция возвращается. Любая смена режима
+(мобильный ↔ планшет ↔ десктоп, поворот) сбрасывает всё состояние.
+
+**Sticky (Figma `2580:48215`).** Шапка всегда `position: fixed` над плейсхолдером
+высотой 80px (64px на Mobile) — layout не прыгает. `position: sticky` не годится:
+у `html` и `body` стоит `overflow-x: hidden`. Состояние при скролле `scrollY > 0`
+(`.is-scrolled`): нижняя линия `1px #D2D2D2` на всю ширину. Больше в макете
+ничего нет (нет тени, блюра, анимации) — не добавлено.
+
+**Язык.** Только интерфейс: корень `.header-language`, активный English,
+остальные (Español, Deutsch, Français, Português — как в Figma) инертные
+`<button aria-disabled>` с `data-language-code`. Нет переводов, hreflang,
+alternate, редиректов, языковых страниц; список скрывается одним правилом
+`.header-language { display: none }`.
+
+**Плановые URL.** Страницы не создавались. Правила slug: латиница, нижний
+регистр, дефисы, без `.html` и query. Приоритет: реальный URL → архитектура
+сайта (`/solutions/`, `/docs/…`) → новый.
+
+| Пункт | Страница есть | URL |
+|---|---|---|
+| Products → KYC & eKYC (Details) | нет | `/products/kyc-ekyc/` |
+| Identity Verification | нет | `/products/identity-verification/` |
+| Document Verification | нет | `/products/document-verification/` |
+| Face Verification | нет | `/products/face-verification/` |
+| Liveness Detection | нет | `/products/liveness-detection/` |
+| AML Screening | нет | `/products/aml-screening/` |
+| KYB | нет | `/products/kyb/` |
+| KYT | нет | `/products/kyt/` |
+| Discover our solution | да | `/solutions/` |
+| KYC: General information, Architecture and components, API and integration, REST API, Web SDK, Recognizable documents, Errors, FAQ | да | `/docs/products/kyc/…` (8 страниц документации) |
+| Industries → Banks | нет | `/industries/banks/` |
+| FinTech & lending | нет | `/industries/fintech-lending/` |
+| Crypto Exchanges | нет | `/industries/crypto-exchanges/` |
+| Telecom | нет | `/industries/telecom/` |
+| Gambling & betting | нет | `/industries/gambling-betting/` |
+| Government | нет | `/industries/government/` |
+| More about industries | да | `/solutions/#industries` |
+| Resources → Blog | нет (страница #570 — черновик) | `/blog/` |
+| News | нет | `/news/` |
+| Video | нет | `/video/` |
+| Latest / карточки блога | да (динамически, из `WP_Query`) | permalink записи |
+| LinkedIn | внешний | `https://www.linkedin.com/company/nvglobal-ai/posts/` |
+| Docs | да | `/docs/` |
+| Pricing | да | `/pricing-matrix/` |
+
+До создания страниц 17 плановых URL отдают 404 — это ожидаемо. Пункты Telegram,
+WhatsApp, YouTube из макета не выведены: адресов в теме нет (BACKLOG R-26).
+
+**Текущий пункт.** `aria-current="page"` и оранжевый цвет: Docs
+(`page-docs.php`, CPT `document`), Pricing (`page-price-matrix.php`), Resources
+(записи блога, архивы, поиск). В Figma отдельного «текущего» состояния нет —
+использован цвет активного состояния.
+
+**CTA.** «Start Free Trial» открывает ту же модалку `#callForm2` (класс
+`.open-callForm2`), мобильное «Book a demo» — `#callForm` (`.open-callForm`).
+Логика форм и модалок не менялась. Lottie-стрелка заменена статичной из Figma.
+
+---
+
 ## 2026-10-13 — редактирование полей ACF-блоков
 
 ### Р-139. Стили ACF отдаются в iframe-канву через `editor_style_handles`

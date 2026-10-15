@@ -312,7 +312,7 @@ function nv_is_light_theme(): bool {
 |---|---|
 | `footer.php` | `if (nv_is_light_theme())` → `template-parts/footer-home.php`, иначе прежняя тёмная разметка |
 | `template-parts/teaser.php` | выбирает логотип: светлый `teaser_logo_primary.svg` или тёмный `teaser_logo.svg` |
-| `header.php` | выбирает логотип шапки: тёмный `logo-header-light.svg` под светлый фон или прежний `nvglobal_logo.png` |
+| `header.php` | глобальная шапка (см. раздел «Header — глобальная шапка» в §4); логотип в шапке Desktop/Tablet не выводится |
 
 `page-privacy.php` обслуживает три юридические страницы, поэтому условие
 проверяет шаблон, а не слаг: новая страница на этом шаблоне получит
@@ -525,14 +525,43 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 
 ---
 
+
+**Низ страницы записи (`post-bottom`):** слева — карточка автора и «Check out other articles»; справа —
+`template-parts/post-comments.php` (форма и список комментариев), если комментарии у записи открыты
+или уже есть, иначе прежняя лид-форма `.post__form` (Р-142).
+
 ## 4. Общие блоки
+
+### Header — глобальная шапка (`header.php`, Р-141)
+
+Один компонент на весь сайт, светлый на всех шаблонах. Токены `--nv-*` объявлены на `.header`.
+
+| Часть | Класс / файл | Роль |
+|---|---|---|
+| Плейсхолдер | `.header` | высота 80px (64px на Mobile), в потоке |
+| Панель | `.header__bar` | `position: fixed`, z-index 900; `.is-scrolled` → нижняя линия (sticky) |
+| Карточка | `.header__shell` | 24px радиус, 16px на Tablet; открыта → `.header.is-open` |
+| Меню | `.header__nav` > `.header__list` > `.header__item[data-menu]` | `<nav aria-label="Main navigation">`; `button.header__trigger` (aria-expanded/-controls) или `a.header__link` |
+| Панели | `.header__panel--products/--industries/--resources`, внутри `.mega*` | mega-menu; на Mobile — аккордеон и экраны |
+| Products | `.mega__item` (выбор) + `.mega__pane` (карточка, «Details», ссылки) + `.mega__col--promo` | вложенное состояние внутри одной панели |
+| Язык | `.header-language` (корень) | UI без мультиязычности, `data-language-code`; скрывается одним правилом |
+| Кнопки | `.header-btn--primary/--secondary`, `--small/--regular` | CTA `.open-callForm2` / `.open-callForm` (модалки `footer.php`) |
+| Бургер, Back | `.header__burger`, `.header__back` | только Mobile |
+| Затемнение | `.header__overlay` | `rgba(33,33,33,.6)` + `blur(4px)`, только Desktop/Tablet |
+| Данные | `inc/header-menu.php` | `nv_header_menu()`, `nv_header_languages()`, `nv_header_current()`, `nv_header_latest_posts()` |
+| Иконки | `inc/header-icons.php` | `nv_header_icon('angle'|'chev'|'arrow'|…)` |
+| Поведение | `initHeaderMenu()` в `js/main.js` | один контроллер: `root`, `product`, `view`, `menuOpen`, `lang`, `pinned`, `scrolled` |
+
+Состав меню меняется только в `inc/header-menu.php` (пункт с `'exists' => false` — плановый URL).
+Старые `.header__menu`, `.burger`, `.submenu`, `.btn--header` удалены.
+
 
 | Блок | Где | CSS-секция |
 |---|---|---|
 | `.btn` + модификаторы | везде | 215+ |
 | `.section`, `.section__badge`, `.section__title` | все страницы | по секциям |
 | `.page-nav` | главная, solutions | 1503–1741 |
-| `.header` | `header.php` | `MENU` (650–930) |
+| `.header`, `.header__*`, `.mega*`, `.header-language*`, `.header-btn*` | `header.php` | `HEADER` (одна секция, `HEADER START`/`HEADER END`) |
 | `.footer` | `footer.php` | `FOOTER` (6577–6869) |
 | `.teaser` | `footer.php`, `template-parts/teaser.php` | `teaser` (6378–6574) |
 | `.cookie-banner` | `footer.php:98` | `COOCKIE` (6871–7008) |

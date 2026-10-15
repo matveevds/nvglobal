@@ -4,6 +4,8 @@ require_once get_template_directory() . '/inc/docs-menu.php';
 
 // ACF-поля с ценами пакетов для калькулятора на /pricing-matrix/
 require_once get_template_directory() . '/inc/calculator-fields.php';
+require_once get_template_directory() . '/inc/header-icons.php';
+require_once get_template_directory() . '/inc/header-menu.php';
 
 // Инициализация темы
 add_action('after_setup_theme', 'theme_setup');
@@ -2397,13 +2399,13 @@ function get_post_author_articles_html() {
 
                 <div class="post__article-item">
 
+                    <?php if ($thumbnail) : ?>
                     <div class="post__article-image">
                         <?php echo $thumbnail; ?>
-                    <?php if ($thumbnail) : ?>
                     </div>
+                    <?php endif; ?>
 
                     <a href="<?php echo esc_url($article_url); ?>" class="post__article-title">
-                    <?php endif; ?>
                         <?php echo esc_html($article_title); ?>
                     </a>
 
