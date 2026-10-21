@@ -54,7 +54,7 @@
 | `/docs/<...>/` | CPT `document`, 71 запись | `single-document.php` | 200 | — |
 | несуществующий URL | — | `404.php` | 404 | — |
 
-Страница `blog` (570) — **черновик**, шаблон `search.php`.
+Страница `blog` (570) — **черновик**, шаблон `search.php` (тот же файл — шаблон результатов поиска); с 2026-10-15 вёрстка архива — `template-parts/blog-archive.php` + `blog-card.php`.
 
 **Главная страница — это `main-page.php`.** `index.php` в отдаче не участвует:
 `front-page.php` в теме нет, главная задана статической страницей.
@@ -83,6 +83,7 @@
 | `main-page.php` | 1547 | Шаблон главной страницы | **главная**; форма Contacts вынесена в `template-parts/contacts-form.php` |
 | `page-solutions.php` | 1176 | Шаблон страницы Solutions | `/solutions/`; **редизайн завершён**, группы 1–9, финальный визуальный аудит и overlay с Figma 2026-10-10 |
 | `page-price-matrix.php` | 713 | KYC/AML Pricing Matrix | `/pricing-matrix/` + калькулятор; **светлый редизайн завершён 2026-10-13**, логика калькулятора не менялась (Р-131) |
+| `page-identity-verification.php` | ~430 | Identity Verification | `/identity-verification/`, WP page ID 1213; **в работе — Steps<992: inset контейнера и clipping у экрана по новому замечанию владельца после1.1.52**, uncommitted; ТЗ: `epics/9a4dc67a-d3d5-41e0-8400-7fb2006fedb1/artifacts/identity-verification/owner-fixes-3/index.md` |
 | `page-docs.php` | 263 | Шаблон страницы Documentation | корень документации |
 | `single.php` | 440 | — | запись блога; **светлый редизайн завершён 2026-10-13** (Р-133…Р-138) |
 | `single-document.php` | 208 | — | CPT `document`; остаётся тёмным |
@@ -103,7 +104,7 @@
 | `template-parts/footer-home.php` | 181 | — | светлый футер: все страницы, где `nv_is_light_theme()` → главная, `/solutions/`, 3 юр. страницы, `/pricing-matrix/` |
 | `template-parts/contacts-form.php` | 228 | — | общая форма обратной связи: главная и `/solutions/` |
 | `functions.php` | 2464 | — | вся логика темы |
-| `404.php` | 32 | — | 404 |
+| `404.php` | 36 | — | светлая 404 (Figma 722:20638 / 722:23852 / 722:24249), `body.error404` |
 | `inc/docs-menu.php` | 188 | — | меню документации + файловый кэш |
 | `inc/calculator-fields.php` | 148 | — | ACF-поля цен калькулятора |
 | `blocks/*/` | 19 блоков | — | ACF-блоки Gutenberg для статей |
@@ -111,6 +112,12 @@
 ### Заготовки блога (сейчас не видны)
 `single.php` (436), `category.php` (181), `author.php` (308), `search.php` (194),
 `blog-page.php` (125), `template-parts/article-card.php` (120), `template-parts/teaser.php` (28).
+
+> **Уточнение 2026-10-16.** Запись в п. «Контент, которого нет» выше (0 опубликованных постов) устарела:
+> на момент проверки REST `wp/v2/categories` отдаёт 2 опубликованные записи (`anti-fraud-liveness-detection`,
+> `kyc-aml-and-digital-identification`, по 1) и пустую `pending-verification` (0). `category.php` теперь имеет
+> отдельный category-only вариант верстки (Figma `2570:33257`/`31820`/`32299`/`32881`) поверх общего
+> `template-parts/blog-archive.php` — подробности в `docs/COMPONENTS.md` и `docs/CHANGELOG.md` (2026-10-16).
 
 ### Дубли и устаревшее — **трогать только по согласованию**
 | Файл | Строк | Отличий от оригинала | Статус |
@@ -515,6 +522,7 @@ simple-user-avatar, Yoast SEO.
 | 7 | Приёмка новой шапки: Lorem Ipsum из Figma заменён реальными пунктами, «Company» вместо «Docs» не реализован, плановые URL | `DECISIONS.md` Р-141, `BACKLOG.md` H-01…H-13 |
 | 5 | A-47 (P1): «200 countries» в FAQ против «195+» в остальных текстах | `BACKLOG.md` A-47 |
 | 6 | A-49 (P1): списки стран и услуг в Contacts остались тёмными | `BACKLOG.md` A-49 |
+| 8 | Страница автора (`author.php`): READY TO ACCEPT, A-01…A-06 закрыты, retest1920/1440/840/392, assets1.0.95. По разрешению владельца локально изменён только Yoast disable-author true→false; реальные авторы200, неизвестный автор/выход за пагинацию404. В текущих данных neurovision2 записи, kochetkov0 (empty state проверен). Пагинация>9 не проверена. Приёмки и commit нет | `blog-author/result` |
 
 ### Технический долг, заведённый этой сессией
 
@@ -553,3 +561,20 @@ simple-user-avatar, Yoast SEO.
 4. Принять новую шапку (раздел 14, п. 7), затем закоммитить её отдельно от всего остального.
 5. Закрыть приёмку по пунктам 1–4 раздела 14.
 6. `git push` ветки `dev` — её на remote нет. **Только по прямому указанию.**
+
+
+## Рубрика блога — итог приёмочных проверок 2026-10-17
+
+READY TO ACCEPT по независимому QA и финальному ретесту координатора; ожидается
+приёмка владельцем. Четыре Figma frame2570:33257/31820/32299/32881 реализованы через
+category-вариант shared blog-archive, без нового route/template. Все найденные
+замечания, включая clipping лапки маскота, закрыты. Assets version1.0.91.
+Canonical category.php и blog-card.php сохранены; Header/Footer не перерабатывались.
+Ничего не закоммичено/опубликовано. Реальная pagination>12 не проверена из-за малого
+числа записей; /blog/ остаётся черновиком. Итог и evidence: Traycer artifact
+epics/9a4dc67a-d3d5-41e0-8400-7fb2006fedb1/artifacts/blog-category/result/index.md.
+
+
+Уточнение по приёмке рубрики: network/play исправлены после замечания владельца —
+восстановлена геометрия SVG24×24 из сжатого24×20. Проверены скриншоты1440/392 и PHP lint;
+THEME_ASSETS_VER=1.0.92. READY TO ACCEPT, приёмка владельцем ожидается, без commit/deploy.

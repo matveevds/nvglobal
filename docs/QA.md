@@ -3,6 +3,268 @@
 Сайт локально доступен **только по HTTPS**, сертификат самоподписанный:
 `curl -k`, в Playwright `ignoreHTTPSErrors: true`. `http://nvglobal.local/` не отвечает.
 
+## Identity Verification — follow-up-5, проверка 1.1.45 (2026-10-18, C5-01…C5-04)
+
+Независимая проверка (`review-finish-5`) нашла 4 остатка в разделах, которые предыдущий отчёт
+(1.1.45) закрыл неверно — не новый scope, те же L-01/02/04/05.
+
+- **C5-01 Coverage** (High): z-index панели/visual были перепутаны (`elementsFromPoint()`
+  координатора подтвердил документы НАД текстом вместо текста НАД документами) — исправлено.
+  Корневая причина y64 вместо target y144 — badge был внутри `.idv-coverage__head` (внутри row с
+  `align-items:flex-start`), из-за чего visual стартовал вровень с badge вместо H2; вынесен
+  отдельным sibling перед row, FHD-грид получил explicit `grid-template-rows`+`grid-row` на
+  badge. Измерено после фикса: **visualYRelSection=146 (target144), badgeYRelSection=64 (точно),
+  overlap=200 (точно) на 1920 и 1440**, panel сверху в `elementsFromPoint()`-стеке. Panel
+  min-height:180px — все 3 состояния (Documents/Regions/SEA) теперь одной высоты (SEA и так была
+  180h из-за длинного текста, остальные были154h).
+- **C5-02 About** (Medium): 1920 cert-row192h→**168h точно** (certs-links flex-direction:row).
+  840 cert-row216h→**202h** (target200, ±2), padding16 (было23). 392 padding-top32 (было1 —
+  ошибочное наследование из прошлого раунда). Divider высота2px (видимость). 1920 topcards
+  y141→**157 точно** (margin-bottom:16 на head).
+- **C5-03 Benefits** (Medium): маскот переведён с `position:static` на overlay-crop на
+  FHD/Tablet/Mobile (был только на 1440). FHD-колонки 3×412+572 (было4×452 поровну — promo была
+  уже на120px, чем нужно). Mobile text align вернули на left (была явная ошибка center).
+  «Compliance without manual work» теперь **1 строка** на Mobile (font-size18px, scoped с
+  достаточной специфичностью, т.к. предыдущая попытка перебивалась общим правилом той же
+  специфичности, но позже в каскаде).
+- **C5-04 Platform** (Medium): Mobile audit-image переведён с `position:static` (блок ПОД
+  текстом) на overlay-crop (как на Desktop/FHD) с `min-height:320px` на карточке (без него
+  картинка перекрывала заголовок). `padding-top:1px` у `.idv-platform` (было 64, тот же паттерн,
+  что About).
+
+Проверено: PHP lint чисто, CSS-скобки 4278/4278. `/kyc/` About/Platform (свои FHD-сетка/
+padding-top64) — не затронуты, измерено отдельно. Coverage keyboard (ArrowRight/Home/End) и
+no-JS (3 панели readable:true, tabs display:none, badge присутствует) — не регрессировали.
+Targeted sweep 8 ширин × 2 страницы — 0 overflow/console errors. `THEME_ASSETS_VER` → `1.1.46`.
+
+## Identity Verification — follow-up-5, продолжение (2026-10-18, About + Coverage overlap)
+
+Координатор вернул отчёт `1.1.44` в работу: L-05 About и Coverage text-panel/visual overlap
+200px были ошибочно закрыты как «вне scope сессии» / «технически невозможно без абсолютного
+позиционирования целой секции». Оба опровергнуты и доведены в этом раунде.
+
+- **H2 4 строки**: "Territories"→"territories" (регистр из исходника) — 156h (3 строки) вместо
+  обрезанных 4, измерено `getBoundingClientRect()`.
+- **Coverage overlap**: `main` = left(680px fixed) + visual(auto), gap:0 (680+740=1420 на FHD,
+  680+696=1376 на 1440, без зазора) — НЕ единая grid-колонка. tabs/text-панель 816px с
+  margin-left:64px внутри 680px left (64+816=880, перекрывает visual на 200px). Component-scoped
+  `position:relative`+`z-index` (панель z-index:1, visual z-index:2), без абсолютного
+  позиционирования секции. Измеренный overlap: **ровно 200px на 1920 и 1440** (panel.x+panel.width
+  − visual.x). Side-колонка FHD (388px) и visual (740px) не регрессировали.
+- **About**: карточки `.kyc-about__accuracy`/`.kyc-about__documents` — `flex:0 0 680px` вместо
+  `flex:1 1 0` (на 1440 совпадение ширины контейнера маскировало баг, на 1920 растягивало до
+  920px). Измерено после фикса: **680w/680w на обеих широких ширинах, впритык (gap16), без
+  разрыва**. Марки: 120h на FHD (было 72, KYC-шное FHD-правило), 72h на Mobile (было 88,
+  KYC-дефолт), 72h на 840 — не трогалось, уже было верно. 840 cert-title: max-width:681px (точно
+  по JSON). Section height 1920=593/1440=597 (target591, Δ2-6px, в пределах погрешности).
+
+Проверено: PHP lint чисто (page-identity-verification.php, kyc-about-section.php), CSS-скобки
+4265/4265. `/kyc/` About (3-колоночная FHD-сетка собственная) — не затронут, измерено отдельно
+(521w/782w карточки, 72h марки, height:220 — все KYC-значения сохранены). Coverage 3 вкладки
+(Documents/Regions/SEA) — ненулевой canvas на 1440/1920 после рестрактура (16/13/16 изображений).
+Targeted sweep 8 ширин × 2 страницы (identity-verification+kyc) — 0 overflow/console errors.
+`THEME_ASSETS_VER` → `1.1.45`.
+
+## Identity Verification — follow-up-5 (2026-10-17, точные координаты layout-contracts)
+
+Источник целей — `layout-contracts/{component}-{width}.json` (точные frame-rects из сохранённого
+Figma XML по каждой секции/ширине), не собственная CSS и не прошлый самоотчёт.
+
+- **Integration**: FHD slider переведён с вертикального стека на горизонтальный Grid (264px
+  title+controls слева / 476px REST-pane справа, gap32) — измерено `getBoundingClientRect()`,
+  x/width точно совпадают с `integration-1920.json` (title x56 w264, REST-pane x352 w476). 1440
+  slider 600px (было 400 — ~1/3 ширины, визуально «ужат»). 840/1440 folder-картинка 280×195 (было
+  160×112 без JSON-источника), 392 — 182×127. Mobile actions — по содержимому, не на всю ширину.
+- **Coverage — корневая причина найдена и исправлена**: `.idv-coverage__row{align-items:
+  flex-start}` рассчитан на row-направление (≥1200px, влияет на вертикаль), но та же команда
+  наследуется и в column-направлении (≤1199.98px для всей Tablet/Mobile раскладки), где становится
+  КРОСС-осью (шириной) — `.idv-coverage__visual` терял `align-items:stretch` и схлопывался до
+  max-content некопируемого ряда документов (662px вместо 360px секции на 392, 930px вместо 776px
+  на 840). Это и была причина «сдвинутого вправо» ряда (Morocco вместо центральных Armenia/
+  Andorra/Italy) — весь visual-блок был шире вьюпорта и обрезался контейнером страницы, а не
+  центрировался собственным overflow:hidden. Один `align-items:stretch` в этом media query чинит
+  оба симптома разом. После фикса: 392 visual 360×460 (точно), документы x-координаты совпадают
+  с `coverage-392.json` **пиксель-в-пиксель** (doc1 x=-65, doc6 x=-118 и т.д. — не округление, а
+  прямое совпадение); 840 visual 776×680 (точно), документы также совпадают 1:1 с
+  `coverage-840.json`; 1920 visual 740×680 (точно, grid-ratio пересчитан под реальный target
+  696:740), боковая колонка 388px (было 280 без источника). Все 3 вкладки (Documents/Regions/SEA)
+  дают ненулевой canvas на 1440/1920 (16/16, 13/13, 16/16 изображений, 0 с `naturalWidth:0` или
+  несчитанных), Belarus-флаг (композит 6 SVG, followup-5 L-03) корректен и в контексте страницы.
+  Keyboard (ArrowRight/Home/End по табам) — без регрессии.
+  **Не закрыто**: точное наложение text-panel на visual на 200px (1440, Figma-слой через
+  абсолютное позиционирование) — не воспроизведено; потребовало бы абсолютного позиционирования
+  всей секции, от чего тикет explicitly предостерегает.
+- **Certs 392**: inner 360×216 (target214, ±2px), секция 392×248 (target246, ±2px) — padding12/16,
+  раздельный gap8 (title↔tokens) + margin-top30 (↔badges) вместо единого uniform gap16/24.
+- **Benefits**: иконка перенесена внутрь `<h3>` и переключена на `float:right` (из
+  `position:absolute`+`padding-right:44px` на весь заголовок) — «Higher onboarding conversion» и
+  «Compliance without manual work» укладываются в 1 строку на Mobile/840, 2-я строка (где есть)
+  больше не теряет 44px без нужды.
+
+Проверено: PHP lint 3 изменённых файла, CSS-скобки 4252/4252, targeted sweep 8 ширин × 2 страницы
+(identity-verification + kyc) — 0 overflow/console errors. `THEME_ASSETS_VER` → `1.1.44`.
+
+## Identity Verification — follow-up-4 (2026-10-17, доказанные причины CSS-регрессий)
+
+4 группы с runtime-доказательствами (DOM-фикстуры координатора + QA-диагностика 3 точечных
+причин Platform/Certs/Integration) исправлены по target/measured, не по догадке:
+
+- Hero: Mobile facts 148→112px (унаследованный от Tablet height, не контентное решение —
+  уточнение неверного утверждения из follow-up-3), FHD facts 24/36→18/24 (обрезка текста
+  факт 1/3), Mobile-кроп — точный source `identity-hero-mobile.webp` + точные inset-проценты
+  вместо догадочного `scale(1.35)`.
+- Security: индивидуальные SVG не несли общий canvas — подключены точные per-layer inset-
+  проценты всех 16 слоёв (coordinates.json), карта больше не слипается в углу.
+- Coverage: документы переведены с пропорционального `flex:1`/`height:100%` (широкие полосы)
+  на фиксированные 140×200/98×140 с центрированием и обрезкой по краям — как в реальном source.
+- Layout: Platform 840 (`flex-direction:row` явно, pair/screen `calc(50% - 12px)`), Certs 840
+  (CSS Grid areas вместо nowrap-row, 3-я марка больше не обрезана), Integration Mobile
+  (явный сброс columns+grid-column/row, 2-колоночное Desktop-правило больше не течёт на 392),
+  Benefits 840 (истинные 50/50 через calc, не flex:1), icon upper-right без лишней строки,
+  About FHD height (auto вместо KYC-шных 220px/карточку), badge→H2 gaps (48px на Benefits/
+  Checks/Security, были 0).
+
+Проверено: PHP lint 14 файлов, `node --check`, CSS 4217/4217, targeted sweep 8 ширин × 2
+страницы — 0 overflow/errors. Coverage keyboard+no-JS, 4 Steps states — не регрессировали.
+KYC About-badges (120px), Integration deploy-карточка — не затронуты.
+
+## Identity Verification — follow-up-3 (2026-10-17, точные ассеты + остатки V2)
+
+Независимая сверка 32 пар (8 секций × 4 ширины) против состояния follow-up-2 (1.1.20) нашла
+незакрытые остатки на всех 4 ширинах. Ассет-блокер (иконки/decision/Macbook/Security) снят —
+точные файлы перенесены в тему (`img/identity-*`, `inc/kyc-icons.php`).
+
+**Найден и исправлен критичный layout-баг по ходу работы**: после перевода Coverage на CSS Grid
+для 3-колоночной FHD-раскладки (follow-up-2) `.idv-coverage__visual` стал grid-, а не
+flex-элементом — percentage-height цепочка `panel→grid→row→doc` переставала резолвиться,
+документы схлопывались до 0px высоты на FHD. Исправлено `display:flex` + `flex:1` на активной
+панели (резолвит высоту независимо от grid/flex контекста снаружи).
+
+Доведено до факта, не до «мы меняли код»: Platform (реальная геометрия нового 2011×1183
+ноутбука, 840-композиция risk+case-слева/laptop-справа), Coverage documents (3 плотных ряда на
+ВСЕХ 4 ширинах, не только 1440), Industries (4 точные иконки), Certs (1440 2-строчный заголовок,
+840 реальная target-композиция), Benefits (840 2-колоночная раскладка, icon upper-right, Mobile
+маскот), About (FHD метрики рядом), Integration (list+backoffice делят 2 колонки без deploy-
+карточки на 1440 И 840), Hero Mobile (compact CTA), Security (точный 16-слойный наб369×360,
+map справа на 1440/840). F2-01 (QA-находка) — Coverage tablist скрыт без JS тем же enhancement-
+гейтом, что панели.
+
+Проверено: PHP lint 14 файлов, `node --check`, CSS 4206/4206, targeted sweep 8 ширин × 2
+страницы — 0 overflow/errors, Coverage keyboard+no-JS (tabs скрыты, 3 панели читаемы) и 4 Steps
+states — не регрессировали, KYC Platform/Integration/About laptop/grid/layout не затронуты
+(все фиксы scoped через `body.page-template-page-identity-verification` или зависят от
+отсутствующей у KYC карточки deploy).
+
+**Не закрыто явно**: Mobile hero фото-кроп не сверен попиксельно (скорректирован визуально);
+высота фактов 1/3 без mobile_text (контентное решение, не CSS). Полный `followup-3/report/
+index.md` — таблица по всем 13 пунктам с remaining.
+
+## Identity Verification — follow-up-2 (2026-10-17, независимый visual review)
+
+После side-by-side сверки 15 секций × 4 ширины с Figma exports найдены и исправлены: Hero
+(FHD/Tablet facts geometry + Mobile CTA-оверлей на фото через CSS Grid), Certs (FHD 3-строчный
+заголовок, Mobile порядок), Checks (нерабочее центрирование бейджа, Mobile типографика), Steps
+(2 из 4 иллюстраций, FHD-чип, Mobile размер), **Platform (критичный баг — чёрный экран ноутбука
+вместо интерфейса, z-index+геометрия)**, Coverage (stats на Mobile), **Coverage no-JS (критичный
+accessibility-баг — 2 из 3 состояний были полностью недоступны без JavaScript, `display:none`
+не зависел от `hidden`/JS)**, Accuracy (порядок NIST-карточки), Industries (сетка FHD, 1 точная
+иконка), Benefits (4-колоночный ряд на FHD, растянутый icon-box), Integration (вес шрифта),
+Security (**карта была горизонтальной полосой вместо компактной композиции** — переведена на
+технику Coverage SEA, порядок на Mobile).
+
+Проверено: `php -l` 14 файлов, `node --check js/main.js`, баланс CSS 4141/4141, полный sweep
+15 ширин × 2 страницы (0 overflow/errors), Coverage no-JS (`javaScriptEnabled:false` — весь текст
+3 состояний читается) и с JS (клик/клавиатура не изменились), regression KYC/Identity после всех
+правок (тексты/кнопки/steps/pricing/about идентичны прежним).
+
+**Продолжение (V2-05/06/11/12 доведены до конца, не остановлено на typography-фиксах)**:
+Platform Mobile audit/pair collapse-баг (flex:1 1 0 в row≠column) найден и исправлен; Coverage
+FHD переведён на CSS Grid (head|visual|promo+stats тремя колонками), 840/392 порядок унифицирован
+(badge→visual→tabs→panel); Pricing-840 pilot/enterprise в ряд; About-FHD 2-рядная композиция
+(была ошибочно унаследована KYC-шная 3-колоночная FHD-сетка), About-840/392 правки; Integration
+стрелки под заголовком на Tablet/Mobile (новая Identity-scoped grid-раскладка), deploy-карточка
+скрыта новым опциональным `show_deploy_card` арг (KYC/Solutions не затронуты). FAQ пересверен —
+first/second item уже точно по таргету (360×249/360×80), общая высота 97% от цели.
+
+Проверено после: PHP lint 14 файлов, `node --check`, CSS 4164/4164, targeted sweep 8 ширин ×
+2 страницы — 0 overflow/errors, Coverage keyboard+no-JS и 4 Steps states не регрессировали.
+
+**Не закрыто явно** (см. `followup-2/report/index.md` и CHANGELOG): точные иконки Steps-decision
+и Industries (4 из 6) — ближайшие существующие ассеты, не точные Figma-экспорты (Figma MCP
+недоступен без повторной авторизации); Coverage 1440 docs тремя крупными обрезанными рядами
+с overlap text panel. Ничего из этого не объявляется пройденным.
+
+## Identity Verification (`/identity-verification/`, 2026-10-17)
+
+WP page ID 1213, publish, реальный URL (не за редиректом). Проверено: `php -l` всех изменённых
+PHP, баланс CSS 4067/4067, `node --check js/main.js`, 200/без console errors/без горизонтального
+переполнения на 1920/1440/840/392, 1 `h1`, количество карточек/вкладок/FAQ-пунктов по ожидаемому
+числу. Функционально: Coverage (3 вкладки, `aria-selected`, смена текста и визуала), Steps
+(кнопки 1–4), FAQ-аккордеон (открытие/закрытие). Регрессия на живых `/kyc/`, `/solutions/`, `/`:
+200, Integration heading/badge и FAQ heading/count не изменились (прежние значения по умолчанию),
+News на главной — 2 реальных поста, как было.
+
+**Критичный фикс этого раунда**: страница не входила в списки селекторов, объявляющие токены
+`--nv-*` (HOME THEME) и включающие светлую тему для `.contacts`/`.faq`/`.teaser`/`.footer`/
+`.section` — без этого вся страница и переиспользованные блоки рендерились тёмными с нечитаемым
+текстом (см. docs/CHANGELOG.md). Исправлено расширением существующих списков селекторов
+(`body.page-template-page-kyc` → добавлен `body.page-template-page-identity-verification` же).
+
+**Не проверено / упрощено** (кандидаты на follow-up координатора):
+- ~~Responsive sweep — только 4 базовых вьюпорта~~ закрыто в follow-up-1 (см. ниже).
+- Hero-фото — один `object-fit:cover` <img>, не 4 раздельных кропа по брейкпоинтам как у `kyc-hero-*`.
+- Side-by-side/overlay сверка с Figma по каждой секции не делалась (сравнение по скриншотам секций
+  и структуре, не пиксель-в-пиксель).
+- ~~Клавиатурная навигация Coverage~~ закрыто в follow-up-1 (реально нажато, см. ниже).
+- Security/Accuracy — новые заголовки дословно из Figma, включая видимое несоответствие смыслу
+  секции (см. CHANGELOG), не проверялись на предмет опечаток в остальном тексте построчно.
+- Mobile hero: кнопки больше не наезжают на фото оверлеем, как в Figma (попытка через
+  отрицательный margin не сработала технически — `.main__actions` не потомок `.main__media`
+  после `display:contents`), описание сдвинуто вниз на высоту кнопок (y600 вместо y460 из Figma).
+  Раскрыто и принято как упрощение, не скрыто.
+
+### Follow-up-1 (2026-10-17) — F-01…F-07
+
+- **Полный sweep 15 ширин** (1920…320) на `/kyc/` и `/identity-verification/`: 0 overflow,
+  0 console/page errors на каждой из 30 комбинаций.
+- **Regression KYC/Identity после 6 partial-extractions**: H1, тексты кнопок/фактов/степов/
+  pricing/about, число industries-карточек — идентичны прежним значениям на обеих страницах,
+  0 errors.
+- **Coverage — клавиатура нажата по-настоящему** на новой 3-panel структуре: click, ArrowRight,
+  End, Home — фокус и `aria-selected` переключаются корректно; текст всех 3 состояний
+  подтверждён присутствующим в DOM (`textLen` > 0 для скрытых панелей — не только в JSON).
+  Documents — 16 фото, Regions — 4 кластера маркеров × 3 флага = 12 `.idv-coverage__region-flag`.
+- **Hero-геометрия перемерена** на 1920/1440/840/392 (`getBoundingClientRect()`): card y96,
+  title/description x/y/w/h совпадают с таргетом review в пределах 1px на 1920/1440/840.
+  Mobile — H1 вне карточки, фото 360×240, факты: 2-й/4-й — короткие mobile-варианты.
+- **Найден и исправлен QA-регресс**: на Mobile факты без `mobile_text` (1-й «99.74%…», 3-й
+  «195+ countries…») рендерились пустыми строками — `.main__fact-title--wide` была безусловно
+  `display:none` в Mobile-медиа без mobile-замены. Исправлено `:has()`-селектором
+  (приём уже используется в проекте), перепроверено — все 4 факта видны на 392px.
+- **Certs/Checks/Security на 1440/840/392**: бейджи 80×80/63×80/80×80 (1440/840), 48×48/38×48
+  (392) — нативные пропорции, не 64×64; `.idv-certs__left` — `row` на Desktop, `column-reverse`
+  на Tablet/Mobile; Checks — `display:flex`, карточки 2 в ряд на 840 (355px), 1 в ряд на 392
+  (334px); Security — 9 слоёв карты отрисованы на всех 3 проверенных ширинах.
+- **4 состояния Steps нажаты вручную** на обеих страницах (1440): все 4 кнопки переключают
+  активное состояние, 0 errors.
+- **FAQ/Integration после escaping-фикса (F-06)**: аккордеон открывается/закрывается кликом,
+  `wp_kses_post()` не даёт двойного экранирования (нет видимого `&amp;`/`&nbsp;`) в выводе.
+- **Смоук** Home/`/solutions/`/`/pricing-matrix/`: 200, без errors, заголовки страниц как были.
+- PHP lint 13 файлов — чисто; `node --check` — чисто; CSS-скобки 4103/4103.
+
+## Автор (`/author/<slug>/`, 2026-10-17)
+
+**Yoast SEO `disable-author=true` редиректит реальный URL на главную** (pre-existing настройка,
+не менялась) — открывать шаблон для QA только через прямой PHP-рендер (минуя `template_redirect`)
+или временно через `page.route()` в Playwright, не через настоящий HTTP-переход.
+Реальные проверочные авторы: `neurovision` (id1, corporate — N-mark вместо аватара, LinkedIn+
+website, 2 поста) и `kochetkov` (id2, обычный — реальный job/bio/аплоаднутый avatar, без соцсетей).
+Эталоны: 1920↔`2570:33393`, 1440↔`2570:31497`, 840↔`1381:25698`, 392↔`1381:26059`. Hero скрыт
+только на Mobile (его нет в этом макете). FHD — topics СПРАВА от сетки (`grid-template-areas:
+"main cats"`), у остальных ширин — как у category (слева/сверху). Card-геометрия — свои mode-
+значения (442×296/333.33×176/364×184/344×224), не category. `article-card.php` этим шаблоном
+больше не используется (решение задачи), но файл не удалён — нужен `nv_blog_search` на `/blog/`.
+
 ---
 
 ## KYC — `/kyc/` (2026-10-15)
@@ -11,6 +273,70 @@ Playwright: `scrollWidth == clientWidth` на 1920 / 1600 / 1440 / 1200 / 1024 /
 высоты секций на 1920 и 1440 сверены с Figma; состояния: Process 1–5, Steps 1–4, Risk 1–3, Compliance (клик / hover / focus),
 SEA 6 стран, FAQ 11; клавиатура — стрелки у Risk и SEA; регрессия: `/`, `/solutions/` (HTML до и после выноса partials
 совпадает с точностью до пробелов), `/pricing-matrix/`, юридические страницы, `/docs/`, 404. Ошибки `hcaptcha.com/logo.png` — внешние.
+
+## Архив блога (2026-10-15)
+
+- `/blog/` (страница #570 — черновик: открывать залогиненным или после публикации), `/?s=слово`, `/?s=несуществующее` (пустое состояние), `/category/<slug>/`.
+- Один `h1`; нет вложенных `<a>`; пагинация — реальные `/page/N/` (при поиске `/page/N/?s=`), `aria-current="page"`; `/blog/page/N/` за пределами → 404.
+- Нет горизонтальной прокрутки 1920…320; hover карточки гасит соседние только при `(hover: hover)`.
+- Эталоны: 1920 ↔ `2570:33169`, 1440 ↔ `1378:20322`, 840 ↔ `2569:29963`; Mobile — выведен, макета нет.
+- Для проверки сетки без записей в БД клонировать карточки в DOM (записи в БД не создавать, Р-24).
+
+## Category-only вариант архива (`/category/<slug>/`, 2026-10-16)
+
+- Реальные term'ы на момент проверки: `anti-fraud-liveness-detection` (1 запись), `kyc-aml-and-digital-identification`
+  (1 запись), пустая `pending-verification` (0, honest empty state, не 404). Несуществующая рубрика и
+  `/category/<slug>/page/N/` за пределами пагинации — настоящий 404 (без доп. кода, стандартное поведение `WP_Query`).
+- Сетка — 4/3/2/1 колонка (не 2/3 общего архива); проверять именно на `/category/`, не на `/blog/` или `/?s=`.
+- Активная рубрика: на Desktop/Full HD — отдельной строкой над «All topic» (два разделителя), на
+  Tablet/Mobile (`≤1199.98px`) — первой в общем списке (`order:-1`, один разделитель под «All topic»),
+  отдельная строка скрыта. Технически присутствует в DOM дважды (`display:none` у неактивного варианта) —
+  принятое решение (follow-up 1, R-16), не настоящий reorder. **Пустая/исключённая `hide_empty` рубрика**
+  (напр. `pending-verification`) с follow-up 2 (R2-05) добавляется в `$categories` в PHP и рендерится
+  **обычным пунктом списка** — отдельного `--empty-active` состояния больше нет, один разделитель и
+  обычная типографика на всех ширинах, как у непустых терминов. Count текущей рубрики (H1, пилюля, её
+  строка в списке) — единый `$grid->found_posts` (R2-12); остальные термины в сайдбаре — `term->count`.
+  `grid-template-areas` на `≤1199.98px` — `"cats" "main"` у category, без зарезервированной пустой
+  строки `news` (которая осталась бы у page/search).
+- `.blog-news` на category не запрашивается и не рендерится ни при каких данных.
+- Hero Mobile — 548px, заголовок Martel Bold (локальный шрифт, `fonts/Martel/`) 52px/92px, подзаголовок
+  **20px/32px** (3 строки, y276/h96). H1 на Mobile — **32px/44px**. Маскот виден и центрирован (216×135,
+  `object-fit:cover`), текстура кроплена по Figma `imageTransform` — на `/blog/`/`/?s=` маскот на
+  `≤575.98px` по-прежнему скрыт и текстура/шрифт не менялись, это ожидаемо. Desktop/FHD маскот
+  **287×179** фиксированными сторонами + `cover` (не `height:auto`, follow-up 2 R2-06). Tablet hero
+  title y86/subtitle y186 (x186, w468, h108, 3 строки); **Desktop/FHD title y104/subtitle y204, голова
+  секции 152px, сетка начинается на y=612** (H1-зона `min-height:104` с выравниванием по низу, follow-up 2
+  R2-09) — Tablet/Mobile остаются autoheight.
+- Табы Blog/News/Video на category — с иконками (`document`/`network`/`play` в `nv_blog_icon()`,
+  `currentColor`), Mobile — три равные колонки h36 с иконками `20×20` (document) / `24×20` (network/play),
+  Desktop/Tablet — natural width по контенту, слот иконки **24×24 для всех трёх** (`preserveAspectRatio`
+  вписывает native 24×20 без искажения, follow-up 2 R2-07). На `/blog/`/`/?s=` табы без иконок — scope
+  ограничен category.
+- Карточка на category Mobile — компактный вариант (gap12, padding 8/8/12, media 344/284, title/excerpt
+  14/20, stats/date 12/16, avatar40, **radius12** — follow-up 2 R2-08, было 24) — `.blog-card` остаётся
+  общим для `/blog/`/`/?s=`, которые Mobile-макета не имеют вовсе. На Desktop/FHD/Tablet — заголовок до
+  3 строк (`-webkit-line-clamp:3`), Mobile — 2 строки. Media-лесенка (follow-up 2 R2-02, точные значения
+  по всем четырём ширинам): **FHD 324/260, Desktop 329.333/260, Tablet 364/292 (+padding-bottom:16 у
+  карточки), Mobile 344/284.**
+- **Обводка карточки/author/stat/time/tab/search — `box-shadow: inset` вместо `border`** (follow-up 2
+  R2-01): Figma-стиль INSIDE не занимает layout, а CSS `border` при auto-размере отъедал 2px у
+  внутренней ширины/высоты каждого такого блока. Проверять через `getComputedStyle(...).boxShadow`,
+  не только `border`; `:focus-visible` (`outline`) не задет, независимое свойство. На `/blog/`/`/?s=`
+  границы остаются настоящим `border` — не трогались.
+- Эталоны: 1920 ↔ `2570:33257`, 1440 ↔ `2570:31820`, 840 ↔ `2570:32299`, 392 ↔ `2570:32881`.
+- Follow-up 1 и 2 (2026-10-17) сняты реальным Chromium headless Playwright
+  (`/Users/dmitriy/.npm/_npx/e41f203b7505f1fb/node_modules/playwright`, `ignoreHTTPSErrors:true`,
+  `page.setViewportSize()` + `page.screenshot()` оба работают в этом окружении) — скриншоты и
+  `getBoundingClientRect()`/`getComputedStyle()` по 4 эталонным ширинам. Раунд 1 исполнителя использовал
+  `iframe` внутри Electron-браузера Traycer из-за `setViewportSize() cannot be represented at current
+  page zoom`; с follow-up 1 это ограничение снято — используется обычный headless-прогон.
+
+## 404 — `404.php` (2026-10-15)
+
+- Любой несуществующий URL: HTTP 404, без редиректа; ровно один `h1`; CTA — `<a>` на `home_url('/')`.
+- Светлые шапка и футер, нет горизонтальной прокрутки на 1920…320 и на границах 1600/1599, 1200/1199, 992/991, 768/767, 576/575, 420/419.
+- Hover и `:focus-visible` на кнопке: круг разрастается, текст не прыгает; иллюстрация и тень — `alt=""`.
+- Эталоны: 1440 ↔ `722:20638`, 840 ↔ `722:23852`, 392 ↔ `722:24249`. Cookie-баннер перекрывает низ скриншотов — это нормально.
 
 ## 1. PHP-синтаксис — обязательно
 
@@ -227,6 +553,9 @@ Hover-состояния (замерены по фрейму `2386:28499`):
 ---
 
 ## 6. Структура CSS не разъехалась
+
+> С 2026-10-21 (Р-150) `css/styles.css` — заглушка; правила в `css/base.css`, `css/layout/`, `css/blocks/`, `css/pages/`. Команды ниже
+> относятся к прежнему монолиту. Для переносов правил — снимок computed styles до/после (`docs/FRONTEND.md` §2).
 
 ```bash
 # секции на месте (было 38 маркеров START/END)
@@ -1137,3 +1466,30 @@ Playwright-скрипты 2026-10-14 (47 проверок) лежали в scrat
 4. новые найденные риски — в `docs/BACKLOG.md` или `docs/THEME-TODO.md`.
 
 Не выдавать непроверенное за подтверждённое.
+
+
+## Рубрика блога — финальная независимая проверка 2026-10-17
+
+READY TO ACCEPT, приёмка владельцем ожидается. Native Chromium:23viewport/boundaries
+320…1920 без overflow/pageerrors,4визуальных эталона, pixel-test видимой рамки фото,
+category/search/empty/focus/404 и smoke основных страниц. После финального clipping
+fix повторены4widths: лапка видна доY392(1920/1440),Y389(840),Y557(392), как в Figma;
+texture обрезана собственной обёрткой, geometry текста/controls прежняя, search
+overflow:hidden/cover сохранён. Последние evidence /tmp/nv-category-final/paw.json
+и paw-pixels.json; остальные — в итоговом артефакте blog-category/result/index.md.
+Живая pagination>12 не проверена (недостаточно записей); это не пройденный тест.
+
+
+Уточнение по приёмке рубрики: network/play исправлены после замечания владельца —
+восстановлена геометрия SVG24×24 из сжатого24×20. Проверены скриншоты1440/392 и PHP lint;
+THEME_ASSETS_VER=1.0.92. READY TO ACCEPT, приёмка владельцем ожидается, без commit/deploy.
+# 2026-10-17 — финальная проверка страницы автора
+
+READY TO ACCEPT: A-01…A-06 закрыты; final hero retest1920/1440/840/392,
+Mobile hero assets не запрашиваются, PHP lint чисто, overflow/pageerrors отсутствуют.
+После явного разрешения владельца локально изменён только Yoast disable-author true→false,
+остальные title/индексационные опции сохранены. Живые /author/neurovision/ и
+/author/kochetkov/ —200 (текущие2/0 записи), неизвестный автор и /author/neurovision/page/5/ —404.
+Live Chromium: neurovision1920/392, kochetkov1440, один H1, без warnings/errors/overflow.
+Пагинация>9 остаётся непроверенной; job/bio — временная DOM fixture.
+Подробности/evidence: артефакт `blog-author/result/index.md`. Приёмка владельцем ещё не получена.

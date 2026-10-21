@@ -14,6 +14,7 @@
 | 1 | 26 | `.hero` | `HERO END` (1501) | — | статика + canvas-анимация |
 | 2 | 60 | `.page-nav` | `PAGE-NAV` (1503–1741) | — | `data-threshold="2200"` |
 | 3 | 102 | `.about.section` | `ABOUT` (1744–2080) | `#about` | статика |
+| 3а | — | `.video-embed` | `blocks/video.css` | `#video` | универсальный блок «Видео» (`template-parts/video-section.php`, YouTube-фасад, `js/video-block.js`), между About и Results (2026-10-21) |
 | 4 | 187 | `.video-intro.section` | `VIDEO INTRO` (2082–2212) | `#get-to-know` | статика + video |
 | 5 | 251 | `.solutions.section` | `SOLUTIONS` (2214–2405) | `#solutions` | статика |
 | 6 | 501 | `.products.section` | `PRODUCTS` (2408–2928) | `#products` | статика, 7 слайдов |
@@ -246,9 +247,12 @@ JS у блока нет.
 
 ### Блок «Seamless Integration That Just Works» — `.integration`
 
-Слева слайдер из трёх путей интеграции, справа три статичные карточки.
-Данные — массивы `$nv_integration_slides`, `$nv_integration_includes`,
-`$nv_integration_backoffice` в `page-solutions.php`.
+Слева слайдер путей интеграции, справа карточки «Every integration includes», развёртывания и Back-office.
+С 2026-10-21 — **универсальный блок** (один вид, без body-скоупа): `template-parts/integration-section.php`,
+все тексты, слайды, список, чипы и картинки — аргументы (`section_id`, `badge`, `heading`, `subtitle`,
+`docs_text`/`docs_url`, `contact_text`/`contact_form`, `path_title`, `slides`, `includes`, `deploy`, `backoffice`);
+стандартный набор — `nv_integration_preset()` (`inc/integration-preset.php`); пустой `deploy`/`backoffice`
+убирает карточку (без deploy — два столбца list | backoffice, с deploy — раскладка «3 карточки» через `:has()`).
 
 ```
 .section.integration #integration
@@ -424,20 +428,166 @@ template-parts/contacts-form.php      ← <form class="contacts__form">
 
 Тексты — `inc/kyc-data.php`, иконки — `inc/kyc-icons.php`, JS — `initKycPage()` (состояния в `data-kyc-states`).
 
-| Секция | Класс | Откуда | Состояния |
+С follow-up-1 (2026-10-17) **6 секций вынесены в общие с Identity data-driven partials**
+(`get_template_part(..., $args)`, значения по умолчанию в самом partial = прежний текст/
+классы/ID KYC, поведение не изменилось):
+
+| Секция | Класс | Partial | Состояния |
 |---|---|---|---|
-| Первый экран | `.main.main--solutions.main--kyc` | `/solutions/` + модификатор | — |
-| Сертификации | `.kyc-certs` | новое | — |
+| Первый экран | `.main.main--hero` | `template-parts/kyc-hero-section.php` — универсальный блок (2026-10-21): `media` (кадры fhd/desktop/laptop/tablet/mobile), 3–4 факта, `mobile_text`; CSS — `css/blocks/main-hero.css` | — |
+| Сертификации | `.idv-certs` | `template-parts/certs-section.php` — универсальный блок (2026-10-21): `marks` 0–N, `chips` 0–N; CSS — `css/blocks/idv-certs.css` | — |
 | Process | `.solutions-why.solutions-why--kyc` | `.solutions-why`, 5 карточек | 1–5, `initSolutionsWhy()` |
-| How KYC Works | `.kyc-steps` в `.solutions-products__panel` | новое | Step 1–4 (окно / лента) |
-| Risk-Based KYC | `.kyc-risk` | новое, tablist | 3 |
-| Platform | `.kyc-platform` | новое, `.kyc-card` | — |
-| Compliance | `.kyc-compliance` + `.kyc-marker` | новое | FATF + 4 страны |
-| Southeast Asia | `.kyc-sea` | новое, tablist, карта из слоёв | 6 стран |
-| Onboarding / Industries / Pricing / About | `.kyc-onboarding`, `.kyc-industries`, `.kyc-pricing`, `.kyc-about` | новое, `.kyc-card` | — |
-| Integration / Contacts / FAQ | `template-parts/*-section.php` | общие со `/solutions/` | FAQ 11 |
+| How KYC Works | `.kyc-steps` в `.solutions-products__panel` | `template-parts/kyc-steps-section.php`; CSS — `css/blocks/steps.css` | Step 1–4 (окно / лента); на 992–1199.98 окно листается ещё вертикальным свайпом и колесом над окном, на крайних шагах жест уходит странице |
+| Risk-Based KYC | `.kyc-risk` | `template-parts/kyc-risk-section.php` — универсальный блок (2026-10-21): 2–4 вкладки, иконка — аргумент, `side` необязателен; CSS — `css/blocks/kyc-risk.css` | 2–4, `initKycPage()` |
+| Platform | `.kyc-platform` | `template-parts/kyc-platform-section.php` — универсальный блок (2026-10-21), аргументы `top`/`audit`/`pair`/`screen`/`summary`; CSS — `css/blocks/platform.css` | — |
+| Compliance | `.kyc-compliance` + `.kyc-marker` | `template-parts/kyc-compliance-section.php` — универсальный блок (2026-10-21): 2–6 маркеров + общий; CSS — `css/blocks/kyc-compliance.css` | FATF + 4 страны |
+| Southeast Asia | `.kyc-sea` | `template-parts/kyc-sea-section.php` — универсальный блок (2026-10-21): `countries[]` 1–6, `rows` необязательны; CSS — `css/blocks/kyc-sea.css` | 1–6 стран |
+| Industries | `.kyc-industries` | `template-parts/kyc-industries-section.php` — универсальный блок (2026-10-21), только `tags`; CSS — `css/blocks/industries.css` | 3–6 карточек |
+| Pricing | `.kyc-pricing` | `template-parts/kyc-pricing-section.php` — универсальный блок (2026-10-21): цена, `plans` 1–3, все тексты аргументы; CSS — `css/blocks/kyc-pricing.css` | — |
+| About | `.kyc-about` | `template-parts/kyc-about-section.php` | — |
+| Integration / Contacts / FAQ | `template-parts/*-section.php` | общие со `/solutions/`; Integration — универсальный блок; Contacts — `section_id`/`badge`/`title`/`lead`; FAQ — `section_id`, ссылки в ответах | FAQ 11 |
 
 Общие примитивы: `.kyc-card` (`--filled`, `--accent`), `.kyc-token`, `.kyc-icon-box`, `.kyc-btn`, `.kyc-title`, `.kyc-lead`.
+
+## 2.2. Identity Verification — `page-identity-verification.php` → `/identity-verification/`
+
+Тексты/иконки — `inc/identity-verification-data.php`, `inc/identity-icons.php`. Переиспользует
+примитивы и JS KYC (`.kyc-card`, `.kyc-title`, `.kyc-steps`+`initKycPage()`), **6 общих с KYC
+partials** (hero/steps/platform/industries/pricing/about — см. 2.1) и общие
+Integration/Contacts/FAQ/News partials (`template-parts/*-section.php`, последний — новый,
+вынесен из `main-page.php` без изменений).
+
+| Секция | Класс | Откуда | Состояния |
+|---|---|---|---|
+| Первый экран | `.main.main--hero` | `kyc-hero-section.php` — тот же универсальный блок, без модификатора | — |
+| Certs | `.idv-certs` | `certs-section.php` — тот же универсальный блок | — |
+| Checks | `.idv-checks` | `idv-checks-section.php` — универсальный блок (2026-10-21), 2–6 карточек; CSS — `css/blocks/idv-checks.css` | — |
+| How it works | `.kyc-steps` | `kyc-steps-section.php`, reuse KYC | Step 1–4 |
+| Platform | `.kyc-platform` | `kyc-platform-section.php` — тот же универсальный блок, без модификатора | — |
+| Coverage | `.idv-coverage` | новое, 3 отдельных tabpanel, `initCoverage()` | Documents (16 фото)/Regions (карта+флаги)/SEA |
+| Accuracy / NIST | `.idv-accuracy` | новое | — |
+| Industries | `.kyc-industries` | `kyc-industries-section.php` — тот же универсальный блок, без модификатора | — |
+| Benefits | `.idv-benefits` | `idv-benefits-section.php` — универсальный блок (2026-10-21): 2–4 карточки + promo; CSS — `css/blocks/idv-benefits.css` | — |
+| Pricing | `.kyc-pricing` | `kyc-pricing-section.php` — тот же универсальный блок | — |
+| About | `.kyc-about idv-about` | `kyc-about-section.php` | — |
+| API & SDKs | `template-parts/integration-section.php` | универсальный блок, `nv_integration_preset()` + свои `slides`, `deploy` пустой | 1-й слайд REST API |
+| Security | `.idv-security` | `idv-security-section.php` — универсальный блок (2026-10-21): 1–3 карточки, регион и карта необязательны; слои карты — `inc/security-map.php`; CSS — `css/blocks/idv-security.css` | — |
+| Contacts / FAQ / News | `template-parts/*-section.php` | общие | FAQ 11 |
+
+`initCoverage()` — отдельный guarded-контроллер в `js/main.js` (не часть `initKycPage()`):
+с follow-up-1 переключает `hidden`/`.is-active` на реальных DOM tabpanel (`[data-coverage-panel]`,
+по одному на состояние, текст каждого — в разметке, не только в JSON), справа переключается
+целиком видимый визуал-блок. С follow-up-2 (V2-07) — **progressive enhancement**: PHP больше не
+рендерит `hidden` на панелях 2/3, а CSS скрывает неактивные только при `[data-coverage-ready]`,
+который выставляет сам `initCoverage()` при успешной инициализации (`activate(0)` в начале
+функции) — без JS читаемы все 3 состояния, с JS поведение не изменилось. Заголовки Accuracy/
+Security — дословно из Figma несмотря на видимое несоответствие смыслу секции (копипаст в
+макете, см. CHANGELOG 2026-10-17).
+
+Platform-экран (`.idv-platform__screen-img` поверх `.kyc-platform__laptop`) — follow-up-2 нашёл и
+исправил критичный баг: скриншот интерфейса был ПОЛНОСТЬЮ скрыт непрозрачным чёрным экраном
+ноутбука (отсутствовал z-index у оверлея + неверная геометрия выреза экрана, `height:auto` давал
+только ~40% нужной высоты). Follow-up-3 нашёл корневую причину самого силуэта ноутбука: исходный
+`imgMacbookPro.png` 2011×1183 (landscape) был сконвертирован в 400×489 БЕЗ сохранения пропорции
+ещё на этапе создания файла (не CSS-баг) — пересобран через `cwebp -resize`, `.idv-platform__
+laptop-wrap` теперь `aspect-ratio:2011/1183`. Security-карта (`.idv-security__map`) переведена на
+ту же технику слоёв, что Coverage SEA (нативный размер + `transform:scale` под компактный слот);
+follow-up-3 заменил набор на точные 16 слоёв node 2642:30982 (рамка 369×360, была смесь с
+9-слойной Coverage SEA и неверными 481×233).
+
+Coverage Documents (`.idv-coverage__docs-grid`) — follow-up-3 перестроил на 3 явных
+`.idv-coverage__docs-row` (5/6/5 карточек без переноса, flex:1 на каждой) вместо сетки мелких
+90×128 карточек с переносом — по образцу Figma source (references/1920-coverage.png). По ходу
+найден и исправлен баг: после перевода `.idv-coverage__row` на `display:contents` для FHD
+3-колоночной раскладки, `.idv-coverage__visual` стал grid- вместо flex-элементом — цепочка
+percentage-height (panel→grid→row→doc) переставала резолвиться, документы схлопывались до 0px.
+Исправлено `.idv-coverage__visual{display:flex}` + `flex:1` на активной панели.
+
+**follow-up-5**: найдена отдельная, более глубокая причина «сдвинутого вправо» ряда документов
+на Tablet/Mobile. `.idv-coverage__row{align-items:flex-start}` задан под row-направление
+(≥1200px, где влияет только на вертикаль), но наследуется и в column-направлении
+(`@media(max-width:1199.98px){.idv-coverage__row{flex-direction:column}}`), где та же команда
+становится КРОСС-осью (шириной): `.idv-coverage__visual` терял стандартное `stretch` и
+схлопывался до max-content своего некопируемого ряда документов (662px вместо 360px секции на
+392). Добавлен явный `align-items:stretch` в этот же `@media(max-width:1199.98px)` блок.
+Боковая колонка FHD-грида (`.idv-coverage > .container{grid-template-columns:... 388px}`,
+была 280px) пересчитана под `layout-contracts/coverage-*.json`.
+
+**follow-up-5, продолжение (2026-10-18)**: text-panel/visual overlap 200px — координатор
+опроверг «техническую невозможность без абсолютного позиционирования секции» DOM-proof'ом.
+Решение component-scoped, не page-scoped: `main` (1420 FHD / 1376 Desktop) — НЕ единая grid/flex-
+колонка пропорциональным соотношением (0.94fr:1fr было промежуточным приближением), а
+left(680px fixed) + visual(auto) с `gap:0` вплотную (680+740=1420, 680+696=1376 — без зазора).
+`.idv-coverage__row` вернул себе реальный `display:flex` (не `display:contents`) и стал одним
+grid-item рядом с `.idv-coverage__bottom`/side(388px, gap48, FHD-only). Текстовая панель
+(`.idv-coverage__tabs`, `.idv-coverage__panel`) — явные `width:816px;margin-left:64px` внутри
+680px левой колонки (64+816=880, на 200px шире самой колонки) — перекрывает `.idv-coverage__visual`
+слева. Измеренный overlap — ровно 200px на 1920 и 1440 (`panel.x+panel.width − visual.x`).
+
+**follow-up-5, независимая проверка 1.1.45 (C5-01, 2026-10-18)**: z-index в первой версии overlap
+был перепутан — DOM-порядок (visual после left) красил visual НАД панелью по умолчанию, и
+комментарий ошибочно утверждал, что так и задумано; `elementsFromPoint()` координатора показал
+документы поверх текста, тогда как Figma рисует ПАНЕЛЬ целиком поверх документов. Исправлено:
+панель `z-index:2`, visual `z-index:1`. Отдельно найдена причина «visual y64 вместо target y144
+относительно секции»: `.section__badge` был внутри `.idv-coverage__head` (внутри `.idv-coverage__
+row` с `align-items:flex-start`) — visual (сосед left-колонки в том же row) стартовал вровень с
+badge, а не с H2, теряя ~80px. В Figma badge — отдельный элемент НАД всей строкой (y64, 32h),
+row (head+visual+side) начинается на y144 (48px разрыв). Badge вынесен отдельным sibling'ом перед
+`.idv-coverage__row`; на FHD-гриде понадобился явный `grid-template-rows:auto auto` с
+`grid-row` на badge (1) и row/bottom (2) — без этого auto-placement сталкивал badge с уже явно
+позиционированным row в одной ячейке. `.idv-coverage__panel` получил `min-height:180px` — это
+высота самого длинного состояния (SEA, естественно 180h из-за длинного текста); без неё
+Documents/Regions короче (152h) и карточка «прыгает» высотой при переключении вкладок.
+
+**Integration** (`template-parts/integration-section.php`; исторически Identity-only scoped правила — с 2026-10-21 вид один, правила на классе `.integration`) —
+follow-up-5: FHD `.integration__path` переведён с вертикального стека (title→nav→slider) на
+Grid `264px 476px` (title+controls слева, REST-pane-слайдер справа через всю высоту) — точные
+координаты `layout-contracts/integration-1920.json`. 1440 `.integration__path` 600px (было 400,
+сжимало slider до ~1/3 ширины). Folder-иллюстрация backoffice-карточки 280×195 на 840/1440
+(было 160×112 без источника), 182×127 на 392.
+
+**About** (`template-parts/kyc-about-section.php`, общий с `/kyc/`, Identity через `.idv-about`
+модификатор) — follow-up-5, продолжение: верхние 2 карточки (`.kyc-about__accuracy`,
+`.kyc-about__documents`) используют `flex:0 0 680px` вместо `flex:1 1 0` на широких ширинах
+(≥1200px) — старое правило «случайно» давало верный результат на 1440 (контейнер там ровно
+1376=680×2+16), но растягивало карточки до 920px на 1920 (контейнер 1856). Марки
+(`.kyc-about__badges img`) — 120h на FHD / 72h на Mobile для Identity (KYC-шные дефолты для тех
+же ширин — 72px и 88px соответственно, под собственную 3-колоночную FHD-сетку KYC, не трогались).
+`padding-top:1px` на About уже был верно scoped с follow-up-4 (ложная тревога в отчёте координатора
+не подтвердилась при повторной проверке). `/kyc/` (3-колоночная собственная FHD-сетка, 521w/782w
+карточки, марки 72h, `height:220` фикс.) — не затронут, все правки через
+`body.page-template-page-identity-verification .idv-about`.
+
+**follow-up-5, независимая проверка 1.1.45 (C5-02, 2026-10-18)**: `.kyc-about__certs-links{flex-
+direction:column}` (KYC-шное FHD-правило под узкую 633px-колонку) наследовалось у Identity, где
+cert-row на всю ширину — давало 72h (2 чипа друг под другом) вместо32h (в ряд); явный
+`flex-direction:row`. 840: `.kyc-about__certs{padding:16px}` (было 23, `.kyc-card`-дефолт). 392:
+`padding-top:32px` у Identity — прошлый комментарий «padding-top1px на всех widemodes» ошибочно
+включал Mobile, хотя исходный L-05 явно ограничивал это тремя ШИРОКИМИ modes (FHD/Desktop/
+Tablet). Divider высота увеличена до2px (1px формально рендерился, но был едва различим на
+сравнении). 1920 topcards: `margin-bottom:16px` на `.kyc-about__head` (было8, терялся разрыв до
+stats-row).
+
+**Benefits** (`.idv-benefits`) — follow-up-5, независимая проверка 1.1.45 (C5-03): маскот
+(`.idv-benefits__promo-image`) был `position:static` (мелкий full-body) на FHD/Tablet/Mobile —
+переведён на `position:absolute` overlay-crop, как было задумано (1440 уже был близко к цели).
+Источник-ассет (`identity-benefits-fraud.webp`) — центрированный full-body кадр без отдельного
+zoom на голову, поэтому буквальный crop по `benefits-*.json` координатам показывал только
+прозрачный край кадра; элемент сознательно укрупнён (не точные px из contracts) для сохранения
+духа «крупного нижнего кропа». FHD-колонки сделаны НЕ равными: 3 карточки по412px + promo572px
+(было4×452 поровну, `flex:1 1 0`) — `benefits-1920.json` даёт 412×3+572+3×16=1856 ровно. Mobile
+`align-items`/`text-align` вернули с `center` на `flex-start`/`left` (была явная ошибка в коде, не
+задумано). «Compliance without manual work» оставалась на2 строках при общем Mobile
+`.kyc-card__title{font-size:20px}` — добавлен более специфичный селектор
+`.idv-benefits__card .idv-benefits__card-title{font-size:18px}` (простой класс-селектор той же
+специфичности перебивался общим правилом, расположенным позже в каскаде).
+
+**Platform** (`.kyc-platform.idv-platform`) — follow-up-5, независимая проверка 1.1.45 (C5-04):
+Mobile `.kyc-platform__audit-image` был `position:static` (192×192 — размер уже верный с
+followup-5, но статичный блок в потоке ПОД текстом, добавляющий карточке лишнюю высоту) —
+переведён на `position:absolute` overlay-crop, как на Desktop/FHD; карточка получила
+`min-height:320px` (без резерва высоты overlay перекрывал заголовок/текст). `padding-top:1px` у
+`.idv-platform` (было64, унаследованный KYC-дефолт — тот же паттерн, что у About).
 
 ## 3. Pricing Matrix — `page-price-matrix.php` → `/pricing-matrix/`
 
@@ -1251,7 +1401,7 @@ new WP_Query([
 `no_found_rows` — пагинация не нужна.
 
 Карточка: `template-parts/news-card.php`. Логика данных повторяет
-`template-parts/article-card.php` (карточка `/blog/`, архивов и поиска):
+`template-parts/article-card.php`:
 
 | Что | Источник |
 |---|---|
@@ -1263,8 +1413,10 @@ new WP_Query([
 | анонс | `wp_trim_words(get_the_excerpt(), 32, '...')` |
 | обложка | `the_post_thumbnail('large')`, если есть |
 
-⚠️ Общий `article-card.php` **не переиспользуется**: у него другие классы
-и оформление, менять его нельзя — он формирует `/blog/` и архивы.
+⚠️ Общий `article-card.php` **не переиспользуется**: у него другие классы и
+оформление, менять его нельзя. **Уточнение 2026-10-17**: `/blog/`, рубрики, поиск и теперь
+`author.php` используют `template-parts/blog-card.php` (светлая система); `article-card.php`
+используется только AJAX live-поиском блога (`nv_blog_search()` в `functions.php`) — не удалён.
 
 ### Пустое состояние
 
@@ -1636,6 +1788,10 @@ main.content-page
 
 | Класс | Где ещё используется |
 |---|---|
+| `.section-404`, `.section-404__image` (бокс 737×473 + `__picture` + `__shadow`), `.btn-hero` внутри `.section-404` — серая animated button | `404.php`, всё под `body.error404` |
+| `.blog-hero`, `.blog-archive`, `.blog-card` (+`--featured`), `.blog-cats`, `.blog-news`, `.blog-pagination`, `.blog-search`, `.blog-tab` | `template-parts/blog-archive.php`, `blog-card.php` (`search.php`, `blog-page.php`, `category.php`); всё под `body.nv-blog`, стили — `css/blog.css`, регион BLOG ARCHIVE LIGHT |
+| `.blog-hero--author`, `.blog-archive--author`, `.author-profile*`, `.author-layout`, `.author-content` | Только `author.php`. `template-parts/blog-hero.php` — hero вынесен из `blog-archive.php` в отдельный partial (переиспользуют category/page/search/author), на Mobile скрыт только для author. Профиль: avatar140 (Mobile216) rounded24/32 + border primary, identity (name24/36 bold + job18/24 bold) + socials (реальный `user_url` + для `user_nicename==='neurovision'` реальный LinkedIn из footer), bio ниже (`description`, honest-empty если пусто). FHD — профиль слева 440px колонкой, контент справа, topics СПРАВА от сетки (`grid-template-areas:"main cats"`); Desktop/Tablet/Mobile — сверху/слева, как у category. Card-геометрия свои mode-значения (442×296/333.33×176/364×184/344×224, не category), та же inside-stroke техника (R2-01). Corporate-аватар — `img/author-corporate-mark.png` (официальный N-mark, не `get_avatar()`), определяется по `user_nicename`, не по ID. `article-card.php` этим шаблоном больше не используется (см. выше) |
+| `.blog-hero--category`, `.blog-archive--category`, `.blog-cats--category`, `.blog-cats__active`, `.blog-cats__divider`, `.blog-tab__icon` | Только `category.php` (context `category` в `blog-archive.php`). Grid 4/3/2/1 колонки (не 2/3 как у page/search), `grid-template-areas: "cats" "main"` на ≤1199.98 (без зарезервированной пустой строки `news`), H1-зона `min-height:104` с выравниванием по низу на Desktop/FHD (голова секции 152px, сетка с y=612), autoheight на Tablet/Mobile. H1/активная пилюля/её строка в списке — term+count через единый `$grid->found_posts` (R2-12), остальные термины сайдбара — `term->count`. Активная рубрика рендерится **дважды в DOM** — отдельная пилюля (`.blog-cats__active`, видна на Desktop/FHD, 2 разделителя) и обычный пункт списка (`.blog-cats__list li.is-current`, видна на Tablet/Mobile первой через `order:-1`, 1 разделитель) — нужный вариант скрывается `display:none` на каждой ширине. Если текущий term исключён `hide_empty`, PHP добавляет его в `$categories` перед рендером — он проходит тот же путь, что и обычный term, без отдельного состояния (follow-up 2, R2-05; `--empty-active` удалён). Карточка/`__author`/`__stat`/`__time`/табы/поиск — Figma-обводка INSIDE воспроизведена как `box-shadow: inset` вместо `border` (R2-01), иначе внутренняя ширина/высота были на 2px меньше mode-значений; media-лесенка FHD 324/260 / Desktop 329.333/260 / Tablet 364/292 (+padding-bottom:16) / Mobile 344/284 (R2-02). Карточка на Mobile — `border-radius:12` (не 24, R2-08). Иконка таба — слот 24×24 на ≥768px для всех трёх, свои 20×20/24×20 на Mobile (R2-07). Табы с иконками (`nv_blog_icon('document'|'network'|'play')`) только у category. Hero Mobile 548px, заголовок Martel Bold (локальный шрифт, алиас `'Martel Blog Category'`) 52px/92px, подзаголовок 20px/32px, маскот Desktop/FHD 287×179, Tablet/Mobile 216×135 (фиксированные стороны + `object-fit:cover`, не `height:auto`) и Figma-кроп текстуры на Mobile (у page/search маскот на ≤575px скрыт, текстура/обводки — общие) |
 | `.content-page` | `404.php` (`content-page page-404`) — **базовые правила не трогать** |
 | `.page__wrapper`, `.page__header`, `.page__title`, `.page__last`, `.page__content` | только этот шаблон |
 | `.container`, `.small-container`, `.teaser`, `.footer`, `.header` | общие компоненты темы |
@@ -1692,3 +1848,72 @@ main.content-page
 страницах встречаются только `p`, `h2`, `h3`, `ul`, `li`, `strong`, `a`
 и таблицы. Правила стоят, чтобы редактор мог добавить такой блок
 в админке и не получить неоформленный вывод.
+
+
+---
+
+## CSS по файлам (Р-149 / Р-150, 2026-10-21)
+
+Стили разнесены из `css/styles.css` по файлам; подключает `inc/css-registry.php` (порядок строк = порядок подключения, все файлы грузятся на всех страницах). Колонка «Шаблоны» — где корневой класс стоит в `class=` (поиск по шаблонам; `header.php`/`footer.php` общие). Новый блок: partial + `css/blocks/<имя>.css` + строка в реестре (см. `docs/FRONTEND.md` §2).
+
+| № | Запись реестра | Файл | Корневые классы | Шаблоны |
+|---:|---|---|---|---|
+| 1 | `base` | `css/base.css` | токены `--nv-*`, reset, `.container`, `.section*`, `.btn*`, `.kyc-*` (примитивы), `@font-face`, body-правила страниц | все |
+| 2 | `layout/header` | `css/layout/header.css` | `.mega`, `.header`, `.header-language` | `header.php` |
+| 3 | `blocks/hero` | `css/blocks/hero.css` | `.hero`, `.btn-hero`, `.btn` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 4 | `blocks/page-nav` | `css/blocks/page-nav.css` | `.page-nav` | `page-solutions.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 5 | `blocks/about` | `css/blocks/about.css` | `.about`, `.maskot-animation` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 6 | `blocks/results` | `css/blocks/results.css` | `.results` | `main-page.php` |
+| 7 | `blocks/video-intro` | `css/blocks/video-intro.css` | `.video-intro` | `main-page.php`, `main-page-video-autoplay.php` |
+| 8 | `blocks/solutions` | `css/blocks/solutions.css` | `.solutions`, `.btn` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 9 | `blocks/products` | `css/blocks/products.css` | `.products`, `.home` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 10 | `blocks/how` | `css/blocks/how.css` | `.how` | `main-page.php` |
+| 11 | `blocks/advantages` | `css/blocks/advantages.css` | `.advantages`, `.advantage` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 12 | `blocks/clients` | `css/blocks/clients.css` | `.clients`, `.company` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 13 | `blocks/testimonials` | `css/blocks/testimonials.css` | `.testimonials` | `index.php`, `page-solutions.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 14 | `blocks/cases` | `css/blocks/cases.css` | `.cases`, `.btn` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 15 | `blocks/pricing` | `css/blocks/pricing.css` | `.pricing` | `main-page.php` |
+| 16 | `blocks/doc` | `css/blocks/doc.css` | `.doc`, `.btn` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 17 | `blocks/news` | `css/blocks/news.css` | `.news` | `index.php`, `main-page-video-autoplay.php`, `template-parts/news-section.php`, `template-parts/news-card.php` |
+| 18 | `blocks/offer-card` | `css/blocks/offer-card.css` | `.promo` | `index.php`, `main-page.php`, `main-page-video-autoplay.php` |
+| 19 | `layout/forms` | `css/layout/forms.css` | `.phone-field`, `.input-form-block`, `.ui-check` | `functions.php`, `index.php`, `main-page-video-autoplay.php`, `footer.php`, `single.php` … |
+| 20 | `blocks/contacts` | `css/blocks/contacts.css` | `.contacts`, `.post`, `.modal` | `index.php`, `main-page.php`, `main-page-video-autoplay.php`, `footer.php`, `single.php` … |
+| 21 | `layout/cta-band` | `css/layout/cta-band.css` | `.teaser` | `index.php`, `main-page-video-autoplay.php`, `footer.php`, `template-parts/teaser.php` |
+| 22 | `layout/footer` | `css/layout/footer.css` | `.footer` | `footer.php`, `template-parts/footer-home.php` |
+| 23 | `layout/cookie` | `css/layout/cookie.css` | `.cookie`, `.cookie-banner` | `footer.php` |
+| 24 | `layout/modals` | `css/layout/modals.css` | `.modal`, `.review`, `.post` | `footer.php` |
+| 25 | `blocks/benefits` | `css/blocks/benefits.css` | `.benefits`, `.section` | `page-solutions.php` |
+| 26 | `blocks/solutions-why` | `css/blocks/solutions-why.css` | `.solutions-why` | `page-solutions.php`, `page-document-verification.php`, `page-kyc.php` |
+| 27 | `blocks/features` | `css/blocks/features.css` | `.features` | в `class=` шаблонов не найден |
+| 28 | `blocks/solutions-products` | `css/blocks/solutions-products.css` | `.solutions-products` | `page-face-verification.php`, `page-liveness.php`, `page-solutions.php`, `page-document-verification.php`, `page-kyc.php` … |
+| 29 | `blocks/flow` | `css/blocks/flow.css` | `.flow` | в `class=` шаблонов не найден |
+| 30 | `blocks/industries-slider` | `css/blocks/industries-slider.css` | `.nvslider`, `.industries` | `page-solutions.php` |
+| 31 | `blocks/integration` | `css/blocks/integration.css` | `.integration` | `template-parts/integration-section.php` |
+| 32 | `blocks/solutions-security` | `css/blocks/solutions-security.css` | `.solutions-security` | `page-solutions.php` |
+| 33 | `blocks/security` | `css/blocks/security.css` | `.security` | в `class=` шаблонов не найден |
+| 34 | `blocks/faq` | `css/blocks/faq.css` | `.faq` | `main-page.php`, `template-parts/faq-section.php`, `blocks/faq/faq.php` |
+| 35 | `blocks/cta` | `css/blocks/cta.css` | `.cta` | в `class=` шаблонов не найден |
+| 36 | `blocks/main-hero` | `css/blocks/main-hero.css` | `.main` | `page-face-verification.php`, `page-price-matrix.php`, `page-liveness.php`, `page-solutions.php`, `page-identity-verification.php` … |
+| 37 | `blocks/kyc-certs` | `css/blocks/kyc-certs.css` | — (пуст, перенесено в `blocks/idv-certs`) | — |
+| 38 | `blocks/kyc-risk` | `css/blocks/kyc-risk.css` | `.kyc-risk` | `template-parts/kyc-risk-section.php` (`page-kyc.php`, `page-liveness.php`) |
+| 39 | `blocks/kyc-compliance` | `css/blocks/kyc-compliance.css` | `.kyc-compliance`, `.kyc-marker` | `template-parts/kyc-compliance-section.php` (`page-kyc.php`, `page-aml.php`, `page-kyb.php`) |
+| 40 | `blocks/kyc-sea` | `css/blocks/kyc-sea.css` | `.kyc-sea` | `template-parts/kyc-sea-section.php` (6 страниц) |
+| 41 | `blocks/kyc-onboarding` | `css/blocks/kyc-onboarding.css` | `.kyc-onboarding`, `.kyc-flags` | `page-kyc.php` |
+| 42 | `blocks/kyc-pricing` | `css/blocks/kyc-pricing.css` | `.kyc-pricing` | `page-face-verification.php`, `page-liveness.php`, `page-document-verification.php`, `page-aml.php`, `page-kyb.php` … |
+| 43 | `blocks/kyc-about` | `css/blocks/kyc-about.css` | `.kyc-about`, `.idv-about`, `.kyc-tag` | `template-parts/kyc-about-section.php` |
+| 44 | `blocks/idv-certs` | `css/blocks/idv-certs.css` | `.idv-certs` | `template-parts/certs-section.php` (7 страниц) |
+| 45 | `blocks/idv-checks` | `css/blocks/idv-checks.css` | `.idv-checks` | `template-parts/idv-checks-section.php` (6 страниц) |
+| 46 | `blocks/idv-coverage` | `css/blocks/idv-coverage.css` | `.idv-coverage` | `page-identity-verification.php` |
+| 47 | `blocks/idv-accuracy` | `css/blocks/idv-accuracy.css` | `.idv-accuracy` | `page-identity-verification.php` |
+| 48 | `blocks/idv-benefits` | `css/blocks/idv-benefits.css` | `.idv-benefits` | `template-parts/idv-benefits-section.php` (`page-identity-verification.php`, `page-aml.php`, `page-face-verification.php`) |
+| 49 | `blocks/idv-security` | `css/blocks/idv-security.css` | `.idv-security` | `template-parts/idv-security-section.php` (6 страниц) |
+| 50 | `pages/404` | `css/pages/404.css` | `.section-404`, `.page-404`, `.page-id-582` | `404.php` |
+| 51 | `layout/light-content` | `css/layout/light-content.css` | `.page`, `.content-page`, `.section` | `page-privacy.php` |
+| 52 | `pages/price-matrix` | `css/pages/price-matrix.css` | `.calculator`, `.packages`, `.overview` | `page-price-matrix.php` |
+| 53 | `layout/chat-widget` | `css/layout/chat-widget.css` | `.wp-singular` | в `class=` шаблонов не найден |
+| 54 | `blocks/steps` | `css/blocks/steps.css` | `.kyc-steps` | `template-parts/kyc-steps-section.php` |
+| 55 | `blocks/platform` | `css/blocks/platform.css` | `.kyc-platform` | `template-parts/kyc-platform-section.php` |
+| 56 | `blocks/industries` | `css/blocks/industries.css` | `.kyc-industries` | `template-parts/kyc-industries-section.php` |
+| 57 | `blocks/video` | `css/blocks/video.css` | `.video-embed` | `template-parts/video-section.php` (главная; блок универсальный) |
+
+`css/styles.css` — заглушка (не подключается). Не относятся к реестру: `css/post.css`, `css/blog.css`, `css/document-toc.css`, `css/bloki.css`, `css/editor-blocks.css`.

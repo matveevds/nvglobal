@@ -70,7 +70,8 @@
 Новые файлы — только туда, никаких `<link>` и `<script src>` в шаблонах.
 
 Порядок зависимостей стилей:
-`swiper-css`, `locomotive-css` → `theme-styles` (`css/styles.css`) → `theme-main-style`
+`swiper-css`, `locomotive-css` → `theme-styles` (`css/base.css`) → файлы реестра `inc/css-registry.php`
+(`theme-css-layout-*`, `theme-css-blocks-*`, `theme-css-pages-*`, плоский порядок, Р-150) → `theme-main-style`
 (`style.css`) → `post-styles`, `blog-styles`. Условно: `document-toc-styles`.
 
 `main-js` зависит от всех библиотек и от `form-js` — порядок не переставлять.
