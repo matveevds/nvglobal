@@ -417,6 +417,17 @@
         align-items: stretch;
         gap: 24px;
     }
+
+    /* Мобильная версия: карточки встают в столбец, каждая на всю ширину. */
+    .doc__cards {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .doc__card {
+        flex: 0 0 auto;
+        width: 100%;
+    }
 }
 
 @media (max-width: 575.98px) {
