@@ -103,8 +103,9 @@
      * заменён ссылкой Blog; данные $nv_menu['resources'] оставлены для будущих News/Video.
      */
     $nv_show_industries = false;
-    /* Пункт Blog скрыт из верхнего меню по решению владельца (2026-10-21); данные $nv_menu['blog'] остаются — вернуть, поставив true. */
-    $nv_show_blog = false;
+    /* Пункт Blog скрыт из верхнего и мобильного меню по решению владельца (2026-10-21): общий флаг NVGLOBAL_BLOG_LINKS_ENABLED
+     * (functions.php); данные $nv_menu['blog'] остаются. */
+    $nv_show_blog = nv_blog_links_enabled();
     ?>
     <header class="header" id="site-header" data-header>
         <div class="header__bar">

@@ -38,6 +38,13 @@ define('THEME_ASSETS_VER', '1.1.92');
 define('NVGLOBAL_NEVI_WIDGET_ENABLED', false);
 
 /**
+ * Ссылки на раздел Blog (пункт верхнего меню, Resources в светлом подвале, кнопка «все записи» в блоке News на главной)
+ * отключены (2026-10-21): в блоге пока нет материалов. Страница /blog/, записи, крошки и архивы работают как раньше — на
+ * них просто никто не ссылается. Чтобы вернуть ссылки — поставить true.
+ */
+define('NVGLOBAL_BLOG_LINKS_ENABLED', false);
+
+/**
  * Раннее подключение и инициализация NeVi Widget.
  */
 function nvglobal_enqueue_nevi_widget() {
@@ -2341,6 +2348,11 @@ function nv_blog_ago(int $timestamp): string {
         }
     }
     return 'just now';
+}
+
+/** Выводить ли в шаблонах ссылки на раздел Blog (флаг NVGLOBAL_BLOG_LINKS_ENABLED). */
+function nv_blog_links_enabled(): bool {
+    return defined('NVGLOBAL_BLOG_LINKS_ENABLED') && NVGLOBAL_BLOG_LINKS_ENABLED;
 }
 
 /** Адрес страницы блога: опубликованная страница `blog`, иначе плановый `/blog/` (Р-26). */

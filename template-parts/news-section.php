@@ -2,7 +2,7 @@
 /**
  * Блок «Insights & Resources» (Blog). Вынесен из main-page.php без изменений разметки/поведения,
  * чтобы переиспользовать на /identity-verification/ (blog-author ТЗ-style reuse). Только реальные
- * опубликованные записи WordPress; секция не выводится, если записей нет.
+ * опубликованные записи WordPress; секция не выводится, если записей нет или выключен флаг NVGLOBAL_BLOG_LINKS_ENABLED.
  */
 
 $nv_news_query = new WP_Query([
@@ -16,10 +16,16 @@ $nv_news_query = new WP_Query([
 ]);
 
 $nv_posts_page_id = (int) get_option('page_for_posts');
-$nv_blog_url      = $nv_posts_page_id ? get_permalink($nv_posts_page_id) : '';
+$nv_blog_url      = ($nv_posts_page_id && nv_blog_links_enabled()) ? get_permalink($nv_posts_page_id) : ''; // кнопка скрыта флагом NVGLOBAL_BLOG_LINKS_ENABLED
 ?>
 
-<?php if ($nv_news_query->have_posts()) : ?>
+<?php
+/* Блок скрыт вместе со ссылками на Blog (флаг NVGLOBAL_BLOG_LINKS_ENABLED); в картотеке и стресс-кадрах выводится всегда. */
+$nv_news_hidden = !nv_blog_links_enabled()
+    && !(function_exists('nv_block_stress_slug') && '' !== nv_block_stress_slug())
+    && !(function_exists('nv_is_block_catalog') && nv_is_block_catalog());
+?>
+<?php if (!$nv_news_hidden && $nv_news_query->have_posts()) : ?>
 <section class="news section" id="blog">
     <div class="container">
         <div class="news__wrapper">

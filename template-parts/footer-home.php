@@ -36,9 +36,13 @@ $nv_footer_blog_id = (int) get_option('page_for_posts');
 $nv_footer_resources = [
     ['label' => 'Documentation', 'url' => home_url('/docs/')],
     ['label' => 'Pricing',       'url' => home_url('/pricing-matrix/')],
-    ['label' => 'Blog',          'url' => $nv_footer_blog_id > 0 ? get_permalink($nv_footer_blog_id) : home_url('/blog/')],
     ['label' => 'Demo',          'url' => home_url('/demo/')],
 ];
+
+// Blog скрыт, пока в блоге нет материалов (флаг NVGLOBAL_BLOG_LINKS_ENABLED в functions.php); с флагом пункт идёт перед Demo.
+if (nv_blog_links_enabled()) {
+    array_splice($nv_footer_resources, 2, 0, [['label' => 'Blog', 'url' => $nv_footer_blog_id > 0 ? get_permalink($nv_footer_blog_id) : home_url('/blog/')]]);
+}
 
 $nv_footer_company = [
     ['label' => 'About us', 'url' => home_url('/#about')],
