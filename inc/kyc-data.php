@@ -173,33 +173,39 @@ return array(
     'industries' => array(
         array(
             'title' => 'Banks and digital banks',
+            'icon' => 'temple',
             'text' => 'Open accounts remotely with full CDD, enhanced checks for high-risk customers and an audit trail for your regulator.',
-            'req' => 'CDD and EDD, PEP and sanctions screening, record keeping',
+            'tags' => array('CDD and EDD', 'PEP and sanctions screening', 'record keeping'),
         ),
         array(
             'title' => 'FinTech, e-wallets and lending',
+            'icon' => 'bank-card',
             'text' => 'Start users on a low limit with a quick check and upgrade them to full KYC when they need higher limits. Stop fake borrowers and loan stacking with face matching and duplicate detection before you pay out.',
-            'req' => 'Tiered KYC, duplicate search, sanctions screening',
+            'tags' => array('Tiered KYC', 'duplicate search', 'sanctions screening'),
         ),
         array(
             'title' => 'Crypto exchanges and Web3',
+            'icon' => 'crypto',
             'text' => 'Verify traders in line with FATF standards, the Travel Rule and local licensing, and block multi-accounting before the first deposit.',
-            'req' => 'CDD, sanctions screening, Travel Rule data',
+            'tags' => array('CDD', 'sanctions screening', 'Travel Rule data'),
         ),
         array(
             'title' => 'Telecom and SIM registration',
+            'icon' => 'user',
             'text' => 'Register SIM cards with a verified identity, as required by SIM registration laws such as the Philippines\' SIM Registration Act.',
-            'req' => 'ID check, selfie match, record keeping',
+            'tags' => array('ID check', 'selfie match', 'record keeping'),
         ),
         array(
             'title' => 'Gaming and betting',
+            'icon' => 'cup',
             'text' => 'Verify age and identity at sign-up and before withdrawals to meet licensing rules.',
-            'req' => 'Age check, identity verification, self-exclusion lists',
+            'tags' => array('Age check', 'identity verification', 'self-exclusion lists'),
         ),
         array(
             'title' => 'Government and public services',
+            'icon' => 'university',
             'text' => 'Verify citizens for digital public services with national ID checks, face match and liveness, on-premise where the law requires it.',
-            'req' => 'National ID check, liveness, on-premise deployment',
+            'tags' => array('National ID check', 'liveness', 'on-premise deployment'),
         ),
     ),
     'faq' => array(

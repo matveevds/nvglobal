@@ -1,7 +1,10 @@
 <?php
 /**
- * Секция Contacts (`#cta`). Общая для /solutions/ и /kyc/.
+ * Секция Contacts (`#cta`). Общая для /solutions/, /kyc/, /identity-verification/ и страниц сборщика.
  * Вынесена из page-solutions.php без изменений разметки; форма — contacts-form.php.
+ * Аргументы (все необязательные; по умолчанию — прежние тексты и якорь, страницы без аргументов не меняются):
+ *   section_id — id секции (`cta`); badge — плашка (`Contacts`); title — H2;
+ *   lead — подзаголовок под H2 (HTML через wp_kses_post; пустая строка убирает абзац).
  */
 /*
  * Contacts. Макеты Figma: Full HD 2456:16687, Desktop 2398:25244,
@@ -32,16 +35,25 @@ $nv_contacts_social = array_filter([
     'whatsapp' => ['url' => '', 'label' => 'WhatsApp'],
     'linkedin' => ['url' => 'https://www.linkedin.com/company/nvglobal-ai/posts/', 'label' => 'LinkedIn'],
 ], static function ($item) { return $item['url'] !== ''; });
+
+$nv_contacts_id    = sanitize_html_class($args['section_id'] ?? '') ?: 'cta';
+$nv_contacts_badge = $args['badge'] ?? 'Contacts';
+$nv_contacts_title = $args['title'] ?? 'Not sure which product fits? Tell us about your flow';
+$nv_contacts_lead  = $args['lead'] ?? 'We&rsquo;ll map your onboarding and compliance steps to the right modules and set up a pilot on your real traffic.';
 ?>
-<section class="contacts section" id="cta">
+<section class="contacts section" id="<?php echo esc_attr($nv_contacts_id); ?>">
     <div class="container">
         <div class="contacts__wrapper">
-            <div class="section__badge">Contacts</div>
+            <?php if ('' !== (string) $nv_contacts_badge) : ?>
+            <div class="section__badge"><?php echo esc_html($nv_contacts_badge); ?></div>
+            <?php endif; ?>
 
             <div class="contacts__content">
                 <div class="contacts__title-block">
-                    <h2 class="section__title">Not sure which product fits? Tell us about your flow</h2>
-                    <p class="section__subtitle">We&rsquo;ll map your onboarding and compliance steps to the right modules and set up a pilot on your real traffic.</p>
+                    <h2 class="section__title"><?php echo esc_html($nv_contacts_title); ?></h2>
+                    <?php if ('' !== (string) $nv_contacts_lead) : ?>
+                    <p class="section__subtitle"><?php echo wp_kses_post($nv_contacts_lead); ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="contacts__actions">
