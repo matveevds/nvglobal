@@ -1,0 +1,1100 @@
+/* Блок «Integration» (`.integration`) — универсальный: один вид (Identity), стили не зависят от страницы, все тексты — аргументы партиала template-parts/integration-section.php. */
+
+/*
+ * Seamless Integration That Just Works. Figma: Full HD 2456:16592,
+ * Desktop 499:6223, Tablet 2457:17303, Mobile 2467:17987; состояния слайдов
+ * 2456:16592, 2439:14696, 2440:14768.
+ *
+ * Слева слайдер из трёх путей интеграции, справа три статичные карточки.
+ * Прежние правила тёмной темы переписаны: блок и `.integration*`
+ * используются только на /solutions/.
+ */
+.integration {
+    background: var(--nv-surface-1);
+    /* Сверху поле даёт нижнее поле секции Products, снизу — своё. */
+    padding: 0 0 64px;
+}
+
+/* Та же сетка, что у остальных блоков страницы. */
+.integration .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.integration__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+/* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+.integration .section__badge {
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+.integration__head-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 48px;
+    width: 100%;
+}
+
+.integration__title-block {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: none;
+}
+
+/* Title/H2 40/52. */
+.integration__title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+}
+
+/* Title/H5 20/28. */
+.integration__subtitle {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.integration__actions {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 12px;
+    max-width: 50%;
+}
+
+/* Те же кнопки, что в первом экране: поле 16/8, радиус 8, Button/Regular 18/24. */
+.integration__btn {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.integration__btn-text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.integration__btn-icon {
+    display: flex;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.integration__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.integration__btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.integration__btn--primary:hover,
+.integration__btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Обводка Figma рисуется внутрь, поэтому поле 16 − 1px. */
+.integration__btn--ghost {
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.integration__btn--ghost:hover,
+.integration__btn--ghost:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.integration__btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* 2456:16601 — слайдер 540 и колонка карточек, зазор 16. */
+.integration__board {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: 48px;
+}
+
+/* Поле 24 с обводкой внутрь. */
+.integration__path {
+    flex: 0 0 540px;
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: linear-gradient(146deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+    backdrop-filter: blur(10px);
+}
+
+/* Title/H3 32/48. */
+.integration__path-title {
+    margin: 0;
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+    text-align: center;
+}
+
+.integration__path-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.integration__nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Тёмные кнопки 40x40: поле 8, иконка 24. */
+.integration__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-object-1);
+    color: var(--nv-constant-1);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: opacity .2s ease, background-color .2s ease;
+}
+
+.integration__arrow svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.integration__arrow:hover:not(:disabled) {
+    background: var(--nv-object-2);
+}
+
+.integration__arrow:focus-visible {
+    outline: 2px solid var(--nv-constant-1);
+    outline-offset: 2px;
+}
+
+/* Зацикливания в макете нет: на крайних слайдах кнопка выключается. */
+.integration__arrow:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+/*
+ * Белая карточка — обёртка: Swiper держит высоту только своей ленты, поэтому
+ * индикатор лежит рядом с ним, а не внутри (иначе `overflow: hidden`
+ * контейнера Swiper его срезает). Внутреннее поле карточки 12.
+ */
+.integration__slider {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 12px;
+    border-radius: 24px;
+    background: var(--nv-surface-1);
+}
+
+.integration__swiper {
+    width: 100%;
+    min-width: 0;
+}
+
+/*
+ * Высота слайдов выравнивается по самому высокому, поэтому переключение
+ * не двигает ни правую колонку, ни следующую секцию.
+ */
+.integration__swiper .swiper-wrapper {
+    align-items: stretch;
+}
+
+.integration__slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    height: auto;
+    text-align: center;
+}
+
+.integration__slide-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.integration__slide-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.integration__slide-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Title/H4 24/36. */
+.integration__slide-title {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+/* Подпись под названием у Mobile SDK — Body text/Regular Medium 14/20. */
+.integration__slide-subtitle {
+    display: block;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 500;
+}
+
+/* Title/H6 18/24. */
+.integration__slide-description {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+/*
+ * Индикатор свой, а не Swiper-овский: его разметка приходит с `position:
+ * absolute` и вылезает из белой карточки, а кликабельность по макету
+ * не нужна. Активный штрих переключает `initIntegrationSlider`.
+ */
+.integration__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.integration__bar {
+    width: 16px;
+    height: 2px;
+    border-radius: 4px;
+    background: var(--nv-surface-4);
+    transition: width .25s ease, height .25s ease, background-color .25s ease;
+}
+
+.integration__bar.is-active {
+    width: 32px;
+    height: 4px;
+    background: var(--nv-gradient);
+}
+
+/* 2456:16616 — три карточки в ряд с зазором 16. */
+.integration__info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.integration__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/*
+ * Между 1600 и 1920 раскладка Full HD сохраняется, но места меньше —
+ * карточки ужимаются пропорционально, а не схлопывают первую.
+ */
+.integration__card--list {
+    flex: 1 1 468px;
+    min-width: 0;
+}
+
+.integration__card--deploy,
+.integration__card--backoffice {
+    flex: 0 1 400px;
+    min-width: 0;
+}
+
+.integration__card--backoffice {
+    background: var(--nv-surface-2);
+}
+
+/* Title/H4 24/36. */
+.integration__card-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.integration__card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Body text/Regular Regular 16/24. */
+.integration__card-note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.integration__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Поле 8/12 с обводкой внутрь: 7 + 1 + 24 + 1 + 7 = 40. */
+.integration__list-item {
+    padding: 7px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+    backdrop-filter: blur(10px);
+}
+
+.integration__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Поле 4/12 с обводкой внутрь: 3 + 1 + 24 + 1 + 3 = 32. */
+.integration__chip {
+    padding: 3px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 500;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.integration__card--backoffice .integration__card-text {
+    gap: 16px;
+}
+
+/*
+ * Иллюстрации прижаты к нижнему краю карточки и выходят за её рамку —
+ * обрезает `overflow: hidden` самой карточки.
+ */
+.integration__card-image {
+    position: absolute;
+    bottom: -1px;
+    display: block;
+    pointer-events: none;
+}
+
+.integration__card-image--servers {
+    right: -1px;
+    width: 335px;
+    height: 224px;
+}
+
+/* На Full HD папки развёрнуты зеркально и стоят справа. */
+.integration__card-image--folders {
+    right: 7px;
+    width: 252px;
+    height: 176px;
+    transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .integration__bar {
+        transition: none;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    /*
+     * Desktop 2440:14777: слайдер уже, справа две карточки в ряд, под ними
+     * широкая карточка Back-office.
+     */
+    .integration__path {
+        flex-basis: 400px;
+        width: 400px;
+    }
+
+    .integration__info {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 400px;
+        grid-template-rows: auto auto;
+        gap: 16px;
+    }
+
+    .integration__card--list {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .integration__card--deploy {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    /* Широкая карточка: текст справа, иллюстрация слева и без зеркала. */
+    .integration__card--backoffice {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        flex: 0 0 auto;
+        width: auto;
+        align-items: flex-end;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: 700px;
+        max-width: 100%;
+    }
+
+    .integration__card-image--servers {
+        width: 277px;
+        height: 185px;
+    }
+
+    .integration__card-image--folders {
+        right: auto;
+        left: -1px;
+        width: 222px;
+        height: 155px;
+        transform: none;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /*
+     * Отдельного макета между 992 и 1440 нет: двух колонок рядом со слайдером
+     * уже не хватает, поэтому раскладка переходит на планшетную — слайдер
+     * во всю ширину, заголовок и стрелки в одну строку.
+     */
+    .integration__board {
+        flex-direction: column;
+    }
+
+    .integration__path {
+        flex: 0 0 auto;
+        width: auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px 16px;
+    }
+
+    .integration__path-title {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        text-align: left;
+    }
+
+    /* Обёртка тела раскрывается, чтобы её дети попали в сетку карточки. */
+    .integration__path-body {
+        display: contents;
+    }
+
+    .integration__nav {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+    }
+
+    .integration__slider {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 2457:17312: поля карточек 16, кнопки шапки уходят под заголовок. */
+    .integration__head-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 48px;
+    }
+
+    .integration__actions {
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-width: 100%;
+    }
+
+    .integration__path {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .integration__slider {
+        padding: 8px;
+        border-radius: 16px;
+    }
+
+    .integration__info {
+        grid-template-columns: minmax(0, 1fr) 268px;
+    }
+
+    .integration__card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .integration__card--deploy {
+        flex: 0 1 268px;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: 500px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 2467:17996: всё в одну колонку, заголовок слайдера и стрелки
+     * по центру, карточки друг под другом.
+     */
+    .integration {
+        padding-bottom: 32px;
+    }
+
+    .integration .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Бейдж 98x24: Body text/Regular 14/20. */
+    .integration .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Title/H2 32/44. */
+    .integration__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    /* Title/H5 16/20. */
+    .integration__subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .integration__actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .integration__btn {
+        min-height: 36px;
+        justify-content: flex-start;
+    }
+
+    /* Button/Regular 16/20. */
+    .integration__btn-text {
+        font-size: 16px;
+        line-height: 125%;
+        white-space: normal;
+    }
+
+    .integration__path {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        gap: 24px;
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    /* Title/H3 24/36; в макете заголовок намеренно разбит на две строки. */
+    .integration__path-title {
+        grid-column: 1;
+        grid-row: 1;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+        font-size: 24px;
+        line-height: 150%;
+        text-align: center;
+    }
+
+    .integration__nav {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: center;
+    }
+
+    .integration__slider {
+        grid-column: 1;
+        grid-row: 3;
+        padding: 4px;
+        border-radius: 12px;
+    }
+
+    /* Title/H4 20/32. */
+    .integration__slide-title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* Title/H6 14/20. */
+    .integration__slide-description {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .integration__info {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto;
+    }
+
+    .integration__card {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .integration__card--list,
+    .integration__card--deploy,
+    .integration__card--backoffice {
+        grid-column: 1;
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .integration__card--list { grid-row: 1; }
+
+    .integration__card--deploy { grid-row: 2; }
+
+    .integration__card--backoffice { grid-row: 3; }
+
+    .integration__card--deploy {
+        min-height: 200px;
+    }
+
+    .integration__card--backoffice {
+        min-height: 216px;
+        align-items: flex-start;
+    }
+
+    .integration__card--backoffice .integration__card-text {
+        width: auto;
+    }
+
+    /* Title/H4 20/32. */
+    .integration__card-title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* Body text/Regular 14/20. */
+    .integration__card-note,
+    .integration__list-item,
+    .integration__chip {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .integration__list-item {
+        padding: 7px 11px;
+    }
+
+    .integration__chip {
+        padding: 3px 11px;
+    }
+
+    .integration__card-image--servers {
+        width: 197px;
+        height: 132px;
+    }
+
+    .integration__card-image--folders {
+        left: auto;
+        right: -1px;
+        width: 194px;
+        height: 135px;
+        transform: scaleX(-1);
+    }
+}
+
+/* Вид блока (Identity) — раньше под body-классом страницы; стоит после базовых правил, как и побеждал их */
+
+@media (min-width: 1600px) {
+/*
+ * followup-5 L-07: layout-contracts/integration-1920.json — slider 820×340, внутри ДВЕ колонки:
+ * title+controls (264×292, title сверху/стрелки снизу) СЛЕВА, REST-pane/slider (476×292) СПРАВА
+ * — не вертикальный стек (title → nav → slider), как в общем KYC/Solutions-потоке.
+ * `.integration__path-body` раскрывается, title+nav образуют левую колонку (grid), slider —
+ * правую, через всю высоту.
+ */
+    .integration .integration__path {
+        display: grid;
+        grid-template-columns: 264px 476px;
+        grid-template-rows: 1fr auto;
+        column-gap: 32px;
+        width: auto;
+        flex: 0 0 820px;
+    }
+
+    .integration .integration__path-title {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
+    }
+
+    .integration .integration__path-body {
+        display: contents;
+    }
+
+    .integration .integration__nav {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: end;
+    }
+
+    .integration .integration__slider {
+        grid-column: 2;
+        grid-row: 1 / -1;
+        height: 100%;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    /*
+     * followup-3 V2-12: у Identity карточки deploy нет (show_deploy_card=false) — сетка
+     * list|deploy(row1)+backoffice(row2, full) рассчитана на KYC/Solutions с 3 карточками.
+     * Для Identity (без deploy) backoffice занимает освободившуюся 2-ю колонку рядом с list,
+     * а не пустует сверху и не падает отдельной строкой снизу; сама backoffice-карточка
+     * переключается на вертикальную компоновку (картинка+текст уже не умещаются в 700+277px
+     * бок о бок в половинной колонке).
+     */
+    .integration .integration__info {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .integration .integration__card--backoffice {
+        grid-column: 2;
+        grid-row: 1;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .integration .integration__card--backoffice .integration__card-text {
+        width: auto;
+    }
+
+    /* followup-5 L-07: layout-contracts/integration-840.json и integration-1440.json дают
+       одинаковый target 280×195 для этого слоя на обеих ширинах (ранее было 160×112 — цифра
+       без источника). */
+    .integration .integration__card-image--folders {
+        position: static;
+        width: 280px;
+        height: 195px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+/* followup-5 L-07: integration-1440.json — слайдер в составе board 1376w равен 600px
+   (gap16 + info 760), а не сжат до 400 (~1/3 ширины), как в общем KYC/Solutions-правиле
+   выше в этом же media query. */
+    .integration .integration__path {
+        flex-basis: 600px;
+        width: 600px;
+    }
+}
+
+@media (max-width: 767.98px) {
+/* followup-4 (QA-диагностика): 2-колоночное правило выше (≤1599.98, без нижней границы)
+   перебивало Mobile — на 392 list/backoffice должны стоять в 1 колонку. Сброса одного
+   grid-template-columns недостаточно: implicit-колонка от backoffice (grid-column:2 выше)
+   продолжает резервировать место и сжимает list до ~24px, пока явно не сброшен и grid-row. */
+    .integration .integration__info {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .integration .integration__card--backoffice {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    /* layout-contracts/integration-392.json: папки-иллюстрация 182×127 на Mobile,
+       не те же 280×195, что на Tablet/1440. */
+    .integration .integration__card-image--folders {
+        width: 182px;
+        height: 127px;
+    }
+
+    /* L-07: «compact actions» — кнопки в integration-392.json имеют собственную
+       ширину по контенту (196/227 в узкой 227px-колонке), а не растянуты на всю
+       360px-секцию, как в общем KYC/Solutions Mobile-правиле выше. */
+    .integration .integration__actions {
+        align-items: flex-start;
+        width: auto;
+    }
+
+    .integration .integration__btn {
+        width: auto;
+    }
+}
+
+@media (min-width: 1600px) {
+/* QA-I1/I2/I3 (source 2666:50459 / 2637:24119 / 2654:34533 / 2666:42479, get_metadata): две
+   info-карточки Identity (list|back-office; deploy нет) — пропорции из source, а не equalized 1fr 1fr:
+   1920 502|502 (flex 1), 1440 400|344, 840 400|360 (fr-пропорции сохраняют source-ширины на
+   эталонных размерах и ведут себя флюидно между ними). Иллюстрация папки — 280×195 у нижнего
+   края карточки, inset справа 52 (все wide modes), 182×127 с обрезом на Mobile. */
+    .integration .integration__card--list,
+    .integration .integration__card--backoffice {
+        flex: 1 1 0;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+    .integration .integration__info {
+        grid-template-columns: minmax(0, 400fr) minmax(0, 344fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .integration .integration__info {
+        grid-template-columns: minmax(0, 400fr) minmax(0, 360fr);
+    }
+}
+
+@media (max-width: 1599.98px) {
+    /* title→nav gap32 (= gap12 + nav margin20), nav→slider gap12 (source: title y16/h48 → nav y96 → slider
+       y148 на 840; те же 32/12 на 1440 и 392), было generic24/24. */
+    .integration .integration__path {
+        gap: 12px;
+    }
+
+    .integration .integration__nav {
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    /* back-office natural height 376 (иллюстрация в source даёт низ карточки; у нас абсолютная) */
+    .integration .integration__card--backoffice {
+        min-height: 376px;
+    }
+}
+
+@media (min-width: 768px) {
+    .integration .integration__card-image--folders {
+        position: absolute;
+        right: 52px;
+        bottom: -1px;
+        width: 280px;
+        height: 195px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* I-Mobile: у Identity заголовок слайдера в одну строку в боксе336 (2666:42490, h36), а не
+       двустрочный max-width200 общего KYC/Solutions-мока. */
+    .integration .integration__path-title {
+        max-width: none;
+    }
+
+    /* I2: back-office 360×204, art 182×127 привязан к правому краю и обрезан (не в потоке под
+       чипами, +79h); inset12; кнопки 36h (стрелка 20, Button/Regular 16/20). */
+    .integration .integration__card--backoffice {
+        min-height: 204px;
+        padding: 11px;
+    }
+
+    .integration .integration__card-image--folders {
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        width: 182px;
+        height: 127px;
+    }
+
+    .integration .integration__btn-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /* V2-12: у Identity на Tablet/Mobile стрелки идут ПОД заголовком (своя строка на всю ширину),
+       а не рядом с ним справа, как в общей KYC/Solutions раскладке выше. */
+    .integration .integration__path-title {
+        grid-column: 1 / -1;
+    }
+
+    .integration .integration__nav {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: center;
+    }
+
+    .integration .integration__slider {
+        grid-row: 3;
+    }
+}
+
+/* R2-5 Integration slider (source 2654:34549 / 2637:24135 / 2666:42495): gap заголовок→описание
+   16 (общий 8 у KYC/Solutions не тронут) → 840 376/212, 1440 400/220; Mobile нижний inset 16
+   (padding15 + border1). */
+.integration .integration__slide-text {
+    gap: 16px;
+}
+
+@media (max-width: 767.98px) {
+    .integration .integration__path {
+        padding-bottom: 15px;
+    }
+}
+
+/* V2-12: Identity показывает только 1-й (REST API) слайд — его описание обычного веса, а не
+   полужирного (общий `font-weight:700` рассчитан на KYC/Solutions 3-слайдовый набор). */
+.integration .integration__slide-description {
+    font-weight: 400;
+}
+
+@media (min-width: 768px) {
+/* QA-I3 (source 2637:24129 / 2654:34543 / 2666:42489, screenshot — slider там растр): описание
+   REST API — Regular 16/24 на ≥768 (3 строки, шаг 24; общее 18px давало 4 строки / 2 строки), 14/20
+   на Mobile (шаг 20, 5 строк). */
+    .integration .integration__slide-description {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .integration .integration__slide-description {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+}
+
+/*
+ * Три карточки (передан и deploy, и backoffice): раскладка Desktop 2440:14777 — list | deploy в первом ряду,
+ * широкая карточка Back-office под ними (текст справа, папки слева). Без deploy работают правила выше (list | backoffice).
+ */
+@media (min-width: 768px) and (max-width: 1599.98px) {
+    .integration .integration__info:has(.integration__card--deploy) {
+        grid-template-columns: minmax(0, 1fr) 268px;
+        grid-template-rows: auto auto;
+    }
+
+    .integration .integration__info:has(.integration__card--deploy) .integration__card--backoffice {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        flex-direction: row;
+        align-items: flex-end;
+        min-height: 0;
+    }
+
+    /* Текст — справа от папок (222 + поля), на узкой карточке сжимается. */
+    .integration .integration__info:has(.integration__card--deploy) .integration__card--backoffice .integration__card-text {
+        width: min(500px, calc(100% - 248px));
+        margin-left: auto;
+    }
+
+    .integration .integration__info:has(.integration__card--deploy) .integration__card-image--folders {
+        position: absolute;
+        right: auto;
+        left: -1px;
+        bottom: -1px;
+        width: 222px;
+        height: 155px;
+        transform: none;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1599.98px) {
+    .integration .integration__info:has(.integration__card--deploy) {
+        grid-template-columns: minmax(0, 1fr) 400px;
+    }
+
+    .integration .integration__info:has(.integration__card--deploy) .integration__card--backoffice .integration__card-text {
+        width: min(700px, calc(100% - 248px));
+    }
+}

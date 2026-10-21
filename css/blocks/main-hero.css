@@ -1,0 +1,781 @@
+/* Блок «main-hero» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/*
+ * Первый экран Solutions. Фреймы Figma: Full HD 2456:16496 (карточка 1856x732),
+ * Desktop 2396:15605 (1376x732), Tablet 2457:17207 (776x872),
+ * Mobile 2467:17894 (перестроенная раскладка, 2467:18560).
+ *
+ * Секция светлая внутри пока ещё тёмной страницы, поэтому фон задаётся самой
+ * секции: остальные блоки /solutions/ до своих групп остаются тёмными.
+ */
+.main {
+    padding: 32px 0;
+}
+
+.main--solutions {
+    background: var(--nv-surface-1);
+}
+
+/*
+ * Сетка макета: поле 32, контент = ширина экрана − 64
+ * (1920 -> 1856, 1440 -> 1376, 840 -> 776). Потолок повторяет самый широкий фрейм.
+ * Пока ограничено первым экраном — остальные секции переедут со своими группами.
+ */
+.main--solutions .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+/* 2456:16507 — карточка 1856x732, поле 32, радиус 32. */
+.main__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 732px;
+    padding: 32px;
+    border-radius: 32px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.main__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+}
+
+.main__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*
+ * Затемнение из макета: от прозрачного в правом верхнем углу к 95% чёрного
+ * в левом нижнем. Отдельного слоя в разметке не заводим.
+ */
+.main__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(246.95deg, rgba(0, 0, 0, 0) 20.628%, rgba(0, 0, 0, 0.95) 90.79%);
+}
+
+/* 2456:16509 — логотип 206x39 в левом верхнем углу карточки. */
+.main__logo {
+    display: block;
+    width: 206px;
+    height: 39px;
+    flex-shrink: 0;
+}
+
+/* 2456:16508 — левая колонка 600 во всю высоту карточки: логотип сверху, текст снизу. */
+.main__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    gap: 32px;
+    width: 600px;
+    flex-shrink: 0;
+}
+
+.main__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+}
+
+.main__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Title/H1 52/64. */
+.main__title {
+    margin: 0;
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+    color: var(--nv-constant-1);
+}
+
+/* Title/H6 18/24, белый 85%. */
+.main__subtitle {
+    margin: 0;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    color: var(--nv-constant-85);
+}
+
+.main__actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/*
+ * Кнопки первого экрана. Классы локальные: общие `.btn` и `.btn-hero` несут
+ * оформление тёмной темы и используются ниже на этой же странице
+ * (секция Integration) и на /pricing-matrix/, /blog/, 404 — переопределять их
+ * нельзя. Обработчик модального окна остаётся на `.open-callForm2`.
+ */
+.main__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.main__btn-text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Стрелка берёт цвет через currentColor: у <button> он не наследуется от body. */
+.main__btn-icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.main__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.main__btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.main__btn--primary:hover,
+.main__btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Обводка в Figma рисуется внутрь рамки, поэтому поле 16 − 1px. */
+.main__btn--ghost {
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.main__btn--ghost:hover,
+.main__btn--ghost:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+/* Обе кнопки лежат на тёмной фотографии — обводка фокуса светлая. */
+.main__btn:focus-visible {
+    outline: 2px solid var(--nv-constant-1);
+    outline-offset: 2px;
+}
+
+/* 2456:16522 — колонка 280, четыре карточки равной высоты, зазор 16. */
+.main__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: stretch;
+    width: 280px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Поле 16 и обводка 1px: обводка рисуется внутрь, поэтому padding 15. */
+.main__fact {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* Поле 4 с обводкой внутрь: 3 + 1 + иконка 24 + 1 + 3 = 32. */
+.main__fact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    flex-shrink: 0;
+}
+
+.main__fact-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* Full HD — Title/H4 24/36; ниже 1600 — Title/H6 18/24. */
+.main__fact-title {
+    width: 100%;
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+    color: var(--nv-primary);
+}
+
+/* Переносы в карточках есть только на Full HD, ниже текст ложится сам. */
+.main__fact-title br {
+    display: inline;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2396:15616: карточка 1376x732, колонка 372, полоса фактов 180. */
+    .main__body {
+        width: 372px;
+    }
+
+    .main__facts {
+        width: 180px;
+    }
+
+    .main__fact-title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .main__fact-title br {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Tablet 2457:17218: карточка 776x872 — колонка с логотипом и текстом,
+     * под ней строка из четырёх фактов высотой 120.
+     */
+    .main__card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 48px;
+        min-height: 872px;
+    }
+
+    .main__body {
+        width: 100%;
+        flex: 1;
+    }
+
+    /* Title/H1 44/56. */
+    .main__title {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+
+    .main__subtitle {
+        max-width: 516px;
+    }
+
+    .main__facts {
+        flex-direction: row;
+        align-self: auto;
+        width: 100%;
+        height: 120px;
+    }
+
+    .main__fact {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 11px;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* 2467:17894 — между шапкой и контентом 48, поля экрана 16. */
+    .main {
+        padding-top: 48px;
+    }
+
+    .main--solutions .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .main__card {
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 16px;
+        min-height: 0;
+        padding: 0;
+        border-radius: 0;
+        overflow: visible;
+    }
+
+    .main__body,
+    .main__group,
+    .main__content {
+        display: contents;
+    }
+
+    .main__logo {
+        display: none;
+    }
+
+    /* Title/H1 30/36, тёмный на светлом фоне. */
+    .main__title {
+        grid-row: 1;
+        font-size: 30px;
+        line-height: 120%;
+        color: var(--nv-object-1);
+    }
+
+    /* 2467:17905 — фотокарточка 360x248, радиус 16. */
+    .main__media {
+        position: relative;
+        grid-column: 1;
+        grid-row: 2;
+        z-index: auto;
+        height: 248px;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .main__media::after {
+        background: linear-gradient(215.36deg, rgba(0, 0, 0, 0) 32.249%, rgba(0, 0, 0, 0.95) 74.63%);
+    }
+
+    /* 2467:18550 — кнопки в левом нижнем углу фотографии, в столбик. */
+    .main__actions {
+        grid-column: 1;
+        grid-row: 2;
+        z-index: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: end;
+        justify-self: start;
+        margin: 16px;
+    }
+
+    /* Button/Regular 16/20. */
+    .main__btn-text {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    /* Title/H6 14/20, Object_2. */
+    .main__subtitle {
+        grid-row: 3;
+        max-width: none;
+        font-size: 14px;
+        line-height: 142.857%;
+        color: var(--nv-object-2);
+    }
+
+    /*
+     * 2467:17920 — карточки по 160 не помещаются в 360: полоса уходит под
+     * правый край экрана и прокручивается пальцем. Поля выносятся наружу,
+     * чтобы строка начиналась по сетке, а обрезалась по краю экрана.
+     */
+    .main__facts {
+        grid-row: 4;
+        width: calc(100% + 32px);
+        height: 120px;
+        margin-left: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+    }
+
+    .main__facts::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main__fact {
+        flex: 0 0 160px;
+        border-radius: 12px;
+    }
+
+    .main__fact-title {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+}
+
+/*
+ * Универсальный первый экран продуктовой страницы (`section.main.main--hero`, partial kyc-hero-section.php).
+ * Один вид, не зависит от страницы: левая колонка 500 с логотипом, H1, подзаголовком и кнопками, справа — 3–4 плашки
+ * фактов; фото на всю карточку, тёмное затемнение под текстом — часть блока (в картинку тень не вшивается).
+ * Макеты Figma: Identity 2620:25852 (Desktop) / 2666:50068 (FHD) / 2654:36192 (Tablet) / 2666:42086 (Mobile),
+ * KYC 2561:30924 (FHD) / 2492:14452 (Desktop). Общие правила `.main__*` лежат выше (их же использует /solutions/),
+ * здесь — только то, что отличает этот блок; селектор `.main--hero .main__…` специфичнее базового, поэтому
+ * значения, которые база меняет в media-запросах, повторены у блока в тех же брейкпоинтах.
+ *
+ * Плашки фактов (О-21): ≥1600 — 280×190, шрифт 24; 992–1599 — 180×155, шрифт 18; плашка не ниже этой высоты и растёт
+ * по тексту, при 3 фактах столбец прижат к низу карточки. Ниже 992 — ряд плашек равной высоты (≥148; на мобильной ≥112).
+ * Тексты не обрезаются: ни у плашек, ни у кнопок нет overflow:hidden.
+ */
+.main--hero {
+    padding-top: 16px;
+    background: var(--nv-surface-1);
+}
+
+.main--hero .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+/* Без картинки (или пока она грузится) текст остаётся читаемым: белый на тёмной подложке. */
+.main--hero .main__card {
+    min-height: 872px;
+    background: #1b1b1b;
+}
+
+.main--hero .main__body {
+    width: 500px;
+}
+
+.main--hero .main__subtitle {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+    color: var(--nv-constant-85);
+}
+
+/* Затемнение под текстом: плотное в левом нижнем углу, к правому верхнему сходит на нет. */
+.main--hero .main__media::after {
+    background:
+        linear-gradient(60deg, rgba(0, 0, 0, .7) 10.167%, rgba(0, 0, 0, 0) 71.292%);
+}
+
+.main--hero .main__media img {
+    object-position: var(--hero-pos, 50% 50%);
+}
+
+/* Кнопки переносятся, а не вылезают из колонки, если подписи длинные. */
+.main--hero .main__actions {
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.main--hero .main__btn-text--mobile,
+.main--hero .main__fact-title--mobile {
+    display: none;
+}
+
+.main--hero .main__facts {
+    justify-content: flex-end;
+    width: 280px;
+}
+
+.main--hero .main__fact {
+    flex: 0 1 190px;
+    overflow: visible;
+}
+
+.main--hero .main__fact-title {
+    color: var(--nv-object-1);
+}
+
+@media (max-width: 1599.98px) {
+    .main--hero .main__card {
+        min-height: 732px;
+    }
+
+    .main--hero .main__facts {
+        width: 180px;
+    }
+
+    .main--hero .main__fact {
+        flex-basis: 155px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    /* Карточка 928–1136: колонка текста сужена до 400 и H1 до 44, иначе текст заходит на героя фото (колонка фактов справа). */
+    .main--hero .main__body {
+        width: 400px;
+    }
+
+    .main--hero .main__title {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Макет Tablet 2654:36192: колонка текста 435, под ней ряд плашек равной высоты. */
+    .main--hero .main__card {
+        min-height: 872px;
+    }
+
+    .main--hero .main__body {
+        width: 435px;
+        max-width: 100%;
+    }
+
+    .main--hero .main__subtitle {
+        max-width: 100%;
+    }
+
+    .main--hero .main__media img {
+        object-position: var(--hero-pos-tablet, var(--hero-pos, 50% 50%));
+    }
+
+    .main--hero .main__facts {
+        justify-content: flex-start;
+        width: 100%;
+        height: auto;
+    }
+
+    .main--hero .main__fact {
+        flex: 1 1 0;
+        min-height: 148px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 2666:42086: H1 вне фотокарточки, кнопки поверх фото в левом нижнем углу, под фото подзаголовок и
+     * лента фактов со свайпом (раскладка Grid и display:contents — из базы). Подписи `--mobile` заменяют `--wide`
+     * только там, где они заданы; без них остаётся полный текст.
+     */
+    .main--hero .main__card {
+        min-height: 0;
+        background: none;
+    }
+
+    .main--hero .main__title {
+        color: var(--nv-object-1);
+    }
+
+    .main--hero .main__media {
+        height: clamp(240px, 42vw, 320px);
+        background: #1b1b1b;
+    }
+
+    .main--hero .main__media img {
+        object-position: var(--hero-pos-mobile, var(--hero-pos-tablet, var(--hero-pos, 50% 50%)));
+    }
+
+    .main--hero .main__actions {
+        flex-wrap: nowrap;
+        max-width: calc(100% - 32px);
+    }
+
+    .main--hero .main__btn {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .main--hero .main__btn-text {
+        white-space: normal;
+    }
+
+    .main--hero .main__btn-text--wide:has(+ .main__btn-text--mobile),
+    .main--hero .main__fact-title--wide:has(+ .main__fact-title--mobile) {
+        display: none;
+    }
+
+    .main--hero .main__btn-text--mobile,
+    .main--hero .main__fact-title--mobile {
+        display: block;
+    }
+
+    .main--hero .main__subtitle {
+        margin: 0 8px;
+        font-size: 14px;
+        line-height: 142.857%;
+        font-weight: 700;
+        color: var(--nv-object-2);
+    }
+
+    /* Лента уходит под край экрана, а не контейнера: ширина = контейнер + поля 16×2 (перебивает `width:100%` блока выше). */
+    .main--hero .main__facts {
+        flex-wrap: nowrap;
+        gap: 16px;
+        width: calc(100% + 32px);
+        height: auto;
+    }
+
+    .main--hero .main__fact {
+        flex: 0 0 164px;
+        min-width: 164px;
+        min-height: 112px;
+    }
+}
+
+/*
+ * Первый экран. Блок `main` общий с /solutions/ (секция MAIN выше), здесь —
+ * только отличия макета 2547:23059: колонка шире, фактов нет, над заголовком
+ * стоят хлебные крошки, у акцентной кнопки стрелка слева.
+ */
+.main--pricing {
+    background: var(--nv-surface-1);
+}
+
+/* 2547:23071 — колонка 580 во всю высоту карточки; на Full HD не растягиваем. */
+.main--pricing .main__body {
+    width: 580px;
+}
+
+/* Затемнение 2547:23070: прозрачное справа сверху, 95% чёрного слева снизу. */
+.main--pricing .main__media::after {
+    background: linear-gradient(252.49deg, rgba(0, 0, 0, 0) 43.352%, rgba(0, 0, 0, 0.95) 88.109%);
+}
+
+.main--pricing .main__group {
+    gap: 32px;
+}
+
+.main--pricing .main__content {
+    gap: 32px;
+}
+
+/* 2547:23147 — Body text/Regular Regular 16/24, текущий раздел оранжевый. */
+.main__breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.main__breadcrumbs-link {
+    color: var(--nv-constant-1);
+    text-decoration: none;
+}
+
+.main__breadcrumbs-link:hover,
+.main__breadcrumbs-link:focus-visible {
+    color: var(--nv-primary);
+}
+
+.main__breadcrumbs-link:focus-visible {
+    outline: 2px solid var(--nv-constant-1);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.main__breadcrumbs-sep,
+.main__breadcrumbs-current {
+    color: var(--nv-primary);
+}
+
+/* 2547:23152 — между кнопками 16. */
+.main--pricing .main__actions {
+    gap: 16px;
+}
+
+/*
+ * 2547:23153 — у «Request Demo» стрелка стоит слева, поэтому поля зеркальные.
+ * Обводка в Figma рисуется внутрь рамки, отсюда 16 − 1 и 8 − 1.
+ */
+.main__btn--lead {
+    padding: 7px 15px 7px 7px;
+    border: 1px solid var(--nv-surface-4);
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Отдельного Tablet-фрейма первого экрана в макете нет. Берём раскладку
+     * Desktop: карточка во всю ширину, колонка на 100%. Высота 872 из Solutions
+     * здесь лишняя — там её держала полоса фактов, которой на тарифах нет.
+     */
+    .main--pricing .main__card {
+        min-height: 560px;
+    }
+
+    .main--pricing .main__body {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 2547:23261: крошки и заголовок выходят на светлый фон, фотокарточка
+     * 360x360 идёт под ними, кнопки остаются внутри фотографии. Общие правила
+     * секции MAIN раскрывают обёртки через `display: contents` и раскладывают
+     * детей по строкам сетки — здесь добавляется строка под крошки.
+     */
+    .main--pricing .main__card {
+        /* Сетка мобильной раскладки: высота по контенту, не 560 из планшета. */
+        min-height: 0;
+        gap: 24px;
+    }
+
+    .main--pricing .main__breadcrumbs {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .main--pricing .main__title {
+        grid-row: 2;
+        font-size: 40px;
+        line-height: 120%;
+    }
+
+    /* 2547:23264 — фотокарточка 360x360, затемнения в макете нет. */
+    .main--pricing .main__media {
+        grid-row: 3;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .main--pricing .main__media::after {
+        display: none;
+    }
+
+    .main--pricing .main__actions {
+        grid-row: 3;
+        gap: 12px;
+    }
+
+    /* На светлом фоне ссылка «Home» — второй уровень текста. */
+    .main--pricing .main__breadcrumbs-link {
+        color: var(--nv-object-2);
+    }
+
+    .main--pricing .main__breadcrumbs-link:focus-visible {
+        outline-color: var(--nv-primary);
+    }
+
+    /* Button/Regular 18/24 — в макете тарифов кегль кнопок на мобильной не падает. */
+    .main--pricing .main__btn-text {
+        font-size: var(--Text-Button-Size-Regular, 18px);
+        line-height: 133.333%;
+    }
+}

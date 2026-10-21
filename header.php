@@ -97,6 +97,14 @@
     $nv_products = $nv_menu['products'];
     $nv_industries = $nv_menu['industries'];
     $nv_resources = $nv_menu['resources'];
+    /*
+     * Industries скрыт до появления страниц /industries/* (решение владельца 2026-10-21, Р-141): данные
+     * $nv_menu['industries'] и разметка панели остаются — вернуть пункт можно, поставив true. Resources
+     * заменён ссылкой Blog; данные $nv_menu['resources'] оставлены для будущих News/Video.
+     */
+    $nv_show_industries = false;
+    /* Пункт Blog скрыт из верхнего меню по решению владельца (2026-10-21); данные $nv_menu['blog'] остаются — вернуть, поставив true. */
+    $nv_show_blog = false;
     ?>
     <header class="header" id="site-header" data-header>
         <div class="header__bar">
@@ -177,6 +185,7 @@
                             </div>
                         </li>
 
+                        <?php if ($nv_show_industries) : ?>
                         <li class="header__item<?php echo esc_attr($nv_cur('industries')); ?>" data-menu="industries">
                             <button type="button" class="header__trigger" id="header-trigger-industries" aria-expanded="false" aria-controls="header-panel-industries" data-trigger="industries">
                                 <span class="header__trigger-label"><?php echo esc_html($nv_industries['label']); ?></span>
@@ -233,54 +242,13 @@
                                 </div>
                             </div>
                         </li>
+                        <?php endif; ?>
 
-                        <li class="header__item<?php echo esc_attr($nv_cur('resources')); ?>" data-menu="resources">
-                            <button type="button" class="header__trigger" id="header-trigger-resources" aria-expanded="false" aria-controls="header-panel-resources" data-trigger="resources">
-                                <span class="header__trigger-label"><?php echo esc_html($nv_resources['label']); ?></span>
-                                <span class="header__chevron"><?php echo nv_header_icon('angle'); echo nv_header_icon('chev', 'header__icon--m'); ?></span>
-                            </button>
-                            <div class="header__panel header__panel--resources" id="header-panel-resources" role="region" aria-labelledby="header-trigger-resources" data-panel="resources">
-                                <div class="mega mega--resources<?php echo empty($nv_resources['latest']) ? ' mega--no-latest' : ''; ?>">
-                                    <button type="button" class="header__back" data-back>
-                                        <?php echo nv_header_icon('arrow-left', 'header__back-icon'); ?>
-                                        <span>Back</span>
-                                    </button>
-                                    <div class="mega__banner">
-                                        <img src="<?php echo esc_url($nv_img . 'header-news-texture.webp'); ?>" class="mega__banner-texture" width="1360" height="906" loading="lazy" alt="">
-                                        <p class="mega__banner-title"><span>Neuro</span>News</p>
-                                        <p class="mega__banner-text"><?php echo esc_html($nv_resources['banner']['text']); ?></p>
-                                        <img src="<?php echo esc_url($nv_img . 'header-news-mascot.webp'); ?>" class="mega__banner-mascot" width="374" height="238" loading="lazy" alt="">
-                                    </div>
-                                    <div class="mega__nav">
-                                        <ul class="mega__nav-list">
-                                            <?php foreach ($nv_resources['links'] as $nv_link) : ?>
-                                            <li><a href="<?php echo esc_url($nv_link['url']); ?>" class="mega__nav-link"><?php echo esc_html($nv_link['label']); ?></a></li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                        <ul class="mega__social">
-                                            <?php foreach ($nv_resources['social'] as $nv_soc) : ?>
-                                            <li><a href="<?php echo esc_url($nv_soc['url']); ?>" class="mega__social-link" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr('NeuroVision Global Systems on ' . $nv_soc['label']); ?>"><?php echo nv_header_icon($nv_soc['icon']); ?></a></li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                    <?php if (!empty($nv_resources['latest'])) : ?>
-                                    <div class="mega__latest">
-                                        <p class="mega__latest-title">Latest</p>
-                                        <ul class="mega__cards">
-                                            <?php foreach ($nv_resources['latest'] as $nv_post) : ?>
-                                            <li>
-                                                <a href="<?php echo esc_url($nv_post['url']); ?>" class="mega__card-post">
-                                                    <?php if ($nv_post['thumb']) : ?><img src="<?php echo esc_url($nv_post['thumb']); ?>" class="mega__card-post-thumb" loading="lazy" alt=""><?php endif; ?>
-                                                    <span class="mega__card-post-title"><?php echo esc_html($nv_post['title']); ?></span>
-                                                </a>
-                                            </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                        <?php if ($nv_show_blog) : ?>
+                        <li class="header__item<?php echo esc_attr($nv_cur('blog')); ?>">
+                            <a href="<?php echo esc_url($nv_menu['blog']['url']); ?>" class="header__link"<?php echo $nv_aria('blog'); ?>><?php echo esc_html($nv_menu['blog']['label']); ?></a>
                         </li>
+                        <?php endif; ?>
 
                         <li class="header__item<?php echo esc_attr($nv_cur('docs')); ?>">
                             <a href="<?php echo esc_url($nv_menu['docs']['url']); ?>" class="header__link"<?php echo $nv_aria('docs'); ?>><?php echo esc_html($nv_menu['docs']['label']); ?></a>

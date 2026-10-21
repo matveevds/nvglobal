@@ -1,0 +1,295 @@
+/* Блок «idv-accuracy» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/* CR-04: badge→H2 gap48 отсутствовал (не было margin-top, в отличие от того же паттерна
+   у Security/Checks/etc) — H2 шёл сразу за badge (gap0 вместо48). */
+.idv-accuracy__title {
+    margin-top: 48px;
+    margin-bottom: 24px;
+}
+
+.idv-accuracy__grid {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.idv-accuracy__col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.idv-accuracy__metrics {
+    background: var(--nv-surface-2);
+}
+
+.idv-accuracy__metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+.idv-accuracy__metric-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    border: 1px solid var(--nv-surface-4);
+}
+
+.idv-accuracy__metric-row dt {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--nv-object-1);
+}
+
+.idv-accuracy__metric-row dd {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+    color: var(--nv-object-1);
+}
+
+.idv-accuracy__metrics-note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 142.857%;
+    text-align: center;
+}
+
+.idv-accuracy__cards {
+    display: flex;
+    gap: 16px;
+}
+
+.idv-accuracy__card {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.idv-accuracy__nist {
+    flex: 0 0 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+}
+
+.idv-accuracy__nist-title {
+    color: var(--nv-constant-1);
+    text-align: center;
+}
+
+.idv-accuracy__nist-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 24px;
+    background: var(--nv-surface-1);
+}
+
+.idv-accuracy__nist-logos {
+    display: block;
+    width: 100%;
+    max-width: 318px;
+    height: auto;
+    opacity: .5;
+}
+
+.idv-accuracy__nist-lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.idv-accuracy__nist-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@media (min-width: 1600px) {
+/* CR-04: FHD source NIST648w (left col 1192w = 1856-648-16gap, автоматически через flex:1 1 0
+   у .idv-accuracy__col) — было 540 (Desktop-значение, которое уже верно на 1440, тут не трогаем). */
+    .idv-accuracy__nist {
+        flex: 0 0 648px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .idv-accuracy__grid {
+        flex-direction: column;
+    }
+
+    .idv-accuracy__nist {
+        flex: 1 1 auto;
+        /* V2-08: на Tablet/Mobile NIST-карточка идёт сразу после заголовка, перед metrics/cards. */
+        order: -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .idv-accuracy__cards {
+        flex-direction: column;
+    }
+
+    /* CR-04: Mobile metric value H5=16/20 (было 20/28, source H5 Desktop-размер, не Mobile);
+       NIST body regular14/20 (было16/24, lead14/20 уже был верен — не трогать). */
+    body.page-template-page-identity-verification .idv-accuracy__metric-row dd {
+        font-size: 16px;
+        line-height: 1.25;
+    }
+
+    body.page-template-page-identity-verification .idv-accuracy__nist-text {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+}
+
+/* R6-2 Accuracy (source 2666:50259 1920 / 2620:26921 1440 / 2654:34337 840 / 2666:42287 392,
+   get_metadata + get_variable_defs + get_design_context 2620:26928): NIST title H2-токен 40/52
+   (Mobile 32/44); inner-панель — padding16, gap24, logo-слот 88 (1920 — 64), logo видимой ширины
+   418 / 372 / 345 / 296 (1440 / 1920 / 840 / 392), lead→text 16; inset карточек Outside 24 → 16 →
+   12 (CSS 23 / 15 / 11), corner = Outside; title→text карточек 8. Только Identity. */
+body.page-template-page-identity-verification .idv-accuracy .idv-accuracy__nist-title {
+    font-size: 40px;
+    line-height: 1.3;
+}
+
+.idv-accuracy__card {
+    gap: 8px;
+}
+
+.idv-accuracy__metrics {
+    gap: 16px;
+}
+
+/* metric-row: 44 (value 28 + padding7×2 + border1×2), Mobile 36 (value 20) — source Component 2…5 */
+.idv-accuracy__metric-row {
+    padding: 7px 11px;
+}
+
+.idv-accuracy__nist-logos {
+    width: 418px;
+    max-width: 100%;
+    height: 88px;
+    object-fit: contain;
+}
+
+.idv-accuracy__cards {
+    flex: 1 1 auto;
+}
+
+.idv-accuracy__nist-lead {
+    line-height: 1.33333333;
+}
+
+.idv-accuracy__nist-text {
+    margin-top: -8px;
+}
+
+@media (min-width: 1600px) {
+    .idv-accuracy__nist-logos {
+        width: 372px;
+        height: 64px;
+    }
+
+    /* source 2666:50281: карточка 156 = padding-top24 + 116 + 16 (левая колонка 284 + 16 + 156 = 456 = NIST) */
+    .idv-accuracy__card {
+        padding-bottom: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .idv-accuracy__nist-logos {
+        width: 345px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .idv-accuracy__metrics,
+    .idv-accuracy__card,
+    .idv-accuracy__nist {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .idv-accuracy__nist-inner {
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .idv-accuracy .idv-accuracy__nist-title {
+        font-size: 32px;
+        line-height: 1.375;
+    }
+
+    .idv-accuracy__metrics,
+    .idv-accuracy__card,
+    .idv-accuracy__nist {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .idv-accuracy__nist-inner {
+        border-radius: 12px;
+    }
+
+    .idv-accuracy__nist-logos {
+        width: 296px;
+    }
+
+    /* Mobile metric-row 36 (2666:42299): label 14/20, value 16/20 */
+    .idv-accuracy__metric-row dt {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .idv-accuracy__nist-lead {
+        line-height: 1.42857143;
+    }
+
+    body.page-template-page-identity-verification .idv-accuracy .idv-accuracy__card .kyc-card__text {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+}
+
+@media (min-width: 1600px) {
+/* R6-8 Accuracy: заголовки карточек в source (2620:26948, 2638:24229, 2666:42315, Tablet 2654:34357) —
+   с жёстким переносом (`<br>`), в Full HD (2666:50283/50287) — одной строкой. Бокс заголовка совпадает
+   (336×64), различался перенос. `<br>` из данных (`\n` → nl2br); на ≥1600 скрыт, пробел остаётся. */
+    .idv-accuracy__card .kyc-card__title br {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .idv-accuracy__nist-lead {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    body.page-template-page-identity-verification .idv-accuracy__metrics-note {
+        font-size: 12px;
+        line-height: 133.333%;
+    }
+}

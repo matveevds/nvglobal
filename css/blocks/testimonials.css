@@ -1,0 +1,224 @@
+/* Блок «testimonials» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.testimonials {
+    margin-top: -32px;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    margin-bottom: -32px;
+    position: relative;
+    z-index: 0;
+    background: radial-gradient(circle, rgba(249,170,102,0.04) 1.4px, transparent 1.4px),
+        radial-gradient(circle, rgba(249,170,102,0.04) 1.4px, transparent 1.4px),
+        radial-gradient(53.66% 53.66% at 50% 49.83%, rgba(249, 170, 102, 0.30) 0%, rgba(33, 33, 33, 0.00) 100%),
+        #212121;
+    background-size: 16px 16px,
+        16px 16px,
+        100% 100%,
+        auto;
+    background-position: 0 0,
+        8px 8px,
+        0 0,
+        0 0;
+}
+
+.testimonials__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.testimonials__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.testimonials .section__badge {
+    align-self: center;
+}
+
+.testimonials__title-block {}
+
+.testimonials__title {}
+
+.testimonials__content {
+    position: relative;
+}
+
+.testimonials__slider {}
+
+.testimonials__arrows {
+    
+}
+
+.testimonials__arrow {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top:calc(50% - 60px);
+    z-index: 3;
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    cursor: pointer;
+    display: none;
+}
+
+.testimonials__arrow:hover,
+.testimonials__arrow:active,
+.testimonials__arrow:focus {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.testimonials__arrow-prev {
+    left:20px;
+}
+
+.testimonials__arrow-next {
+    right: 20px;
+}
+
+.testimonials__slider-wrapper {}
+
+.testimonials__slide {
+    padding: 36px 0;
+}
+
+.testimonials__slide-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-left: 124px;
+    padding-right: 124px;
+}
+
+.testimonials__slide-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border-radius: 6px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+}
+
+.testimonials__slide-text {
+    color: var(--Text-White, #FBFBFB);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.testimonials__slide-author {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.testimonials__slide-author-image {
+    display: none;
+    width: 200px;
+    height: auto;
+}
+
+.testimonials__slide-author-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.testimonials__slide-author-name {
+    margin-top: 8px;
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    text-align: center;
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.testimonials__slide-author-subtitle {
+    color: var(--Text-Orange, #F9AA66);
+    text-align: center;
+}
+
+@media (max-width: 991.98px) {
+    .testimonials__slide {
+        padding: 94px 0;
+    }
+
+    .testimonials__slide-text {
+        color: var(--Text-White, #FBFBFB);
+        text-align: center;
+        font-size: var(--Text-Title-Size-H4, 24px);
+        font-weight: 700;
+    }
+
+    .testimonials__slide-wrapper {
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+
+    .testimonials__arrow-prev {
+        left:0;
+    }
+
+    .testimonials__arrow-next {
+        right:0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .testimonials__wrapper {
+        gap: 32px;
+    }
+
+    .testimonials__slide {
+        margin-bottom: 56px;
+    }
+
+    .testimonials__slide {
+        padding: 0;
+    }
+
+    .testimonials__slide-text {
+        font-size: 20px;
+    }
+
+    .testimonials__arrow {
+        bottom: 0;
+        top:unset;
+    }
+
+    .testimonials__arrow-prev {
+        left: calc(50% - 44px);
+    }
+
+    .testimonials__arrow-next {
+        right: calc(50% - 44px);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .testimonials__slide-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .testimonials__slide-author-name {
+        font-size: 16px;
+    }
+
+    .testimonials__slide-author-subtitle {
+        font-size: 14px;
+    }
+}

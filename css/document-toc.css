@@ -537,3 +537,162 @@ h1.wp-block-heading {
     padding: 16px;
   }
 }
+
+/* ===================== DOCUMENT LIGHT START ===================== */
+
+/*
+ * Светлая документация (`/docs/`, `/docs/<документ>/`) — тот же дизайн, что у страницы записи блога:
+ * токены `--nv-*` и раскладка берутся из `body.single-post`-правил css/post.css (продублированы под
+ * `body.single-document` и `body.page-template-page-docs`). Здесь — только то, что есть у документации
+ * и чего нет у записи: оглавление-дерево, спойлеры, код, ссылки на дочерние документы, нижняя навигация.
+ */
+
+body.single-document,
+body.page-template-page-docs {
+  background: var(--nv-surface-1);
+  color: var(--nv-object-1);
+}
+
+body.single-document .toc-block,
+body.page-template-page-docs .toc-block {
+  border-color: var(--nv-surface-4);
+  background: var(--nv-surface-2);
+}
+
+body.single-document .toc-block__title,
+body.page-template-page-docs .toc-block__title {
+  color: var(--nv-object-1);
+}
+
+body.single-document .toc-block__list::before,
+body.page-template-page-docs .toc-block__list::before {
+  background: var(--nv-surface-4);
+}
+
+body.single-document .toc-block__item a,
+body.page-template-page-docs .toc-block__item a,
+body.single-document .toc-block__item--level-3 > .toc-block__row > a,
+body.single-document .toc-block__item--level-4 > .toc-block__row > a,
+body.single-document .toc-block__item--level-5 > .toc-block__row > a,
+body.page-template-page-docs .toc-block__item--level-3 > .toc-block__row > a,
+body.page-template-page-docs .toc-block__item--level-4 > .toc-block__row > a,
+body.page-template-page-docs .toc-block__item--level-5 > .toc-block__row > a {
+  color: var(--nv-object-1);
+}
+
+body.single-document .toc-block__item a:hover,
+body.single-document .toc-block__item a[aria-current="page"],
+body.single-document .toc-block__list li.toc-block__item--active > .toc-block__row > a,
+body.single-document .toc-block__item:has(> .toc-block__row > a[aria-current="page"]) > .toc-block__row > a,
+body.page-template-page-docs .toc-block__item a:hover,
+body.page-template-page-docs .toc-block__item a[aria-current="page"],
+body.page-template-page-docs .toc-block__list li.toc-block__item--active > .toc-block__row > a,
+body.page-template-page-docs .toc-block__item:has(> .toc-block__row > a[aria-current="page"]) > .toc-block__row > a {
+  color: var(--nv-primary);
+}
+
+body.single-document .toc-block__item--active > .toc-block__row::before,
+body.single-document .toc-block__item:has(> .toc-block__row > a[aria-current="page"]) > .toc-block__row::before,
+body.page-template-page-docs .toc-block__item--active > .toc-block__row::before,
+body.page-template-page-docs .toc-block__item:has(> .toc-block__row > a[aria-current="page"]) > .toc-block__row::before {
+  background: var(--nv-primary);
+}
+
+/* Стрелка раскрытия: faq_arrow.svg белая, на светлой теме — тёмный вариант faq_arrow_dark.svg. */
+body.single-document .toc-block__toggle::before,
+body.page-template-page-docs .toc-block__toggle::before {
+  background-image: url("../img/faq_arrow_dark.svg");
+}
+
+body.single-document .single-doc .toc-block__list,
+body.page-template-page-docs .single-doc .toc-block__list {
+  scrollbar-color: var(--nv-primary) var(--nv-surface-3);
+}
+
+body.single-document .single-doc .toc-block__list::-webkit-scrollbar-track,
+body.page-template-page-docs .single-doc .toc-block__list::-webkit-scrollbar-track {
+  background: var(--nv-surface-3);
+}
+
+body.single-document .single-doc .toc-block__list::-webkit-scrollbar-thumb,
+body.page-template-page-docs .single-doc .toc-block__list::-webkit-scrollbar-thumb {
+  background: var(--nv-primary);
+}
+
+/* Ссылки на дочерние документы и нижняя навигация. */
+body.single-document .document-child-links__item a,
+body.page-template-page-docs .document-child-links__item a {
+  color: var(--nv-primary);
+}
+
+body.single-document .document-bottom-nav__link,
+body.page-template-page-docs .document-bottom-nav__link {
+  padding: 7px 15px;
+  border: 1px solid var(--nv-surface-4);
+  border-radius: 8px;
+  background: var(--nv-surface-2);
+}
+
+body.single-document .document-bottom-nav__link:hover,
+body.page-template-page-docs .document-bottom-nav__link:hover {
+  background: var(--nv-surface-3);
+}
+
+body.single-document .document-bottom-nav__link span,
+body.page-template-page-docs .document-bottom-nav__link span {
+  color: var(--nv-object-1);
+  font-weight: 700;
+}
+
+/* Код. */
+body.single-document .document pre.wp-block-code,
+body.page-template-page-docs .document pre.wp-block-code {
+  border-color: var(--nv-surface-4);
+  background: var(--nv-surface-2);
+}
+
+/* Спойлеры. */
+body.single-document .post__content details,
+body.page-template-page-docs .post__content details {
+  border-color: var(--nv-surface-4);
+  background: var(--nv-surface-2);
+}
+
+body.single-document .post__content details > summary,
+body.page-template-page-docs .post__content details > summary {
+  border-color: var(--nv-surface-4);
+  color: var(--nv-object-1);
+}
+
+body.single-document .post__content details > summary::after,
+body.page-template-page-docs .post__content details > summary::after {
+  border-color: var(--nv-surface-4);
+  background-color: var(--nv-surface-1);
+  background-image: url("../img/faq_arrow_dark.svg");
+}
+
+body.single-document .post__content details > :not(summary),
+body.page-template-page-docs .post__content details > :not(summary),
+body.single-document .post__content details > summary + :not(summary),
+body.page-template-page-docs .post__content details > summary + :not(summary) {
+  border-color: var(--nv-surface-4);
+}
+
+body.single-document .post__content details > p,
+body.page-template-page-docs .post__content details > p {
+  color: var(--nv-object-1);
+}
+
+@media (max-width: 1199.98px) {
+  body.single-document .toc-block,
+  body.page-template-page-docs .toc-block {
+    background: transparent;
+  }
+
+  body.single-document .post-sidebar__wrapper,
+  body.page-template-page-docs .post-sidebar__wrapper {
+    scrollbar-color: var(--nv-primary) var(--nv-surface-3);
+  }
+}
+
+/* ====================== DOCUMENT LIGHT END ====================== */

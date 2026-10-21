@@ -585,3 +585,1674 @@
 @media (max-width: 419.98px) {
 
 }
+/* BLOG ARCHIVE LIGHT START */
+
+/*
+ * Светлый архив блога: страница блога (search.php / blog-page.php), результаты поиска и рубрики.
+ * Figma: Full HD 2570:33169, Desktop 1378:20322, hover 2569:23708, Tablet 2569:29963.
+ * Макета Mobile нет — он выведен из Tablet (одна колонка, карточка «последней статьи» вертикальная).
+ * Разметка — template-parts/blog-archive.php и blog-card.php, всё под `body.nv-blog`.
+ * Шапка, тизер и футер — общие светлые (регионы HOME THEME / HEADER / TEASER HOME / FOOTER HOME).
+ * Раскладка Desktop действует с 1200px, Full HD (3 колонки в сетке) — с 1800px; ниже 1200 — компоновка Tablet.
+ */
+
+body.nv-blog {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/* Category-only Martel Bold: локальный файл (SIL OFL 1.1, fonts/Martel/OFL.txt), алиас отдельным
+   именем — чтобы не включить реальный Martel у общего .blog-hero__title (page/search) и
+   .mega__banner-title (styles.css:1637, оба сейчас на Georgia-фолбэке по BACKLOG). */
+@font-face {
+    font-family: 'Martel Blog Category';
+    src: url('../fonts/Martel/Martel-Bold.woff2') format('woff2'),
+         url('../fonts/Martel/Martel-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Hero NeuroNews (2567:22690): 380px, текст по центру, маскот справа внизу. Шрифт баннера — Martel (BACKLOG, как .mega__banner-title). */
+body.nv-blog .blog-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 380px;
+    margin-top: -80px; /* высота шапки в потоке: макет рисует hero от верха страницы под шапкой */
+    padding: 0 32px;
+    overflow: hidden;
+    background: var(--nv-surface-3);
+    text-align: center;
+}
+
+/* Обёртка клипует текстуру независимо от собственного overflow .blog-hero — category переключает
+   hero на overflow:visible (ниже), чтобы лапка маскота не обрезалась по нижней кромке, а текстура
+   при этом остаётся внутри своих границ через этот wrapper. Для page/search эффект не меняется:
+   .blog-hero сохраняет overflow:hidden, обёртка просто дублирует ту же границу. */
+body.nv-blog .blog-hero__texture-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+body.nv-blog .blog-hero__texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: soft-light;
+    opacity: .5;
+    pointer-events: none;
+}
+
+/* Category/author: разрешить маскоту выступать за нижнюю кромку hero (видимая лапка по Figma) —
+   текстура остаётся обрезанной через .blog-hero__texture-wrap выше, геометрия hero/title/mascot
+   не меняется, page/search сохраняют overflow:hidden как раньше. */
+body.nv-blog .blog-hero--category,
+body.nv-blog .blog-hero--author {
+    overflow: visible;
+}
+
+/* R3-02/A-01: Figma fill transform у image 585 одинаков на всех category/author-ширинах (2570:32301/
+   31822/33259/33393 — тот же imageHash af7cc86d…, та же матрица, что и у Mobile 2570:32883) — кроп
+   переносится в base вместо дублирования только для ≤767.98. object-fit:cover у page/search не трогаем. */
+body.nv-blog .blog-hero--category .blog-hero__texture,
+body.nv-blog .blog-hero--author .blog-hero__texture {
+    top: -113.11%;
+    left: -1.4%;
+    right: auto;
+    bottom: auto;
+    width: 102.79%;
+    height: 350.74%;
+    object-fit: fill;
+}
+
+body.nv-blog .blog-hero__title {
+    position: relative;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-family: Martel, Georgia, "Times New Roman", serif;
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 92px;
+}
+
+body.nv-blog .blog-hero__title span {
+    color: var(--nv-primary);
+}
+
+body.nv-blog .blog-hero__text {
+    position: relative;
+    max-width: 800px;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+/* Author-обёртка <picture> маскота (blog-hero.php, A-06): вне потока, иначе становится flex-item
+   0×0 с gap8 и сдвигает title/subtitle на 4px. inset:0 = padding box hero, поэтому right/bottom
+   маскота считаются от той же границы, что и у обычного <img>. */
+body.nv-blog .blog-hero__mascot-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+body.nv-blog .blog-hero__mascot {
+    position: absolute;
+    right: 87px;
+    bottom: -15px;
+    width: 287px;
+    height: auto;
+    pointer-events: none;
+}
+
+/* Category/author: настоящий Martel вместо Georgia-фолбэка (R-20/BACKLOG про page/search не трогаем). */
+body.nv-blog .blog-hero--category .blog-hero__title,
+body.nv-blog .blog-hero--author .blog-hero__title {
+    font-family: 'Martel Blog Category', Georgia, "Times New Roman", serif;
+}
+
+/* R2-06/A-01: маскот Desktop/FHD фиксированной высотой 179 (не auto≈182.625 при native 374×238) —
+   требует object-fit:cover, т.к. точная высота при ширине 287 недостижима без кропа ассета.
+   Действует с базового (Desktop) уровня; Tablet/Mobile переопределены в своих регионах. */
+body.nv-blog .blog-hero--category .blog-hero__mascot,
+body.nv-blog .blog-hero--author .blog-hero__mascot {
+    height: 179px;
+    object-fit: cover;
+}
+
+/* Category/author: 8px между заголовком и подзаголовком + центрирование по ширине (R-04/R-05).
+   Без этого оба текста лежат в block-flow без зазора, а подзаголовок стретчится по ширине
+   более широкого заголовка вместо собственного max-width — см. review R-04/R-05. */
+body.nv-blog .blog-hero--category .blog-hero__content,
+body.nv-blog .blog-hero--author .blog-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* R3-03: статичный Tablet-перенос подзаголовка (Figma 2570:32304, bbox468×108: 3 строки, разрыв перед
+   «and facial recognition»). Скрыт по умолчанию и на Mobile (дальше свой перенос по ширине), виден
+   только в существующем Tablet-диапазоне ≤1199.98. Не влияет на общий `<br>` page/search. */
+body.nv-blog .blog-hero__text-break {
+    display: none;
+}
+
+/* Основная часть. */
+body.nv-blog .blog-archive {
+    padding: 32px 0 64px;
+    background: var(--nv-surface-1);
+}
+
+body.nv-blog .blog-archive__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 48px;
+    margin-bottom: 48px;
+}
+
+body.nv-blog .blog-archive__heading {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+body.nv-blog .breadcrumbs {
+    margin: 0;
+}
+
+body.nv-blog .breadcrumbs a,
+body.nv-blog .breadcrumbs span {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+body.nv-blog .breadcrumbs a {
+    color: var(--nv-object-2);
+    text-decoration: none;
+}
+
+body.nv-blog .breadcrumbs a:hover,
+body.nv-blog .breadcrumbs a:focus-visible {
+    color: var(--nv-primary);
+}
+
+body.nv-blog .breadcrumbs span {
+    color: var(--nv-primary);
+}
+
+body.nv-blog .blog-archive__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 52px;
+}
+
+body.nv-blog .blog-archive__title-lead {
+    display: block;
+}
+
+/* R2-09: Desktop/FHD H1-зона — фиксированная высота 104 с выравниванием текста по нижней границе
+   (Figma: бокс H1 104px, textAlignVertical BOTTOM), чтобы голова секции была 152 (24 крошки + 24 gap
+   + 104) и сетка начиналась на y=612, независимо от того, 1/2/3 строки занимает реальное имя рубрики.
+   Tablet/Mobile — autoheight, переопределено в их регионах ниже. */
+body.nv-blog .blog-archive--category .blog-archive__title {
+    min-height: 104px;
+    display: flex;
+    align-items: flex-end;
+}
+
+body.nv-blog .blog-archive__controls {
+    display: flex;
+    flex: 0 0 448px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+    min-width: 0;
+}
+
+/* Blog / News / Video: Blog — ссылка, News и Video — плановые маршруты /news/ и /video/ (DECISIONS), пока без ссылок. */
+body.nv-blog .blog-archive__tabs {
+    display: flex;
+    gap: 8px;
+}
+
+body.nv-blog .blog-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, color .2s ease;
+}
+
+body.nv-blog .blog-tab.is-active {
+    background: linear-gradient(157deg, #FD6B01 15%, #FF4601 100%);
+    color: var(--nv-constant-1);
+}
+
+/* R-10: иконки табов только у category (Figma 2570:32307/32309-11); ширина 95/102/105 получается
+   из контента (иконка24+gap8+текст+padding), без фиксированных px-ширин. currentColor уже
+   переключает цвет иконки между is-active (белый) и обычным (тёмный) состоянием таба.
+   R2-01: border → inset box-shadow (обводка Figma INSIDE, не отъедает ширину контента — иначе
+   95/102/105 недостижимы даже с точным content). R2-07: слот иконки 24×24 на ≥768px для всех трёх
+   (document/network/play) — preserveAspectRatio впишет native 24×20 без искажения. */
+body.nv-blog .blog-archive--category .blog-tab {
+    gap: 8px;
+    padding: 8px 16px 8px 8px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+body.nv-blog .blog-archive--category .blog-tab__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+}
+body.nv-blog .blog-archive--category .blog-tab__icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+body.nv-blog .blog-tab.is-soon {
+    cursor: default;
+}
+
+@media (hover: hover) {
+    body.nv-blog .blog-tab.is-soon:hover {
+        background: var(--nv-surface-3);
+        color: var(--nv-primary);
+    }
+}
+
+body.nv-blog .blog-tab:focus-visible,
+body.nv-blog .blog-cats a:focus-visible,
+body.nv-blog .blog-news a:focus-visible,
+body.nv-blog .blog-card a:focus-visible,
+body.nv-blog .blog-pagination a:focus-visible,
+body.nv-blog .blog-search__submit:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+}
+
+/* Поиск — обычный GET на главную: WordPress отдаёт search.php. */
+body.nv-blog .blog-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 8px 6px 6px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: transparent;
+    transition: border-color .2s ease;
+}
+
+body.nv-blog .blog-search:focus-within {
+    border-color: var(--nv-primary);
+}
+
+/* R2-01: search INSIDE-обводка — inset box-shadow вместо border; focus-within переключает цвет
+   того же box-shadow, чтобы не потерять существующую фокус-подсветку поля. */
+body.nv-blog .blog-archive--category .blog-search {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+body.nv-blog .blog-archive--category .blog-search:focus-within {
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+}
+
+body.nv-blog .blog-search__input {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 8px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--nv-object-1);
+    font: inherit;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    appearance: none;
+}
+
+body.nv-blog .blog-search__input::placeholder {
+    color: var(--nv-object-3);
+    opacity: 1;
+}
+
+body.nv-blog .blog-search__input::-webkit-search-cancel-button {
+    display: none;
+}
+
+body.nv-blog .blog-search__submit {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--nv-object-3);
+    cursor: pointer;
+}
+
+/* Раскладка: категории | лента | новости. */
+body.nv-blog .blog-archive__layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr) 240px;
+    grid-template-areas: "cats main news";
+    gap: 48px;
+    align-items: start;
+}
+
+body.nv-blog .blog-archive__layout--no-news {
+    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-areas: "cats main";
+}
+
+body.nv-blog .blog-cats { grid-area: cats; display: flex; flex-direction: column; gap: 24px; }
+body.nv-blog .blog-archive__main { grid-area: main; display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+body.nv-blog .blog-news { grid-area: news; display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+
+body.nv-blog .blog-cats__all,
+body.nv-blog .blog-cats__link,
+body.nv-blog .blog-news__title {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-decoration: none;
+}
+
+body.nv-blog .blog-cats__all {
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--nv-primary-soft);
+}
+
+body.nv-blog .blog-cats__all.is-active,
+body.nv-blog .blog-cats__link.is-active,
+body.nv-blog .blog-news__title {
+    color: var(--nv-primary);
+}
+
+body.nv-blog .blog-cats__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body.nv-blog .blog-cats__link {
+    display: block;
+}
+
+body.nv-blog .blog-cats__link:hover,
+body.nv-blog .blog-cats__all:hover {
+    color: var(--nv-primary);
+}
+
+/* Category-only: выбранная рубрика отдельной строкой над All topic (Figma 2570:33257/31820), не дублируется в списке ниже. */
+body.nv-blog .blog-cats--category .blog-cats__all {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+body.nv-blog .blog-cats__active {
+    display: block;
+}
+
+body.nv-blog .blog-cats__divider {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--nv-surface-3);
+}
+
+body.nv-blog .blog-cats--category .blog-cats__list li.is-current {
+    display: none;
+}
+
+/* Правая колонка: заголовок, разделитель, шесть последних записей. */
+body.nv-blog .blog-news__title {
+    margin: 0;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--nv-surface-3);
+}
+
+body.nv-blog .blog-news__list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+body.nv-blog .blog-news__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.nv-blog .blog-news__date {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+body.nv-blog .blog-news__link {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+body.nv-blog .blog-news__link a {
+    color: var(--nv-object-1);
+    text-decoration: none;
+}
+
+body.nv-blog .blog-news__link a:hover {
+    color: var(--nv-primary);
+}
+
+/* Сетка карточек. Разделитель после «последней статьи» — 2px #FFF0E6 (Devider/Large). */
+body.nv-blog .blog-archive__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* Category-only сетка: 4 / 3 / 2 / 1 колонки (Figma 2570:33257/31820/32299/32881), не 2 / 3 как у page/search. */
+body.nv-blog .blog-archive--category .blog-archive__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.nv-blog .blog-card--featured + .blog-archive__grid::before {
+    content: '';
+    position: absolute;
+    top: -32px;
+    right: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--nv-primary-soft);
+}
+
+body.nv-blog .blog-archive__empty {
+    margin: 0;
+    padding: 48px 0;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 28px;
+}
+
+/* Hover (2569:23708): под курсором остаётся одна карточка, остальные гаснут до 50%. Только для устройств с наведением. */
+@media (hover: hover) {
+    body.nv-blog .blog-archive__grid:has(.blog-card:hover) .blog-card:not(:hover) {
+        opacity: .5;
+    }
+}
+
+body.nv-blog .blog-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+    padding: 8px 8px 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    transition: opacity .25s ease;
+}
+
+/* R2-01: Figma-обводка карточки и её внутренних блоков — INSIDE, не занимает layout. CSS border при
+   border-box отъедает 2px у внутренней ширины (вложенные media/author оказываются на 2px уже mode-
+   значений). category заменяет border на inset box-shadow той же толщины/цвета — полная ширина
+   остаётся детям, визуально обводка там же. page/search не трогаем (там своего mode-замера нет). */
+body.nv-blog .blog-archive--category .blog-card {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-blog .blog-card__inner,
+body.nv-blog .blog-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+}
+
+body.nv-blog .blog-card__media {
+    display: block;
+    aspect-ratio: 366 / 284;
+    overflow: hidden;
+    border: 2px solid var(--nv-surface-3);
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+}
+
+/* R2-01/R3-01: media INSIDE-обводка. inset box-shadow на самом .blog-card__media рисуется ПОД
+   <img> (статичный child перекрывает фон/box-shadow родителя при обычном paint order) — обводка
+   была фактически невидима. ::after — позиционированный псевдоэлемент — красится ПОСЛЕ статичных
+   детей в том же стекинг-контексте, поэтому ложится поверх <img>; pointer-events:none не перехватывает
+   клик/hover, реальная геометрия .blog-card__media (aspect-ratio) не меняется. */
+body.nv-blog .blog-archive--category .blog-card__media {
+    position: relative;
+    border: 0;
+}
+body.nv-blog .blog-archive--category .blog-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 2px var(--nv-surface-3);
+    pointer-events: none;
+}
+
+body.nv-blog .blog-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+@media (hover: hover) {
+    body.nv-blog .blog-card:hover .blog-card__media img {
+        transform: scale(1.03);
+    }
+}
+
+body.nv-blog .blog-card__body {
+    padding: 0 8px;
+}
+
+body.nv-blog .blog-card__author {
+    margin-top: auto;
+}
+
+body.nv-blog .blog-card__meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+body.nv-blog .blog-card__stats {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body.nv-blog .blog-card__stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px 6px 6px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+/* R2-01: stat-badge INSIDE-обводка. */
+body.nv-blog .blog-archive--category .blog-card__stat {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-blog .blog-card__time {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 8px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+/* R2-01: time-badge INSIDE-обводка. */
+body.nv-blog .blog-archive--category .blog-card__time {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+}
+
+body.nv-blog .blog-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+body.nv-blog .blog-card__date {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+body.nv-blog .blog-card__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+body.nv-blog .blog-card__title a {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--nv-object-1);
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* Category-only: до 3 строк заголовка на Desktop/FHD/Tablet (узел 2570:31874 — h72 = 3×24),
+   общий clamp:2 page/search не трогаем; Mobile возвращает 2 строки ниже (R-09, followup п.4). */
+body.nv-blog .blog-archive--category .blog-card__title a {
+    -webkit-line-clamp: 3;
+}
+
+/* R2-02: Desktop (база, 1200-1799.98) media 329.333/260 — узел 2570:31874. FHD/Tablet переопределены
+   в их существующих регионах ниже (≥1800px / ≤1199.98px), Mobile — в ≤767.98px. Полную высоту
+   карточки нигде не фиксируем — только соотношение сторон фото. */
+body.nv-blog .blog-archive--category .blog-card__media {
+    aspect-ratio: 329.333 / 260;
+}
+
+/* Вся карточка кликабельна через заголовок — вложенных ссылок нет. */
+body.nv-blog .blog-card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+}
+
+body.nv-blog .blog-card__excerpt {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+body.nv-blog .blog-card__author {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-1);
+    text-decoration: none;
+}
+
+/* R2-01: author-блок INSIDE-обводка — без неё 328×64 (Figma) внутри становился 326×66. */
+body.nv-blog .blog-archive--category .blog-card__author {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-blog .blog-card__avatar {
+    display: block;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body.nv-blog .blog-card__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.nv-blog .blog-card__author-name {
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-overflow: ellipsis;
+}
+
+body.nv-blog .blog-card__author-job {
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* «The latest article»: оранжевая рамка, плашка-заголовок, картинка слева, текст справа. */
+body.nv-blog .blog-card--featured {
+    gap: 12px;
+    padding: 8px;
+    border-color: var(--nv-primary);
+    background: var(--nv-surface-1);
+}
+
+body.nv-blog .blog-card__label {
+    margin: 0;
+    padding: 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: linear-gradient(176deg, #FD6B01 15%, #FF4601 100%);
+    color: var(--nv-constant-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+}
+
+body.nv-blog .blog-card--featured .blog-card__inner {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 16px;
+}
+
+body.nv-blog .blog-card--featured .blog-card__media {
+    flex: 1 1 0;
+    aspect-ratio: auto;
+    min-height: 444px;
+}
+
+body.nv-blog .blog-card--featured .blog-card__body {
+    flex: 1 1 0;
+    padding: 0 16px 16px 0;
+}
+
+body.nv-blog .blog-card--featured .blog-card__excerpt {
+    -webkit-line-clamp: 6;
+}
+
+body.nv-blog .blog-card--featured .blog-card__author {
+    background: var(--nv-surface-2);
+}
+
+body.nv-blog .blog-card--featured .blog-card__title a::after {
+    border-radius: 24px;
+}
+
+/* Пагинация: стрелки, номера, Last и «Page X of Y» (2569:31301). */
+body.nv-blog .blog-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+}
+
+body.nv-blog .blog-pagination__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+}
+
+body.nv-blog .blog-pagination__pages {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+body.nv-blog .blog-pagination__arrow {
+    display: flex;
+    color: var(--nv-object-1);
+}
+
+body.nv-blog .blog-pagination__pages .page-numbers {
+    min-width: 32px;
+    color: var(--nv-object-1);
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+}
+
+body.nv-blog .blog-pagination__pages .page-numbers.current {
+    color: var(--nv-primary);
+    font-weight: 700;
+}
+
+body.nv-blog .blog-pagination__pages a.page-numbers:hover,
+body.nv-blog .blog-pagination__last:hover {
+    color: var(--nv-primary);
+}
+
+body.nv-blog .blog-pagination__last {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--nv-object-1);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+body.nv-blog .blog-pagination__info {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/* Full HD (2570:33169): три колонки карточек, колонки шире. */
+@media (min-width: 1800px) {
+    body.nv-blog .blog-archive__controls {
+        flex-basis: 600px;
+    }
+    body.nv-blog .blog-archive__layout {
+        grid-template-columns: 400px minmax(0, 1fr) 340px;
+    }
+    body.nv-blog .blog-archive__layout--no-news {
+        grid-template-columns: 400px minmax(0, 1fr);
+    }
+    body.nv-blog .blog-archive__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    body.nv-blog .blog-archive--category .blog-archive__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    body.nv-blog .blog-card--featured .blog-card__media {
+        flex-grow: 488;
+    }
+    body.nv-blog .blog-card--featured .blog-card__body {
+        flex-grow: 500;
+    }
+    /* R2-02: FHD media 324/260 (узел 2570:33288, precise-other-cards); padding-bottom остаётся 24. */
+    body.nv-blog .blog-archive--category .blog-card__media {
+        aspect-ratio: 324 / 260;
+    }
+}
+
+/* Tablet (2569:29963): управление сверху, заголовок ниже, полоса «новости», категории строкой, лента во всю ширину. */
+@media (max-width: 1199.98px) {
+    body.nv-blog .blog-hero__mascot {
+        right: 17px;
+        bottom: -12px;
+        width: 216px;
+    }
+    body.nv-blog .blog-archive {
+        padding-top: 32px;
+    }
+    body.nv-blog .blog-archive__head {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 48px;
+        margin-bottom: 48px;
+    }
+    body.nv-blog .blog-archive__controls {
+        flex: none;
+        flex-direction: row;
+        align-items: center;
+        gap: 64px;
+    }
+    body.nv-blog .blog-search {
+        flex: 1 1 0;
+        width: auto;
+    }
+    body.nv-blog .blog-archive__layout,
+    body.nv-blog .blog-archive__layout--no-news {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "news" "cats" "main";
+        gap: 48px;
+    }
+    /* R-01: у category/author нет news ни в одном макете — пустая строка "news" не должна
+       резервировать gap (author — тот же дефект, что был у category, тот же фикс). */
+    body.nv-blog .blog-archive--category .blog-archive__layout,
+    body.nv-blog .blog-archive--category .blog-archive__layout--no-news,
+    body.nv-author .blog-archive--author .blog-archive__layout,
+    body.nv-author .blog-archive--author .blog-archive__layout--no-news {
+        grid-template-areas: "cats" "main";
+    }
+    body.nv-blog .blog-news {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 20px;
+        margin-inline: -32px;
+        padding: 32px;
+        background: var(--nv-surface-2);
+    }
+    body.nv-blog .blog-news__title {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+    body.nv-blog .blog-news__list {
+        flex-direction: row;
+        gap: 32px;
+        width: 100%;
+    }
+    body.nv-blog .blog-news__item {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    /* На Tablet и Mobile показываем три записи, как в макете. */
+    body.nv-blog .blog-news__item:nth-child(n+4) {
+        display: none;
+    }
+    body.nv-blog .blog-cats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 24px;
+    }
+    body.nv-blog .blog-cats__all {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+    body.nv-blog .blog-cats__list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+    }
+    body.nv-blog .blog-cats__all,
+    body.nv-blog .blog-cats__link {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    /* Category Tablet/Mobile (2570:32299/32881): All topic → разделитель → список, выбранная рубрика первой в общем списке, без отдельной строки. */
+    body.nv-blog .blog-cats--category {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    /* R-02: скрывать пилюлю и её собственный разделитель вместе — иначе над "All topic" остаётся лишняя линия.
+       R2-05: пустая/исключённая hide_empty рубрика теперь добавляется в $categories в PHP и рендерится
+       обычным пунктом списка — больше нет отдельного --empty-active состояния и его исключений. */
+    body.nv-blog .blog-cats__active,
+    body.nv-blog .blog-cats__active + .blog-cats__divider {
+        display: none;
+    }
+    body.nv-blog .blog-cats--category .blog-cats__list li.is-current {
+        display: list-item;
+        order: -1;
+    }
+    body.nv-blog .blog-archive--category .blog-archive__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* R-07/R-08: Tablet — "All topic" крупнее списка, row-gap8/col-gap24 (Figma 2570:32355/32357). */
+    body.nv-blog .blog-cats--category .blog-cats__all {
+        font-size: 18px;
+        line-height: 1.3333;
+    }
+    body.nv-blog .blog-cats--category .blog-cats__list {
+        gap: 8px 24px;
+    }
+    /* R2-10: тот же боковой инсет 8px, что и на Mobile (Figma 2570:32354: элементы x=8, разделитель 760). */
+    body.nv-blog .blog-cats--category {
+        padding: 0 8px;
+    }
+    /* R2-02: Tablet media 364/292 (узел 2570:32364, precise-other-cards) и padding-bottom16 (не24). */
+    body.nv-blog .blog-archive--category .blog-card__media {
+        aspect-ratio: 364 / 292;
+    }
+    body.nv-blog .blog-archive--category .blog-card {
+        padding-bottom: 16px;
+    }
+    body.nv-blog .blog-hero--category .blog-hero__text,
+    body.nv-blog .blog-hero--author .blog-hero__text {
+        max-width: 468px;
+    }
+    /* R3-03: статичный перенос перед "and facial recognition" только на Tablet. */
+    body.nv-blog .blog-hero__text-break {
+        display: inline;
+    }
+    /* R2-06/A-01: Tablet-маскот тоже фиксированной высотой (216×135), ширина уже верна выше в этом блоке. */
+    body.nv-blog .blog-hero--category .blog-hero__mascot,
+    body.nv-blog .blog-hero--author .blog-hero__mascot {
+        height: 135px;
+        object-fit: cover;
+    }
+    /* R2-09: Tablet — H1-зона autoheight, а не фиксированные 104 с bottom-align (только Desktop/FHD). */
+    body.nv-blog .blog-archive--category .blog-archive__title {
+        min-height: 0;
+        display: block;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.nv-blog .blog-hero {
+        margin-top: -64px;
+        padding: 64px 16px 24px;
+    }
+    body.nv-blog .blog-hero__title {
+        font-size: 52px;
+        line-height: 60px;
+    }
+    body.nv-blog .blog-hero__text {
+        font-size: 18px;
+        line-height: 28px;
+    }
+    body.nv-blog .blog-hero__text br {
+        display: none;
+    }
+    body.nv-blog .blog-archive {
+        padding: 24px 0 48px;
+    }
+    body.nv-blog .blog-archive__title {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    body.nv-blog .blog-archive__head {
+        gap: 32px;
+        margin-bottom: 32px;
+    }
+    body.nv-blog .blog-archive__controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    body.nv-blog .blog-archive__tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    body.nv-blog .blog-archive__layout {
+        gap: 32px;
+    }
+    body.nv-blog .blog-news {
+        margin-inline: -16px;
+        padding: 24px 16px;
+    }
+    body.nv-blog .blog-news__list {
+        flex-direction: column;
+        gap: 24px;
+    }
+    body.nv-blog .blog-archive__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    body.nv-blog .blog-archive--category .blog-archive__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    body.nv-blog .blog-card--featured .blog-card__inner {
+        flex-direction: column;
+    }
+    body.nv-blog .blog-card--featured .blog-card__media {
+        flex: none;
+        aspect-ratio: 366 / 284;
+        min-height: 0;
+    }
+    body.nv-blog .blog-card--featured .blog-card__body {
+        padding: 0 8px 8px;
+    }
+    /* Category Mobile hero (2570:32881): 548px, заголовок 52/92 (не 52/60 общей NeuroNews-шапки).
+       padding:0 16px (не 64/16/24 общей шапки) — без вертикального padding justify-content:center
+       центрирует блок title+8px+subtitle симметрично и даёт exact y176 (R-04). */
+    body.nv-blog .blog-hero--category {
+        min-height: 548px;
+        padding: 0 16px;
+    }
+    body.nv-blog .blog-hero--category .blog-hero__title {
+        font-size: 52px;
+        line-height: 1.76923;
+    }
+    /* R-04: Satoshi Bold 20/32 (не 24/36) — иначе подзаголовок рвётся на 4 строки вместо 3. */
+    body.nv-blog .blog-hero--category .blog-hero__text {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+    /* R3-03: Tablet-перенос обратно скрыт — на Mobile 3 строки получаются естественным переносом (R-04). */
+    body.nv-blog .blog-hero__text-break {
+        display: none;
+    }
+    body.nv-blog .blog-hero--category .blog-hero__mascot {
+        right: auto;
+        left: 50%;
+        bottom: -12px;
+        width: 216px;
+        height: 135px;
+        object-fit: cover;
+        transform: translateX(-50%);
+    }
+    /* R-03: H1 32/44 на Mobile (узел 2570:32898), а не общие 40/52. R2-09: autoheight (не 104/bottom). */
+    body.nv-blog .blog-archive--category .blog-archive__title {
+        font-size: 32px;
+        line-height: 1.375;
+        min-height: 0;
+        display: block;
+    }
+    /* R-12/R2-04: breadcrumbs одной строкой (Figma 2570:32896, 329×20) — строчный бокс контейнера тоже
+       должен быть 14/20, иначе струт родителя (16/24) держит высоту блока 24 вместо 20. */
+    body.nv-blog .blog-archive--category .breadcrumbs,
+    body.nv-blog .blog-archive--category .breadcrumbs__nav,
+    body.nv-blog .blog-archive--category .breadcrumbs a,
+    body.nv-blog .blog-archive--category .breadcrumbs span {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    /* R2-03: вертикальный ритм Mobile — верх секции32, head gap24 (контролы→крошки), сайдбар→сетка48. */
+    body.nv-blog .blog-archive--category {
+        padding-top: 32px;
+    }
+    body.nv-blog .blog-archive--category .blog-archive__head {
+        gap: 24px;
+    }
+    body.nv-blog .blog-archive--category .blog-archive__layout {
+        gap: 48px;
+    }
+    /* R-10: табы равными колонками с иконками (Figma 2570:32889), поиск и отступ controls по mode. */
+    body.nv-blog .blog-archive--category .blog-archive__controls {
+        gap: 12px;
+    }
+    body.nv-blog .blog-archive--category .blog-tab {
+        flex: 1 1 0;
+        height: 36px;
+        font-size: 16px;
+        line-height: 1.25;
+    }
+    body.nv-blog .blog-archive--category .blog-tab__icon--document svg {
+        width: 20px;
+        height: 20px;
+    }
+    /* R2-07: Mobile-слоты иконок остаются как в Figma (document20×20, network/play — native24×20) —
+       база (≥768) теперь форсирует все три в 24×24, здесь для network/play возвращаем точный Mobile-размер. */
+    body.nv-blog .blog-archive--category .blog-tab__icon--network svg,
+    body.nv-blog .blog-archive--category .blog-tab__icon--play svg {
+        width: 24px;
+        height: 20px;
+    }
+    body.nv-blog .blog-archive--category .blog-search__input {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    /* Инсет-обводка (R2-01) убрала 2px реального border — на Mobile это единственная ширина, где
+       intrinsic-высота строки заметно садится (38 вместо 40), controls падает с верных 88 до 86.
+       Компенсируем вертикальным padding, чтобы controls остался 88 (Desktop/Tablet 104/40 не задеты). */
+    body.nv-blog .blog-archive--category .blog-search {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    /* R-07/R-08/R-15: сайдбар Mobile — All topic16/20, список в колонку 12/16, gap12, инсет 8px
+       (Figma 2570:32936/32937/32939-44, padding 0 8 внутри 16px экранного отступа). */
+    body.nv-blog .blog-cats--category {
+        padding: 0 8px;
+    }
+    body.nv-blog .blog-cats--category .blog-cats__all {
+        font-size: 16px;
+        line-height: 1.25;
+    }
+    body.nv-blog .blog-cats--category .blog-cats__list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    body.nv-blog .blog-cats--category .blog-cats__list .blog-cats__link {
+        font-size: 12px;
+        line-height: 1.3333;
+    }
+    /* R-09: category-only компактная карточка на Mobile (Figma 2570:32946) — shared .blog-card
+       остаётся без изменений для page/search (там Mobile-макета нет вовсе). */
+    body.nv-blog .blog-archive--category .blog-card {
+        gap: 12px;
+        padding: 8px 8px 12px;
+        border-radius: 12px;
+    }
+    /* R2-08: ::after — кликабельная область/фокус-кольцо заголовка — та же форма, что и карточка. */
+    body.nv-blog .blog-archive--category .blog-card__title a::after {
+        border-radius: 12px;
+    }
+    body.nv-blog .blog-archive--category .blog-card__inner,
+    body.nv-blog .blog-archive--category .blog-card__body {
+        gap: 12px;
+    }
+    body.nv-blog .blog-archive--category .blog-card__media {
+        aspect-ratio: 344 / 284;
+    }
+    body.nv-blog .blog-archive--category .blog-card__meta {
+        gap: 16px;
+    }
+    body.nv-blog .blog-archive--category .blog-card__stat,
+    body.nv-blog .blog-archive--category .blog-card__time,
+    body.nv-blog .blog-archive--category .blog-card__date {
+        font-size: 12px;
+        line-height: 1.3333;
+    }
+    /* R3-04: stat-иконка (eye/heart) 16×16 на Mobile (узел 2570:32946), не 20 — даёт точную высоту
+       бейджа 28 без отдельного height. Time-иконка уже 16/24 правильная, Desktop/Tablet не трогаем. */
+    body.nv-blog .blog-archive--category .blog-card__stat svg {
+        width: 16px;
+        height: 16px;
+    }
+    body.nv-blog .blog-archive--category .blog-card__title {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    /* Mobile: обратно 2 строки (Figma 2570:32946 — h40 = 2×20), в отличие от 3 на Desktop/FHD/Tablet. */
+    body.nv-blog .blog-archive--category .blog-card__title a {
+        -webkit-line-clamp: 2;
+    }
+    body.nv-blog .blog-archive--category .blog-card__excerpt {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    body.nv-blog .blog-archive--category .blog-card__avatar {
+        width: 40px;
+        height: 40px;
+    }
+    body.nv-blog .blog-archive--category .blog-card__author-name {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    body.nv-blog .blog-archive--category .blog-card__author-job {
+        font-size: 12px;
+        line-height: 1.3333;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.nv-blog .blog-hero__mascot {
+        display: none;
+    }
+    /* Category Mobile mascot виден и центрирован (2570:32881) — в отличие от page/search, где он скрыт. */
+    body.nv-blog .blog-hero--category .blog-hero__mascot {
+        display: block;
+    }
+    body.nv-blog .blog-pagination {
+        justify-content: flex-start;
+    }
+}
+
+/* BLOG ARCHIVE LIGHT END */
+
+/*
+ * AUTHOR ARCHIVE (body.nv-author), Figma NV Global: Full HD 2570:33393, Desktop 2570:31497,
+ * Tablet 1381:25698, Mobile 1381:26059. Markup — author.php, переиспользует template-parts/
+ * blog-hero.php, .blog-cats/.blog-archive__grid/.blog-card/.blog-pagination из body.nv-blog
+ * (author.php выводит оба класса). Здесь — только author-only профиль и геометрия карточки,
+ * отличная от category (R-09/R2-02 техника inside-stroke переиспользована с другими числами).
+ * Допущение координатора: FHD-сетка Figma содержит 8 placeholder-карточек с одной растянутой
+ * последней и пустой ячейкой перед ней — реализована регулярная сетка 2 колонок без спец-кейса
+ * по индексу (см. implementation-report).
+ */
+
+/* Mobile-макета hero нет — скрываем, не убирая разметку (общий blog-hero.php). */
+@media (max-width: 767.98px) {
+    body.nv-author .blog-hero--author {
+        display: none;
+    }
+}
+
+body.nv-author .author-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+body.nv-author .author-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+}
+
+body.nv-author .author-profile__avatar {
+    position: relative;
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    border: 1px solid var(--nv-primary);
+    border-radius: 24px;
+    background: var(--nv-surface-3);
+}
+
+body.nv-author .author-profile__avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body.nv-author .author-profile__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex: 1 1 0;
+    gap: 24px;
+    min-width: 0;
+}
+
+body.nv-author .author-profile__head {
+    display: flex;
+    flex: 0 0 396px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    min-width: 0;
+}
+
+body.nv-author .author-profile__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+body.nv-author .author-profile__name {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+body.nv-author .author-profile__job {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3333;
+}
+
+body.nv-author .author-profile__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.nv-author .author-profile__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    backdrop-filter: blur(10px);
+    transition: color .2s ease;
+}
+
+body.nv-author .author-profile__social:hover,
+body.nv-author .author-profile__social:focus-visible {
+    color: var(--nv-primary);
+}
+
+body.nv-author .author-profile__social:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+}
+
+/* A-05: единый слот24×24 для иконки внутри кнопки40×40 — network(native24×20) не сплющивается/не
+   растягивается (preserveAspectRatio: xMidYMid meet по умолчанию центрирует её в слоте), LinkedIn
+   (native24×24) заполняет слот один в один. */
+body.nv-author .author-profile__social svg {
+    width: 24px;
+    height: 24px;
+}
+
+body.nv-author .author-profile__bio {
+    flex: 1 1 0;
+    min-width: 0;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 1.5556;
+}
+
+body.nv-author .author-profile__bio p {
+    margin: 0 0 16px;
+}
+
+body.nv-author .author-profile__bio p:last-child {
+    margin-bottom: 0;
+}
+
+body.nv-author .author-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* H1 переиспользует .blog-archive__title (40/52 общий, 32/44 на Mobile ниже). flex:1 — единственный
+   child в .blog-archive__head (нет controls, как у category) не должен схлопываться до content-width. */
+body.nv-author .blog-archive__head--author .blog-archive__title {
+    flex: 1 1 0;
+    width: 100%;
+}
+
+/* Сайдбар topics/grid: реюз .blog-archive__layout/.blog-cats/.blog-archive__grid, только gap36
+   (не общие 48) и 3 колонки карточек (не 2/3/4 category) на Desktop. */
+body.nv-author .blog-archive--author .blog-archive__layout,
+body.nv-author .blog-archive--author .blog-archive__layout--no-news {
+    gap: 36px;
+}
+
+body.nv-author .blog-archive--author .blog-archive__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Author-only карточка: inside-stroke той же техникой, что и category (R2-01), другие mode-числа. */
+body.nv-author .blog-card {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-author .blog-card__media {
+    position: relative;
+    border: 0;
+    aspect-ratio: 333.33 / 176;
+}
+
+body.nv-author .blog-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 2px var(--nv-surface-3);
+    pointer-events: none;
+}
+
+body.nv-author .blog-card__author {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-author .blog-card__stat {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-surface-4);
+}
+
+body.nv-author .blog-card__time {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+}
+
+/* Full HD (2570:33393): профиль слева 440px (колонкой), контент справа 1368px; sidebar topics
+   СПРАВА от сетки (в отличие от category/Desktop, где он слева); 2 колонки карточек 458 (442 фото). */
+@media (min-width: 1800px) {
+    body.nv-author .author-layout {
+        display: grid;
+        grid-template-columns: 440px minmax(0, 1fr);
+        align-items: start;
+        gap: 48px;
+    }
+    body.nv-author .author-profile {
+        flex-direction: column;
+        width: 440px;
+    }
+    body.nv-author .author-profile__body {
+        flex-direction: column;
+    }
+    body.nv-author .author-profile__head {
+        flex-basis: auto;
+    }
+    body.nv-author .blog-archive--author .blog-archive__layout--no-news {
+        grid-template-columns: minmax(0, 1fr) 400px;
+        grid-template-areas: "main cats";
+    }
+    body.nv-author .blog-archive--author .blog-archive__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    body.nv-author .blog-card__media {
+        aspect-ratio: 442 / 296;
+    }
+}
+
+/* Tablet (1381:25698): профильный ряд avatar140 + info, bio отдельной строкой; topics строкой,
+   сетка 2 колонки 364-фото/16-gap, padding-bottom карточки 16 (не 24). */
+@media (max-width: 1199.98px) {
+    /* A-04: bio должна идти под ВСЕМ рядом avatar+head на полную ширину (776 при 840), а не внутри
+       __body рядом с head (там она ограничена оставшимся пространством ~612). display:contents убирает
+       собственный бокс __body, не трогая разметку/текст — его дети (head, bio) становятся прямыми
+       flex-item'ами __profile; flex-wrap переносит bio (flex-basis:100%) на свою строку. */
+    body.nv-author .author-profile {
+        flex-wrap: wrap;
+    }
+    body.nv-author .author-profile__body {
+        display: contents;
+    }
+    body.nv-author .author-profile__head {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    body.nv-author .author-profile__bio {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+    body.nv-author .blog-archive--author .blog-archive__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    body.nv-author .blog-card {
+        padding-bottom: 16px;
+        border-radius: 16px;
+    }
+    body.nv-author .blog-card__media {
+        aspect-ratio: 364 / 184;
+        border-radius: 16px;
+    }
+    body.nv-author .blog-card__title a::after {
+        border-radius: 16px;
+    }
+}
+
+/* Mobile (1381:26059): hero скрыт выше; avatar216 + info рядом, перенос ниже фото при нехватке
+   места (реальное длинное имя компании, не "Ostap Bender" из Figma); topics в колонку; сетка 1. */
+@media (max-width: 767.98px) {
+    body.nv-author .author-profile {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    body.nv-author .author-profile__avatar {
+        width: 216px;
+        height: 216px;
+        border-radius: 32px;
+    }
+    body.nv-author .author-profile__body {
+        flex: 1 1 200px;
+        flex-direction: column;
+        min-width: 0;
+    }
+    body.nv-author .author-profile__head {
+        flex-basis: auto;
+    }
+    body.nv-author .blog-cats--author {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    body.nv-author .blog-cats--author .blog-cats__list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    body.nv-author .blog-archive--author .blog-archive__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    body.nv-author .blog-card {
+        padding-bottom: 12px;
+        border-radius: 12px;
+    }
+    body.nv-author .blog-card__title a::after {
+        border-radius: 12px;
+    }
+    body.nv-author .blog-card__media {
+        aspect-ratio: 344 / 224;
+        border-radius: 12px;
+    }
+    body.nv-author .blog-card__title,
+    body.nv-author .blog-card__title a {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    body.nv-author .blog-card__excerpt {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    body.nv-author .blog-card__stat,
+    body.nv-author .blog-card__time,
+    body.nv-author .blog-card__date {
+        font-size: 12px;
+        line-height: 1.3333;
+    }
+    body.nv-author .blog-card__avatar {
+        width: 40px;
+        height: 40px;
+    }
+    /* A-02: stat-иконка (eye/heart) 16×16 на Mobile, как у category (time уже16 в базовом .blog-card__time). */
+    body.nv-author .blog-card__stat svg {
+        width: 16px;
+        height: 16px;
+    }
+    /* A-03: имя/должность автора на карточке — 14/20 и 12/16 на Mobile. */
+    body.nv-author .blog-card__author-name {
+        font-size: 14px;
+        line-height: 1.4286;
+    }
+    body.nv-author .blog-card__author-job {
+        font-size: 12px;
+        line-height: 1.3333;
+    }
+    /* R-03 аналог: H1 остаётся читаемым 32/44 на Mobile, не наследует общие 40/52. */
+    body.nv-author .blog-archive--author .blog-archive__title {
+        font-size: 32px;
+        line-height: 1.375;
+    }
+}
+
+/* AUTHOR ARCHIVE LIGHT END */

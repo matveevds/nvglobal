@@ -1,0 +1,432 @@
+/* Блок «news» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/*
+ * Blog. Макеты: Full HD 2380:23753, Desktop 318:9382, Tablet 2376:17578,
+ * карточка 830:11701, ховер карточки 2386:37293.
+ *
+ * Карточка фиксированной высоты 580 на всех трёх фреймах, ширина меняется:
+ * 452 / 332 / 360, зазор 16. На Full HD и Desktop четыре карточки ровно
+ * заполняют контейнер, прокрутка не нужна; на планшете они шире контейнера —
+ * там работает слайдер. Стрелок навигации в макете нет ни на одном фрейме.
+ */
+.news {
+    position: relative;
+    z-index: 2;
+}
+
+.news__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.news__top {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.news__top-info {
+    display: flex;
+    gap: 48px;
+    align-items: flex-end;
+}
+
+.news__title-block {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.news__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.news__description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+}
+
+.news__top-action {
+    flex: 0 0 auto;
+}
+
+.news .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.news .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.news .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+.news .btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.news .btn:hover {
+    background: var(--nv-surface-3);
+}
+
+.news .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Четыре карточки ровно заполняют контейнер, Swiper здесь не инициализируется. */
+.news__content {
+    width: 100%;
+}
+
+.news__list {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+
+/*
+ * Ширина по сетке из четырёх карточек: (100% - 3 зазора) / 4. Так карточка
+ * сохраняет размер макета и когда записей меньше четырёх — иначе одна запись
+ * растягивалась бы на всю ширину контейнера.
+ */
+.news__item {
+    flex: 0 1 calc((100% - 48px) / 4);
+    min-width: 0;
+    height: 580px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+    padding: 8px 8px var(--Frame-Card-Padding-Outside, 24px);
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(4px);
+    transition: background-color .2s ease;
+}
+
+.news__item-image {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 2px solid var(--nv-surface-3);
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30);
+}
+
+.news__item-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.news__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 16px;
+}
+
+.news__item-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.news__item-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.news__item-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 12px 6px 6px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.news__item-chip-icon,
+.news__item-time-icon {
+    display: flex;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+.news__item-chip-icon svg,
+.news__item-time-icon svg {
+    display: block;
+}
+
+.news__item-chip-value {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+    white-space: nowrap;
+}
+
+.news__item-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: var(--nv-primary-soft);
+    backdrop-filter: blur(10px);
+}
+
+.news__item-time-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--nv-primary);
+}
+
+.news__item-time-text {
+    color: var(--nv-primary);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+    white-space: nowrap;
+}
+
+.news__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/*
+ * Заголовок и анонс занимают ровно три строки — столько в макете. Высота
+ * карточки фиксированная, а длина реальных заголовков произвольная: без
+ * жёсткой высоты текстового блока картинки в соседних карточках получали бы
+ * разную высоту и блоки автора не выстраивались бы в одну линию.
+ * min-height держит нижнюю границу, line-clamp — верхнюю.
+ */
+.news__item-title {
+    min-height: 72px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.news__item-title:hover,
+.news__item-title:focus-visible {
+    color: var(--nv-primary);
+}
+
+.news__item-description {
+    margin: 0;
+    min-height: 72px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.news__item-author {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 12px;
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+    text-decoration: none;
+    transition: background-color .2s ease;
+}
+
+.news__item-author-image {
+    display: flex;
+    flex-shrink: 0;
+    width: 49px;
+    height: 49px;
+}
+
+.news__item-author-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    object-fit: cover;
+}
+
+.news__item-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.news__item-author-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+}
+
+.news__item-author-job {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+/* Ховер по фрейму 2386:37293: фон карточки и блока автора меняются местами. */
+.news__item:hover {
+    background: var(--nv-surface-3);
+}
+
+.news__item:hover .news__item-author {
+    background: var(--nv-surface-2);
+}
+
+.news__item:focus-within {
+    background: var(--nv-surface-3);
+}
+
+.news__item:focus-within .news__item-author {
+    background: var(--nv-surface-2);
+}
+
+.news__item-title:focus-visible,
+.news__item-author:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+@media (max-width: 1199.98px) {
+/*
+ * Ниже 1200 включается Swiper (initNewsSlider), слайды получают ширину
+ * из макета, зазор задаёт сам Swiper.
+ */
+    .news__content {
+        overflow: visible;
+    }
+
+    .news__list {
+        display: flex;
+        gap: 0;
+    }
+
+    .news__item {
+        flex: 0 0 auto;
+        width: 360px;
+        height: 580px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .news__wrapper {
+        gap: 48px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .news__top-info {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .news__top-action .btn {
+        max-width: fit-content;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .news__title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 125%;
+    }
+
+    .news__item {
+        width: 288px;
+        height: 540px;
+    }
+
+    .news__item-info {
+        gap: 24px;
+    }
+
+    .news__item-title,
+    .news__item-description {
+        min-height: 0;
+    }
+
+    .news__item-title {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .news__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    body.page-template-page-identity-verification .news__description {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+}

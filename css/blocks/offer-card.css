@@ -1,0 +1,169 @@
+/* Блок «promo» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.promo {
+    padding-top: 64px;
+    margin-top: -24px;
+    padding-bottom: 128px;
+    border-radius: 0 0 32px 32px;
+    border: none;
+    border-bottom: 1px solid rgba(251, 251, 251, 0.15);
+    position: relative;
+    z-index: 2;
+    display: none;
+}
+
+.promo__wrapper {
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    padding: 24px 24px 0 24px;
+    display: flex;
+    gap: 48px;
+}
+
+.promo__info {
+    padding-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.promo__info-title {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.promo__info-description {
+
+}
+
+.promo__image-maskot {
+    position: relative;
+    width: 176px;
+    flex-shrink: 0;
+}
+
+.promo__image-maskot img {
+    position: absolute;
+    bottom: 0;
+    width: 176px;
+    height: auto;
+}
+
+.promo__action {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.promo__form {
+    padding-bottom: 24px;
+}
+
+.promo__form-wrapper {
+    display: flex;
+    gap: 7px;
+    align-items: flex-end;
+}
+
+.promo__form-input {}
+
+.promo__form .input-form-block {
+    height: 40px;
+    padding: 5px;
+}
+
+.promo__form .input-form-action {
+    width: unset;
+}
+
+@media (max-width: 1199.98px) {
+    .promo__wrapper {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .promo__info {
+        order: 1;
+        padding-right: 200px;
+        padding-bottom: 0;
+    }
+
+    .promo__action {
+        order: 2;
+        padding-right: 200px;
+    }
+
+    .promo__image-maskot {
+        order: 3;
+        align-self: flex-end;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .promo__info {
+        padding-right: 160px;
+    }
+
+    .promo__wrapper {
+        padding-top: 56px;
+    }
+
+    .promo__action {
+        padding-right: 0;
+    }
+
+    .promo__image-maskot {
+        width: 128px;
+        height: 93px;
+        padding: 0;
+        margin: 0;
+        top: 0;
+        bottom: unset;
+    }
+
+    .promo__image-maskot img{
+        transform: rotate(-90deg);
+        width: 134px;
+        height: 168px;
+        right: 17px;
+        top: -20px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .promo {
+        padding-bottom: 64px;
+    }
+
+    .promo__wrapper {
+        padding-top: 80px;
+    }
+
+    .promo__info {
+        padding-right: 0;
+    }
+
+    .promo__info-title {
+        padding-right: 60px;
+    }
+
+    .promo__image-maskot img {
+        width: 109px;
+        height: 144px;
+    }
+
+    .promo__form-wrapper {
+        flex-direction: column;
+    }
+
+    .promo__form-input {
+        
+    }
+}

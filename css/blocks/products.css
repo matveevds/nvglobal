@@ -1,0 +1,508 @@
+/* Блок «products» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/*
+ * Макет Figma 291:7228. Секция оформлена как скруглённая «страница»: компонент
+ * Page edge сверху и снизу — это просто рамка с радиусом 32, отдельная разметка
+ * для него не нужна. Внутренние поля 128 = 64 (поле Page edge) + 64 (поле контента).
+ */
+.products {
+    position: relative;
+    z-index: 0;
+    background: var(--nv-surface-1);
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 32px;
+}
+
+.products__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+/* В рамках Home общее поле секции — контрактное (64/32); внутреннее поле содержимого 64 на всех ширинах —
+   вместе 128/96, как в Figma (решение владельца). */
+.home.page-template-main-page .products__wrapper {
+    padding-block: 64px;
+}
+
+/* Сохраняет прежнюю геометрию legacy index.php вне текущего page-template-main-page. */
+.home:not(.page-template-main-page) .products {
+    padding-block: 128px;
+}
+
+/*
+ * Колонки: Full HD 2380:22973 — 633 + 223 + 1000, Desktop 2363:30609 —
+ * 540 + 96 + 740. В узкой колонке заголовок переносится на вторую строку
+ * и секция вырастает на 52px (BACKLOG A-08), поэтому ширины разведены.
+ */
+.products__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.products__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    width: 633px;
+    flex-shrink: 0;
+}
+
+/* Карточка слайдера не шире макетных 1000 — остаток уходит в зазор колонок. */
+.products__slider {
+    flex: 1 1 auto;
+    max-width: 1000px;
+    min-width: 0;
+}
+
+.products__info-top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.products__title {
+    margin: 0;
+}
+
+.products__info-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.products__info-description {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.products__info-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+/* Карточка слайдера */
+.products__slider {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.products__slider-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    width: 100%;
+}
+
+.products__slider-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* 2380:22986 — высота вкладки 32, обводка внутри. */
+.products__slider-tab {
+    display: flex;
+    padding: 3px 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, color .2s ease;
+    flex: 0 0 auto;
+}
+
+/* Hover замерен по фрейму 2386:28499: фон плашки темнеет #E4E4E4 -> #D2D2D2. */
+.products__slider-tab:hover {
+    background: var(--nv-surface-4);
+}
+
+.products__slider-tab--active,
+.products__slider-tab--active:hover {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    cursor: default;
+}
+
+.products__slider-tab:focus-visible,
+.products__slider-arrow:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.products__slider-arrows {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.products__slider-arrow {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, opacity .2s ease;
+}
+
+.products__slider-arrow svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.products__slider-arrow:hover {
+    background: var(--nv-surface-3);
+}
+
+/* В макете неактивная стрелка — без заливки и с прозрачностью 50%. */
+.products__slider-arrow--disabled,
+.products__slider-arrow--disabled:hover {
+    background: transparent;
+    opacity: .5;
+    cursor: default;
+}
+
+.products__slider-content-swiper {
+    width: 100%;
+    min-width: 0;
+}
+
+.products__slider-list {
+    align-items: stretch;
+}
+
+.products__slide {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    padding-left: 8px;
+}
+
+.products__slide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.products__slide-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.products__slide-subtitle {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+/* Full HD 2380:22999 — поле описания слайда 571 при текстовом блоке 763. */
+.products__slidedescription {
+    max-width: 571px;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+.products__slide-action {
+    flex-shrink: 0;
+}
+
+/*
+ * Кнопки секции. `.btn`, `.btn--small`, `.btn--gray` — общие классы,
+ * поэтому новый вид ограничен секцией, чтобы не задеть другие страницы.
+ */
+.products .btn--primary,
+.products .btn--gray {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: filter .2s ease, background-color .2s ease;
+}
+
+.products .btn--primary {
+    background: var(--nv-gradient);
+}
+
+.products .btn--gray {
+    background: var(--nv-surface-2);
+}
+
+.products .btn--primary .btn__text {
+    color: var(--nv-constant-1);
+}
+
+.products .btn--gray .btn__text {
+    color: var(--nv-object-1);
+}
+
+.products .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.products .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.products .btn__icon {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.products .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Крупные кнопки левой колонки: 18/24, иконка по высоте строки. */
+.products__info-actions .btn {
+    gap: 8px;
+    padding: 7px 7px 7px 15px;
+    min-height: 40px;
+}
+
+.products__info-actions .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.products__info-actions .btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Кнопка внутри слайда: 14/20, иконка 20. */
+.products__slide-action .btn {
+    gap: 4px;
+    padding: 5px 5px 5px 11px;
+    min-height: 32px;
+}
+
+.products__slide-action .btn__text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+}
+
+.products__slide-action .btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.products .btn--primary:hover,
+.products .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.products .btn--gray:hover,
+.products .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.products .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    /* На десктопе Swiper выключен: слайды показываются по активному классу. */
+    .products__slider-content-swiper {
+        overflow: visible;
+    }
+
+    .products__slider-list {
+        display: block;
+        transform: none !important;
+    }
+
+    .products__slide {
+        display: none;
+    }
+
+    .products__slide--active {
+        display: flex;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2363:30609: колонки 540 + 96 + 740. */
+    .products__content {
+        justify-content: flex-start;
+        gap: 96px;
+    }
+
+    .products__info {
+        width: 540px;
+    }
+
+    .products__slider {
+        max-width: none;
+    }
+
+    .products__slidedescription {
+        max-width: none;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .products__content {
+        gap: 48px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /*
+     * Ниже 1200 двухколоночная раскладка становится тесной: карточке остаётся
+     * меньше 550px, и вкладка «Liveness & Face Authentication» (250px) начинает
+     * занимать строку целиком. Переходим к схеме планшетного фрейма 2376:16797:
+     * заголовок, под ним карточка, описание и кнопки — отдельной строкой внизу.
+     */
+    .products__content {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .products__info {
+        display: contents;
+    }
+
+    .products__info-top {
+        order: 1;
+    }
+
+    .products__slider {
+        order: 2;
+    }
+
+    .products__info-bottom {
+        order: 3;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .products__info-description {
+        max-width: 356px;
+    }
+
+    .products__slider-head {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Планшетный фрейм 2376:16797: поле карточки 16. */
+    .products__slider {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .home.page-template-main-page .products__wrapper {
+        padding-block: 64px;
+    }
+
+    .home:not(.page-template-main-page) .products {
+        padding-block: 96px;
+    }
+
+    .products {
+        border-radius: 24px;
+    }
+
+    .products__slider {
+        gap: 24px;
+    }
+
+    .products__slide {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding-left: 0;
+    }
+
+    .products__info-bottom {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .products__info-description {
+        max-width: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .products__slider-head {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .products__slider-arrows {
+        align-self: flex-end;
+    }
+
+    .products__slide-title {
+        font-size: 24px;
+    }
+
+    .products__info-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Базовый `.btn` ограничен `max-width: fit-content` — в колонке снимаем, иначе кнопки разной ширины. */
+    .products__info-actions .btn {
+        max-width: none;
+        justify-content: space-between;
+    }
+}

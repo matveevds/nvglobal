@@ -1,0 +1,1314 @@
+/* Базовый слой: @font-face, reset, токены и контекстные списки `--nv-*`, `.container`, `.section*`, `.btn*`, примитивы KYC (`.kyc-card/.kyc-btn/.kyc-title/…`), body-правила страниц. */
+
+@font-face {
+    font-family: 'Satoshi';
+    src:url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.eot');
+    src:url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff2') format('woff2'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff') format('woff'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.eot');
+    src: url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2') format('woff2'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff') format('woff'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.eot');
+    src: url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.woff2') format('woff2'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.woff') format('woff'),
+         url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src:url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Light.eot');
+    src:url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Light.woff2') format('woff2'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Light.woff') format('woff'),
+        url('../fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 150%;
+    margin: 0;
+    color: #FBFBFB;
+    background: var(--Background-Black, #212121);
+    position: relative;
+    overflow-x: hidden;
+    overflow: clip;
+}
+
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+/* body.no-scroll {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+} */
+button {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 150%;
+}
+
+textarea,
+input {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 150%;
+}
+
+.container {
+    max-width: 1560px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.small-container {
+    max-width: 900px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    background: var(--Background-Black, #212121);
+    padding: 64px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.section__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.section__badge {
+    display: flex;
+    padding: 4px 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    align-self: flex-start;
+    color: var(--Text-Orange, #F9AA66);
+    line-height: 150%;
+    width: fit-content;
+}
+
+.section__content {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+}
+
+.section__title-block {
+    max-width: 730px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.section__title {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+    margin: 0;
+}
+
+.section__title span {
+    color:#F9AA66;
+}
+
+.section__subtitle {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.section__subtitle--small {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.section__description {
+    color: var(--Text-White, #FBFBFB);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+.tag {
+    height: 32px;
+    display: flex;
+    flex-shrink: 0;
+    width: fit-content;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    color: var(--Text-Orange, #F9AA66);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.btn {
+    display: flex;
+    padding: 5px 5px 5px 11px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Orange, #F9AA66);
+    cursor: pointer;
+    text-decoration: none;
+    max-width: fit-content;
+    backdrop-filter: blur(10px);
+    outline: none;
+}
+
+.btn:hover {
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+}
+
+.btn-form.btn:hover {
+    background: #383837;
+}
+
+.btn__text {
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 700;
+    color: var(--Text-Dark-blue, #2B323B);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.btn__icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.widget__btn .btn__text {
+    font-size: 14px;
+}
+
+.widget__btn .btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.btn--transparent {
+    background-color: transparent;
+    padding: 7px 7px 7px 16px;
+    gap: 8px;
+}
+
+.btn--transparent .btn__text {
+    color:#FBFBFB;
+}
+
+.btn--transparent .btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.btn--transparent:hover {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.btn--18 .btn__text {
+    font-size: 18px;
+}
+
+.btn--orange {
+    background-color: #F9AA66;
+    padding: 7px 7px 7px 15px;
+}
+
+.btn--orange .btn__text {
+    font-size: 18px;
+}
+
+.btn--orange .btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-form {
+    height: 64px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    background: #383837;
+}
+
+.btn-form__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    /* background: var(--island-white-10, rgba(251, 251, 251, 0.10)); */
+    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+}
+
+.section__description {
+    color: rgba(251, 251, 251, 0.70);
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+.gprev, .gnext {
+    display: none;
+}
+
+.btn-hero,
+.btn-form{
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    display: flex;
+    padding: 8px 8px 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 16px;
+    height: 40px;
+    cursor: pointer;
+    text-decoration: none;
+    max-width: fit-content;
+  }
+
+  /* слой заливки */
+  .btn-hero::before,
+  .btn-form::before{
+    content:"";
+    position:absolute;
+    left: 50%;
+    bottom: 0;
+    width: 130%;
+    aspect-ratio: 1 / 1;           /* идеальный круг */
+    transform: translate(-50%, 50%) scale(0); /* старт из точки снизу */
+    transform-origin: 50% 100%;
+    background: linear-gradient(142deg, #F9AA66 0%, #FF7759 100%);
+    border-radius: 9999px;
+    z-index: -1;
+    transition: transform 1000ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* hover — круг расширяется */
+  .btn-hero:hover::before,
+  .btn-form:hover::before{
+    transform: translate(-50%, 50%) scale(1);
+  }
+
+  /* чтобы текст/иконки были поверх */
+  .btn-hero > *,
+  .btn-form > *{
+    position: relative;
+    z-index: 1;
+  }
+
+  /* можно оставить бордер как есть */
+  .btn-hero:hover,
+  .btn-form:hover{
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+}
+
+.btn-form:hover .btn__text {
+    color: #000;
+}
+
+.btn-form:hover .btn-form__icon {
+    background: var(--Island-Dark-blue, #2B323B);
+}
+
+.btn-form:hover .btn-form__icon svg path{
+    fill: #fff;
+}
+
+.btn-hero .btn__text {
+    font-size: 18px;
+}
+
+.btn-form {
+    height: 64px;
+}
+
+.btn--disabled {
+    cursor: default;
+    border: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+}
+
+.btn--disabled .btn__text,
+.btn--disabled:hover .btn__text{
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50))!important;
+}
+
+.btn--disabled:hover {
+    background: unset;
+    background-color: rgba(251, 251, 251, 0.05)!important;
+}
+
+.btn--disabled .btn__icon svg path {
+    fill: #2B323B;
+}
+
+.btn--disabled:hover::before {
+    display: none;
+}
+
+.btn--disabled .btn-form__icon {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.btn--mobile {
+    display: none;
+}
+
+.btn-with-lottie-arrow-orange:hover .lottie-container-arrow-orange svg {
+    filter: brightness(0) saturate(100%) invert(67%) sepia(67%) saturate(1234%) hue-rotate(340deg) brightness(102%) contrast(101%);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section__tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.medium-title {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.medium-text {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.large-text {
+    color: rgba(251, 251, 251, 0.70);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+.orange-text {
+    color: #F9AA66;
+}
+
+.medium-icon {
+    width: 32px;
+    height: 32px;
+    padding: 3px;
+    border-radius: 6px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top__widget {
+    position: fixed;
+    left: 32px;
+    bottom: 42px;
+    z-index: 7;
+    cursor:pointer;
+    display: none;
+}
+
+.top__widget.top__widget--active {
+    display: block;
+}
+
+.top__widget-btn {
+    width: 44px;
+    height: 44px;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Orange, #F9AA66);
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.40);
+}
+
+/* Светлая тема главной: старая палитра виджета на ней выбивается. */
+body.home .top__widget-btn {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    box-shadow: 0 12px 28px 0 rgba(33, 33, 33, 0.18);
+}
+
+body.home .top__widget-btn:hover {
+    background: var(--nv-primary);
+}
+
+body.home .top__widget-btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.top__widget-btn svg {
+
+}
+
+/* Контейнер для Lottie анимации */
+.lottie-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lottie-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 1599.98px) {
+    .container {
+        max-width: 1408px;
+    }
+
+    .small-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .container {
+        max-width: 1140px;
+    }
+
+    .small-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .small-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .container {
+        max-width: 754px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .btn--desktop {
+        display: none;
+    }
+
+    .btn--mobile {
+        display: flex;
+        display: none;
+        padding: 7px 7px 7px 15px;
+    }
+
+    .btn--mobile .btn__icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    /*
+     * На этих ширинах тема переносит чат-виджет NeVi влево
+     * (.wp-singular .web-chat-widget .wc-right-4 ниже по файлу), и кнопка
+     * «наверх» оказывалась целиком под ним: чат 72x72 с z-index 9998 против
+     * 44x44 с z-index 7 — кнопка переставала нажиматься. Разводим их
+     * по разным сторонам, z-index не трогаем.
+     */
+    .top__widget {
+        left: auto;
+        right: 16px;
+    }
+
+    .section {
+        padding: 32px 0;
+    }
+
+    .section__description {
+        font-size: 16px;
+    }
+
+    .btn--mobile .btn__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn--transparent .btn__icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .medium-title {
+        font-size: 20px;
+    }
+
+    .medium-text {
+        font-size: 14px;
+    }
+
+    .large-text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .btn--transparent {
+        gap: 8px;
+    }
+
+    .section {
+        padding: 32px 0;
+    }
+}
+
+/*
+ * Светлая тема макетов Figma NV-Global. Токены объявлены для главной, для
+ * страницы Solutions и для юридических страниц (шаблон `page-privacy.php`):
+ * все переведены на один и тот же светлый дизайн, поэтому значения
+ * не дублируются (решения Р-9 / Р-12 / Р-122 в docs/DECISIONS.md).
+ * /pricing-matrix/, /docs/, /blog/, 404 и архивы остаются тёмными.
+ *
+ * С 2026-10-12 тот же набор объявлен на `.modal--form` и `.modal--result`:
+ * всплывающие формы — глобальный компонент и открываются на тёмных шаблонах
+ * тоже, где токенов на body нет (DECISIONS.md, Р-113). Окно отзывов
+ * (`#review`) модификаторов не получает и остаётся тёмным.
+ *
+ * Токены названы с префиксом --nv-, чтобы не пересекаться с семейством
+ * --island-* / --text-white-* / --stroke-white-*: те 384 раза используются
+ * с fallback-значениями и нигде не объявлены, объявлять их нельзя
+ * (docs/THEME-TODO.md, раздел 1).
+ */
+body.home,
+body.page-template-page-kyc,
+body.page-template-page-identity-verification,
+body.page-template-page-solutions,
+body.page-template-page-privacy,
+body.page-template-page-price-matrix,
+body.single-post,
+body.single-document,
+body.nv-blog,
+body.nv-bloki,
+body.error404,
+body.page-template-page-docs {
+    --nv-primary: #FD6B01;
+    --nv-primary-2: #FF4601;
+    --nv-primary-soft: #FFF0E6;
+
+    --nv-object-1: #212121;
+    --nv-object-2: #5A5A5A;
+    --nv-object-3: #898989;
+
+    --nv-surface-1: #F8F8F8;
+    --nv-surface-2: #F2F2F2;
+    --nv-surface-3: #E4E4E4;
+    --nv-surface-4: #D2D2D2;
+
+    --nv-white: #FFFFFF;
+    --nv-constant-1: #F8F8F8;
+    --nv-constant-85: rgba(248, 248, 248, 0.85);
+    --nv-constant-50: rgba(248, 248, 248, 0.5);
+
+    /* Приглушённый оранжевый: номер на акцентной карточке Products. */
+    --nv-primary-tint: #FEB580;
+
+    --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
+
+    --nv-radius-card: 24px;
+    --nv-radius-hero: 32px;
+    --nv-gutter: 32px;
+}
+
+/*
+ * Фон и базовый цвет текста включаются постранично. На /solutions/ редизайн
+ * идёт по группам, и ниже первого экрана ещё остаются тёмные секции, которым
+ * нужен унаследованный светлый текст, — поэтому светлый фон там задаёт пока
+ * сама секция. Страница целиком переедет сюда вместе с последней группой.
+ */
+body.home {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/*
+ * Общие компоненты секций в светлой теме. `.section`, `.section__badge`,
+ * `.section__title`, `.section__subtitle` используются ещё на /solutions/,
+ * /pricing-matrix/ и 404 — поэтому только через `body.home`.
+ */
+body.home .section,
+body.page-template-page-identity-verification .section {
+    background: var(--nv-surface-1);
+}
+
+body.home .section__badge,
+body.page-template-page-identity-verification .section__badge {
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* CR-09: Figma inside stroke не добавляет пикселей к layout-размеру бейджа (32h wide / 24h
+   Mobile), а обычный CSS `border` добавляет 2px сверх line-height+padding — отсюда actual
+   34h/29.88h вместо 32/24 на всех 11 секциях разом (сдвигает каждый H2 ниже badge). Заменено
+   на `box-shadow: inset` (тот же видимый контур, без layout-налога). Explicit padding:4px 20px
+   обязателен: `.kyc-section .section__badge`/`.kyc-panel .section__badge` (общий KYC-шный
+   компенсатор, padding3px19px под СВОЙ border1) той же/близкой специфичности продолжают
+   задавать padding для секций, использующих общие `.kyc-section`/`.kyc-panel` (Platform/
+   Industries/Pricing/Security/About/Integration/Steps) — без явного override здесь их высота
+   остаётся24+3+3=30 вместо32 (border снят, а компенсирующий padding3 остался). */
+body.page-template-page-identity-verification .section__badge {
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    padding: 4px 20px;
+}
+
+@media (max-width: 767.98px) {
+    /* CR-09 Mobile: inset2/16 (не унаследованные 4/20 с wide) — даёт ровно 24h при line-height20. */
+    body.page-template-page-identity-verification .section__badge {
+        padding: 2px 16px;
+    }
+}
+
+body.home .section__title,
+body.page-template-page-identity-verification .section__title {
+    color: var(--nv-object-1);
+}
+
+body.home .section__title span,
+body.page-template-page-identity-verification .section__title span {
+    color: var(--nv-primary);
+}
+
+body.home .section__subtitle,
+body.page-template-page-identity-verification .section__subtitle {
+    color: var(--nv-primary);
+}
+
+body.home .section__title-block,
+body.page-template-page-identity-verification .section__title-block {
+    gap: 16px;
+}
+
+/*
+ * Сетка макета: контент = ширина экрана − 64, боковое поле 32px на всех трёх фреймах
+ * (1920 → 1856, 1440 → 1376, 840 → 776). Потолок 1920 повторяет самый широкий фрейм.
+ * Специфичность `body.home .container` выше, чем у лесенки `.container` в media-запросах,
+ * поэтому общие правила переопределять не нужно.
+ *
+ * С группы 9 то же правило действует на /solutions/: светлые тизер и футер
+ * выводятся вне шаблона страницы и своей сетки не задают. Секции страницы
+ * задают `.container` сами и идут ниже по файлу — их это не затрагивает.
+ */
+body.home .container,
+body.page-template-page-kyc .container,
+body.page-template-page-identity-verification .container,
+body.page-template-page-solutions .container,
+body.page-template-page-privacy .container,
+body.page-template-page-price-matrix .container,
+body.single-post .container,
+body.single-document .container,
+body.nv-bloki .container,
+body.nv-blog .container,
+body.error404 .container,
+body.page-template-page-docs .container {
+    max-width: 1920px;
+    padding-left: var(--nv-gutter);
+    padding-right: var(--nv-gutter);
+}
+
+@media (max-width: 767.98px) {
+    /* Макета мобильной версии нет — сохраняем поля темы (docs/DECISIONS.md, Р-1 / BACKLOG R-01). */
+    body.home .container,
+    body.page-template-page-kyc .container,
+    body.page-template-page-identity-verification .container,
+    body.page-template-page-solutions .container,
+    body.page-template-page-privacy .container,
+    body.page-template-page-price-matrix .container,
+    body.single-post .container,
+    body.single-document .container,
+    body.nv-bloki .container,
+body.nv-blog .container,
+    body.error404 .container,
+    body.page-template-page-docs .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 419.98px) {
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .section__title {
+        font-size: 32px;
+    }
+
+    .section__subtitle {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .section__subtitle {
+        font-size: 16px;
+    }
+}
+
+/* Пустые правила ниже достались от прежней вёрстки, оставлены как были. */
+.section {
+
+}
+
+.container {
+
+}
+
+.section__badge {
+
+}
+
+body.page-template-page-kyc {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+.kyc-section {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+/* Бейдж секции: Figma «Component 2» — поле 4/20, обводка внутрь, высота 32. */
+.kyc-section .section__badge,
+.kyc-panel .section__badge {
+    align-self: flex-start;
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* Title/H2 40/52. */
+.kyc-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+}
+
+/* Body text/Regular Medium 16/24. */
+.kyc-lead {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+/* Body text/Medium Medium 18/28. */
+.kyc-lead--md {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+/* Title/H5 20/28, оранжевый. */
+.kyc-subtitle {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+/*
+ * Карточка: обводка 1px рисуется внутрь, поэтому поле 23 при макетных 24.
+ * Модификаторы — только подложка: `--filled` (Island/1), `--accent` (градиент).
+ */
+.kyc-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-card--filled {
+    background: var(--nv-surface-2);
+}
+
+.kyc-card--accent {
+    background: var(--nv-gradient);
+}
+
+.kyc-card--overflow {
+    overflow: hidden;
+}
+
+/* Title/H4 24/36. */
+.kyc-card__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+/* Title/H3 32/48. */
+.kyc-card__title--lg {
+    font-size: var(--Text-Title-Size-H3, 32px);
+}
+
+/* Title/H5 20/28. */
+.kyc-card__title--md {
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+}
+
+/* Body text/Regular 16/24. */
+.kyc-card__text {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+}
+
+/* Body text/Medium 18/28. */
+.kyc-card__text--md {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+.kyc-card--accent .kyc-card__title {
+    color: var(--nv-constant-1);
+}
+
+.kyc-card--accent .kyc-card__text {
+    color: var(--nv-constant-85);
+}
+
+/* Ссылка в тексте карточки (Сборщик страниц: «→ …» из ТЗ): оранжевая, подчёркнутая, длинный адрес переносится. */
+.kyc-card__text a,
+.kyc-card__title a {
+    color: var(--nv-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+}
+
+.kyc-card__text a:hover,
+.kyc-card__title a:hover {
+    color: var(--nv-primary-2);
+}
+
+.kyc-card__text a:focus-visible,
+.kyc-card__title a:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* На оранжевой карточке ссылка белая. */
+.kyc-card--accent .kyc-card__text a,
+.kyc-card--accent .kyc-card__title a {
+    color: var(--nv-constant-1);
+}
+
+.kyc-card--accent .kyc-card__text a:focus-visible,
+.kyc-card--accent .kyc-card__title a:focus-visible {
+    outline-color: var(--nv-constant-1);
+}
+
+/* Поле 4 с обводкой внутрь: 3 + 1 + иконка 24 + 1 + 3 = 32. */
+.kyc-icon-box {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 1px solid var(--nv-primary);
+    border-radius: 6px;
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.kyc-icon-box svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* Токен: Body text/Small Medium 16/24 на Island/Surface 1. */
+.kyc-token {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+/* Оранжевый токен: Body text/Small 14/20, Stroke/Orange. */
+.kyc-token--orange {
+    padding: 3px 11px;
+    border-color: var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+}
+
+/* Кнопки секций: те же размеры, что у `.main__btn`; классы локальные (общие `.btn` — тёмная тема). */
+.kyc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 8px 8px 16px;
+    border: 0;
+    border-radius: 8px;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, background-image .2s ease;
+}
+
+.kyc-btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+}
+
+.kyc-btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-btn--primary:hover,
+.kyc-btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+/* Button/Small 14/20: поле 6/6/6/12, радиус 6, светлая подложка с обводкой. */
+.kyc-btn--small {
+    min-height: 32px;
+    padding: 5px 5px 5px 11px;
+    gap: 4px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.kyc-btn--small .kyc-btn__text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+}
+
+.kyc-btn--small .kyc-btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-btn--small:hover,
+.kyc-btn--small:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.kyc-btn:focus-visible,
+.kyc-token:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-panel {
+    overflow: hidden;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-section {
+        padding: 32px 0;
+    }
+
+    .kyc-panel {
+        padding: 32px 0;
+    }
+
+    .kyc-title {
+        font-size: 32px;
+    }
+
+    .kyc-card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .kyc-card__title--lg {
+        font-size: var(--Text-Title-Size-H4, 24px);
+    }
+}
+
+@media (max-width: 478.98px) {
+    .kyc-title {
+        font-size: 28px;
+    }
+}
+
+/*
+ * Страница /identity-verification/ (page-identity-verification.php). Figma ISDh0vGDZPe3CsGvR4ZaIn:
+ * Full HD 2666:50067, Desktop 2620:25851, Tablet 2654:34135, Mobile 2666:42085. Переиспользует
+ * `.kyc-card`/`.kyc-title`/`.kyc-lead`/`.kyc-subtitle`/`.kyc-btn`/`.kyc-icon-box`/`.kyc-token`
+ * (KYC BASE выше) и `.main--solutions` (новый модификатор `.main--identity`, ниже). Новое —
+ * только `.idv-*` композиции (Checks/Coverage/Accuracy/Benefits/Security).
+ */
+body.page-template-page-identity-verification {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+@media (max-width: 1199.98px) {
+    /* H2 остаётся Desktop-значением 40/52 на Tablet (KYC сам уменьшает до 36/46.8 — у Identity иначе). */
+    body.page-template-page-identity-verification .kyc-title {
+        font-size: 40px;
+        line-height: 130%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* H2 32/44 на Mobile (другой line-height, чем у KYC-шного 28/36.4). */
+    body.page-template-page-identity-verification .kyc-title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    body.page-template-page-identity-verification .kyc-subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    body.page-template-page-identity-verification .kyc-lead--md {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    body.page-template-page-identity-verification .kyc-card__title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    /* V2-05: та же специфичность (2 класса), что у правила выше, — без явного восстановления
+       здесь `--lg` (no-code card title) тоже укатывался в 20/32 вместо своих 24/36. */
+    body.page-template-page-identity-verification .kyc-card__title--lg {
+        font-size: 24px;
+        line-height: 150%;
+    }
+
+    body.page-template-page-identity-verification .section__badge {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    body.page-template-page-identity-verification .kyc-card__text--md {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+/*
+ * Светлая 404. Figma NV Global: Desktop 722:20638, Tablet 722:23852, Mobile 722:24249.
+ * Макета Full HD нет: выше 1440 действует общий светлый `.container` (потолок 1920,
+ * поля 32), текст 574px и иллюстрация 737px не растут — прибавляется только
+ * свободное место между ними. Шапка и футер — общие, из header.php / footer.php.
+ * Высота страницы естественная: 1200 / 1861 в макете — это высота фрейма с шапкой и футером.
+ */
+body.error404 {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/*
+ * Светлые юридические страницы: Terms of Use, Privacy Policy и Information
+ * Security Policy Statement. Все три сидят на одном шаблоне `page-privacy.php`,
+ * поэтому правила ограничены `body.page-template-page-privacy`: блоки
+ * `.content-page` и `.page__*` общие с 404 и прежними тёмными страницами,
+ * их база выше по файлу не менялась.
+ *
+ * Figma: Article page `751:13876`, ширина фрейма 1440. Макетов Full HD, Tablet
+ * и Mobile нет: выше 1440 колонка остаётся теми же 900px, ниже сохраняется
+ * адаптив темы (docs/FIGMA.md → «Работа с Desktop-only макетами»).
+ *
+ * Вертикаль макета: шапка absolute на 32, контент сверху 140 и снизу 64,
+ * колонка 900 в полях 32, дальше скруглённый «page edge» тизера высотой 64.
+ */
+body.page-template-page-privacy,
+body.page-template-page-price-matrix,
+body.single-post {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}
+
+/*
+ * Светлая страница тарифов `/pricing-matrix/` (шаблон `page-price-matrix.php`).
+ * Макеты Figma: Desktop 1680:26979, Tablet 1687:15573 (только калькулятор),
+ * Mobile 1687:24170. Отдельного Full HD-фрейма нет — ширины берутся из общей
+ * сетки светлых страниц (контент = экран − 64, потолок 1920), как на главной
+ * и на /solutions/ (docs/DECISIONS.md, Р-130).
+ *
+ * Токены `--nv-*` объявлены в блоке HOME THEME; шаблон добавлен в их список
+ * и в `nv_is_light_theme()`, поэтому шапка, тизер и футер приезжают светлыми
+ * без собственных правил.
+ *
+ * Логика калькулятора не менялась: классы, `id` и `data-`атрибуты, на которые
+ * смотрит `js/calculate.js`, сохранены — ниже только оформление.
+ */
+body.page-template-page-price-matrix,
+body.single-post {
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+}

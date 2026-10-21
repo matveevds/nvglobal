@@ -1,0 +1,47 @@
+/* Страница «Demo» (page-demo.php): встроенное демо KYC. Правила — для обёртки, без стековых контекстов у предков демо. */
+
+.demo {
+    padding: 48px 0 96px;
+}
+
+.demo__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.demo__title {
+    margin: 0;
+    color: var(--nv-object-1, #212121);
+    font-size: 40px;
+    line-height: 130%;
+}
+
+/* Заголовок и демо — один блок: на всю ширину контейнера, но не шире 1440, по центру. */
+.demo__wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.demo__widget {
+    width: 100%;
+}
+
+@media (max-width: 767.98px) {
+    .demo__title {
+        font-size: 32px;
+    }
+
+    .demo {
+        padding: 32px 0 64px;
+    }
+
+    .demo__head {
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+}

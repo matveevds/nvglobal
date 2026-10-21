@@ -1,0 +1,903 @@
+/* Блок «faq» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .faq.faq .section__badge {
+        padding: 2px 16px;
+        border: 0;
+        box-shadow: inset 0 0 0 1px var(--nv-primary);
+        line-height: 1.42857143;
+    }
+}
+
+.faq {
+    padding-top: 96px;
+}
+
+.faq__wrapper {
+    display: flex;
+    gap: 16px;
+}
+
+.faq__left {
+    width: calc(40% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: space-between;
+}
+
+.faq__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.faq__title-text {}
+
+.faq__image {
+    align-self: center;
+}
+
+.faq__right {
+    width: calc(60% - 8px);
+}
+
+.faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.faq__item {
+    padding: 15px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+}
+
+.faq__item-wrapper {
+    border-radius: 12px;
+    border: 1px dashed var(--Stroke-Lightened_1, rgba(255, 255, 255, 0.50));
+}
+
+.faq__item-question {
+    padding: 12px 12px 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 64px;
+    align-items: center;
+    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
+    cursor:pointer;
+}
+
+.faq__item-question:hover {
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+}
+
+.faq__item-question-text {
+    color: #FFF;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.faq__item-question-icon {
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    line-height: 0;
+}
+
+.faq__item-answer {
+    box-sizing: border-box;
+    height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    border-top: 0 dashed var(--Stroke-Lightened_1, rgba(255, 255, 255, 0.50));
+    transition: height 0.35s ease, border-top-width 0.35s ease;
+}
+
+.faq__item--open .faq__item-answer {
+    border-top: 1px dashed var(--Stroke-Lightened_1, rgba(255, 255, 255, 0.50));
+}
+
+.faq__item-question-icon svg {
+    transition: transform 0.35s ease;
+    transform-origin: center;
+}
+
+.faq__item--open .faq__item-question-icon svg {
+    transform: scaleY(-1);
+}
+
+.faq__item-answer-text {
+    color: #FFF;
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+/*
+ * Светлый FAQ. Макеты главной: Full HD 2380:23774, Desktop 2363:32515,
+ * Tablet 2376:17599, спойлер 2363:32526 (открыт) / 2363:32527 (закрыт),
+ * ховер 2386:37430. Макеты Solutions: Full HD 2456:16671, Desktop 2398:25091,
+ * Tablet 2457:17382, Mobile 2467:18067.
+ *
+ * Блок один на две страницы: в макетах Solutions спойлеры, кнопка и
+ * типографика те же, что на главной. Поэтому общая часть перечисляет оба
+ * контекста, а различия Solutions собраны ниже отдельным подблоком
+ * и в media-запросах. Ни одно правило не делаем глобальным: те же классы
+ * `.faq__*` остаются у прежнего тёмного FAQ других шаблонов.
+ *
+ * Структура разметки и механика раскрытия взяты у существующего аккордеона
+ * (`initFaq`), новых обработчиков не добавлялось.
+ */
+body.home .faq__wrapper,
+body.page-template-page-kyc .faq__wrapper,
+body.page-template-page-identity-verification .faq__wrapper,
+body.page-template-page-solutions .faq__wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+/* Левая колонка фиксированной ширины 440 и на Full HD, и на Desktop. */
+body.home .faq__left,
+body.page-template-page-kyc .faq__left,
+body.page-template-page-identity-verification .faq__left,
+body.page-template-page-solutions .faq__left {
+    flex: 0 0 440px;
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: flex-start;
+}
+
+body.home .faq__title-block,
+body.page-template-page-kyc .faq__title-block,
+body.page-template-page-identity-verification .faq__title-block,
+body.page-template-page-solutions .faq__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+body.home .faq__title-text,
+body.page-template-page-kyc .faq__title-text,
+body.page-template-page-identity-verification .faq__title-text,
+body.page-template-page-solutions .faq__title-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+body.home .faq__title,
+body.page-template-page-kyc .faq__title,
+body.page-template-page-identity-verification .faq__title,
+body.page-template-page-solutions .faq__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+body.home .faq__description,
+body.page-template-page-kyc .faq__description,
+body.page-template-page-identity-verification .faq__description,
+body.page-template-page-solutions .faq__description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .faq__cta,
+body.page-template-page-kyc .faq__cta,
+body.page-template-page-identity-verification .faq__cta,
+body.page-template-page-solutions .faq__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+body.home .faq__cta-text,
+body.page-template-page-kyc .faq__cta-text,
+body.page-template-page-identity-verification .faq__cta-text,
+body.page-template-page-solutions .faq__cta-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+body.home .faq__cta-btn,
+body.page-template-page-kyc .faq__cta-btn,
+body.page-template-page-identity-verification .faq__cta-btn,
+body.page-template-page-solutions .faq__cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 7px 7px 15px;
+    min-height: 40px;
+    max-width: none;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+body.home .faq__cta-btn .btn__text,
+body.page-template-page-kyc .faq__cta-btn .btn__text,
+body.page-template-page-identity-verification .faq__cta-btn .btn__text,
+body.page-template-page-solutions .faq__cta-btn .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+body.home .faq__cta-btn .btn__icon,
+body.page-template-page-kyc .faq__cta-btn .btn__icon,
+body.page-template-page-identity-verification .faq__cta-btn .btn__icon,
+body.page-template-page-solutions .faq__cta-btn .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+body.home .faq__cta-btn .btn__icon svg,
+body.page-template-page-kyc .faq__cta-btn .btn__icon svg,
+body.page-template-page-identity-verification .faq__cta-btn .btn__icon svg,
+body.page-template-page-solutions .faq__cta-btn .btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+body.home .faq__cta-btn:hover,
+body.page-template-page-kyc .faq__cta-btn:hover,
+body.page-template-page-identity-verification .faq__cta-btn:hover,
+body.page-template-page-solutions .faq__cta-btn:hover {
+    background: var(--nv-surface-3);
+}
+
+body.home .faq__cta-btn:focus-visible,
+body.page-template-page-kyc .faq__cta-btn:focus-visible,
+body.page-template-page-identity-verification .faq__cta-btn:focus-visible,
+body.page-template-page-solutions .faq__cta-btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+body.home .faq__right,
+body.page-template-page-kyc .faq__right,
+body.page-template-page-identity-verification .faq__right,
+body.page-template-page-solutions .faq__right {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}
+
+body.home .faq__list,
+body.page-template-page-kyc .faq__list,
+body.page-template-page-identity-verification .faq__list,
+body.page-template-page-solutions .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/*
+ * Паддинги уменьшены на толщину рамки: в Figma обводка рисуется внутрь
+ * габарита, поэтому расстояние от внешнего края до вложенного блока
+ * в макете — 16, а не 16 + рамка. Так закрытая строка выходит ровно 88px.
+ */
+body.home .faq__item,
+body.page-template-page-kyc .faq__item,
+body.page-template-page-identity-verification .faq__item,
+body.page-template-page-solutions .faq__item {
+    padding: 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+body.home .faq__item-wrapper,
+body.page-template-page-kyc .faq__item-wrapper,
+body.page-template-page-identity-verification .faq__item-wrapper,
+body.page-template-page-solutions .faq__item-wrapper {
+    border: 1px dashed var(--nv-surface-4);
+    border-radius: 12px;
+}
+
+body.home .faq__item-question,
+body.page-template-page-kyc .faq__item-question,
+body.page-template-page-identity-verification .faq__item-question,
+body.page-template-page-solutions .faq__item-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+    width: 100%;
+    margin: 0;
+    padding: 11px 11px 11px 23px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+/*
+ * Вопрос без ответа — обычная строка: курсор не обманывает, а высота
+ * держится такой же, как у строки с шевроном (12 + 32 + 12).
+ */
+body.home .faq__item--static .faq__item-question,
+body.page-template-page-kyc .faq__item--static .faq__item-question,
+body.page-template-page-identity-verification .faq__item--static .faq__item-question,
+body.page-template-page-solutions .faq__item--static .faq__item-question {
+    min-height: 54px;
+    cursor: default;
+}
+
+body.home .faq__item-question:hover,
+body.page-template-page-kyc .faq__item-question:hover,
+body.page-template-page-identity-verification .faq__item-question:hover,
+body.page-template-page-solutions .faq__item-question:hover {
+    background: var(--nv-surface-3);
+}
+
+body.home .faq__item--static .faq__item-question:hover,
+body.page-template-page-kyc .faq__item--static .faq__item-question:hover,
+body.page-template-page-identity-verification .faq__item--static .faq__item-question:hover,
+body.page-template-page-solutions .faq__item--static .faq__item-question:hover {
+    background: transparent;
+}
+
+body.home .faq__item-question:focus-visible,
+body.page-template-page-kyc .faq__item-question:focus-visible,
+body.page-template-page-identity-verification .faq__item-question:focus-visible,
+body.page-template-page-solutions .faq__item-question:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: -2px;
+}
+
+body.home .faq__item--open .faq__item-question,
+body.page-template-page-kyc .faq__item--open .faq__item-question,
+body.page-template-page-identity-verification .faq__item--open .faq__item-question,
+body.page-template-page-solutions .faq__item--open .faq__item-question {
+    border-radius: 12px 12px 0 0;
+}
+
+body.home .faq__item-question-text,
+body.page-template-page-kyc .faq__item-question-text,
+body.page-template-page-identity-verification .faq__item-question-text,
+body.page-template-page-solutions .faq__item-question-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+/* В макете кнопка ровно 32x32, обводка внутри — поэтому фиксируем размер. */
+body.home .faq__item-question-icon,
+body.page-template-page-kyc .faq__item-question-icon,
+body.page-template-page-identity-verification .faq__item-question-icon,
+body.page-template-page-solutions .faq__item-question-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    color: var(--nv-object-1);
+    line-height: 0;
+}
+
+body.home .faq__item-question-icon svg,
+body.page-template-page-kyc .faq__item-question-icon svg,
+body.page-template-page-identity-verification .faq__item-question-icon svg,
+body.page-template-page-solutions .faq__item-question-icon svg {
+    display: block;
+    transition: transform .35s ease;
+    transform-origin: center;
+}
+
+body.home .faq__item--open .faq__item-question-icon svg,
+body.page-template-page-kyc .faq__item--open .faq__item-question-icon svg,
+body.page-template-page-identity-verification .faq__item--open .faq__item-question-icon svg,
+body.page-template-page-solutions .faq__item--open .faq__item-question-icon svg {
+    transform: scaleY(-1);
+}
+
+/*
+ * Высоту панели считает `initFaq` по содержимому и вертикальным полям текста:
+ * поэтому отступы ответа заданы через margin текста (48 = 24 + 24), а не
+ * через padding панели — иначе расчёт разъедется.
+ */
+body.home .faq__item-answer,
+body.page-template-page-kyc .faq__item-answer,
+body.page-template-page-identity-verification .faq__item-answer,
+body.page-template-page-solutions .faq__item-answer {
+    box-sizing: border-box;
+    height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    border-top: 0 dashed var(--nv-surface-4);
+    border-radius: 0 0 12px 12px;
+    transition: height .35s ease, border-top-width .35s ease;
+}
+
+body.home .faq__item--open .faq__item-answer,
+body.page-template-page-kyc .faq__item--open .faq__item-answer,
+body.page-template-page-identity-verification .faq__item--open .faq__item-answer,
+body.page-template-page-solutions .faq__item--open .faq__item-answer {
+    border-top: 1px dashed var(--nv-surface-4);
+}
+
+body.home .faq__item-answer-text,
+body.page-template-page-kyc .faq__item-answer-text,
+body.page-template-page-identity-verification .faq__item-answer-text,
+body.page-template-page-solutions .faq__item-answer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+body.home .faq__item-answer-text p,
+body.page-template-page-kyc .faq__item-answer-text p,
+body.page-template-page-identity-verification .faq__item-answer-text p,
+body.page-template-page-solutions .faq__item-answer-text p {
+    margin: 0;
+}
+
+/*
+ * Ссылки в ответах и в описании (partial пропускает <a href target rel>). Один вид для светлого и тёмного FAQ:
+ * фирменный оранжевый с подчёркиванием, длинный адрес переносится, а не раздвигает карточку.
+ */
+.faq__description a,
+.faq__item-answer-text a {
+    color: var(--nv-primary, #FD6B01);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+    transition: color .2s ease;
+}
+
+.faq__description a:hover,
+.faq__item-answer-text a:hover {
+    color: var(--nv-primary-2, #FF4601);
+}
+
+.faq__description a:focus-visible,
+.faq__item-answer-text a:focus-visible {
+    outline: 2px solid var(--nv-primary, #FD6B01);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+/* Анимация раскрытия отключается, если пользователь её не хочет. */
+    body.home .faq__item-answer,
+    body.home .faq__item-question-icon svg,
+    body.page-template-page-kyc .faq__item-answer,
+    body.page-template-page-identity-verification .faq__item-answer,
+    body.page-template-page-solutions .faq__item-answer,
+    body.page-template-page-kyc .faq__item-question-icon svg,
+    body.page-template-page-identity-verification .faq__item-question-icon svg,
+    body.page-template-page-solutions .faq__item-question-icon svg {
+        transition: none;
+    }
+}
+
+/*
+ * Отличия Solutions. Фон и сетку общие правила не задают: на главной их
+ * даёт `body.home .section` / `body.home .container`, здесь — своё правило,
+ * как у остальных секций страницы.
+ */
+body.page-template-page-kyc .faq,
+body.page-template-page-identity-verification .faq,
+body.page-template-page-solutions .faq {
+    background: var(--nv-surface-1);
+}
+
+/* Та же сетка, что у остальных блоков страницы. */
+body.page-template-page-kyc .faq .container,
+body.page-template-page-identity-verification .faq .container,
+body.page-template-page-solutions .faq .container {
+    max-width: 1920px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+/* Обводка Figma рисуется внутрь рамки, поэтому поле 4/20 − 1px: высота 32. */
+body.page-template-page-kyc .faq .section__badge,
+body.page-template-page-identity-verification .faq .section__badge,
+body.page-template-page-solutions .faq .section__badge {
+    padding: 3px 19px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* 2456:16672 — на Full HD левая колонка шире, чем на главной: 600 + 48 + 1208. */
+body.page-template-page-kyc .faq__left,
+body.page-template-page-identity-verification .faq__left,
+body.page-template-page-solutions .faq__left {
+    flex: 0 0 600px;
+    width: 600px;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2398:25092 — левая колонка та же, что на главной: 440 + 48 + 888. */
+    body.page-template-page-kyc .faq__left,
+    body.page-template-page-identity-verification .faq__left,
+    body.page-template-page-solutions .faq__left {
+        flex: 0 0 440px;
+        width: 440px;
+    }
+}
+
+@media (min-width: 1600px) {
+/* CR-12: у Identity на FHD (2666:51168) левая колонка та же440, что на1440 (НЕ общая600 у KYC/
+   Solutions выше) — при600 заголовок умещался в одну строку вместо двух. `.faq__right{flex:1 1
+   auto}` сам выбирает остаток (1920−64−48−440=1368, source list1368), доп. правка не нужна. */
+    body.page-template-page-identity-verification .faq__left {
+        flex: 0 0 440px;
+        width: 440px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Tablet 2376:17599: колонки складываются. Бейдж на своей строке,
+     * под ним текст и блок «Didn't find your answer?» в ряд (496 + 64 + 216),
+     * спойлеры ниже на всю ширину. `display: contents` у заголовочного блока
+     * отдаёт бейдж и текст сетке — без правок разметки.
+     */
+    body.home .faq__wrapper {
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    body.home .faq__left,
+    body.home .faq__right {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    body.home .faq__left {
+        display: grid;
+        grid-template-columns: 1fr 216px;
+        column-gap: 64px;
+        row-gap: 48px;
+    }
+
+    body.home .faq__title-block {
+        display: contents;
+    }
+
+    body.home .faq__left .section__badge {
+        grid-column: 1 / -1;
+    }
+
+    body.home .faq__title-text {
+        grid-column: 1;
+    }
+
+    body.home .faq__cta {
+        grid-column: 2;
+        align-self: end;
+    }
+
+    /*
+     * Tablet Solutions 2457:17382: колонки тоже складываются, но «Didn't find
+     * your answer?» уходит под текст, а не вправо от него. Поля между блоками
+     * 24, между бейджем и текстом остаются 48.
+     */
+    body.page-template-page-kyc .faq__wrapper,
+    body.page-template-page-identity-verification .faq__wrapper,
+    body.page-template-page-solutions .faq__wrapper {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    body.page-template-page-kyc .faq__left,
+    body.page-template-page-identity-verification .faq__left,
+    body.page-template-page-solutions .faq__left,
+    body.page-template-page-kyc .faq__right,
+    body.page-template-page-identity-verification .faq__right,
+    body.page-template-page-solutions .faq__right {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    body.page-template-page-kyc .faq__left,
+    body.page-template-page-identity-verification .faq__left,
+    body.page-template-page-solutions .faq__left {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* Скругление спойлера на планшете 16, а не 24. */
+    body.page-template-page-kyc .faq__item,
+    body.page-template-page-identity-verification .faq__item,
+    body.page-template-page-solutions .faq__item {
+        border-radius: 16px;
+    }
+
+    .faq__wrapper {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .faq__image {
+        display: none;
+    }
+
+    .faq__left,
+    .faq__right {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+/* CR-12: Identity Tablet-only (768–991.98, не Mobile) — CTA строкой, прижат вправо после
+   description (у Solutions CTA уходит ПОД текст колонкой — тот же общий
+   `.faq__cta{flex-direction:column}` выше не годится для обеих страниц разом, нужен
+   Identity-only override; Mobile (≤767.98) своё поведение CTA не меняет). */
+    body.page-template-page-identity-verification .faq__cta {
+        flex-direction: row;
+        align-items: center;
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Мобильного макета нет: раскладываем в одну колонку. */
+    body.home .faq__left {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
+    }
+
+    body.home .faq__title-text,
+    body.home .faq__cta {
+        grid-column: 1;
+    }
+
+    body.home .faq__item-question {
+        gap: 16px;
+        padding: 11px 11px 11px 15px;
+    }
+
+    /*
+     * initFaq ниже 768 прибавляет к высоте 32px вместо 48 — поля текста
+     * должны совпадать с этим числом, иначе ответ обрежется.
+     */
+    body.home .faq__item-answer {
+        padding: 0 16px;
+    }
+
+    body.home .faq__item-answer-text {
+        margin: 16px 0;
+    }
+
+    /*
+     * Mobile Solutions 2467:18067. У главной мобильного макета нет, поэтому
+     * её значения ниже 768 не трогаем, а эти берём прямо из фрейма 392.
+     */
+    body.page-template-page-kyc .faq .container,
+    body.page-template-page-identity-verification .faq .container,
+    body.page-template-page-solutions .faq .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* CR-12: source body→CTA→list gap48 у Identity — унаследованный Tablet-only gap24
+       (`.faq__wrapper`/`.faq__left`, ≤991.98, рассчитан на свой layout) без Mobile-override
+       заставлял list начинаться раньше source. KYC/Solutions Mobile-поведение не трогаем. */
+    body.page-template-page-identity-verification .faq__wrapper,
+    body.page-template-page-identity-verification .faq__left {
+        gap: 48px;
+    }
+
+    /* Бейдж 59x24: Body text/Regular 14/20. */
+    body.page-template-page-kyc .faq .section__badge,
+    body.page-template-page-identity-verification .faq .section__badge,
+    body.page-template-page-solutions .faq .section__badge {
+        padding: 1px 14px;
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Title/H2 32/44. */
+    body.page-template-page-kyc .faq__title,
+    body.page-template-page-identity-verification .faq__title,
+    body.page-template-page-solutions .faq__title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 137.5%;
+    }
+
+    /* Body text/Medium Medium 16/24. */
+    body.page-template-page-kyc .faq__description,
+    body.page-template-page-identity-verification .faq__description,
+    body.page-template-page-solutions .faq__description {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+
+    /* Title/H6 14/20. */
+    body.page-template-page-kyc .faq__cta-text,
+    body.page-template-page-identity-verification .faq__cta-text,
+    body.page-template-page-solutions .faq__cta-text {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /* Button/Regular 16/20, кнопка 194x36: стрелка тоже 20, по высоте строки. */
+    body.page-template-page-kyc .faq__cta-btn,
+    body.page-template-page-identity-verification .faq__cta-btn,
+    body.page-template-page-solutions .faq__cta-btn {
+        min-height: 36px;
+    }
+
+    body.page-template-page-kyc .faq__cta-btn .btn__text,
+    body.page-template-page-identity-verification .faq__cta-btn .btn__text,
+    body.page-template-page-solutions .faq__cta-btn .btn__text {
+        font-size: var(--Text-Button-Size-Regular, 16px);
+        line-height: 125%;
+    }
+
+    body.page-template-page-kyc .faq__cta-btn .btn__icon,
+    body.page-template-page-identity-verification .faq__cta-btn .btn__icon,
+    body.page-template-page-solutions .faq__cta-btn .btn__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Поле спойлера 8 с обводкой внутрь, скругление 20. */
+    body.page-template-page-kyc .faq__item,
+    body.page-template-page-identity-verification .faq__item,
+    body.page-template-page-solutions .faq__item {
+        padding: 7px;
+        border-radius: 20px;
+    }
+
+    /* Title/H6 14/20. */
+    body.page-template-page-kyc .faq__item-question-text,
+    body.page-template-page-identity-verification .faq__item-question-text,
+    body.page-template-page-solutions .faq__item-question-text {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    /*
+     * Поле строки вопроса 12/12/12/16 с обводкой внутрь. Зазор до шеврона
+     * в мобильном фрейме остался 64 — из-за него часть вопросов переносится
+     * на вторую строку ровно так же, как в макете.
+     */
+    body.page-template-page-kyc .faq__item-question,
+    body.page-template-page-identity-verification .faq__item-question,
+    body.page-template-page-solutions .faq__item-question {
+        padding: 11px 11px 11px 15px;
+    }
+
+    /*
+     * initFaq ниже 768 прибавляет к высоте 32px вместо 48 — поля текста
+     * должны совпадать с этим числом, иначе ответ обрежется.
+     */
+    body.page-template-page-kyc .faq__item-answer,
+    body.page-template-page-identity-verification .faq__item-answer,
+    body.page-template-page-solutions .faq__item-answer {
+        padding: 0 16px;
+    }
+
+    /* Body text/Medium Regular 16/24. */
+    body.page-template-page-kyc .faq__item-answer-text,
+    body.page-template-page-identity-verification .faq__item-answer-text,
+    body.page-template-page-solutions .faq__item-answer-text {
+        margin: 16px 0;
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+
+    .faq__item-question {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.home .faq__title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 125%;
+    }
+
+    body.home .faq__item {
+        padding: 7px;
+        border-radius: 20px;
+    }
+
+    body.home .faq__item-question-text {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+
+    body.home .faq__description,
+    body.home .faq__item-answer-text {
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .faq {
+        padding-top: 72px;
+    }
+
+    .faq__list {
+        gap: 8px;
+    }
+
+    .faq__item {
+        border-radius: 20px;
+        padding: 7px;
+    }
+
+    .faq__item-question {
+        padding: 12px 12px 12px 16px;
+    }
+
+    .faq__item-question-text {
+        font-size: 14px;
+    }
+
+    .faq__item-answer {
+        padding: 0 16px;
+    }
+
+    .faq__item--open .faq__item-answer {
+        padding: 0 16px;
+    }
+
+    .faq__item-answer-text {
+        font-size: 14px;
+        margin: 16px 0;
+    }
+}

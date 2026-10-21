@@ -1,0 +1,582 @@
+/* Блок «kyc-about» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/* 2539:19578: заголовок, две карточки с цифрами (680 + 680), широкая карточка с сертификатами. */
+.kyc-about > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-about > .container > .section__badge {
+    margin-bottom: 24px;
+}
+
+.kyc-about__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 1048px;
+}
+
+.kyc-about__stats {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.kyc-about__accuracy,
+.kyc-about__documents {
+    flex: 1 1 0;
+    gap: 24px;
+}
+
+@media (min-width: 1200px) {
+/* followup-5 L-05 (продолжение): about-{1920,1440}.json — обе карточки ФИКСИРОВАННЫЕ 680px
+   (гэп16, итого1376), слева в строке, не растянуты на всю ширину flex:1 1 0. На 1440 flex:1 1 0
+   «случайно» давал те же 680px только потому, что контейнер там ровно 1376 (680*2+16) — на
+   1920 (контейнер1856) та же формула растягивала карточки до 920px. Явная фиксированная ширина
+   не зависит от такого совпадения. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__accuracy,
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents {
+        flex: 0 0 680px;
+        width: 680px;
+    }
+}
+
+.kyc-about__documents {
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 15px 23px;
+}
+
+.kyc-about__figures {
+    display: flex;
+    gap: 40px;
+}
+
+.kyc-about__figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.kyc-about__value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-about__caption {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-about__divider {
+    flex: 0 0 1px;
+    align-self: stretch;
+    background: var(--nv-surface-4);
+}
+
+.kyc-about__documents-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-about__documents-text span {
+    color: var(--nv-primary);
+}
+
+@media (max-width: 767.98px) {
+    .kyc-about__br {
+        display: none;
+    }
+}
+
+.kyc-about__certs {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+}
+
+.kyc-about__certs-text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.kyc-about__certs-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-about__certs-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Ссылок-сертификатов в проекте нет: плашки статичные, оформление как у кнопки Small. */
+.kyc-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+    font-weight: 700;
+}
+
+.kyc-tag svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-about__badges {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 24px;
+}
+
+.kyc-about__badges img {
+    display: block;
+    width: auto;
+    height: 120px;
+}
+
+.kyc-about__badge-round {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-about__figures {
+        gap: 24px;
+    }
+
+    .kyc-about__value {
+        font-size: 32px;
+    }
+
+    .kyc-about__documents-text {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-about__stats,
+    .kyc-about__certs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .kyc-about__badges {
+        justify-content: flex-start;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+/* followup-5 L-05: уточнение прежнего краткого описания («марки справа») — layout-contracts/
+   about-840.json показывает ДВА ряда внутри carta 776×200: description 681×84 сверху во всю
+   ширину, ниже отдельная строка 744×72 с chips СЛЕВА и marks (249×72, высота марок 72, не
+   80/120) СПРАВА. `.kyc-about__certs-text` раскрывается, чтобы title(description) встал
+   отдельной полноширинной строкой, а links+badges образовали вторую строку. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px 0;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-text {
+        display: contents;
+    }
+
+    /* about-840.json: description 681w (не вся доступная 728px строка). */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-title {
+        flex: 1 1 100%;
+        max-width: 681px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-links {
+        flex: 1 1 auto;
+        align-self: center;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__badges {
+        flex: 0 0 auto;
+        margin-left: auto;
+        align-self: center;
+        justify-content: flex-end;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__badges img {
+        height: 72px;
+    }
+
+    /* C5-02: about-840.json — padding16 (не kyc-card default23), что также даёт description
+       x48 (32card+16pad), не56; cert-row216→200h вместе с этим. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29453: всё в колонку, цифры друг под другом. */
+    .kyc-about > .container > .section__badge {
+        margin-bottom: 8px;
+    }
+
+    .kyc-about__figures {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .kyc-about__divider {
+        display: none;
+    }
+
+    /* followup-5 L-05: у Identity на Mobile между метриками нужен горизонтальный divider
+       (KYC прячет его вовсе в column-раскладке — pair392-about). N-4: divider уже виден по
+       реальному flex-basis (1px, тот же, что везде) — 2px было лишней подгонкой под скриншот,
+       не требованием источника. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__divider {
+        display: block;
+        width: 100%;
+        height: 1px;
+    }
+
+    .kyc-about__documents-text {
+        font-size: 24px;
+    }
+
+    .kyc-about__badges {
+        gap: 12px;
+    }
+
+    .kyc-about__badges img {
+        height: 88px;
+    }
+
+    /* about-392.json — марки 72h у Identity (KYC-шный Mobile-дефолт — 88px). */
+    body.page-template-page-identity-verification .idv-about .kyc-about__badges img {
+        height: 72px;
+    }
+
+    /* CR-07: source metric body/cert title336w, actual328 — унаследованный generic Mobile
+       `.kyc-card` padding15(Outside16) вместо Outside12(padding11). `.kyc-about__documents`
+       несёт собственный несимметричный padding(15/23, общий для всех ширин, не Mobile-specific)
+       и не тронут здесь — цель328→336 подтверждена только для accuracy/certs. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__accuracy,
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        padding: 11px;
+    }
+
+    /* CR-07: source cert link group Small12/16 (было14/20, унаследованный общий `.kyc-tag`). */
+    body.page-template-page-identity-verification .idv-about .kyc-tag {
+        font-size: 12px;
+        line-height: 1.33333333;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:36904: три карточки в одном ряду 2fr / 2fr / 3fr высотой 220; в карточке с цифрами обе пары
+     * друг под другом, в карточке сертификатов — подписи слева, значки 72 справа.
+     */
+    .kyc-about {
+        padding-top: 64px;
+    }
+
+    .kyc-about > .container {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+        column-gap: 16px;
+        row-gap: 24px;
+        align-items: stretch;
+    }
+
+    .kyc-about > .container > .section__badge,
+    .kyc-about__head {
+        grid-column: 1 / -1;
+    }
+
+    .kyc-about__head {
+        max-width: 1389px;
+    }
+
+    .kyc-about__stats {
+        display: contents;
+    }
+
+    .kyc-about__accuracy,
+    .kyc-about__documents,
+    .kyc-about__certs {
+        height: 220px;
+        justify-content: flex-end;
+    }
+
+    .kyc-about__figures {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .kyc-about__figure {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 24px;
+    }
+
+    .kyc-about__value {
+        flex: 0 0 148px;
+    }
+
+    .kyc-about__divider {
+        flex: 0 0 1px;
+        align-self: stretch;
+        width: auto;
+        height: 1px;
+    }
+
+    .kyc-about__certs {
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .kyc-about__certs-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Подпись по Figma — H6 588 в ряду 220: на меньших размерах она не помещается, поэтому 16/24 и ширина 588. */
+    .kyc-about__certs-text {
+        flex: 0 1 633px;
+        gap: 16px;
+    }
+
+    .kyc-about__certs-title {
+        max-width: 588px;
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-about__badges img {
+        height: 72px;
+    }
+
+    /* V2-11: у Identity на FHD иначе — metrics+documents в верхнем ряду (2 фикс. 680px-карточки
+       слева, не растянуты на всю ширину), certs полной шириной ниже (не 3 равные колонки, как у
+       KYC 2561:36904). followup-5 (продолжение): grid-template-columns:1fr 1fr + display:contents
+       растягивал каждую карточку на свой ~920px track, создавая разрыв между ними вместо
+       смежных 680+16+680 — обычный flex-column возвращает карточки впритык друг к другу. */
+    body.page-template-page-identity-verification .idv-about > .container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__stats {
+        display: flex;
+        gap: 16px;
+    }
+
+    /* C5-02: about-1920.json — topcards должны начинаться на y157 (section-relative), сейчас
+       y141 (на16px выше) из-за недостающего зазора head→stats. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__head {
+        margin-bottom: 16px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        width: 100%;
+    }
+
+    /* about-1920.json — марки 120h, как на 1440 (KYC-шное FHD-правило выше задаёт 72px под
+       свою собственную 3-колоночную сетку). */
+    body.page-template-page-identity-verification .idv-about .kyc-about__badges img {
+        height: 120px;
+    }
+
+    /* followup-3 V2-11: две метрики рядом (вертикальный разделитель), не в столбец — KYC-шное
+       FHD-правило выше (figures:column) рассчитано на его собственную 3-колоночную FHD-сетку. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__figures {
+        flex-direction: row;
+        gap: 24px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__divider {
+        align-self: stretch;
+        width: 1px;
+        height: auto;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__figure {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__value {
+        flex: 0 0 auto;
+    }
+
+    /* Cert-row занимает полную ширину (grid-column:1/-1 выше) — KYC-шный flex:0 1 633px
+       оставлял текст узкой колонкой с пустым местом справа. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-text {
+        flex: 1 1 0;
+        max-width: none;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-title {
+        max-width: none;
+    }
+
+    /* C5-02: KYC-шное FHD-правило `.kyc-about__certs-links{flex-direction:column}` (своя узкая
+       633px-колонка) наследовалось и у Identity, давая 72h (2 чипа друг под другом) вместо
+       32h (в ряд) — cert-row192h вместо168. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-links {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    /* followup-4: KYC-шный фикс `height:220px` на каждой из 2 карточек (выше) считал высоту под
+       свою 3-колоночную FHD-сетку — у Identity это давало 748h секции (2×220+gaps) вместо
+       целевых 591. Высота по контенту, без общей фиксированной section-height. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__accuracy,
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents,
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        height: auto;
+        justify-content: flex-start;
+    }
+
+    /* CR-07: FHD inset16 (padding-top15 от shared `.kyc-about__documents{padding:15px 23px}`,
+       не Identity/FHD-scoped — не трогаем базу) вместо24 (как у соседней accuracy, inset = base
+       `.kyc-card` padding23+border1). */
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents {
+        padding-top: 23px;
+        padding-bottom: 23px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+/* CR-07: на Desktop (1200–1599.98, между Tablet-column и FHD-3col) documents всё ещё наследует
+   общий `justify-content:flex-end` (прижат к низу) — source group начинается у верхнего padding,
+   тот же фикс, что уже применён на FHD чуть выше. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents {
+        justify-content: flex-start;
+        /* CR-07: тот же inset16-вместо-24 баг, что на FHD (padding-top15 от shared-базы), здесь
+           ещё не было собственного FHD-override — тот же фикс. */
+        padding-top: 23px;
+        padding-bottom: 23px;
+    }
+}
+
+@media (max-width: 1599.98px) {
+/* R2-4 About (source 2666:50430 / 2666:42450, get_metadata): Frame15 (stats) → cert = 16 на
+   ≤1599 (контейнер gap24 −8), accuracy→documents уже 16;
+   392: badge→H2 48 (margin24 + gap24), cert: title→links 12, tag SVG 16 (tag 28h, cert 296);
+   1920: badge→H2 48 / H2→stats 24 (H2 на 8 ниже, stats на месте). Только Identity. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs {
+        margin-top: -8px;
+    }
+}
+
+@media (min-width: 1600px) {
+    body.page-template-page-identity-verification .idv-about > .container > .section__badge {
+        margin-bottom: 32px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__head {
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .idv-about > .container > .section__badge {
+        margin-bottom: 24px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-text {
+        gap: 12px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-tag svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+/* R3-1 About accuracy (source 2659:38442 @840, 2666:44917 @392, get_metadata): 840 — inset16
+   (padding15), value 40/52 (figure 52+8+24 = 84, карточка 168); 392 — value 32/44, подпись 14/20
+   (figure 44+8+20 = 72, карточка 272). Только Identity. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__accuracy {
+        padding: 15px;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__value {
+        font-size: 40px;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.page-template-page-identity-verification .idv-about .kyc-about__value {
+        font-size: 32px;
+        line-height: 1.375;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__caption {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+}
+
+/* ABOUT (variant kyc-about, только заголовок/badge меняются, 2620:26881) */
+.idv-about__title {
+    margin-bottom: 24px;
+}
+
+body.page-template-page-identity-verification .idv-about .kyc-about__certs-title {
+    font-size: 20px;
+    line-height: 140%;
+}
+
+@media (max-width: 1199.98px) {
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents-text {
+        font-size: 32px;
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* V2-11: Tablet-значение 32/48 (выше, @1199.98) не должно действовать на Mobile — там 24/36;
+       cert description тоже свой размер — 16/20, не унаследованные 20/28. */
+    body.page-template-page-identity-verification .idv-about .kyc-about__documents-text {
+        font-size: 24px;
+        line-height: 150%;
+    }
+
+    body.page-template-page-identity-verification .idv-about .kyc-about__certs-title {
+        font-size: 16px;
+        line-height: 125%;
+    }
+}

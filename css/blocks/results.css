@@ -1,0 +1,283 @@
+/* Блок «results» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/*
+ * Базовый уровень — Full HD 2380:22930: заголовок на всю ширину отдельной
+ * строкой, под ним ряд «карточка кейса 576 + четыре карточки по 302».
+ * Desktop 2363:33982 (заголовок и кейс в левой колонке, статистика сеткой 2×2)
+ * восстановлен в `max-width: 1599.98px`.
+ *
+ * `.results__intro` переведён в `display: contents`, чтобы заголовок и кейс
+ * стали элементами одной сетки — разметка не дублируется.
+ */
+.results__content {
+    display: grid;
+    grid-template-columns: 576px minmax(0, 1fr);
+    column-gap: 24px;
+    row-gap: 24px;
+    align-items: stretch;
+}
+
+.results__intro {
+    display: contents;
+}
+
+.results__title {
+    margin: 0;
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+/* Карточка кейса: иллюстрация выходит за правый нижний угол и подрезается карточкой. */
+.results__case {
+    grid-column: 1;
+    grid-row: 2;
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+}
+
+.results__case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 310px;
+    max-width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.results__case-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.results__case-name {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.results__case-problem {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.results__case-outcome {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.results__case-label {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+.results__tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.results__token {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-3);
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+/* Смещение Full HD 2380:22946: right -50, bottom -45 при размере 276. Desktop — ниже. */
+.results__case-image {
+    position: absolute;
+    right: -50px;
+    bottom: -45px;
+    width: 276px;
+    height: 276px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.results__stats {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.results__stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    flex: 0 1 calc((100% - 48px) / 4);
+    min-width: 0;
+    padding: 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.results__stat-value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    font-weight: 700;
+    line-height: 123.077%;
+}
+
+.results__stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/*
+ * Заголовок карточки статистики. В макете стиль разный по брейкпоинтам:
+ * Full HD 2380:22951 — Title/H5 20/28, Desktop 2363:33996 и Tablet
+ * 2376:16779 — Title/H4 24/36. Desktop-значение возвращается ниже 1600.
+ */
+.results__stat-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.results__stat-description {
+    /*
+     * Full HD I2380:22948;147:2811 — поле описания фиксировано в две строки,
+     * поэтому у карточки с короткой подписью значение не съезжает вниз.
+     */
+    min-height: 48px;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2363:33996 и Tablet 2376:16779: заголовок карточки — Title/H4. */
+    .results__stat-title {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
+
+    .results__stat-description {
+        min-height: 0;
+    }
+
+    /* Desktop 2363:33982: заголовок и кейс в левой колонке, статистика 2×2. */
+    .results__content {
+        display: flex;
+        align-items: center;
+        column-gap: 48px;
+        row-gap: 48px;
+        gap: 48px;
+    }
+
+    .results__intro {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+        width: 560px;
+        flex-shrink: 0;
+    }
+
+    .results__stats {
+        flex-wrap: wrap;
+        flex: 1 1 auto;
+    }
+
+    .results__stat {
+        flex: 0 0 calc(50% - 8px);
+    }
+
+    .results__case-image {
+        right: -66px;
+        bottom: -46px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .results__intro {
+        width: 460px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Планшетный фрейм 2376:16763: колонка, карточки статистики по две в ряд. */
+    .results__content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .results__intro {
+        width: 100%;
+    }
+
+    .results__stats {
+        align-self: auto;
+    }
+
+    .results__case {
+        padding: 16px;
+    }
+
+    .results__case-info {
+        width: 560px;
+    }
+
+    .results__case-image {
+        right: -50px;
+        top: -31px;
+        bottom: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Макета для телефонов нет. Карточка кейса сужается, и декоративная
+     * иллюстрация начинает перекрывать заголовок и плашки — на этих ширинах
+     * убираем её вместо того, чтобы жертвовать читаемостью.
+     */
+    .results__case-image {
+        display: none;
+    }
+
+    .results__case-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .results__content,
+    .results__intro {
+        gap: 24px;
+    }
+
+    .results__stat {
+        flex: 1 1 100%;
+    }
+}

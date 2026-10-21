@@ -128,12 +128,6 @@ else : ?>
             <div class="modal__container modal-window" role="dialog" aria-modal="true" aria-labelledby="callForm-title">
 
                 <h2 class="modal__title" id="callForm-title">Contact us</h2>
-                <button class="modal__close" type="button" aria-label="Close" data-micromodal-close>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1784 10L15.5892 5.58921C15.915 5.26338 15.915 4.73671 15.5892 4.41088C15.2634 4.08505 14.7367 4.08505 14.4109 4.41088L10 8.82171L5.58921 4.41088C5.26338 4.08505 4.73671 4.08505 4.41088 4.41088C4.08505 4.73671 4.08505 5.26338 4.41088 5.58921L8.82171 10L4.41088 14.4109C4.08505 14.7367 4.08505 15.2634 4.41088 15.5892C4.73671 15.915 5.26338 15.915 5.58921 15.5892L10 11.1784L14.4109 15.5892C14.7367 15.915 15.2634 15.915 15.5892 15.5892C15.915 15.2634 15.915 14.7367 15.5892 14.4109L11.1784 10Z" fill="currentColor"/>
-                    </svg>
-                </button>
-
                 <form class="contacts__form" action="#">
     
                     <div class="input-form-item input-form-item--50">
@@ -447,12 +441,6 @@ else : ?>
             <div class="modal__container modal-window modal__container2" role="dialog" aria-modal="true" aria-labelledby="callForm2-title">
 
                 <h2 class="modal__title" id="callForm2-title">Contact us</h2>
-                <button class="modal__close" type="button" aria-label="Close" data-micromodal-close>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1784 10L15.5892 5.58921C15.915 5.26338 15.915 4.73671 15.5892 4.41088C15.2634 4.08505 14.7367 4.08505 14.4109 4.41088L10 8.82171L5.58921 4.41088C5.26338 4.08505 4.73671 4.08505 4.41088 4.41088C4.08505 4.73671 4.08505 5.26338 4.41088 5.58921L8.82171 10L4.41088 14.4109C4.08505 14.7367 4.08505 15.2634 4.41088 15.5892C4.73671 15.915 5.26338 15.915 5.58921 15.5892L10 11.1784L14.4109 15.5892C14.7367 15.915 15.2634 15.915 15.5892 15.5892C15.915 15.2634 15.915 14.7367 15.5892 14.4109L11.1784 10Z" fill="currentColor"/>
-                    </svg>
-                </button>
-
                 <form class="contacts__form" action="#">
 
                     <div class="input-form-item">
@@ -654,12 +642,6 @@ else : ?>
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container modal-window modal__container2" role="dialog" aria-modal="true">
 
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1784 10L15.5892 5.58921C15.915 5.26338 15.915 4.73671 15.5892 4.41088C15.2634 4.08505 14.7367 4.08505 14.4109 4.41088L10 8.82167L5.58921 4.41088C5.26338 4.08505 4.73671 4.08505 4.41088 4.41088C4.08505 4.73671 4.08505 5.26338 4.41088 5.58921L8.8217 10L4.41088 14.4109C4.08505 14.7367 4.08505 15.2633 4.41088 15.5892C4.57338 15.7517 4.78671 15.8333 5.00005 15.8333C5.21338 15.8333 5.42671 15.7517 5.58921 15.5892L10 11.1784L14.4109 15.5892C14.5734 15.7517 14.7867 15.8333 15 15.8333C15.2134 15.8333 15.4267 15.7517 15.5892 15.5892C15.915 15.2633 15.915 14.7367 15.5892 14.4109L11.1784 10Z" fill="#FBFBFB"/>
-                    </svg>
-                </button>
-
                 <div class="review__wrapper">
                     <div class="review__image">
                         <div class="review__image-wrapper">
@@ -696,11 +678,6 @@ else : ?>
     <div class="modal modal--result micromodal-slide" id="thanks" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container modal-window modal__container--thanks" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
-                <button class="modal__close" type="button" aria-label="Close" data-micromodal-close>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1784 10L15.5892 5.58921C15.915 5.26338 15.915 4.73671 15.5892 4.41088C15.2634 4.08505 14.7367 4.08505 14.4109 4.41088L10 8.82171L5.58921 4.41088C5.26338 4.08505 4.73671 4.08505 4.41088 4.41088C4.08505 4.73671 4.08505 5.26338 4.41088 5.58921L8.82171 10L4.41088 14.4109C4.08505 14.7367 4.08505 15.2634 4.41088 15.5892C4.73671 15.915 5.26338 15.915 5.58921 15.5892L10 11.1784L14.4109 15.5892C14.7367 15.915 15.2634 15.915 15.5892 15.5892C15.915 15.2634 15.915 14.7367 15.5892 14.4109L11.1784 10Z" fill="currentColor"/>
-                    </svg>
-                </button>
                 <div class="modal__thanks">
                     <div class="modal__thanks-info">
                         <h2 class="modal__thanks-title" id="thanks-title">Thank you!</h2>
@@ -717,11 +694,6 @@ else : ?>
     <div class="modal modal--result micromodal-slide" id="error" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container modal-window modal__container--error" role="dialog" aria-modal="true" aria-labelledby="error-title">
-                <button class="modal__close" type="button" aria-label="Close" data-micromodal-close>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1784 10L15.5892 5.58921C15.915 5.26338 15.915 4.73671 15.5892 4.41088C15.2634 4.08505 14.7367 4.08505 14.4109 4.41088L10 8.82171L5.58921 4.41088C5.26338 4.08505 4.73671 4.08505 4.41088 4.41088C4.08505 4.73671 4.08505 5.26338 4.41088 5.58921L8.82171 10L4.41088 14.4109C4.08505 14.7367 4.08505 15.2634 4.41088 15.5892C4.73671 15.915 5.26338 15.915 5.58921 15.5892L10 11.1784L14.4109 15.5892C14.7367 15.915 15.2634 15.915 15.5892 15.5892C15.915 15.2634 15.915 14.7367 15.5892 14.4109L11.1784 10Z" fill="currentColor"/>
-                    </svg>
-                </button>
                 <div class="modal__thanks">
                     <div class="modal__thanks-info">
                         <h2 class="modal__thanks-title" id="error-title">Oops...</h2>
@@ -735,14 +707,6 @@ else : ?>
         </div>
     </div>
 
-    <div class="top__widget">
-        <button class="top__widget-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M16 10.3334C17.32 10.3334 18.6127 11.1165 19.7031 12.0222C20.8317 12.9596 21.9281 14.1865 22.8763 15.3776C23.8292 16.5746 24.6569 17.767 25.2448 18.6576C25.5393 19.1037 25.7748 19.4764 25.9375 19.7383C26.0189 19.8693 26.0831 19.973 26.1263 20.0443C26.1477 20.0797 26.1644 20.1074 26.1758 20.1263C26.1814 20.1358 26.1858 20.1433 26.1888 20.1485C26.1903 20.151 26.1919 20.1536 26.1927 20.155V20.1563H26.194V20.1576C26.4751 20.6328 26.3176 21.2461 25.8425 21.5274C25.3971 21.7908 24.8309 21.6691 24.53 21.2618L24.4701 21.1719C24.4678 21.1681 24.4645 21.1617 24.4597 21.1537C24.4499 21.1375 24.4352 21.1121 24.4154 21.0795C24.3758 21.0141 24.3167 20.9171 24.2396 20.793C24.0852 20.5445 23.8586 20.188 23.5755 19.7592C23.0083 18.8998 22.2157 17.7587 21.3112 16.6224C20.4022 15.4806 19.4038 14.3736 18.4258 13.5612C17.4094 12.717 16.5833 12.3334 16 12.3334C15.4163 12.3334 14.5906 12.7171 13.5742 13.5612C12.596 14.3738 11.5966 15.4803 10.6875 16.6224C9.78311 17.7586 8.99165 18.8999 8.4245 19.7592C8.14148 20.188 7.9148 20.5445 7.76044 20.793C7.68336 20.9171 7.62422 21.0141 7.58466 21.0795C7.56487 21.1121 7.5501 21.1375 7.54039 21.1537C7.5356 21.1617 7.5322 21.1682 7.52997 21.1719L7.47007 21.2618C7.16911 21.6691 6.60291 21.7908 6.15757 21.5274C5.68243 21.2461 5.52491 20.6328 5.80601 20.1576V20.1563H5.80731V20.155C5.80818 20.1535 5.80971 20.151 5.81122 20.1485C5.81429 20.1433 5.81858 20.1358 5.82424 20.1263C5.83561 20.1074 5.85227 20.0797 5.87372 20.0443C5.91694 19.9729 5.98116 19.8693 6.06252 19.7383C6.22521 19.4764 6.46076 19.1038 6.75523 18.6576C7.34299 17.7671 8.16978 16.5745 9.12242 15.3776C10.0706 14.1865 11.1682 12.9596 12.2969 12.0222C13.3874 11.1165 14.6799 10.3334 16 10.3334Z" fill="#2B323B"/>
-            </svg>
-        </button>
-    </div>
-   
 
     <?php wp_footer(); ?>
 

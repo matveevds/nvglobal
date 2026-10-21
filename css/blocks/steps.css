@@ -1,0 +1,459 @@
+/* Steps Slider (`.kyc-steps`) — универсальный блок, не зависит от страницы. Подключается после styles.css. */
+
+/*
+ * How KYC Verification Works: 2495:24452 (Desktop 1376, содержимое 440), шаги 2553:23453 / 23505 / 23557.
+ * Окно списка высотой 440, карточки 640x324 с зазором 16; выбранная карточка по центру окна
+ * (сдвиг считает initKycPage). Full HD 2561:31154 — четыре карточки в ряд с подписями «Step N»,
+ * кнопок слева нет. Ниже 992 — лента карточек со свайпом (Mobile 2558:28524).
+ */
+.kyc-steps__grid {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 48px;
+    min-height: 440px;
+}
+
+.kyc-steps__left {
+    display: flex;
+    flex: 0 0 548px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    min-width: 300px;
+}
+
+.kyc-steps__text {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.kyc-steps__head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kyc-steps__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+}
+
+.kyc-steps__lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-steps__note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+.kyc-steps__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Button/Small 14/20: неактивная — Island/1 с обводкой, радиус 6; активная — градиент, радиус 8. */
+.kyc-steps__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.kyc-steps__btn-text {
+    font-size: var(--Text-Button-Size-Small, 14px);
+    line-height: 142.857%;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.kyc-steps__btn-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+}
+
+.kyc-steps__btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-steps__btn:hover {
+    background: var(--nv-surface-3);
+}
+
+.kyc-steps__btn.is-active {
+    border-radius: 8px;
+    border-color: transparent;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-steps__btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-steps__right {
+    flex: 0 0 640px;
+    min-width: 0;
+}
+
+.kyc-steps__viewport {
+    height: 440px;
+    overflow: hidden;
+}
+
+@media (min-width: 992px) and (max-width: 1599.98px) {
+    .kyc-steps__viewport {
+        overflow: visible;
+    }
+}
+
+/* Блок не зависит от страницы: серый фон и два белых PageEdge (64px, скруглены со стороны серого тела); панель
+   внутри теряет собственные border/radius. `.kyc-steps__viewport{position:relative}` обязателен — иначе offsetParent
+   карточек для JS-центрирования смещается на секцию. */
+.kyc-steps {
+    position: relative;
+    padding: 64px 0;
+    background: var(--nv-surface-2);
+}
+
+.kyc-steps__viewport {
+    position: relative;
+}
+
+.kyc-steps > .kyc-panel {
+    border: 0;
+    border-radius: 0;
+}
+
+.kyc-steps::before,
+.kyc-steps::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--nv-surface-1);
+    border: 1px solid var(--nv-surface-4);
+    pointer-events: none;
+}
+
+.kyc-steps::before {
+    top: 0;
+    border-top: 0;
+    border-radius: 0 0 32px 32px;
+}
+
+.kyc-steps::after {
+    bottom: 0;
+    border-bottom: 0;
+    border-radius: 32px 32px 0 0;
+}
+
+@media (max-width: 767.98px) {
+    section.kyc-steps[data-kyc-steps] {
+        padding-block: 64px;
+    }
+}
+
+.kyc-steps__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform .45s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Карточка 640x324: поле 24, картинка 200 по центру сверху, заголовок и описание по центру. */
+.kyc-steps__card {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.kyc-steps__image {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.kyc-steps__card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.kyc-steps__card-title {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-steps__card-desc {
+    margin: 0;
+    color: var(--nv-object-3);
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kyc-steps__list {
+        transition: none;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31154 / Identity 2666:50157: карточки в ряд (3–5 шт.), кнопок слева нет; левая группа 396,
+       зазор до ряда 64, высота ряда не меньше 392 и растёт по содержимому. */
+    .kyc-steps__grid {
+        gap: 64px;
+        min-height: 392px;
+    }
+
+    .kyc-steps__left {
+        flex: 0 0 396px;
+        min-width: 0;
+    }
+
+    .kyc-steps__right {
+        flex: 1 1 auto;
+    }
+
+    .kyc-steps__viewport {
+        height: auto;
+        overflow: visible;
+    }
+
+    .kyc-steps__list {
+        flex-direction: row;
+        transform: none !important;
+    }
+
+    .kyc-steps__card {
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: flex-start;
+    }
+
+    .kyc-steps__nav {
+        display: none;
+    }
+}
+
+@media (max-width: 1599.98px) {
+    .kyc-steps__left {
+        flex-basis: 548px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-steps__left {
+        flex-basis: 420px;
+    }
+
+    .kyc-steps__right {
+        flex: 1 1 0;
+        max-width: 640px;
+    }
+
+    .kyc-steps__card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: текст, кнопки, под ними лента карточек (свайп). */
+    .kyc-steps__grid {
+        flex-direction: column;
+        gap: 24px;
+        min-height: 0;
+    }
+
+    .kyc-steps__left {
+        flex: 0 0 auto;
+        gap: 48px;
+        min-width: 0;
+    }
+
+    /* owner-fixes-3 → общий для /kyc/ и /identity-verification/ (решение владельца 2026-10-19): лента идёт до
+       краёв ЭКРАНА (full-bleed viewport), первая карточка — вровень с контентом контейнера (inset 32 Tablet /
+       16 Mobile). `.kyc-steps__right{max-width:640px}` из ≤1399.98 рассчитан на вертикальный режим ≥992 и
+       сужал ленту KYC (704 вместо ширины экрана). scroll-padding-inline держит snap у inset; position:relative
+       — offsetParent карточек для `layout()` (scrollTo по offsetLeft − padding-left). */
+    .kyc-steps__right {
+        flex: 0 0 auto;
+        max-width: none;
+        width: 100%;
+    }
+
+    .kyc-steps__viewport {
+        position: relative;
+        height: auto;
+        margin: 0 -32px;
+        /* inline-end padding scroll-контейнера в scrollable overflow не попадает (Chrome/WebKit) — правый
+           отступ после последней карточки даёт спейсер списка (::after), а не padding-right. */
+        padding: 0 0 0 32px;
+        scroll-padding-inline: 32px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .kyc-steps__viewport::-webkit-scrollbar {
+        display: none;
+    }
+
+    .kyc-steps__list {
+        flex-direction: row;
+        transform: none !important;
+    }
+
+    /* Конец ленты: gap 16 + спейсер = inset контейнера (32), симметрично первой карточке. */
+    .kyc-steps__list::after {
+        content: "";
+        flex: 0 0 16px;
+    }
+
+    /* Лента: карточки по 400, высота — по содержимому (не меньше 348), радиус 16. */
+    .kyc-steps__card {
+        flex: 0 0 min(400px, 80%);
+        min-height: 348px;
+        justify-content: flex-start;
+        scroll-snap-align: start;
+        border-radius: 16px;
+    }
+
+    .kyc-steps__lead {
+        max-width: 434px;
+    }
+
+    .kyc-steps__btn-text,
+    .kyc-steps__card-desc {
+        line-height: 1.42857143;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* owner-fixes-3: Mobile inset 16 (Figma 2666:42166); конец ленты — gap 16 + спейсер 1px − 1px
+       (бокс нулевой ширины в scrollable overflow не учитывается). */
+    .kyc-steps__viewport {
+        margin: 0 -16px;
+        padding: 0 0 0 16px;
+        scroll-padding-inline: 16px;
+    }
+
+    .kyc-steps__list::after {
+        flex-basis: 1px;
+        margin-left: -1px;
+    }
+
+    /* 320 — ширина Mobile-макета; на экранах уже 352 карточка не шире экрана минус два inset 16. */
+    .kyc-steps__card {
+        flex: 0 0 min(320px, calc(100vw - 32px));
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .kyc-steps__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .kyc-steps__lead {
+        max-width: none;
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .kyc-steps__note {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .kyc-steps__nav {
+        gap: 8px;
+    }
+
+    .kyc-steps__btn {
+        min-height: 28px;
+    }
+
+    .kyc-steps__btn-text {
+        font-size: 12px;
+        line-height: 1.33333333;
+    }
+
+    .kyc-steps__btn-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .kyc-steps__card-title {
+        font-size: 16px;
+        line-height: 1.25;
+    }
+
+    .kyc-steps__card-desc {
+        font-size: 12px;
+        line-height: 1.33333333;
+    }
+}
+
+/* Типографика и бейдж Identity для блоков Steps / Platform / Industries — от класса блока, не от страницы. */
+.kyc-steps .section__badge {
+    padding: 4px 20px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+@media (max-width: 767.98px) {
+    .kyc-steps .section__badge {
+        padding: 2px 16px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+}

@@ -1,0 +1,205 @@
+/* Блок «kyc-onboarding» — стили не зависят от страницы. Ноутбук — полное изображение (О-17). */
+
+@media (min-width: 1600px) {
+    .kyc-onboarding__retakes picture {
+        display: contents;
+    }
+}
+
+/*
+ * 2538:18915: заголовок с оранжевым подзаголовком, ниже сетка — широкая карточка с ноутбуком, телефон
+ * и две правые карточки. Ноутбук — ПОЛНОЕ изображение (kyc-onboard-laptop-full, 440x394, с запасом под тень):
+ * стоит на нижней грани карточки и чуть выступает над верхней; срезов внутри карточки нет (О-17).
+ * Левое поле карточки резервирует место под ноутбук: ширина ноутбука + отступ справа + зазор.
+ */
+.kyc-onboarding > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-onboarding__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-onboarding__head .kyc-subtitle {
+    max-width: 859px;
+}
+
+.kyc-onboarding__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kyc-onboarding__auto {
+    grid-column: 1 / -1;
+    gap: 16px;
+    padding-right: 420px;
+    justify-content: center;
+}
+
+.kyc-onboarding__auto > * {
+    max-width: 600px;
+}
+
+.kyc-onboarding__laptop {
+    position: absolute;
+    right: 32px;
+    bottom: 0;
+    width: 262px;
+    height: auto;
+    max-width: none;
+}
+
+.kyc-onboarding__retakes {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    min-height: 388px;
+    overflow: hidden;
+}
+
+.kyc-onboarding__phone {
+    display: block;
+    flex: 0 0 auto;
+    width: 158px;
+    height: 326px;
+}
+
+.kyc-onboarding__retakes-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.kyc-onboarding__side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.kyc-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kyc-flags__item img {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-onboarding__auto {
+        padding-right: 320px;
+    }
+
+    .kyc-onboarding__laptop {
+        width: 220px;
+        right: 16px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-onboarding__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .kyc-onboarding__auto {
+        padding-right: 23px;
+        padding-bottom: 213px;
+    }
+
+    .kyc-onboarding__laptop {
+        right: 24px;
+        width: 220px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:29304: одна колонка; телефон — под текстом по центру, ноутбук — внизу справа. */
+    .kyc-onboarding > .container {
+        gap: 24px;
+    }
+
+    .kyc-onboarding__auto {
+        padding-right: 15px;
+        padding-bottom: 180px;
+    }
+
+    .kyc-onboarding__laptop {
+        right: 16px;
+        width: 185px;
+    }
+
+    .kyc-onboarding__retakes {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        min-height: 0;
+    }
+
+    .kyc-onboarding__retakes-text {
+        order: -1;
+    }
+
+    .kyc-onboarding__phone {
+        align-self: center;
+        width: 236px;
+        height: auto;
+        margin-bottom: -110px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:31770: три колонки 624 / 572 / 636, ряд 402. Телефон слева от текста,
+     * ноутбук в широкой карточке стоит на нижней грани справа целиком.
+     */
+    .kyc-onboarding__grid {
+        grid-template-columns: 624px 572px minmax(0, 1fr);
+        grid-template-rows: 402px;
+    }
+
+    .kyc-onboarding__auto {
+        grid-column: auto;
+        justify-content: flex-start;
+        padding-right: 23px;
+    }
+
+    .kyc-onboarding__auto .kyc-card__title {
+        max-width: 600px;
+    }
+
+    .kyc-onboarding__auto .kyc-card__text {
+        max-width: 311px;
+    }
+
+    .kyc-onboarding__laptop {
+        right: 20px;
+        width: 250px;
+    }
+
+    .kyc-onboarding__retakes {
+        min-height: 0;
+    }
+
+    .kyc-onboarding__phone {
+        width: 172px;
+        height: 354px;
+    }
+
+    .kyc-onboarding__retakes-text {
+        flex: 0 0 295px;
+    }
+}

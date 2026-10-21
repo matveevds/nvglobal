@@ -1,0 +1,367 @@
+/*
+ * Блок «Pricing» (`.kyc-pricing`) — универсальный: один вид (Identity), стили не зависят от страницы, все тексты — аргументы
+ * партиала template-parts/kyc-pricing-section.php. Серый фон и два белых PageEdge (64px, скруглены со стороны серого тела);
+ * слева карточка с ценой, справа 1–3 карточки планов; высоты — по содержимому.
+ */
+.kyc-pricing {
+    position: relative;
+    padding: 64px 0;
+    background: var(--nv-surface-2);
+}
+
+.kyc-pricing > .kyc-panel {
+    border: 0;
+    border-radius: 0;
+}
+
+.kyc-pricing::before,
+.kyc-pricing::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--nv-surface-1);
+    border: 1px solid var(--nv-surface-4);
+    pointer-events: none;
+}
+
+.kyc-pricing::before {
+    top: 0;
+    border-top: 0;
+    border-radius: 0 0 32px 32px;
+}
+
+.kyc-pricing::after {
+    bottom: 0;
+    border-bottom: 0;
+    border-radius: 32px 32px 0 0;
+}
+
+.kyc-pricing .section__badge {
+    margin-bottom: 48px;
+}
+
+.kyc-pricing__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-pricing__head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 980px;
+}
+
+.kyc-pricing__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 620px) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 16px;
+}
+
+.kyc-pricing__main:only-child {
+    grid-column: 1 / -1;
+}
+
+.kyc-pricing__main {
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    padding: 24px;
+}
+
+.kyc-pricing__main-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+}
+
+.kyc-pricing__eyebrow {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.kyc-pricing__price {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    line-height: 123.077%;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.kyc-pricing__price span {
+    color: var(--nv-primary);
+}
+
+.kyc-pricing__desc {
+    max-width: 540px;
+    margin: -8px 0 0;
+    color: var(--nv-object-2);
+    font-size: 20px;
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-pricing__side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.kyc-pricing__plan {
+    flex: 1 1 0;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+}
+
+.kyc-pricing__plan-text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.kyc-pricing__plan .kyc-btn {
+    flex: 0 0 auto;
+}
+
+/* Длинная подпись кнопки переносится, а не выходит за край. */
+.kyc-pricing .kyc-btn {
+    max-width: 100%;
+}
+
+.kyc-pricing .kyc-btn__text {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Типографика и бейдж Identity — от класса блока. */
+.kyc-pricing .section__badge {
+    padding: 4px 20px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-pricing .kyc-title {
+        font-size: 40px;
+        line-height: 130%;
+    }
+
+    .kyc-pricing__price {
+        font-size: 44px;
+        line-height: 127.273%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .kyc-pricing__head {
+        max-width: none;
+    }
+
+    .kyc-pricing__grid {
+        min-height: 322px;
+    }
+}
+
+/* Full HD: слева колонка с бейджем и заголовком, справа группа карточек. */
+@media (min-width: 1600px) {
+    .kyc-pricing > .kyc-panel > .container {
+        display: grid;
+        grid-template-columns: 412px minmax(0, 1fr);
+        column-gap: 48px;
+        row-gap: 48px;
+        align-items: start;
+    }
+
+    .kyc-pricing .section__badge {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+
+    .kyc-pricing__inner {
+        display: contents;
+    }
+
+    .kyc-pricing__head {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .kyc-pricing__grid {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+/* Ноутбук 992–1199: колонки поровну (цена не держит 620 и не сжимает планы), в плане текст над кнопкой. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .kyc-pricing__grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .kyc-pricing__plan {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .kyc-pricing__plan .kyc-btn {
+        align-self: flex-end;
+    }
+}
+
+/* Tablet: карточка цены — строкой, планы стоят рядом под ней. */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .kyc-pricing__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .kyc-pricing__main {
+        flex-direction: row;
+        padding: 16px;
+        gap: 48px;
+    }
+
+    .kyc-pricing__main-text {
+        flex: 1 1 0;
+        width: auto;
+    }
+
+    .kyc-pricing__side {
+        flex-direction: row;
+    }
+
+    .kyc-pricing__plan {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 15px;
+    }
+
+    .kyc-pricing__plan .kyc-btn {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-pricing__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Отступ секции равен высоте PageEdge (64): серое поле за краем даёт padding панели. Перебивает общий контракт
+       отступов `main > section` одним уровнем специфичности. */
+    .kyc-pricing.kyc-pricing {
+        padding-block: 64px;
+    }
+
+    .kyc-pricing .section__badge {
+        padding: 2px 16px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-pricing .kyc-title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .kyc-pricing .kyc-lead--md {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-pricing__eyebrow {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-pricing__price {
+        font-size: 30px;
+        line-height: 120%;
+    }
+
+    .kyc-pricing__desc {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .kyc-pricing__main {
+        gap: 48px;
+        padding: 12px;
+    }
+
+    .kyc-pricing__main .kyc-btn {
+        min-height: 36px;
+    }
+
+    .kyc-pricing__main .kyc-btn__text {
+        font-size: 16px;
+        line-height: 1.25;
+    }
+
+    .kyc-pricing__main .kyc-btn__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .kyc-pricing__plan {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 15px;
+    }
+
+    .kyc-pricing__plan-text {
+        padding-right: 0;
+    }
+
+    .kyc-pricing__plan .kyc-card__title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .kyc-pricing__plan .kyc-card__text {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-pricing__plan .kyc-btn {
+        align-self: flex-end;
+    }
+
+    .kyc-pricing__plan .kyc-btn--small {
+        min-height: 28px;
+    }
+
+    .kyc-pricing__plan .kyc-btn--small .kyc-btn__text {
+        font-size: 12px;
+        line-height: 1.33333333;
+    }
+
+    .kyc-pricing__plan .kyc-btn--small .kyc-btn__icon {
+        width: 16px;
+        height: 16px;
+    }
+}

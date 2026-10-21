@@ -1,0 +1,207 @@
+/*
+ * Блок «Benefits» (`.idv-benefits`) — универсальный: один вид (Identity), стили не зависят от страницы, все тексты —
+ * аргументы партиала template-parts/idv-benefits-section.php. 2–4 карточки выгод и акцентная promo-карточка.
+ * ≥1600 — всё в один ряд; 1200–1599 — карточки рядом, promo под ними; 768–1199 — карточки столбцом слева, promo справа;
+ * ниже — столбцом. Картинка promo стоит в потоке (под текстом или справа от него), текст её не перекрывает.
+ * Число колонок карточек — `--idv-benefits-cols` на `.idv-benefits__row` (ставит партиал).
+ */
+.idv-benefits .section__badge {
+    padding: 4px 20px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+.idv-benefits__title {
+    margin-top: 48px;
+    margin-bottom: 24px;
+}
+
+.idv-benefits__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+}
+
+.idv-benefits__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--idv-benefits-cols, 3), minmax(0, 1fr));
+    gap: 16px;
+    min-width: 0;
+}
+
+.idv-benefits__card {
+    position: relative;
+    min-width: 0;
+    align-items: flex-end;
+}
+
+.idv-benefits__card-icon {
+    flex-shrink: 0;
+}
+
+.idv-benefits__card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.idv-benefits__card-title {
+    margin: 0;
+    color: var(--nv-primary);
+}
+
+.idv-benefits__promo {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.idv-benefits__promo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* Маскот зеркально, прижат к правому нижнему углу карточки и обрезается её краем. */
+.idv-benefits__promo-image {
+    display: block;
+    align-self: flex-end;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    margin: auto -8px -23px 0;
+    transform: scaleX(-1);
+    pointer-events: none;
+}
+
+.idv-benefits .kyc-card__text {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+/* Карточки в один ряд, promo под ними на всю ширину: текст слева, маскот справа. */
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+    .idv-benefits__promo {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 48px;
+    }
+
+    .idv-benefits__promo-text {
+        flex: 1 1 0;
+    }
+
+    .idv-benefits__promo-image {
+        flex: 0 0 auto;
+        align-self: flex-end;
+        width: 150px;
+        margin: auto -8px -23px 0;
+    }
+}
+
+/* Full HD: все карточки и promo в один ряд. */
+@media (min-width: 1600px) {
+    .idv-benefits__row {
+        grid-template-columns: repeat(var(--idv-benefits-cols, 3), minmax(0, 1fr)) minmax(0, 1.4fr);
+    }
+
+    .idv-benefits__grid {
+        display: contents;
+    }
+}
+
+/* Tablet и ниже: карточки столбцом. */
+@media (max-width: 1199.98px) {
+    .idv-benefits .kyc-title {
+        font-size: 40px;
+        line-height: 130%;
+    }
+
+    .idv-benefits__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .idv-benefits__promo-image {
+        width: min(100%, 180px);
+    }
+
+    .idv-benefits__row {
+        grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+        align-items: stretch;
+    }
+
+    .idv-benefits__card {
+        padding: 15px;
+        border-radius: 16px;
+        gap: 0;
+    }
+
+    .idv-benefits__promo {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .idv-benefits__promo-text {
+        gap: 24px;
+    }
+
+    .idv-benefits__card .kyc-card__text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .idv-benefits .section__badge {
+        padding: 2px 16px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .idv-benefits .kyc-title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .idv-benefits__card,
+    .idv-benefits__promo {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .idv-benefits__card {
+        gap: 0;
+    }
+
+    .idv-benefits .kyc-card__title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .idv-benefits__card .kyc-card__text {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .idv-benefits__promo-text {
+        gap: 24px;
+    }
+
+    .idv-benefits__promo .kyc-card__text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .idv-benefits__promo-image {
+        width: 160px;
+        margin: 8px -4px -11px 0;
+    }
+}

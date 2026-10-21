@@ -6,6 +6,10 @@ require_once get_template_directory() . '/inc/docs-menu.php';
 require_once get_template_directory() . '/inc/calculator-fields.php';
 require_once get_template_directory() . '/inc/header-icons.php';
 require_once get_template_directory() . '/inc/header-menu.php';
+// Картотека блоков: режим кадра (?nv_block=) и страница каталога (?nv_bloki=1), только для администратора (manage_options), остальным 404
+require_once get_template_directory() . '/inc/block-catalog.php';
+// Страницы из блоков библиотеки: семейство оформления по заголовку `NV Page Family` и предпросмотр ?nv_page_preview=
+require_once get_template_directory() . '/inc/page-builder.php';
 
 // Инициализация темы
 add_action('after_setup_theme', 'theme_setup');
@@ -24,7 +28,7 @@ function theme_setup() {
     add_editor_style('css/editor-blocks.css');
 }
 
-define('THEME_ASSETS_VER', '1.0.87');
+define('THEME_ASSETS_VER', '1.1.92');
 
 
 /**
@@ -83,6 +87,17 @@ add_action('wp_enqueue_scripts', 'nvglobal_enqueue_nevi_widget', 1);
 /**
  * Подключение всех стилей и скриптов темы.
  */
+/**
+ * Версия файла темы для ?ver=: THEME_ASSETS_VER + время изменения файла. Любая правка файла меняет URL, поэтому браузер не держит
+ * старую копию (сервер не отдаёт Cache-Control). Файл не найден — просто THEME_ASSETS_VER. Библиотеки в assets/ остаются на THEME_ASSETS_VER.
+ */
+function nv_asset_ver(string $relative_path): string {
+    $path  = get_template_directory() . '/' . ltrim($relative_path, '/');
+    $mtime = is_file($path) ? (int) filemtime($path) : 0;
+
+    return $mtime ? THEME_ASSETS_VER . '.' . $mtime : THEME_ASSETS_VER;
+}
+
 function my_theme_enqueue_assets() {
     $uri = get_template_directory_uri();
 
@@ -91,13 +106,24 @@ function my_theme_enqueue_assets() {
      */
     wp_enqueue_style('swiper-css', $uri . '/assets/swiper/swiper-bundle.min.css', [], THEME_ASSETS_VER);
     wp_enqueue_style('locomotive-css', $uri . '/assets/locomotive-scroll.min.css', [], THEME_ASSETS_VER);
-    wp_enqueue_style('theme-styles', $uri . '/css/styles.css', ['swiper-css', 'locomotive-css'], THEME_ASSETS_VER);
-    wp_enqueue_style('theme-main-style', $uri . '/style.css', ['theme-styles'], THEME_ASSETS_VER);
-    wp_enqueue_style('post-styles', $uri . '/css/post.css', ['theme-main-style'], THEME_ASSETS_VER);
-    wp_enqueue_style('blog-styles', $uri . '/css/blog.css', ['theme-main-style'], THEME_ASSETS_VER);
+    /*
+     * Стили темы (Р-149): base → layout → blocks → pages, порядок — inc/css-registry.php (плоский список в исходном порядке
+     * правил). Каждый файл зависит от предыдущего, поэтому порядок в <head> строго соответствует реестру. Хэндл 'theme-styles' — base.css.
+     */
+    $nv_css_registry = require get_template_directory() . '/inc/css-registry.php';
+    $nv_css_prev     = ['swiper-css', 'locomotive-css'];
+    foreach ($nv_css_registry as $nv_css_entry) {
+        $nv_css_handle = ('base' === $nv_css_entry) ? 'theme-styles' : 'theme-css-' . str_replace('/', '-', $nv_css_entry);
+        wp_enqueue_style($nv_css_handle, $uri . '/css/' . $nv_css_entry . '.css', $nv_css_prev, nv_asset_ver('css/' . $nv_css_entry . '.css'));
+        $nv_css_prev = [$nv_css_handle];
+    }
+
+    wp_enqueue_style('theme-main-style', $uri . '/style.css', ['theme-styles'], nv_asset_ver('style.css'));
+    wp_enqueue_style('post-styles', $uri . '/css/post.css', ['theme-main-style'], nv_asset_ver('css/post.css'));
+    wp_enqueue_style('blog-styles', $uri . '/css/blog.css', ['theme-main-style'], nv_asset_ver('css/blog.css'));
 
     if (is_singular('document') || is_page_template('page-docs.php')) {
-        wp_enqueue_style('document-toc-styles', $uri . '/css/document-toc.css', ['post-styles'], THEME_ASSETS_VER);
+        wp_enqueue_style('document-toc-styles', $uri . '/css/document-toc.css', ['post-styles'], nv_asset_ver('css/document-toc.css'));
     }
 
     /*
@@ -115,7 +141,7 @@ function my_theme_enqueue_assets() {
      * Калькулятор.
      */
     if (is_page_template('page-price-matrix.php') || is_page_template('page-price-matrix-en.php')) {
-        wp_enqueue_script('calculate-js', $uri . '/js/calculate.js', [], THEME_ASSETS_VER, true);
+        wp_enqueue_script('calculate-js', $uri . '/js/calculate.js', [], nv_asset_ver('js/calculate.js'), true);
 
         wp_localize_script('calculate-js', 'kycCalculatorI18n', [
             'documentLabel'             => 'DOCUMENT · Document Recognition',
@@ -143,7 +169,7 @@ function my_theme_enqueue_assets() {
     /*
      * Скрипты темы.
      */
-    wp_enqueue_script('form-js', $uri . '/js/form.js', ['swiper-js', 'micromodal-js'], THEME_ASSETS_VER, true);
+    wp_enqueue_script('form-js', $uri . '/js/form.js', ['swiper-js', 'micromodal-js'], nv_asset_ver('js/form.js'), true);
 
     wp_localize_script('form-js', 'themeFormData', [
         'ajax_url'          => admin_url('admin-ajax.php'),
@@ -163,7 +189,10 @@ function my_theme_enqueue_assets() {
         'lottie-js',
         'smoothscroll-js',
         'form-js',
-    ], THEME_ASSETS_VER, true);
+    ], nv_asset_ver('js/main.js'), true);
+
+    // Блок «Видео» (template-parts/video-section.php): «фасад» YouTube, отдельный маленький скрипт без зависимостей.
+    wp_enqueue_script('video-block-js', $uri . '/js/video-block.js', [], nv_asset_ver('js/video-block.js'), true);
 }
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_assets', 10);
 
@@ -1718,6 +1747,7 @@ function nv_add_block_category($categories, $post) {
 
 // Помощники ACF-блоков записей блога (заглушка пустого блока в редакторе).
 require_once get_template_directory() . '/inc/block-helpers.php';
+require_once get_template_directory() . '/inc/blog-icons.php';
 
 
 /**
@@ -1739,7 +1769,7 @@ function nv_enqueue_block_editor_compat() {
         'nv-admin-blocks',
         get_template_directory_uri() . '/js/admin-blocks.js',
         ['quicktags'],
-        THEME_ASSETS_VER,
+        nv_asset_ver('js/admin-blocks.js'),
         false
     );
 }
@@ -2075,6 +2105,28 @@ function nv_breadcrumbs() {
         return;
     }
 
+    // Архив блога: Main / Blog [/ рубрика | Search | автор].
+    if (nv_is_blog_archive() || is_author()) {
+        $sep = ' <span class="breadcrumbs__sep">/</span> ';
+        echo '<nav class="breadcrumbs__nav" aria-label="Breadcrumb">';
+        echo '<a class="breadcrumbs__link" href="' . esc_url(home_url('/')) . '">Main</a>' . $sep;
+        if (is_category() || is_search() || is_author()) {
+            echo '<a class="breadcrumbs__link" href="' . esc_url(nv_blog_url()) . '">Blog</a>' . $sep;
+            if (is_search()) {
+                $current_label = 'Search';
+            } elseif (is_author()) {
+                $current_label = nv_author_display_name((int) get_queried_object_id());
+            } else {
+                $current_label = single_cat_title('', false);
+            }
+            echo '<span class="breadcrumbs__current" aria-current="page">' . esc_html($current_label) . '</span>';
+        } else {
+            echo '<span class="breadcrumbs__current" aria-current="page">Blog</span>';
+        }
+        echo '</nav>';
+        return;
+    }
+
     if ( ! $post instanceof WP_Post ) {
         return;
     }
@@ -2172,7 +2224,121 @@ function nv_is_light_theme(): bool {
         || is_page_template('page-kyc.php')
         || is_page_template('page-privacy.php')
         || is_page_template('page-price-matrix.php')
-        || is_singular('post');
+        || is_page_template('page-identity-verification.php')
+        || is_singular('document')
+        || is_page_template('page-docs.php')
+        || is_singular('post')
+        || is_404()
+        || nv_is_blog_archive()
+        || is_author()
+        || nv_is_block_catalog()
+        || '' !== nv_block_demo_slug()
+        || (function_exists('nv_block_stress_slug') && '' !== nv_block_stress_slug())
+        || '' !== nv_page_family();
+}
+
+/**
+ * Архив блога в светлом дизайне (Figma 1378:20322): страница блога (#570,
+ * шаблоны search.php / blog-page.php), результаты поиска по записям и рубрики.
+ * `author.php` сюда не входит — у него своя раскладка (профиль + author-only card variant,
+ * blog-author ТЗ) и отдельный page-size (`NV_AUTHOR_PER_PAGE`, не 12), хотя шаблон тоже светлый
+ * и получает `nv-blog` для переиспользования `.blog-hero`/`.blog-cats`/`.blog-card` CSS.
+ */
+function nv_is_blog_archive(): bool {
+    return is_page_template('search.php')
+        || is_page_template('blog-page.php')
+        || is_search()
+        || is_category();
+}
+
+add_filter('body_class', function (array $classes): array {
+    if (nv_is_blog_archive() || is_author()) {
+        $classes[] = 'nv-blog';
+    }
+    if (is_author()) {
+        $classes[] = 'nv-author';
+    }
+    return $classes;
+});
+
+/** Записей в сетке архива (без «последней статьи» на первой странице блога). */
+const NV_BLOG_PER_PAGE = 12;
+
+/** Записей на странице автора — существующее значение author.php, не общий размер архива. */
+const NV_AUTHOR_PER_PAGE = 9;
+
+/**
+ * Реальное имя автора: first+last, иначе display_name. Общая логика для author.php
+ * и nv_breadcrumbs() — раньше дублировалась в каждом файле отдельно.
+ */
+function nv_author_display_name(int $author_id): string {
+    $first = trim((string) get_user_meta($author_id, 'first_name', true));
+    $last  = trim((string) get_user_meta($author_id, 'last_name', true));
+    $name  = trim($first . ' ' . $last);
+    return $name !== '' ? $name : get_the_author_meta('display_name', $author_id);
+}
+
+add_action('pre_get_posts', function (WP_Query $query): void {
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    if ($query->is_search()) {
+        $query->set('post_type', 'post');
+        $query->set('posts_per_page', NV_BLOG_PER_PAGE);
+    } elseif ($query->is_category()) {
+        $query->set('posts_per_page', NV_BLOG_PER_PAGE);
+    } elseif ($query->is_author()) {
+        $query->set('posts_per_page', NV_AUTHOR_PER_PAGE);
+    }
+});
+
+/**
+ * Страница блога: адрес `/blog/page/N/` за последней страницей отдаёт 404 (для страниц WP
+ * этого сам не делает). Первая запись показана отдельно как «последняя статья» и в сетку не входит.
+ */
+add_action('template_redirect', function (): void {
+    if (!is_page_template('search.php') && !is_page_template('blog-page.php')) {
+        return;
+    }
+    $paged = (int) get_query_var('paged');
+    if ($paged < 2) {
+        return;
+    }
+    $in_grid = max(0, (int) wp_count_posts('post')->publish - 1);
+    if ($paged > max(1, (int) ceil($in_grid / NV_BLOG_PER_PAGE))) {
+        global $wp_query;
+        $wp_query->set_404();
+        status_header(404);
+        nocache_headers();
+    }
+});
+
+/** «2 days ago» по-английски независимо от локали сайта (human_time_diff отдаёт переведённые единицы). */
+function nv_blog_ago(int $timestamp): string {
+    $diff = max(0, time() - $timestamp);
+    $units = array(
+        array(YEAR_IN_SECONDS, 'year'),
+        array(MONTH_IN_SECONDS, 'month'),
+        array(WEEK_IN_SECONDS, 'week'),
+        array(DAY_IN_SECONDS, 'day'),
+        array(HOUR_IN_SECONDS, 'hour'),
+        array(MINUTE_IN_SECONDS, 'minute'),
+    );
+    foreach ($units as $unit) {
+        if ($diff >= $unit[0]) {
+            $n = (int) floor($diff / $unit[0]);
+            return $n . ' ' . $unit[1] . ($n > 1 ? 's' : '') . ' ago';
+        }
+    }
+    return 'just now';
+}
+
+/** Адрес страницы блога: опубликованная страница `blog`, иначе плановый `/blog/` (Р-26). */
+function nv_blog_url(): string {
+    $page = get_page_by_path('blog');
+    return $page && 'publish' === $page->post_status
+        ? get_permalink($page)
+        : home_url('/blog/');
 }
 
 

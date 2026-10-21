@@ -1,0 +1,309 @@
+/*
+ * Блок «Security» (`.idv-security`) — универсальный: один вид, стили не зависят от страницы, все тексты и знаки —
+ * аргументы партиала template-parts/idv-security-section.php. 1–3 карточки (знаки сертификатов и ссылка — по желанию)
+ * и необязательная региональная панель с картой ЮВА. Сочетания (только карточки / карточки + регион / только регион)
+ * раскладываются без пустот: карточки переносятся (`flex-wrap`) и растягиваются, высоты — по содержимому.
+ * Размеры Figma (R6-1): 1920 col720 (карточки 288 | 416) + regional (карта 201×196 слева); 1440 col512 (карточки друг
+ * над другом) + regional (текст | карта 369×360 справа); 840 карточки 300 | 460, regional 776 (inset16, карта 369×360);
+ * 392 карточки inset12, regional: текст → карта 336×327. Regional — Surface2; corner = 24 / 16 / 12.
+ */
+.idv-security__title {
+    margin-bottom: 24px;
+}
+
+.section__badge + .idv-security__title {
+    margin-top: 48px;
+}
+
+.idv-security__grid {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+
+/* Колонка карточек: 1440 — 512, карточки друг над другом (базис 100%); без регионального блока — на всю ширину. */
+.idv-security__col {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    flex: 0 1 512px;
+    min-width: 0;
+}
+
+.idv-security__grid--no-regional .idv-security__col {
+    flex: 1 1 100%;
+}
+
+/* title→text 8 (был generic12 `.kyc-card`) */
+.idv-security__card {
+    flex: 1 1 100%;
+    gap: 8px;
+    overflow-wrap: anywhere;
+}
+
+/* Без регионального блока карточки в ряд: 3 в 1136, нечётная последняя растягивается на оставшуюся ширину. */
+.idv-security__grid--no-regional .idv-security__card {
+    flex: 1 1 320px;
+}
+
+.idv-security__grid--no-regional .idv-security__card--marks {
+    flex: 1.4 1 440px;
+}
+
+.idv-security__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.idv-security__badges img {
+    display: block;
+    width: auto;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Кнопка «Information security policy»: по ширине текста, а не на всю карточку; длинный текст переносится. */
+.idv-security__link {
+    align-self: flex-start;
+    max-width: 100%;
+}
+
+.idv-security__link .kyc-btn__text {
+    white-space: normal;
+}
+
+.idv-security__regional {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 16px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+}
+
+.idv-security__grid--no-cards .idv-security__regional {
+    flex-basis: 100%;
+}
+
+.idv-security__regional-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 415px;
+    overflow-wrap: anywhere;
+}
+
+/* Без карты текст занимает всю панель. */
+.idv-security__regional--no-map .idv-security__regional-text {
+    flex: 1 1 100%;
+}
+
+/* Индивидуальные слои карты не несут общего canvas (у каждого свой тесный bounding box): каждый `<img>` получает
+   inline top/right/bottom/left/width/height (% от кадра 369×360, Figma 2620:25965) внутри позиционированного
+   контейнера с тем же соотношением сторон — композиция масштабируется проценты-в-проценты под любой слот. */
+.idv-security__map {
+    position: relative;
+    flex: 0 1 369px;
+    width: 369px;
+    min-width: 0;
+    aspect-ratio: 369 / 360;
+    overflow: hidden;
+}
+
+/* width/height задаются inline per-layer: для замещённых элементов (img) auto не вычисляется из inset. */
+.idv-security__map-layer {
+    position: absolute;
+}
+
+.idv-security__flags {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.idv-security__flag {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: -8px;
+}
+
+.idv-security__accent {
+    color: var(--nv-primary);
+}
+
+/* перенос заголовка regional как в render (после «EU,» на 1440/840/392) */
+.idv-security__regional-text .kyc-card__title {
+    text-wrap: balance;
+}
+
+@media (max-width: 1599.98px) {
+
+}
+
+@media (max-width: 1399.98px) {
+
+}
+
+@media (max-width: 1199.98px) {
+    /* Карточки в ряд (перенос по месту), региональный блок — под ними на всю ширину. */
+    .idv-security__grid {
+        flex-direction: column;
+    }
+
+    .idv-security__col {
+        flex: 0 0 auto;
+    }
+
+    .idv-security__card,
+    .idv-security__grid--no-regional .idv-security__card {
+        flex: 1 1 300px;
+    }
+
+    .idv-security__card--marks,
+    .idv-security__grid--no-regional .idv-security__card--marks {
+        flex: 1.4 1 440px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+/* Tablet (768–991.98): карточки 300 | 460, знаки 64 справа внизу; regional inset16 (padding15), gap16,
+   карта 369×360 справа, text 359; corner 16 (source 2654:34578). */
+    .idv-security__card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .idv-security__badges {
+        align-self: flex-end;
+        margin-top: 0;
+    }
+
+    .idv-security__badges img {
+        height: 64px;
+    }
+
+    .idv-security__regional {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    /* карта 369×360 нативная, текст — остаток (744 − 369 − 16 = 359) */
+    .idv-security__map {
+        flex: 0 0 369px;
+    }
+
+    .idv-security__regional-text {
+        flex: 1 1 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile (2666:42525 / 42539): карточки друг над другом, inset12 (padding11), corner12, знаки 64 справа внизу,
+       regional: текст → gap16 → карта 336×327.48 (column-reverse: карта первой в DOM), body 14/20. */
+    .idv-security__card,
+    .idv-security__card--marks,
+    .idv-security__grid--no-regional .idv-security__card,
+    .idv-security__grid--no-regional .idv-security__card--marks {
+        flex: 1 1 100%;
+    }
+
+    .idv-security__card {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .idv-security__card .kyc-card__text {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .idv-security__badges {
+        align-self: flex-end;
+        margin-top: 0;
+    }
+
+    .idv-security__badges img {
+        height: 64px;
+    }
+
+    .idv-security__regional {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .idv-security__regional-text,
+    .idv-security__regional--no-map .idv-security__regional-text {
+        flex: 0 0 auto;
+    }
+
+    .idv-security__regional-text .kyc-card__text {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    /* margin-inline:auto — на широком Mobile (576–767) карта 336 по центру карточки, а не слева (О-31). */
+    .idv-security__map {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 336px;
+        height: 327.48px;
+        margin-inline: auto;
+        aspect-ratio: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}
+
+@media (max-width: 478.98px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
+
+@media (min-width: 1600px) {
+/* FHD (≥1600): col720 (карточки 288 | 416) + regional (карта 201×196 слева, текст справа) */
+    .idv-security__col {
+        flex: 0 1 720px;
+    }
+
+    .idv-security__card {
+        flex: 1 1 280px;
+    }
+
+    .idv-security__card--marks {
+        flex: 1.44 1 400px;
+    }
+
+    .idv-security__regional {
+        flex-direction: row;
+    }
+
+    .idv-security__map {
+        flex: 0 0 auto;
+        width: auto;
+        height: 196px;
+    }
+
+    .idv-security__regional-text {
+        flex: 1 1 0;
+    }
+
+    .idv-security__regional--no-map .idv-security__regional-text {
+        flex: 1 1 100%;
+    }
+}

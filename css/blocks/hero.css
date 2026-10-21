@@ -1,0 +1,676 @@
+/* Блок «hero» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.hero {
+    position: relative;
+    width: 100%;
+    padding: 32px 0;
+    background: var(--nv-surface-1);
+}
+
+/* Карточка первого экрана: фото на всю площадь, контент по нижнему краю. */
+.hero__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    width: 100%;
+    min-height: 872px;
+    /* Full HD 2380:22866 — поле 48, Desktop 2363:34983 — 32. */
+    padding: 48px;
+    border-radius: var(--nv-radius-hero);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+}
+
+.hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Full HD 2380:22868 — 342×64 с полем 48; Desktop 2363:34985 — 206×39 с полем 32. */
+.hero__logo {
+    position: absolute;
+    top: 48px;
+    left: 48px;
+    width: 342px;
+    height: 64px;
+    display: block;
+}
+
+.pin-spacer {
+    transition: none !important;
+}
+
+.hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero__video canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+/* Отключаем блокировку скролла от Locomotive Scroll */
+html.has-scroll-smooth {
+    overflow: auto !important;
+}
+
+html.has-scroll-smooth body {
+    overflow: auto !important;
+}
+
+/* Отключаем трансформации от Locomotive Scroll */
+.has-scroll-smooth [data-scroll-container] {
+    min-height: auto !important;
+    transform: none !important;
+}
+
+/* Контент поверх видео */
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/*
+ * В макете отдельного затемняющего слоя нет: сверка рендера Figma с экспортом
+ * фотографии дала расхождение 0.00 по всем контрольным точкам. Читаемость текста
+ * обеспечивает сама фотография (слева тёмный диван и стена в тени).
+ */
+.hero.hero--hide {
+    display: none;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    left:0;
+    width: 100%;
+    display: none;
+    height: 400px;
+    background-color: line;
+    background: linear-gradient(
+        to top,
+        #000 0%,
+        rgba(0, 0, 0, 0.7) 70%,
+        transparent 100%
+    );
+}
+
+.hero__wrapper {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+/* Full HD 2380:22867 — колонка 852, Desktop 2363:34984 — 496. */
+.hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 852px;
+    width: 100%;
+}
+
+/* Full HD 2380:22875 — 72/84; Desktop 2363:34992 — H1 52/64. */
+.hero__title {
+    margin: 0;
+    font-size: 72px;
+    line-height: 116.667%;
+    font-weight: 700;
+    color: var(--nv-constant-1);
+}
+
+.hero__title-accent {
+    color: var(--nv-primary);
+}
+
+/*
+ * На Full HD тире входит в оранжевую часть и переноса нет, на Desktop тире
+ * белое и строка рвётся перед «in seconds» (2363:34992).
+ */
+.hero__title-dash {
+    color: var(--nv-primary);
+}
+
+.hero__title br {
+    display: none;
+}
+
+.hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+/* Full HD 2380:22876 — Title/H4 24/36; Desktop 2363:34993 — Title/H6 18/24. */
+.verify {
+    color: var(--nv-constant-85);
+    font-size: 24px;
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.companies {
+    font-size: 18px;
+    line-height: 155.556%;
+}
+
+/* Исходный вид кнопки — используется на /pricing-matrix/, /404/, /blog/, в архивах. */
+.btn-hero {
+    padding: 16px;
+    gap: 17px;
+    border-radius: 16px;
+    background-color: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    flex-direction: row-reverse;
+    height: 64px;
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.btn__text-hero {
+    color: var(--Text-White, #FBFBFB);
+}
+
+/* Светлая тема: кнопка перерисована по макету. Разметка иконки та же — inline-SVG в `.btn__icon`. */
+body.home .btn-hero,
+body.page-template-page-price-matrix .btn-hero,
+body.single-post .btn-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    height: auto;
+    min-height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-gradient);
+    /*
+     * Иконка берёт цвет через `currentColor`. У `<button>` цвет не наследуется
+     * от body — без этой строки браузер подставляет свой чёрный, и стрелка
+     * на оранжевом градиенте чернеет.
+     */
+    color: var(--nv-constant-1);
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: filter .2s ease;
+}
+
+body.home .btn-hero .btn__icon,
+body.page-template-page-price-matrix .btn-hero .btn__icon,
+body.single-post .btn-hero .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+body.home .btn-hero .btn__icon svg,
+body.page-template-page-price-matrix .btn-hero .btn__icon svg,
+body.single-post .btn-hero .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+body.home .btn__text-hero,
+body.page-template-page-price-matrix .btn__text-hero,
+body.single-post .btn__text-hero {
+    color: var(--nv-constant-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.btn__icon-arrow {
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 16px;
+    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+}
+
+.btn__icon-arrow::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    background-image: url('../../img/big_arrow.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Исходное поведение hover на остальных страницах. */
+.btn-hero:hover .btn__icon-arrow::after {
+    background-image: url('../../img/big_arrow_white.svg');
+}
+
+.btn-hero:hover .btn__icon-arrow,
+.btn-hero.is-active .btn__icon-arrow {
+    background: var(--Island-Dark-blue, #2B323B);
+}
+
+.btn-hero:hover .btn__text-hero,
+.btn-hero.is-active .btn__text-hero {
+    color: var(--Text-Dark-blue, #2B323B);
+}
+
+/*
+ * Расширяющийся круг тёмной темы (`.btn-hero::before`, #F9AA66 → #FF7759)
+ * лежит поверх заливки и на ховере забеливал оранжевую кнопку.
+ * В светлой кнопке его нет.
+ */
+body.home .btn-hero::before {
+    content: none;
+}
+
+/*
+ * Hover главной замерен по фрейму 2386:28441: градиент снимается, остаётся сплошной #FD6B01.
+ * Цвет текста и иконки не меняется.
+ */
+body.home .btn-hero:hover,
+body.home .btn-hero:focus-visible,
+body.home .btn-hero.is-active {
+    background: var(--nv-primary);
+}
+
+/*
+ * Унаследованное от тёмной темы `.btn-hero:hover .btn__text-hero` (0,3,0)
+ * перебивает `body.home .btn__text-hero` (0,2,1) и красит подпись в #2B323B.
+ * В макете цвет на ховере не меняется — возвращаем его явно.
+ */
+body.home .btn-hero:hover .btn__text-hero,
+body.home .btn-hero:focus-visible .btn__text-hero,
+body.home .btn-hero.is-active .btn__text-hero {
+    color: var(--nv-constant-1);
+}
+
+body.home .btn-hero:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* .btn-hero:hover .btn__icon-arrow svg path, .btn-hero.is-active .btn__icon-arrow svg path {
+    fill: #FBFBFB;
+} */
+.btn-back {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 11px 5px 5px;
+    border-radius: 6px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+
+}
+
+.btn-back svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-back span {
+    color: var(--Text-White, #FBFBFB);
+    font-family: Satoshi;
+    font-size: var(--Text-Button-Size-Small, 12px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.btn-back-menu {
+    align-self: flex-end;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    display: none;
+}
+
+@media (max-width: 1599.98px) {
+    /*
+     * Desktop 2363:34983: поле карточки 32, колонка 496, логотип 206×39,
+     * заголовок H1 52/64 с переносом перед «in seconds» и белым тире,
+     * подзаголовок Title/H6 18/24.
+     */
+    .hero__card {
+        padding: 32px;
+    }
+
+    .hero__logo {
+        top: 32px;
+        left: 32px;
+        width: 206px;
+        height: 39px;
+    }
+
+    .hero__content {
+        max-width: 496px;
+    }
+
+    .hero__title {
+        font-size: 52px;
+        line-height: 123.077%;
+    }
+
+    .hero__title-dash {
+        color: inherit;
+    }
+
+    .hero__title br {
+        display: inline;
+    }
+
+    .verify {
+        font-size: 18px;
+        line-height: 133.333%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .hero {
+        /* height: 900px; */
+    }
+
+    .hero__content {
+        padding-top: 200px;
+    }
+
+    .hero::after {
+        height: 300px;
+        display: block;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .companies {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .btn-back-menu2 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .hero::after {
+        height: 240px;
+    }
+}
+
+@media (max-width: 620px) {
+    .btn-back-menu {
+        display: flex;
+    }
+
+    .hero__content {
+        padding-top: 120px;
+    }
+
+    .btn-hero {
+        padding: 16px;
+        background-color: #F9AA66;
+        height: auto;
+        border-radius: 8px;
+        gap: 8px;
+    }
+
+    .btn-hero {
+        flex-direction: row;
+        padding: 9px 8px 8px 16px;
+    }
+
+    .btn-hero .btn__text {
+        color: #2B323B;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 125%;
+    }
+
+    .btn-hero .btn__icon {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0  ;
+        width: 24px;
+        height: 24px;
+        background: transparent;
+    }
+
+    .btn-hero .btn__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn__icon-arrow::after {
+        background-image: url('../../img/small_arrow.svg');
+        width: 20px;
+        height: 20px;
+    }
+
+    .hero__actions {
+        gap: 8px;
+    }
+
+    .hero__actions-sep {
+        display: none;
+    }
+
+    .hero__actions .btn--gray .btn__text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 460px) {
+    .hero {
+        padding-bottom: 40px;
+    }
+
+    .hero {
+        /* height: 800px; */
+    }
+
+    .hero__title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 120%;
+    }
+
+    .hero__content {
+        padding-top: 80px;
+    }
+}
+
+@media (max-width: 419.98px) {
+    .hero {
+        background-position: right -80px top -30px;
+    }
+
+    .verify {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 125%;
+    }
+
+    .companies {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .btn__text-hero {
+        font-size: 16px;
+        font-style: normal;
+        line-height: 125%;
+    }
+}
+
+@media (max-width: 379.98px) {
+    .hero__content {
+        padding-top: 60px;
+    }
+}
+
+/*
+ * Кнопка «View our prices» в первом экране. `.btn` и `.btn--gray` — общие классы,
+ * используются на /solutions/, /pricing-matrix/ и в блоге, поэтому правило ограничено
+ * `.hero__actions`, чтобы не задеть другие страницы.
+ */
+.hero__actions .btn--gray {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    color: var(--nv-object-1);
+    transition: background-color .2s ease;
+}
+
+.hero__actions .btn--gray .btn__text {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.hero__actions .btn--gray .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.hero__actions .btn--gray .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Hover замерен по фрейму 2386:28441: подложка #F2F2F2 -> #E4E4E4, рамка не меняется. */
+.hero__actions .btn--gray:hover,
+.hero__actions .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.hero__actions .btn--gray:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop-фрейм Figma 1440: карточка 1376x732. */
+    .hero__card {
+        min-height: 732px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet-фрейм Figma 840: карточка 776x872, раскладка та же. */
+    .hero__card {
+        min-height: 872px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Макета мобильной версии нет (BACKLOG R-01). Раскладку собираем так, чтобы
+     * композиция макета не ломалась: карточка ниже, контент и кнопки в колонку.
+     */
+    .hero__card {
+        min-height: 560px;
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .hero__wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .hero__content {
+        max-width: 100%;
+    }
+
+    .hero__actions {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .hero__title {
+        font-size: 36px;
+        line-height: 122.222%;
+    }
+
+    .verify {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 478.98px) {
+    /*
+     * Сохраняем прежний мобильный размер заголовка темы: до правок он задавался
+     * в унаследованном блоке 460px, который стоит выше по файлу и теперь
+     * перекрывался бы правилом 767.98 из этой лесенки.
+     */
+    .hero__title {
+        font-size: 32px;
+        line-height: 120%;
+    }
+}
+
+body.home main > section:where(:not(.hero):not(.main):not(.teaser)),
+body.page-template-page-solutions main > section:where(:not(.hero):not(.main):not(.teaser)),
+body.page-template-page-kyc main > section:where(:not(.hero):not(.main):not(.teaser)),
+body.page-template-page-identity-verification main > section:where(:not(.hero):not(.main):not(.teaser)) {
+    padding-top: var(--nv-block-space);
+    padding-bottom: var(--nv-block-space);
+}

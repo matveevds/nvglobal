@@ -1,0 +1,308 @@
+/* Platform Bento (`.kyc-platform`) — универсальный блок, не зависит от страницы. Подключается после styles.css. */
+
+/*
+ * Platform Bento — один вид (Identity), без привязки к странице и без модификаторов.
+ * Сетка: ≥1200 — колонка карточек + панель с ноутбуком (ширина панели 34% с пределами 380–632); ниже —
+ * одна колонка. Внутри колонки: верхняя карточка (текст + note, переносится), ряд audit | pair
+ * (audit — карточка с картинкой, pair — столбец карточек), на <768 всё в столбец. Ширины — minmax/flex-basis
+ * с min-width:0, высоты — по содержимому. Картинка audit стоит в потоке под текстом (резервирует место),
+ * а не абсолютно, поэтому не пересекает текст при любом его объёме.
+ */
+.kyc-platform > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-platform .kyc-title {
+    margin-top: 24px;
+}
+
+.kyc-platform .kyc-subtitle {
+    margin-top: -12px;
+}
+
+.kyc-platform__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    align-items: stretch;
+}
+
+.kyc-platform__col:only-child {
+    grid-column: 1 / -1;
+}
+
+.kyc-platform__col {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Верхняя карточка: текст + note; при нехватке ширины note уходит под текст. */
+.kyc-platform__case {
+    flex-flow: row wrap;
+    align-items: flex-end;
+    gap: 16px 48px;
+}
+
+.kyc-platform__case-text {
+    display: flex;
+    flex: 1 1 320px;
+    min-width: 0;
+    max-width: 640px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-platform__note {
+    display: flex;
+    flex: 1 1 260px;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.kyc-platform__note-text {
+    width: 100%;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-platform__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kyc-platform__audit {
+    min-width: 0;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.kyc-platform__audit-image {
+    display: block;
+    width: min(100%, 192px);
+    height: auto;
+    margin: auto -15px -15px auto;
+    align-self: flex-end;
+    object-fit: contain;
+}
+
+.kyc-platform__pair {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Верх пары — верх audit; карточки делят высоту ряда поровну, без пустой полосы сверху. */
+.kyc-platform__pair > .kyc-card {
+    flex: 1 1 auto;
+}
+
+.kyc-platform__screen {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-3);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    container-type: inline-size;
+    --lp-inset: 23px;
+}
+
+/* Свой макет вместо ноутбука (`screen_html`) получает поля панели. */
+.kyc-platform__screen-custom {
+    width: 100%;
+    padding: 23px;
+}
+
+/*
+ * Ноутбук со скриншотом: целый MacBook (img/identity-platform-laptop, 400×235) и экран страницы поверх, оба в
+ * процентах от ноутбука — никакого обрезанного кадра. Правило: ноутбук либо виден целиком, либо уходит под правый
+ * край панели вплотную (без зазора справа); панель обрезает по своему краю (overflow:hidden), не обёртка.
+ * Панель ≥700px — целиком по центру (не шире 640); уже — крупнее панели (118%), отступ слева 23 (12 на Mobile),
+ * правая часть уходит под край.
+ */
+.kyc-platform__laptop-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    width: 118cqw;
+    margin: var(--lp-inset) 0 var(--lp-inset) var(--lp-inset);
+}
+
+.kyc-platform__laptop {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: none;
+}
+
+.kyc-platform__screen-img {
+    position: absolute;
+    top: 4.369%;
+    left: 11.456%;
+    width: 77.09%;
+    height: 81.893%;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: top;
+}
+
+@container (min-width: 700px) {
+    .kyc-platform__laptop-wrap {
+        width: min(100cqw - 2 * var(--lp-inset), 640px);
+        margin: var(--lp-inset) auto;
+    }
+}
+
+.kyc-platform__summary {
+    padding: 24px;
+    border-radius: 24px;
+    background: var(--nv-gradient);
+    text-align: center;
+}
+
+.kyc-platform__summary p {
+    margin: 0;
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+    .kyc-platform__grid {
+        grid-template-columns: minmax(0, 1fr) clamp(380px, 34%, 632px);
+    }
+
+    .kyc-platform .kyc-subtitle {
+        max-width: 1080px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .kyc-platform__row {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .kyc-platform .kyc-card {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .kyc-platform__note {
+        padding: 16px;
+    }
+
+    .kyc-platform__summary {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2666:42203: всё в один столбец, зазоры 12, поля карточек 11. */
+    .kyc-platform__row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .kyc-platform .kyc-card {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .kyc-platform__case {
+        gap: 24px;
+    }
+
+    .kyc-platform__note {
+        padding: 8px;
+    }
+
+    .kyc-platform__note-text {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    .kyc-platform__screen {
+        --lp-inset: 12px;
+    }
+
+    .kyc-platform__screen-custom {
+        padding: 12px;
+    }
+
+    .kyc-platform__summary {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .kyc-platform__summary p {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+}
+
+.kyc-platform .section__badge {
+    padding: 4px 20px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-platform .kyc-title {
+        font-size: 40px;
+        line-height: 130%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-platform .section__badge {
+        padding: 2px 16px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-platform .kyc-title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .kyc-platform .kyc-subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .kyc-platform .kyc-card__title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .kyc-platform .kyc-card__title--lg {
+        font-size: 24px;
+        line-height: 150%;
+    }
+
+    .kyc-platform .kyc-card__text--md {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}

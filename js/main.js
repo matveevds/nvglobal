@@ -4576,10 +4576,22 @@ function initKycPage() {
         const stacked = window.matchMedia('(max-width: 991.98px)');
         let current = 0;
         let scrollTimer = null;
+        let layoutLocked = false;
+        let layoutLockTimer = null;
 
         function layout(smooth) {
             if (!viewport || !list || !cards[current]) return;
             const card = cards[current];
+
+            /* Вертикальное окно (992–1599.98) по умолчанию 440 (CSS), но не ниже самой высокой карточки — длинный
+               текст растит окно, а не вылезает за него. В остальных режимах высота окна — по CSS. */
+            if (!wide.matches && !stacked.matches) {
+                viewport.style.height = '';
+                const tallest = cards.reduce((m, c) => Math.max(m, c.offsetHeight), 0);
+                if (tallest > viewport.clientHeight) viewport.style.height = `${tallest}px`;
+            } else {
+                viewport.style.height = '';
+            }
 
             if (wide.matches) {
                 list.style.transform = '';
@@ -4605,17 +4617,133 @@ function initKycPage() {
 
         buttons.forEach((btn, i) => btn.addEventListener('click', () => setStep(i, true)));
 
+        /* Вертикальное окно 992–1199.98: шаги листаются вертикальным свайпом (touch) и колесом мыши
+           над окном. На первом шаге «назад» и на последнем «вперёд» жест не перехватывается —
+           листается страница, пользователь не застревает в блоке. Колесо вне окна — обычный скролл. */
+        const gestures = window.matchMedia('(min-width: 992px) and (max-width: 1199.98px)');
+        const canGo = (dir) => (dir > 0 ? current < cards.length - 1 : current > 0);
+
+        if (viewport) {
+            /* Колесо: один шаг на один жест. Инерция тачпада и быстрая прокрутка колеса идут потоком
+               событий — после смены шага поток гасится, пока не наступит пауза WHEEL_IDLE мс.
+               Поток, начатый над страницей и «доехавший» до окна, не перехватывается. */
+            const WHEEL_IDLE = 200;
+            const WHEEL_THRESHOLD = 30;
+            let wheelLocked = false;
+            let wheelUnlockTimer = null;
+            let wheelAcc = 0;
+            let lastWheelAt = -Infinity;
+            let streamFromPage = false;
+
+            /* capture — срабатывает раньше обработчика окна; начало потока = пауза больше WHEEL_IDLE. */
+            window.addEventListener('wheel', (e) => {
+                if (e.timeStamp - lastWheelAt > WHEEL_IDLE) streamFromPage = !viewport.contains(e.target);
+                lastWheelAt = e.timeStamp;
+            }, { passive: true, capture: true });
+
+            viewport.addEventListener('wheel', (e) => {
+                if (!gestures.matches || e.ctrlKey) return;
+                if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+
+                const holdLock = () => {
+                    window.clearTimeout(wheelUnlockTimer);
+                    wheelUnlockTimer = window.setTimeout(() => {
+                        wheelLocked = false;
+                        wheelAcc = 0;
+                    }, WHEEL_IDLE);
+                };
+
+                if (wheelLocked) {
+                    e.preventDefault();
+                    holdLock();
+                    return;
+                }
+                if (streamFromPage) return;
+
+                const dir = e.deltaY > 0 ? 1 : -1;
+                if (!canGo(dir)) {
+                    wheelAcc = 0;
+                    return;
+                }
+
+                e.preventDefault();
+                if (Math.sign(wheelAcc) !== dir) wheelAcc = 0;
+                wheelAcc += e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? viewport.clientHeight : 1);
+                if (Math.abs(wheelAcc) < WHEEL_THRESHOLD) return;
+
+                setStep(current + dir, true);
+                wheelLocked = true;
+                holdLock();
+            }, { passive: false });
+
+            /* Свайп: направление решается по первому заметному сдвигу. Вертикальный жест, который
+               может сменить шаг, забирается у страницы (preventDefault), шаг меняется один раз
+               при прохождении порога. Горизонтальный жест и жест «за край» отдаются странице. */
+            const SWIPE_SLOP = 6;
+            const SWIPE_THRESHOLD = 40;
+            let touch = null;
+
+            viewport.addEventListener('touchstart', (e) => {
+                touch = (gestures.matches && e.touches.length === 1)
+                    ? { x: e.touches[0].clientX, y: e.touches[0].clientY, mode: null, done: false }
+                    : null;
+            }, { passive: true });
+
+            viewport.addEventListener('touchmove', (e) => {
+                if (!touch || touch.mode === 'page') return;
+                if (e.touches.length !== 1) {
+                    touch = null;
+                    return;
+                }
+
+                const dx = e.touches[0].clientX - touch.x;
+                const dy = e.touches[0].clientY - touch.y;
+
+                if (!touch.mode) {
+                    if (Math.abs(dx) < SWIPE_SLOP && Math.abs(dy) < SWIPE_SLOP) return;
+                    /* Палец вверх (dy < 0) — следующий шаг, как прокрутка страницы вниз. */
+                    const dir = dy < 0 ? 1 : -1;
+                    touch.mode = (Math.abs(dy) > Math.abs(dx) && canGo(dir) && e.cancelable) ? 'steps' : 'page';
+                    if (touch.mode === 'page') return;
+                }
+
+                e.preventDefault();
+                if (!touch.done && Math.abs(dy) >= SWIPE_THRESHOLD) {
+                    touch.done = true;
+                    setStep(current + (dy < 0 ? 1 : -1), true);
+                }
+            }, { passive: false });
+
+            const endTouch = () => { touch = null; };
+            viewport.addEventListener('touchend', endTouch, { passive: true });
+            viewport.addEventListener('touchcancel', endTouch, { passive: true });
+        }
+
         /* Свайп ленты на узких экранах: активной становится ближайшая к левому краю карточка. */
         if (viewport) {
             viewport.addEventListener('scroll', () => {
                 if (!stacked.matches) return;
                 window.clearTimeout(scrollTimer);
                 scrollTimer = window.setTimeout(() => {
-                    const left = viewport.scrollLeft + (parseFloat(getComputedStyle(viewport).paddingLeft) || 0);
-                    let nearest = 0;
-                    cards.forEach((card, i) => {
-                        if (Math.abs(card.offsetLeft - left) < Math.abs(cards[nearest].offsetLeft - left)) nearest = i;
-                    });
+                    /* QA-S4: пока идёт восстановление после resize/смены брейкпоинта, scroll-события —
+                       следствие пересчёта геометрии и scroll-snap, а не жест пользователя. */
+                    if (layoutLocked) return;
+                    /* owner-fixes-3: у maxScroll последняя карточка не всегда может докатиться
+                       вплотную к левому краю (ей некуда отдавать scroll дальше своего конца) —
+                       nearest-по-offsetLeft тогда ошибочно выбирал предпоследнюю, хотя последняя
+                       карточка полностью видна у правого края. На settle у фактического конца
+                       скролла активным всегда становится последний шаг, без геометрического поиска. */
+                    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+                    let nearest;
+                    if (viewport.scrollLeft >= maxScroll - 1) {
+                        nearest = cards.length - 1;
+                    } else {
+                        const left = viewport.scrollLeft + (parseFloat(getComputedStyle(viewport).paddingLeft) || 0);
+                        nearest = 0;
+                        cards.forEach((card, i) => {
+                            if (Math.abs(card.offsetLeft - left) < Math.abs(cards[nearest].offsetLeft - left)) nearest = i;
+                        });
+                    }
                     if (nearest !== current) {
                         current = nearest;
                         buttons.forEach((btn, i) => {
@@ -4627,9 +4755,32 @@ function initKycPage() {
             }, { passive: true });
         }
 
-        window.addEventListener('resize', () => layout(false));
-        wide.addEventListener('change', () => layout(false));
-        stacked.addEventListener('change', () => layout(false));
+        /* QA-S4: синхронный layout() в resize/matchMedia-change запускается РАНЬШЕ, чем контейнер
+           ленты стал scroll-контейнером (после overflow visible/hidden → auto scrollWidth ещё ==
+           clientWidth, scrollTo зажимается в 0), а через ~200 мс UA пересчитывает scroll-snap и
+           возвращает ленту к 1-й карточке — 80 мс settle-таймер принимал это за выбор шага
+           (KYC сбрасывался на Step 1, Identity оставался с aria=4 при видимой карточке 1).
+           Поэтому после смены геометрии: scroll-события не меняют current на время блокировки,
+           позицию применяем повторно на следующих кадрах и финально после блокировки. */
+        function relayout() {
+            layout(false);
+            layoutLocked = true;
+            window.clearTimeout(layoutLockTimer);
+            let frames = 0;
+            const reapply = () => {
+                if (stacked.matches) layout(false);
+                if (++frames < 4) window.requestAnimationFrame(reapply);
+            };
+            window.requestAnimationFrame(reapply);
+            layoutLockTimer = window.setTimeout(() => {
+                layoutLocked = false;
+                layout(false);
+            }, 400);
+        }
+
+        window.addEventListener('resize', relayout);
+        wide.addEventListener('change', relayout);
+        stacked.addEventListener('change', relayout);
         window.addEventListener('load', () => layout(false));
         setStep(0, false);
     }
@@ -4732,6 +4883,74 @@ function initKycPage() {
     }
 }
 
+/**
+ * Страница /identity-verification/: Coverage — tablist из трёх вкладок (Documents/Regions/
+ * Southeast Asia), один текстовый tabpanel (data-idv-states, JSON из inc/identity-verification-data.php)
+ * и справа — переключение целиком видимого визуального блока (не только текст, в отличие от
+ * initKycPage(), поэтому отдельный контроллер, не его копия).
+ */
+/**
+ * Coverage (identity-verification): текст всех 3 состояний уже лежит в разметке — по одному
+ * tabpanel на вкладку (I-08), initCoverage() только переключает hidden/is-active/aria, ничего
+ * не подставляет через textContent. Справа — тот же набор [data-coverage-visual] целиком
+ * видимым/скрытым блоком, т.к. визуал (стена документов / карта / SEA-карта) меняется целиком.
+ */
+function initCoverage() {
+    const root = document.querySelector('[data-idv-coverage]');
+    if (!root) return;
+
+    const tabs = Array.from(root.querySelectorAll('.idv-coverage__tab'));
+    const panels = Array.from(root.querySelectorAll('[data-coverage-panel]'));
+    const visuals = Array.from(root.querySelectorAll('[data-coverage-visual]'));
+    if (!tabs.length || !panels.length) return;
+
+    function activate(index, focus) {
+        tabs.forEach((tab, i) => {
+            const on = i === index;
+            tab.classList.toggle('is-active', on);
+            tab.setAttribute('aria-selected', on ? 'true' : 'false');
+            tab.tabIndex = on ? 0 : -1;
+        });
+        if (focus) tabs[index].focus();
+
+        const key = tabs[index].dataset.coverage;
+
+        panels.forEach((p) => {
+            const on = p.dataset.coveragePanel === key;
+            p.classList.toggle('is-active', on);
+            p.hidden = !on;
+        });
+
+        visuals.forEach((visual) => {
+            const on = visual.dataset.coverageVisual === key;
+            visual.classList.toggle('is-active', on);
+            visual.hidden = !on;
+        });
+    }
+
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => activate(i, false));
+        tab.addEventListener('keydown', (e) => {
+            let target = null;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') target = (i + 1) % tabs.length;
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') target = (i - 1 + tabs.length) % tabs.length;
+            else if (e.key === 'Home') target = 0;
+            else if (e.key === 'End') target = tabs.length - 1;
+            if (target === null) return;
+            e.preventDefault();
+            activate(target, true);
+        });
+    });
+
+    /*
+     * V2-07: без JS все панели/визуалы должны оставаться читаемыми (PHP их не скрывает).
+     * Схлопывание до одной активной панели — задача JS: помечаем корень как «готов», и только
+     * тогда CSS ([data-idv-coverage][data-coverage-ready]) включает display:none у неактивных.
+     */
+    activate(0, false);
+    root.setAttribute('data-coverage-ready', '');
+}
+
 
 // ==================== ГЛАВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ====================
 
@@ -4756,6 +4975,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFeaturesBlock();
     initSolutionsWhy();
     initKycPage();
+    initCoverage();
     initFlowSlider();
     initIndustriesSlider();
     initIntegrationSlider();

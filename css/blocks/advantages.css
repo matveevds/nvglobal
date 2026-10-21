@@ -1,0 +1,286 @@
+/* Блок «advantages» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/*
+ * Why us. Макеты: Full HD 2380:23078, Desktop 291:7937, Tablet 2376:16906.
+ * Три колонки: карточки, снимки экранов приложения, карточки. Боковые
+ * колонки тянутся, центр — фиксированной ширины из макета и по центру ряда.
+ *
+ * Старые правила `.advantages__row*`, `.advantages__col-1/-2`,
+ * `.advantage__item-icon`, `.advantage__item--image-hover`,
+ * `.advantage__item--fill-image` оставлены ниже: их используют запасные
+ * шаблоны `index.php` и `main-page-video-autoplay.php`.
+ */
+.advantages {
+    position: relative;
+    z-index: 2;
+}
+
+.advantages__content {
+    gap: 24px;
+}
+
+.advantages__content .section__title-block {
+    max-width: none;
+}
+
+.advantages__layout {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.advantages__col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.advantage__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    backdrop-filter: blur(10px);
+}
+
+.advantage__item-title {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.advantage__item-description {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* Ширина снимков из макета: Full HD 360.74, Desktop 433.41. */
+.advantages__image {
+    flex: 0 0 360.74px;
+    width: 360.74px;
+}
+
+.advantages__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ——— ниже правила старой вёрстки: нужны index.php и main-page-video-autoplay.php ——— */
+.advantages__list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.advantages__row {
+    display: flex;
+    gap: 12px;
+}
+
+.advantages__row-3 .advantage__item {
+    width: calc(33.33% - 8px);
+}
+
+.advantage__item-description span {
+    font-weight: 700;
+}
+
+.advantage__item--fill-image {
+    padding: 0;
+}
+
+.advantage__item--fill-image img {
+    border-radius: 24px;
+    width: 100%;
+}
+
+.advantages__row-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.advantages__row-2:has(.advantage__item--image-hover) {
+    flex-direction: row;
+}
+
+.advantages__row-2 .advantage__item {
+    width: 100%;
+}
+
+.advantages__row-2 .advantage__item.advantage__item--image-hover {
+    width: calc(50% - 8px);
+}
+
+.advantage__item--image-hover {
+    position: relative;
+    padding-right: 300px;
+}
+
+.advantage__item--image-hover img {
+    position: absolute;
+    right: 40px;
+    bottom: -40px;
+    transition: all ease-in-out 0.3s;
+}
+
+.advantages__col-1 .advantage__item--image-hover {
+    padding-right: 88px;
+}
+
+.advantages__row-2-1 {
+    display: flex;
+    gap: 12px;
+}
+
+.advantages__col-2 {
+    width: calc(33.33% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.advantages__col-1 {
+    width: calc(33.33% - 6px);
+}
+
+.advantages__col-1 .advantages__row {
+    height: 100%;
+}
+
+.advantage__item-icon {
+    opacity: 0;
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    transition: all ease-in-out 0.3s;
+    transform: translateX(-64px);
+    line-height: 0;
+}
+
+.advantage__item:hover .advantage__item-icon {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.advantage__item--image-hover:hover img {
+    transform: translateY(-40px);
+}
+
+/*
+ * Ховер старых карточек. Ограничен `.advantages__list`: этого контейнера
+ * в новой вёрстке нет, поэтому на главную правила не попадают.
+ */
+.advantages__list .advantage__item-title {
+    opacity: 0.5;
+    transition: all ease-in-out 0.3s;
+}
+
+.advantages__list .advantage__item-description {
+    opacity: 0.3;
+    transition: all ease-in-out 0.3s;
+}
+
+.advantages__list .advantage__item:hover {
+    background:
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px),
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px),
+        radial-gradient(178.48% 141.54% at 100.17% 0%, rgba(249, 170, 102, 0.30) 0%, rgba(33, 33, 33, 0.00) 50.21%), #212121;
+    background-size: 16px 16px, 16px 16px, 100% 100%, auto;
+    background-position: 0 0, 8px 8px, 0 0, 0 0;
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--Stroke-Orange, #F9AA66);
+}
+
+.advantages__list .advantage__item--fill-image:hover {
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+}
+
+.advantages__list .advantage__item:hover .advantage__item-title,
+.advantages__list .advantage__item:hover .advantage__item-description {
+    opacity: 1;
+    transform: translateX(64px);
+}
+
+@media (max-width: 1599.98px) {
+/* Desktop 291:7937: снимки шире. */
+    .advantages__image {
+        flex-basis: 433.41px;
+        width: 433.41px;
+    }
+}
+
+@media (max-width: 991.98px) {
+/*
+ * Tablet 2376:16906: карточки в две колонки над снимками.
+ * Отступ от заголовка до контента здесь 48 — так в макете.
+ */
+    .advantages__content {
+        gap: 48px;
+    }
+
+    /*
+     * В макете карточки идут построчно: 1-2, 3-4, 5-6, а не по колонкам.
+     * `display: contents` у колонок отдаёт все шесть карточек общей сетке,
+     * и порядок получается ровно как в макете без правок разметки.
+     */
+    .advantages__layout {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: start;
+        gap: 16px;
+    }
+
+    .advantages__col {
+        display: contents;
+    }
+
+    /* Снимки в макете идут после всех шести карточек, в разметке — между колонками. */
+    .advantages__image {
+        order: 1;
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 100%;
+        max-width: 433.41px;
+        margin-top: 32px;
+    }
+
+    .advantage__item {
+        padding: 16px;
+    }
+
+    .advantage__item-title {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .advantages__layout {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .advantages__image {
+        grid-column: 1;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .advantage__item-description {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+}

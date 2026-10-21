@@ -1,0 +1,447 @@
+/* Блок «doc» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/* Макет Figma 2363:32425. Слева колонка 440, справа две карточки и блок поддержки. */
+.doc__wrapper {
+    display: flex;
+    align-items: stretch;
+    gap: 48px;
+    width: 100%;
+}
+
+/* Full HD 2380:23730 — колонка 503 и кнопки в ряд; Desktop 2363:32426 — 440 и столбиком. */
+.doc__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    width: 503px;
+    flex-shrink: 0;
+    padding-right: 0;
+}
+
+.doc__info-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+.doc__info-head {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.doc__title br {
+    display: inline;
+}
+
+.doc__title {
+    margin: 0;
+}
+
+/* Full HD 2380:23735 — текстовый блок уже колонки: 437 при колонке 503. */
+.doc__description {
+    max-width: 437px;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+}
+
+.doc__info-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.doc__lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+}
+
+.doc__actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.doc__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.doc__cards {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+
+.doc__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+    flex: 1 1 0;
+    /*
+     * Нижний предел — доля ряда, а не фиксированные 340px: на 1200–1230
+     * вторая карточка упиралась в минимум и вылезала за контейнер.
+     */
+    min-width: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.doc__card-icon {
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.doc__card-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.doc__card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 32px;
+    width: 100%;
+}
+
+.doc__card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+}
+
+.doc__card-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.doc__card-description {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* Блок поддержки на оранжевом градиенте */
+.doc__support {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 48px;
+    width: 100%;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    background: linear-gradient(171deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+}
+
+.doc__support-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.doc__support-title {
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.doc__support-description {
+    margin: 0;
+    color: var(--nv-constant-85);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+/*
+ * Кнопки секции. `.btn` и его модификаторы — общие классы, поэтому
+ * оформление ограничено секцией.
+ */
+.doc .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 7px 7px 15px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+/* Иконка в разметке уже идёт первой — меняем только поля. */
+.doc .btn--icon-first {
+    padding: 8px 16px 8px 8px;
+}
+
+.doc .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.doc .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.doc .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.doc .btn--primary {
+    background: var(--nv-gradient);
+}
+
+.doc .btn--primary .btn__text,
+.doc .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.doc .btn--gray {
+    background: var(--nv-surface-2);
+}
+
+.doc .btn--gray .btn__text,
+.doc .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.doc .btn--dark {
+    border-color: transparent;
+    background: var(--nv-object-1);
+}
+
+.doc .btn--dark .btn__text,
+.doc .btn--dark .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.doc .btn--primary:hover,
+.doc .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.doc .btn--gray:hover,
+.doc .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.doc .btn--dark:hover,
+.doc .btn--dark:focus-visible {
+    background: #000;
+}
+
+.doc .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * `.btn--black` — общий модификатор кнопки, используется на /solutions/
+ * и в секции контактов главной. Исторически лежал в этой секции; восстановлен
+ * без изменений (BACKLOG R-15).
+ */
+.btn--black {
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Black, #212121);
+}
+
+.btn--black span {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.btn--black:hover {
+    background: var(--Island-Black, #212121);
+}
+
+.btn--black:hover span {
+    color: #F9AA66;
+}
+
+.btn--black:hover svg path{
+    fill: #F9AA66;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2363:32426: колонка 440 с полем 20, кнопки столбиком. */
+    .doc__info {
+        width: 440px;
+        padding-right: 20px;
+    }
+
+    .doc__title br {
+        display: none;
+    }
+
+    .doc__description {
+        max-width: none;
+    }
+
+    .doc__actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .doc__wrapper {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .doc__info {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .doc__info-top,
+    .doc__info {
+        gap: 24px;
+    }
+
+    .doc__cards {
+        flex-wrap: wrap;
+    }
+
+    .doc__card {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /*
+     * Tablet 2376:17554: заголовок, затем две карточки в ряд, полоса поддержки
+     * и только внизу блок призыва с кнопками. `.doc__info` переведён
+     * в `display: contents`, порядок задаётся `order` — разметка не дублируется.
+     */
+    .doc__wrapper {
+        gap: 48px;
+    }
+
+    .doc__info {
+        display: contents;
+    }
+
+    .doc__info-top {
+        order: 1;
+        gap: 48px;
+    }
+
+    .doc__content {
+        order: 2;
+    }
+
+    .doc__info-bottom {
+        order: 3;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .doc__lead {
+        max-width: 414px;
+    }
+
+    .doc__actions {
+        align-items: flex-end;
+        flex-shrink: 0;
+    }
+
+    .doc__cards {
+        flex-wrap: nowrap;
+    }
+
+    .doc__card {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    /* В планшетном макете поле полосы поддержки 16, а не 24. */
+    .doc__support {
+        padding: 16px;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
+    .btn--black span {
+    font-size: 16px;
+    }
+
+    .doc__support {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    /* восстановлено из прежней версии секции (BACKLOG R-15) */
+    .btn--black svg {
+    width: 20px;
+    height: 20px;
+    }
+
+    .doc__card,
+    .doc__support {
+        padding: 16px;
+    }
+
+    .doc__actions {
+        align-items: stretch;
+    }
+
+    .doc .btn {
+        max-width: none;
+        justify-content: space-between;
+    }
+
+    .doc .btn--icon-first {
+        justify-content: flex-start;
+        gap: 12px;
+    }
+}

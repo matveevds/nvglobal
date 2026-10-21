@@ -1,0 +1,2317 @@
+/* Стили, уникальные для страницы «price-matrix». Перенесены из css/styles.css без изменений. */
+
+/*
+ * Калькулятор, макет 1680:28895. Поля секции 64/32, между заголовком
+ * и содержимым 48. Колонки 5:2 с зазором 16 — как во фрейме
+ * (971.43 и 388.57 при контенте 1376).
+ */
+.calculator {
+    position: relative;
+    z-index: 2;
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+.calculator__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.calculator .section__title-block {
+    gap: 16px;
+    max-width: 900px;
+    margin-bottom: 0;
+}
+
+.calculator__content {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    min-width: 0;
+}
+
+.calculator__spoilers {
+    flex: 5 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: auto;
+    min-width: 0;
+}
+
+/* 1682:34648 — карточка на фоне страницы: только обводка и радиус 24. */
+.calculator__spoiler {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: transparent;
+    backdrop-filter: blur(10px);
+}
+
+.calculator__spoiler--open {
+    gap: 32px;
+}
+
+/*
+ * В макете раскрытая карточка тянется на всю высоту колонки и разводит
+ * шапку и содержимое по краям (зазор получается 69). Высота здесь зависит
+ * от контента, поэтому берём шаг внутренней сетки — 40.
+ */
+.calculator__spoiler--base.calculator__spoiler--open {
+    gap: 40px;
+}
+
+.calculator__spoiler-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.calculator__spoiler-header:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* 1682:34653 — Title/H4 24/36 основным цветом макета. */
+.calculator__spoiler-title {
+    display: flex;
+    flex-wrap: wrap;
+    /* На 320 длинный заголовок не должен выталкивать кнопку за край карточки. */
+    min-width: 0;
+    gap: 16px;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.calculator__spoiler-title span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 3px 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-2);
+    text-align: center;
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    line-height: 1;
+}
+
+/* 1682:34667 — кнопка 32x32, поле 6 с обводкой внутрь, иконка 20. */
+.calculator__spoiler-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    transition: transform 0.3s ease, background-color 0.2s ease;
+}
+
+.calculator__spoiler-icon path {
+    fill: currentColor;
+}
+
+.calculator__spoiler-header:hover .calculator__spoiler-icon {
+    background: var(--nv-surface-3);
+}
+
+.calculator__spoiler--open .calculator__spoiler-icon {
+    transform: scaleY(-1);
+}
+
+.calculator__spoiler-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.calculator__spoiler--base .calculator__spoiler-content {
+    gap: 0;
+}
+
+/* 1683:18830 — между блоками 40 + разделитель + 40. */
+.calculator__spoiler--base .calculator__spoiler-item + .calculator__spoiler-item {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--nv-surface-3);
+}
+
+.calculator__spoiler-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Title/H5 20/28. */
+.calculator__spoiler-item-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+/* Body text/Regular Regular 16/24. */
+.calculator__spoiler-item-subtitle,
+.calculator__spoiler-content-text {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.calculator__spoiler-item-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.calculator__spoiler-item-title-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.calculator__spoiler-item-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.calculator__spoiler-item-top .calculator__spoiler-item-title {
+    width: 100%;
+}
+
+.calculator__spoiler-item-top .calculator__spoiler-item-subtitle {
+    max-width: 386px;
+}
+
+/* 1682:34756 — поле 220x40, поля 6/8 с обводкой внутрь. */
+.calculator__spoiler-item-title-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 220px;
+    height: 40px;
+    padding: 5px 7px 5px 5px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: transparent;
+}
+
+.calculator__spoiler-item--range .calculator__spoiler-item-actions {
+    margin-top: 0;
+}
+
+/* 1682:34681 / 1682:34690 — панель вкладок: поле 4, радиус 12, зазор 8. */
+#calculator-package,
+#calculator-document-type {
+    display: flex;
+    align-items: stretch;
+    align-self: stretch;
+    gap: 8px;
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--nv-surface-3);
+}
+
+/*
+ * Название пакета и пояснение в макете идут одной строкой через тире.
+ * Разметка оставлена прежней (два span), тире добавляет CSS.
+ */
+#calculator-package .calculator__spoiler-btn {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px 12px;
+    min-height: 32px;
+    line-height: 150%;
+}
+
+.calculator__spoiler-btn-note {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.calculator__spoiler-btn-note::before {
+    content: '\2014\00a0';
+}
+
+/* I1682:34681;143:1862 — неактивная вкладка сливается с панелью. */
+.calculator__spoiler-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 0;
+    gap: 8px;
+    min-width: 0;
+    padding: 4px 24px;
+    /* Прозрачная рамка держит высоту: у активной кнопки рамка видимая */
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    text-align: center;
+    font-family: Satoshi, sans-serif;
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.calculator__spoiler-btn:hover {
+    background: var(--nv-surface-4);
+    color: var(--nv-object-1);
+}
+
+.calculator__spoiler-btn:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+}
+
+.calculator__spoiler-btn.small {
+    min-height: 32px;
+    height: auto;
+}
+
+/* I1682:34690;143:1830 — активная вкладка: градиент и обводка Stroke 2. */
+.calculator__spoiler-btn.active,
+.calculator__spoiler-btn.active:hover {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    font-weight: 400;
+}
+
+/* 1682:34709 — дорожка 8, подпись над бегунком, поля 24. */
+.calculator-volume-range-wrap {
+    position: relative;
+    width: 100%;
+    padding: 32px 24px 0;
+}
+
+.calculator-volume-range-value {
+    position: absolute;
+    top: 4px;
+    left: var(--range-progress, 0%);
+    transform: translateX(calc(-1 * var(--range-value-shift, 50%)));
+    color: var(--nv-primary);
+    text-align: center;
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 1682:34761 — Body text/Medium Medium 18/28. */
+.calculator-volume-number {
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: unset;
+    color: var(--nv-object-1);
+    text-align: center;
+    font-family: Satoshi, sans-serif;
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+    -moz-appearance: textfield;
+}
+
+.calculator-volume-number:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.calculator-volume-number::-webkit-outer-spin-button,
+.calculator-volume-number::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+/* 1682:34762 / 1682:34774 — кнопки 28x28, поле 2 с обводкой внутрь, иконка 20. */
+.calculator-volume-step {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 1px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--nv-object-1);
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.calculator-volume-step:hover {
+    background: var(--nv-surface-3);
+}
+
+.calculator-volume-step:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+}
+
+.calculator-volume-step svg {
+    flex-shrink: 0;
+}
+
+.calculator-volume-step path {
+    fill: currentColor;
+}
+
+.calculator-volume-range {
+    display: block;
+    width: 100%;
+    height: 16px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.calculator-volume-range:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 4px;
+    border-radius: 99px;
+}
+
+/* 1682:34715 — подписи 14/20 третьим уровнем текста, зазор от дорожки 11. */
+.calculator-volume-range-limits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 11px;
+}
+
+.calculator-volume-range-limits span {
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+.calculator-volume-range-limits span:nth-child(2) {
+    text-align: center;
+}
+
+.calculator-volume-range-limits span:last-child {
+    text-align: right;
+}
+
+.calculator-volume-range::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 99px;
+    background: linear-gradient(
+        to right,
+        var(--nv-primary) 0%,
+        var(--nv-primary) var(--range-progress, 0%),
+        var(--nv-surface-4) var(--range-progress, 0%),
+        var(--nv-surface-4) 100%
+    );
+}
+
+/* 1682:34714 — бегунок 16. */
+.calculator-volume-range::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--nv-primary);
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.calculator-volume-range::-moz-range-track {
+    height: 8px;
+    border-radius: 99px;
+    background: var(--nv-surface-4);
+}
+
+.calculator-volume-range::-moz-range-progress {
+    height: 8px;
+    border-radius: 99px;
+    background: var(--nv-primary);
+}
+
+.calculator-volume-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: var(--nv-primary);
+}
+
+.calculator__spoiler-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+}
+
+/*
+ * Раскрытый блок дополнительных модулей отдельного фрейма в макете не имеет
+ * (1682:34656 показан свёрнутым). Оформление собрано из тех же примитивов,
+ * что и базовый блок: Title/H5 на секцию, Body text/Regular на строки.
+ */
+.calculator__spoiler-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.calculator__spoiler-section--international {
+    padding-top: 32px;
+    border-top: 1px solid var(--nv-surface-3);
+}
+
+.calculator__spoiler-columns {
+    display: flex;
+    gap: 36px;
+}
+
+.calculator__spoiler-columns .calculator__spoiler-content-col {
+    width: calc(50% - 18px);
+}
+
+.calculator__spoiler-content-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.calculator__spoiler-content-text {
+    width: 100%;
+}
+
+.calculator__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.calculator__checkbox input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calculator__checkbox-mark {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.calculator__checkbox-mark::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.calculator__checkbox input:checked + .calculator__checkbox-mark {
+    border-color: transparent;
+    background: var(--nv-gradient);
+}
+
+.calculator__checkbox input:focus-visible + .calculator__checkbox-mark {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 2px;
+}
+
+.calculator__checkbox input:checked + .calculator__checkbox-mark::before {
+    width: 16px;
+    height: 16px;
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.25 11.8751C6.07934 11.8751 5.90867 11.8098 5.77867 11.6798L2.862 8.7632C2.60134 8.50253 2.60134 8.08113 2.862 7.82053C3.12267 7.55987 3.544 7.55987 3.80467 7.82053L6.25 10.2659L12.1953 4.3205C12.456 4.05983 12.8773 4.05983 13.138 4.3205C13.3987 4.58117 13.3987 5.0025 13.138 5.26317L6.72133 11.6798C6.59134 11.8098 6.42067 11.8751 6.25 11.8751Z' fill='%23F8F8F8'/%3E%3C/svg%3E");
+}
+
+.calculator__checkbox--disabled {
+    cursor: not-allowed;
+}
+
+.calculator__checkbox--disabled .calculator__checkbox-mark {
+    opacity: 0.5;
+    background: var(--nv-surface-3);
+}
+
+.calculator__checkbox--disabled .calculator__checkbox-text {
+    color: var(--nv-object-3);
+}
+
+.calculator__checkbox--disabled .calculator__checkbox-text .calculator__checkbox-included-text {
+    color: var(--nv-object-2);
+}
+
+.calculator__checkbox-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.calculator__checkbox-included-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+.calculator__checkbox-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.calculator__checkbox-info {
+    position: relative;
+    display: flex;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    color: var(--nv-object-3);
+    cursor: help;
+}
+
+.calculator__checkbox-info-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.calculator__checkbox-info-icon path {
+    fill: currentColor;
+    fill-opacity: 1;
+    transition: fill 0.2s ease;
+}
+
+.calculator__checkbox-tooltip {
+    position: absolute;
+    left: unset;
+    right: calc(100% + 20px);
+    bottom: -28px;
+    z-index: 30;
+    width: 340px;
+    padding: 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-1);
+    box-shadow: 0 12px 30px rgba(33, 33, 33, 0.12);
+    color: var(--nv-object-2);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 145%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.calculator__checkbox-tooltip strong {
+    color: var(--nv-object-1);
+    font-weight: 700;
+}
+
+.calculator__checkbox-info:hover .calculator__checkbox-tooltip,
+.calculator__checkbox-info:focus .calculator__checkbox-tooltip,
+.calculator__checkbox-info:focus-visible .calculator__checkbox-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.calculator__checkbox-info:hover,
+.calculator__checkbox-info:focus,
+.calculator__checkbox-info:focus-visible {
+    color: var(--nv-primary);
+}
+
+.calculator__spoiler-content-botom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 11px 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+}
+
+.calculator__spoiler-content-botom-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.calculator__spoiler-content-botom-sum {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+    white-space: nowrap;
+}
+
+.calculator__spoiler-content-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.calculator__spoiler-content-actions:last-of-type .calculator__spoiler-content-col {
+    width: 100%;
+}
+
+.calculator__spoiler-content-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.calculator__spoiler-content-header .calculator__spoiler-btn {
+    width: fit-content;
+    flex: 0 0 auto;
+    padding: 4px 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 100px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.calculator__spoiler-content-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.calculator__spoiler-content-subtitle p {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.calculator__spoiler-content-subtitle span {
+    width: fit-content;
+    padding: 1px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-primary);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 500;
+    line-height: 142.857%;
+    white-space: nowrap;
+}
+
+/* 1680:28909 — карточка итога: Island/1 level, обводка Stroke 2, радиус 24. */
+.calculator__result {
+    flex: 2 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-2);
+}
+
+.calculator__result-default {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    height: 100%;
+}
+
+.calculator__result-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.calculator__result-tarif {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 1682:34787 — Body text/Regular Regular 16/24 основным цветом. */
+.calculator__result-text {
+    color: var(--nv-primary);
+    font-family: Satoshi, sans-serif;
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* 1682:34788 — Title/H3 32/48. */
+.calculator__result-subtitle {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+    overflow-wrap: anywhere;
+}
+
+.calculator__result-package,
+.calculator__result-paket {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculator__result-paket {
+    gap: 12px;
+}
+
+/* 1682:34811 — Title/H6 18/24 третьим уровнем текста. */
+.calculator__result-package-description {
+    color: var(--nv-object-3);
+    font-family: Satoshi, sans-serif;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.calculator__result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 1682:34791 / 1682:34792 — подпись 16/24, сумма Title/H5 20/28. */
+.calculator__result-name {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.calculator__result-value {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+    white-space: nowrap;
+}
+
+.calculator__result-line {
+    display: none;
+}
+
+/* 1682:34819 — строка между двумя разделителями, поля 12. */
+.calculator__result-sum {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    padding: 12px 0;
+    border-top: 1px solid var(--nv-surface-4);
+    border-bottom: 1px solid var(--nv-surface-4);
+}
+
+.calculator__result-sum-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.calculator__result-sum-value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+    white-space: nowrap;
+}
+
+/* 1682:34804 — оранжевая плашка, радиус 24, поля 24/8. */
+.calculator__result-itog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 8px;
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    text-align: center;
+}
+
+.calculator__result-itog-subtitle {
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+/* Title/H2 40/52. */
+.calculator__result-itog-summa {
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.calculator__result-itog-info {
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.calculator__result-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*
+ * 2546:20453 — кнопка «Get Package». `.btn-hero` общий и на тёмных страницах
+ * остаётся прежним: светлый вид включён для этого шаблона рядом с `body.home`
+ * (секция HERO выше), здесь добавлена только обводка из макета.
+ */
+body.page-template-page-price-matrix .calculator .btn-hero,
+body.single-post .calculator .btn-hero {
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+}
+
+body.page-template-page-price-matrix .btn-hero:hover,
+body.single-post .btn-hero:hover,
+body.page-template-page-price-matrix .btn-hero:focus-visible,
+body.single-post .btn-hero:focus-visible {
+    background: var(--nv-primary);
+}
+
+body.page-template-page-price-matrix .btn-hero:focus-visible,
+body.single-post .btn-hero:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Состояния «меньше минимума» и «больше максимума»: карточка с маскотом. */
+.calculator__result-request {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding-top: 150px;
+}
+
+.calculator__result-request-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 72px 20px 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: var(--nv-surface-1);
+    text-align: center;
+}
+
+.calculator__result-request-image {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 42px);
+    width: min(100%, 226px);
+    transform: translateX(-50%);
+}
+
+.calculator__result-request-image picture,
+.calculator__result-request-maskot {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.calculator__result-request-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.calculator__result-request-text {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    line-height: 150%;
+}
+
+.calculator__result-request .btn-hero {
+    margin-top: 8px;
+}
+
+.calculator--below-min-volume .calculator__result-default {
+    display: none;
+}
+
+.calculator--below-min-volume .calculator__result-request-text {
+    display: none;
+}
+
+.calculator--above-max-volume .calculator__result-default {
+    display: none;
+}
+
+.calculator--below-min-volume .calculator__result-request,
+.calculator--above-max-volume .calculator__result-request {
+    display: flex;
+}
+
+/* Пакет LIVENESS проверяет только живость лица и не даёт персональных
+   данных. Поэтому к нему неприменимы ни распознавание документов, ни
+   скрининг по санкционным спискам и базам PEP: последнему нужны ФИО,
+   дата рождения и номер документа, которые извлекает шаг AI-OCR.
+   Прячем выбор типа документа, а вместе с ним и весь спойлер
+   дополнительных модулей — после скрытия обеих его секций он пуст. */
+.calculator--no-documents .calculator__spoiler-item--document-type,
+.calculator--no-documents .calculator__spoiler--additional,
+.calculator--no-documents .calculator__spoiler-section--documents,
+.calculator--no-documents .calculator__result-item--docs,
+.calculator--no-documents .calculator__result-item--aml {
+    display: none;
+}
+
+@media (max-width: 1599.98px) {
+    .calculator__spoiler-columns {
+        gap: 24px;
+    }
+
+    .calculator__spoiler-columns .calculator__spoiler-content-col:first-of-type {
+        width: calc(64% - 12px);
+    }
+
+    .calculator__spoiler-columns .calculator__spoiler-content-col:last-of-type {
+        width: calc(36% - 12px);
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .calculator__spoiler-btn {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /*
+     * Tablet 1687:15577: калькулятор в одну колонку — карточка итога уходит
+     * под спойлеры, поля карточек 16.
+     */
+    .calculator__content {
+        flex-direction: column;
+    }
+
+    .calculator__spoilers,
+    .calculator__result {
+        flex: none;
+        width: 100%;
+    }
+
+    .calculator__spoiler,
+    .calculator__result {
+        padding: 15px;
+    }
+
+    .calculator__result {
+        height: fit-content;
+    }
+
+    .calculator__result-request {
+        min-height: 440px;
+    }
+
+    /*
+     * 2547:22898 — на планшете оранжевая плашка разворачивается в строку:
+     * слева заголовок и кнопка, справа сумма с расшифровкой. Кнопка лежит
+     * в соседнем блоке разметки, поэтому обёртки раскрываются через
+     * `display: contents`, а плашка и кнопка кладутся в одну ячейку сетки
+     * (тот же приём, что у первого экрана на мобильной ширине).
+     */
+    .calculator__result-default {
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 32px;
+    }
+
+    .calculator__result-content {
+        display: contents;
+    }
+
+    /*
+     * Колонку задаём каждому явно: плашка и кнопка стоят в одной строке,
+     * и без этого автораскладка уводила кнопку в неявную вторую колонку.
+     */
+    .calculator__result-tarif  { grid-column: 1; grid-row: 1; }
+
+    .calculator__result-paket  { grid-column: 1; grid-row: 2; }
+
+    .calculator__result-sum    { grid-column: 1; grid-row: 3; }
+
+    .calculator__result-itog {
+        grid-column: 1;
+        grid-row: 4;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        padding: 24px;
+        text-align: left;
+    }
+
+    .calculator__result-itog-subtitle {
+        flex: 0 0 auto;
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
+
+    .calculator__result-itog-summa {
+        order: 3;
+        margin-left: auto;
+        text-align: right;
+    }
+
+    .calculator__result-itog-info {
+        order: 4;
+        flex-basis: 100%;
+        text-align: right;
+    }
+
+    .calculator__result-action {
+        grid-column: 1;
+        grid-row: 4;
+        z-index: 1;
+        align-self: end;
+        justify-self: start;
+        margin: 0 0 24px 24px;
+    }
+
+    /* 2547:22904 — на оранжевой плашке кнопка светлая с тёмной подписью. */
+    body.page-template-page-price-matrix .calculator__result-action .btn-hero,
+    body.single-post .calculator__result-action .btn-hero {
+        border-color: transparent;
+        background: var(--nv-surface-1);
+        color: var(--nv-object-1);
+    }
+
+    body.page-template-page-price-matrix .calculator__result-action .btn-hero .btn__text-hero,
+    body.single-post .calculator__result-action .btn-hero .btn__text-hero {
+        color: var(--nv-object-1);
+    }
+
+    body.page-template-page-price-matrix .calculator__result-action .btn-hero:hover,
+    body.single-post .calculator__result-action .btn-hero:hover,
+    body.page-template-page-price-matrix .calculator__result-action .btn-hero:focus-visible,
+    body.single-post .calculator__result-action .btn-hero:focus-visible {
+        background: var(--nv-surface-3);
+    }
+
+    body.page-template-page-price-matrix .calculator__result-action .btn-hero:focus-visible,
+    body.single-post .calculator__result-action .btn-hero:focus-visible {
+        outline-color: var(--nv-constant-1);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .calculator__spoiler-columns {
+        gap: 16px;
+    }
+
+    .calculator__spoiler-columns .calculator__spoiler-content-col:first-of-type {
+        width: calc(65% - 8px);
+    }
+
+    .calculator__spoiler-columns .calculator__spoiler-content-col:last-of-type {
+        width: calc(35% - 8px);
+    }
+
+    .calculator__spoiler-content-botom {
+        padding: 11px 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /*
+     * Mobile 1687:24450: поля карточек 12, вкладки в столбик, поле ввода
+     * объёма на всю ширину, дорожка без боковых полей.
+     */
+    .calculator {
+        padding: 48px 0;
+    }
+
+    .calculator__wrapper {
+        gap: 32px;
+    }
+
+    .calculator__spoiler,
+    .calculator__result {
+        padding: 11px;
+        border-radius: 16px;
+    }
+
+    .calculator__spoiler.calculator__spoiler--open,
+    .calculator__spoiler--base.calculator__spoiler--open {
+        gap: 32px;
+    }
+
+    .calculator__spoiler-title {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .calculator__spoiler--base .calculator__spoiler-item + .calculator__spoiler-item {
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+
+    .calculator__spoiler-columns {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .calculator__spoiler-columns .calculator__spoiler-content-col,
+    .calculator__spoiler-columns .calculator__spoiler-content-col:first-of-type,
+    .calculator__spoiler-columns .calculator__spoiler-content-col:last-of-type {
+        width: 100%;
+    }
+
+    .calculator__spoiler-content-subtitle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .calculator__spoiler-item {
+        gap: 12px;
+    }
+
+    .calculator__spoiler-item-title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    /* 1687:25382 / 1687:25387 — панель вкладок в столбик. */
+    .calculator__spoiler-item-actions,
+    #calculator-package,
+    #calculator-document-type {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .calculator__spoiler-btn,
+    #calculator-package .calculator__spoiler-btn {
+        width: 100%;
+        flex: 0 0 auto;
+        min-height: 28px;
+        padding: 4px 12px;
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+
+    /* 1687:24472 — поле ввода объёма на всю ширину карточки. */
+    .calculator__spoiler-item-top {
+        gap: 12px;
+    }
+
+    .calculator__spoiler-item-top .calculator__spoiler-item-subtitle {
+        max-width: none;
+    }
+
+    .calculator__spoiler-item-title-input {
+        width: 100%;
+        height: 36px;
+    }
+
+    .calculator-volume-range-wrap {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .calculator__checkbox.calculator__checkbox--disabled {
+        align-items: flex-start;
+    }
+
+    .calculator__checkbox-tooltip {
+        right: auto;
+        left: -142px;
+        bottom: calc(100% + 10px);
+        width: min(340px, calc(100vw - 48px));
+    }
+
+    /* 1687:24518 — на мобильной плашка снова вертикальная, кнопка под карточкой. */
+    .calculator__result-default {
+        display: flex;
+        gap: 24px;
+    }
+
+    .calculator__result-content {
+        display: flex;
+        gap: 24px;
+    }
+
+    .calculator__result-itog {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 12px 16px;
+        text-align: left;
+    }
+
+    .calculator__result-itog-subtitle {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .calculator__result-itog-summa {
+        order: 0;
+        margin-left: 0;
+        margin-top: 8px;
+        text-align: left;
+    }
+
+    .calculator__result-itog-info {
+        order: 0;
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+        text-align: left;
+    }
+
+    .calculator__result-action {
+        margin: 0;
+        justify-self: auto;
+        align-self: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .calculator .section__title {
+        font-size: 32px;
+        line-height: 137.5%;
+        overflow-wrap: anywhere;
+    }
+
+    .calculator .section__description {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .calculator__spoiler-title {
+        position: relative;
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .calculator__spoiler-title span {
+        position: absolute;
+        left: 0;
+        bottom: -32px;
+        display: none;
+    }
+
+    .calculator__spoiler.calculator__spoiler--open .calculator__spoiler-title span {
+        display: flex;
+    }
+
+    .calculator__spoiler-content {
+        gap: 24px;
+    }
+
+    .calculator__spoiler-section {
+        gap: 16px;
+    }
+
+    .calculator__spoiler-section--international {
+        padding-top: 20px;
+    }
+
+    .calculator__checkbox-row {
+        width: 100%;
+    }
+
+    .calculator__spoiler-content-botom {
+        padding: 11px;
+    }
+
+    .calculator__spoiler-content-botom-title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .calculator__spoiler-content-botom-sum {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .calculator__result-request {
+        min-height: 390px;
+        padding-top: 130px;
+    }
+
+    .calculator__result-request-card {
+        padding: 64px 12px 20px;
+        border-radius: 16px;
+    }
+
+    .calculator__result-request-image {
+        width: 190px;
+    }
+
+    .calculator__result-request-title {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .calculator__result-request-text {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+
+    .calculator__result-itog-summa {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .calculator__result-subtitle {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
+
+    .calculator__result-sum-title {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .calculator__result-sum-value {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
+
+    .calculator__result-name,
+    .calculator__result-text {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+
+    .calculator__result-value {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .calculator__checkbox-text {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/*
+ * Таблица пакетов, макет 1680:27032. Четыре колонки по 332 с зазором 16
+ * (1376 = 332*4 + 16*3), подписи слева, три колонки-карточки справа.
+ *
+ * Колонка в макете — цельная карточка во всю высоту таблицы. Разметка
+ * построчная, поэтому карточка собирается из ячеек: верхняя скругляется
+ * сверху, нижняя снизу, боковые обводки идут через все строки.
+ */
+.packages {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+.packages__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/* 1682:34514 — заголовок по центру полосы. */
+.packages__title-block .section__title {
+    text-align: center;
+}
+
+.packages__table {
+    display: flex;
+    flex-direction: column;
+}
+
+.packages__table--desktop {
+    overflow-x: visible;
+}
+
+.packages__table-mobile,
+.packages__table--mobile {
+    display: none;
+}
+
+.packages__row {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+
+/*
+ * Ширина колонки задаётся явной базой, а не `flex: 1 1 0`: у колонок-карточек
+ * есть поле 8 и обводка, а они прибавляются к нулевой базе сверху — колонка
+ * подписей выходила на 18px уже остальных.
+ */
+.packages__row > .packages__cell {
+    flex: 0 0 calc((100% - 48px) / 4);
+    width: auto;
+}
+
+.packages__row--head .packages__cell--label {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 28px;
+}
+
+/* 1680:31539 — внутренняя карточка шапки: радиус 24, поле 16, зазор 24. */
+.packages__cell-wraper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: var(--nv-radius-card);
+    padding: 16px;
+}
+
+/* 1680:31538 — колонка DOCUMENT: прозрачная, обводка Stroke 2, поле 8. */
+.packages__cell--package {
+    padding: 8px;
+    border: 1px solid var(--nv-surface-4);
+    border-bottom: none;
+    border-top-left-radius: var(--nv-radius-hero);
+    border-top-right-radius: var(--nv-radius-hero);
+    background: transparent;
+}
+
+.packages__cell--package.packages__cell--basic {
+    background: var(--nv-surface-2);
+}
+
+/*
+ * 1680:31550 — колонка ADVANCED залита градиентом. Градиент в макете почти
+ * горизонтальный (95.88°); здесь колонка собрана из отдельных ячеек, поэтому
+ * берём ровно 90° — иначе на стыке строк появились бы ступеньки.
+ */
+.packages__cell--package.packages__cell--advanced {
+    border-color: transparent;
+    background: linear-gradient(90deg, var(--nv-primary) 0%, var(--nv-primary-2) 100%);
+}
+
+.packages__cell--package.packages__cell--document .packages__cell-wraper {
+    background: var(--nv-surface-2);
+}
+
+.packages__cell--package.packages__cell--basic .packages__cell-wraper {
+    background: var(--nv-surface-3);
+}
+
+/* 1680:31551 — на оранжевой колонке подложка шапки — белый 10%. */
+.packages__cell--package.packages__cell--advanced .packages__cell-wraper {
+    background: rgba(248, 248, 248, 0.10);
+}
+
+.packages__cell--empty,
+.packages__cell--value {
+    border-left: 1px solid var(--nv-surface-4);
+    border-right: 1px solid var(--nv-surface-4);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background: transparent;
+}
+
+.packages__cell--empty.packages__cell--basic,
+.packages__cell--value.packages__cell--basic {
+    background: var(--nv-surface-2);
+}
+
+.packages__cell--empty.packages__cell--advanced,
+.packages__cell--value.packages__cell--advanced {
+    border-color: transparent;
+    background: linear-gradient(90deg, var(--nv-primary) 0%, var(--nv-primary-2) 100%);
+}
+
+.packages__cell--service {
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.packages__cell--value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nv-object-1);
+}
+
+.packages__cell--value.packages__cell--advanced {
+    color: var(--nv-constant-1);
+}
+
+.packages__group-title,
+.packages__cell--service,
+.packages__row--head .packages__cell--label,
+.packages__cell.packages__cell--label {
+    min-width: 332px;
+}
+
+.packages__cell--value,
+.packages__cell--empty,
+.packages__row--head .packages__cell--package {
+    min-width: 300px;
+}
+
+.packages__names-price,
+.packages__names-composition {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+/*
+ * 1680:30959 — между группами 32, от названия группы до первой строки 16.
+ * У строк поля 6, поэтому 26 + 6 и 10 + 6.
+ */
+.packages__group-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+    padding-top: 26px;
+    padding-bottom: 10px;
+}
+
+.packages__row:first-of-type .packages__group-title {
+    padding-top: 8px;
+}
+
+/* 1680:31224 — подзаголовок уровня: Body text/Regular Medium 16/24. */
+.packages__subgroup-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+    padding-top: 12px;
+}
+
+.packages__subgroup-title span,
+.packages__mobile-subgroup-title span {
+    color: var(--nv-object-1);
+}
+
+.packages__group-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+}
+
+.packages__group-icon {
+    margin-left: 0;
+    flex-shrink: 0;
+}
+
+/* 1680:30963 — названия услуг: Body text/Regular Regular 16/24. */
+.packages__service-name {
+    position: static;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/*
+ * Иконка подсказки. Раньше подавалась фоном `img/info.svg` — такого файла
+ * в теме нет, и запрос уходил в 404. Теперь это inline-SVG в разметке,
+ * тот же, что у подсказки калькулятора (FRONTEND.md §8).
+ */
+.packages__service-icon {
+    position: relative;
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+    vertical-align: middle;
+    color: var(--nv-object-3);
+    cursor: help;
+}
+
+.packages__service-icon-glyph {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.packages__service-icon-glyph path {
+    fill: currentColor;
+    fill-opacity: 1;
+    transition: fill 0.2s ease;
+}
+
+.packages__service-icon:hover,
+.packages__service-icon:focus-visible {
+    color: var(--nv-primary);
+}
+
+.packages__service-description {
+    position: absolute;
+    left: calc(100% + 32px);
+    bottom: 8px;
+    z-index: 20;
+    display: none;
+    width: 300px;
+    padding: 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px 8px 8px 0;
+    background: var(--nv-surface-1);
+    box-shadow: 0 12px 30px rgba(33, 33, 33, 0.12);
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    line-height: 142.857%;
+}
+
+.packages__service-description::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 24px 24px 0 0;
+    border-color: transparent var(--nv-surface-1) transparent transparent;
+}
+
+.packages__service-description p {
+    margin: 0 0 12px;
+}
+
+.packages__service-description ul {
+    padding-left: 18px;
+}
+
+.packages__service-description li {
+    margin-bottom: 2px;
+}
+
+.packages__service-icon:hover .packages__service-description,
+.packages__service-description:hover {
+    display: block;
+}
+
+/* 1680:31541 — Title/H5 20/28. */
+.packages__column-title {
+    margin-bottom: 12px;
+    color: var(--nv-object-1);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+/* 1680:31542 — Body text/Regular Regular 16/24. */
+.packages__column-subtitle {
+    margin-bottom: 24px;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.packages__column-subtitle span {
+    font-weight: 400;
+}
+
+.packages__cell--advanced .packages__column-title,
+.packages__cell--advanced .packages__column-subtitle {
+    color: var(--nv-constant-1);
+}
+
+/* 1680:31543 — Title/H3 32/48 основным цветом. */
+.packages__column-price {
+    color: var(--nv-primary);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+/* 1680:31556 — на оранжевой колонке «On Request» светлый и того же кегля. */
+.packages__cell--advanced .packages__column-price {
+    padding: 0;
+    color: var(--nv-constant-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+}
+
+/* 1682:31839 — галочка/крестик 24x24, цвет берётся у ячейки. */
+.packages__icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.packages__icon-glyph {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.packages__icon-glyph path {
+    fill: currentColor;
+}
+
+.packages__icon--cross {
+    color: var(--nv-object-3);
+}
+
+.packages__cell--advanced .packages__icon--cross {
+    color: var(--nv-constant-50);
+}
+
+.packages__row:last-of-type .packages__cell--value {
+    border-top: none;
+    border-bottom: 1px solid var(--nv-surface-4);
+    border-bottom-left-radius: var(--nv-radius-hero);
+    border-bottom-right-radius: var(--nv-radius-hero);
+    padding-bottom: 32px;
+    align-items: flex-start;
+}
+
+.packages__row:last-of-type .packages__cell--value.packages__cell--advanced {
+    border-color: transparent;
+}
+
+.packages__row:last-of-type .packages__cell--service {
+    padding-bottom: 32px;
+    align-items: flex-start;
+}
+
+/* 1687:33972 — сноска под таблицей, третий уровень текста. */
+.packages__note {
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    line-height: 150%;
+}
+
+/*
+ * Ширину задаём явно: слайдер — flex-элемент колонки `.packages__wrapper`,
+ * а Swiper считает ширину слайда от контейнера. Без определённой ширины
+ * контейнер и слайд разрешались друг через друга в max-content.
+ */
+.packages__slider {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.packages__slider-wrapper {
+    width: 100%;
+    align-items: stretch;
+}
+
+.packages__slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.packages__slide .packages__cell {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+}
+
+.packages__slide .packages__cell--package {
+    border-bottom: none;
+}
+
+/* 1687:26537 — список услуг пакета внутри той же карточки-колонки. */
+.packages__slide-services {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 16px 24px;
+    border-left: 1px solid var(--nv-surface-4);
+    border-right: 1px solid var(--nv-surface-4);
+    border-bottom: 1px solid var(--nv-surface-4);
+    border-bottom-left-radius: var(--nv-radius-hero);
+    border-bottom-right-radius: var(--nv-radius-hero);
+    background: transparent;
+}
+
+.packages__slide--basic .packages__slide-services {
+    background: var(--nv-surface-2);
+}
+
+.packages__slide-services.packages__cell--advanced {
+    border-color: transparent;
+    background: linear-gradient(90deg, var(--nv-primary) 0%, var(--nv-primary-2) 100%);
+}
+
+.packages__mobile-group-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+    padding-top: 8px;
+}
+
+.packages__mobile-subgroup-title {
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 500;
+    line-height: 150%;
+    padding-top: 4px;
+}
+
+.packages__slide-services.packages__cell--advanced .packages__mobile-group-title,
+.packages__slide-services.packages__cell--advanced .packages__mobile-subgroup-title,
+.packages__slide-services.packages__cell--advanced .packages__service-name {
+    color: var(--nv-constant-1);
+}
+
+.packages__slide-services.packages__cell--advanced .packages__service-icon {
+    color: var(--nv-constant-85);
+}
+
+.packages__mobile-service {
+    display: flex;
+    align-items: flex-start;
+}
+
+.packages__slider .swiper-pagination {
+    position: static;
+    margin-top: 16px;
+}
+
+/* 1687:26581 / 1687:26586 — стрелки по краям шапки карточки. */
+.packages__slider-arrows {
+    position: absolute;
+    top: 92px;
+    left: 24px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 48px);
+}
+
+.packages__slider-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-1);
+    color: var(--nv-object-1);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.packages__slider-arrow path {
+    fill: currentColor;
+}
+
+.packages__slider--disable {
+    opacity: 0.3;
+    cursor: default;
+}
+
+@media (max-width: 1399.98px) {
+/* Media */
+    .packages__table--desktop {
+        width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        scrollbar-color: var(--nv-surface-4) var(--nv-surface-2);
+    }
+
+    .packages__table--desktop .packages__row {
+        min-width: 1120px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /*
+     * Таблица здесь уже прокручивается внутри `.packages__table--desktop`
+     * (строка не уже 1120). Минимум один на все четыре колонки: 268 * 4 + 16 * 3
+     * ровно укладывается в 1120, и колонки остаются равными.
+     */
+    .packages__group-title,
+    .packages__cell--service,
+    .packages__row--head .packages__cell--label,
+    .packages__cell.packages__cell--label,
+    .packages__cell--value,
+    .packages__cell--empty,
+    .packages__row--head .packages__cell--package {
+        min-width: 268px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .packages {
+        padding: 48px 0;
+    }
+
+    .packages__wrapper {
+        gap: 32px;
+    }
+
+    .packages__table--desktop {
+        display: none;
+    }
+
+    .packages__table-mobile,
+    .packages__table--mobile {
+        display: block;
+    }
+
+    .packages__slider .packages__service-description {
+        left: 0;
+        right: 0;
+        bottom: calc(100% + 12px);
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .packages__slider .packages__service-description::before {
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .packages__slide-services {
+        padding: 12px 12px 20px;
+    }
+
+    .packages__cell--package {
+        padding: 8px;
+    }
+
+    .packages__cell-wraper {
+        padding: 16px 12px;
+    }
+
+    .packages__service-name,
+    .packages__group-title {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+
+    .packages__note {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+}
+
+/*
+ * «What is 1 KYC Check», макет 1680:27014. Две карточки 3:2 с зазором 16,
+ * слева светлая с обводкой, справа оранжевая плашка в рамке-обёртке.
+ */
+.overview {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+.overview__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.overview__content {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+/* 1680:30087 — карточка 816 (3fr), поле 24, радиус 24. */
+.overview__card {
+    flex: 3 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: transparent;
+    backdrop-filter: blur(10px);
+}
+
+/* 1680:30088 — Title/H2 40/52 основным цветом. */
+.overview__card-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.overview__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 1680:30141 — короткий разделитель 200. */
+.overview__card-info hr {
+    width: 200px;
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background: var(--nv-surface-4);
+}
+
+/* 1680:30140 — Title/H4 24/36. */
+.overview__card-descriptin {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+/* 1680:30142 — Body text/Regular Regular 16/24 третьим уровнем текста. */
+.overview__card-text {
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* 1680:30114 — обёртка 544 (2fr): поле 12, радиус 24. */
+.overview__info {
+    flex: 2 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: var(--nv-radius-card);
+    background: transparent;
+    backdrop-filter: blur(10px);
+}
+
+/* 1680:30144 — оранжевая плашка, радиус 16, поле 24. */
+.overview__info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.overview__info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 1680:30146 — Title/H2 40/52. */
+.overview__info-title {
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+/* 1680:30152 — Title/H5 20/28. */
+.overview__info-text {
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+/* 1680:30162 — Body text/Medium Regular 18/28, поле слева 24. */
+.overview__info-description {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    color: var(--nv-object-3);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+@media (max-width: 1199.98px) {
+    .overview__card-title,
+    .overview__info-title {
+        font-size: var(--Text-Title-Size-H3, 32px);
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .overview__content {
+        flex-direction: column;
+    }
+
+    .overview__card,
+    .overview__info {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* 1687:24192 — поля карточек 12, заголовки на ступень ниже. */
+    .overview {
+        padding: 48px 0;
+    }
+
+    .overview__wrapper {
+        gap: 32px;
+    }
+
+    .overview__card {
+        padding: 11px;
+        border-radius: 16px;
+    }
+
+    .overview__info {
+        padding: 11px;
+        border-radius: 16px;
+    }
+
+    .overview__info-card {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .overview__card-descriptin {
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .overview__info-text {
+        font-size: var(--Text-Title-Size-H6, 18px);
+        line-height: 133.333%;
+    }
+
+    .overview__info-description {
+        padding-left: 16px;
+        font-size: var(--Text-Body-Text-Size-Regular, 16px);
+        line-height: 150%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .overview__card-title,
+    .overview__info-title {
+        font-size: var(--Text-Title-Size-H4, 24px);
+        line-height: 150%;
+    }
+
+    .overview__card-text,
+    .overview__info-description {
+        font-size: var(--Text-Body-Text-Size-Small, 14px);
+        line-height: 142.857%;
+    }
+}
+
+/* Контракт пространства для текущих шаблонов Home, Solutions, KYC, Identity и Pricing Matrix.
+   Каталогные кадры наследуют исходный body-class; для нового продуктового шаблона его body-class
+   нужно добавить явно. PageEdge сохраняет фиксированный белый край, mobile inset задан отдельно. */
+:root {
+    --nv-block-space: 64px;
+}
+
+body.page-template-page-price-matrix .calculator,
+body.page-template-page-price-matrix .overview,
+body.page-template-page-price-matrix .packages {
+    padding-top: var(--nv-block-space);
+    padding-bottom: var(--nv-block-space);
+}
+
+@media (max-width: 767.98px) {
+    :root {
+        --nv-block-space: 32px;
+    }
+}

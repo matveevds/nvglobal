@@ -1,0 +1,762 @@
+/* Каркас сайта (modals) — есть на каждой странице. */
+
+.modal--form,
+.modal--result {
+    --nv-primary: #FD6B01;
+    --nv-primary-2: #FF4601;
+    --nv-primary-soft: #FFF0E6;
+
+    --nv-object-1: #212121;
+    --nv-object-2: #5A5A5A;
+    --nv-object-3: #898989;
+
+    --nv-surface-1: #F8F8F8;
+    --nv-surface-2: #F2F2F2;
+    --nv-surface-3: #E4E4E4;
+    --nv-surface-4: #D2D2D2;
+
+    --nv-white: #FFFFFF;
+    --nv-constant-1: #F8F8F8;
+    --nv-constant-85: rgba(248, 248, 248, 0.85);
+    --nv-constant-50: rgba(248, 248, 248, 0.5);
+
+    /* Приглушённый оранжевый: номер на акцентной карточке Products. */
+    --nv-primary-tint: #FEB580;
+
+    --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
+
+    --nv-radius-card: 24px;
+    --nv-radius-hero: 32px;
+    --nv-gutter: 32px;
+}
+
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal__container {
+  position: relative;
+  width: 100%;
+  max-width: 716px;  
+}
+
+.modal-window {
+    border-radius: 16px;
+    border: 1px solid var(--Stroke-Orange, #F9AA66);
+    background: var(--Island-Black, #212121);
+    box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
+    padding:24px;
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+}
+
+#error .modal-window,
+#thanks  .modal-window {
+    overflow: hidden;
+}
+
+#error .modal__container,
+#thanks .modal__container{
+    max-width: 480px;
+}
+
+#review .modal__container {
+    max-width: 916px;
+    height: auto;
+    position: relative;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.captcha-holder--preload {
+  display: none;
+}
+
+.captcha-holder--visible {
+  display: block;
+  margin-top: 16px;
+  height: 79px;
+  overflow: hidden;
+}
+
+.modal__container--thanks {
+    max-width: 480px;
+    position: relative;
+    overflow: visible;
+}
+
+.modal__thanks {
+    display: flex;
+    gap: 24px;
+    padding-right: 200px;
+}
+
+.modal__thanks-info {
+    display: flex;
+    flex-direction: column;
+    gap:12px;
+}
+
+.modal__thanks-title {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.modal__thanks-description {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.modal__thanks-image {
+    position: absolute;
+    right: 20px;
+    bottom: -59px;
+}
+
+.review__wrapper {
+    display: flex;
+    gap: 24px;
+}
+
+.review__image {
+    width: calc(50% - 12px);
+}
+
+.review__image-wrapper {
+    border-radius: var(--Frame-Card-Padding-Corner, 16px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(4px);padding: 7px;
+    line-height: 0;
+}
+
+.review__image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 2px solid var(--Universal-Black, #212121);
+    background: url(../<path-to-image>) lightgray 50% / cover no-repeat;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30);
+    overflow: hidden;
+}
+
+.review__content {
+    width: calc(50% - 12px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.modal__close {
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+
+.modal__close:hover {
+    background: var(--island-white-5, rgba(251, 251, 251, 0.15));
+}
+
+.review__content-title {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+}
+
+.review__content-text {
+    overflow-y: auto;
+    height: 515px;
+}
+
+.review__content-text br {
+    display: block;
+    content: "";
+    margin-bottom: 8px;
+}
+
+.review__content-text p {
+    margin-bottom: 16px;
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.review__content-text p strong {
+    color: #FBFBFB;
+    font-weight: 500;
+}
+
+.review__content-text p:last-child {
+    margin-bottom: 0;
+}
+
+.review__content-text::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review__content-text::-webkit-scrollbar-track {
+  background: rgba(251, 251, 251, 0.08);
+  border-radius: 4px;
+}
+
+.review__content-text::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: linear-gradient(142deg, #F9AA66 0%, #FF7759 100%);
+}
+
+.review__content-text::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(142deg, #FFB77A 0%, #FF8A6B 100%);
+}
+
+.review-btn--mobile {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .review-btn--mobile {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 24px;
+    }
+
+    #review .modal__container {
+        max-width: 520px;
+    }
+
+    .review__content {
+        display: none;
+    }
+
+    .review__image {
+        margin-top: 40px;
+    }
+
+    .review__image,
+    .review__content {
+        width: 100%;
+    }
+
+    .modal-review--transcript .review__content {
+        display: flex;
+    }
+
+    .modal-review--transcript .review__image {
+        display: none;
+    }
+
+    #review .modal__container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .review__content .review-btn--mobile {
+        margin-left: 0;
+        margin-top: 0;
+        padding: 5px 5px 5px 11px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #review .modal__container {
+        padding: 20px;
+    }
+
+    .review__content-text {
+        height: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .modal-window {
+        padding: 12px;
+    }
+
+    .modal__thanks {
+        padding-right: 0;
+        padding-bottom: 160px;
+    }
+
+    .modal__thanks-info {
+        text-align: center;
+    }
+
+    .modal__thanks-image {
+        right:unset;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* 712:18600 — подложка светлая: Island/1 level с прозрачностью 80%. */
+.modal--form .modal__overlay,
+.modal--result .modal__overlay {
+    background: rgba(242, 242, 242, 0.8);
+}
+
+/* 712:18757 — окно: Island/1 level, рамка Primary, тень 0 8 24. */
+.modal--form .modal-window,
+.modal--result .modal-window {
+    border-color: var(--nv-primary);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+    /* Поля 24 за вычетом рамки: Figma рисует обводку внутрь габарита. */
+    padding: 23px;
+}
+
+.modal--large .modal__container {
+    max-width: 901px;
+}
+
+.modal--compact .modal__container {
+    max-width: 640px;
+}
+
+/* Раскладка модалки: блоки в столбик, разделители видны. */
+.modal .contacts__form {
+    row-gap: 12px;
+}
+
+.modal .contacts__form > * {
+    grid-column: 1 / -1;
+}
+
+/* Первые поля идут по две в ряд и сами переносятся, когда места мало. */
+.modal .input-form-item--50 {
+    grid-column: auto;
+}
+
+/* 712:18765 — селект на всю ширину, не во второй колонке, как в секции. */
+.modal .input-form-item.help-select {
+    grid-column: 1 / -1;
+    grid-row: auto;
+}
+
+/*
+ * 712:18768 — текстовое поле на всю ширину. Высота 216 в макете задана всему
+ * блоку вместе с подписью, поэтому ставим её элементу, а не самому полю.
+ */
+.modal .input-form-item:has(.input-form-block--textarea) {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: 216px;
+    margin-top: 0;
+}
+
+/*
+ * 712:18764 — разделители в модалке остаются. В макете у линии высота 0,
+ * в вёрстке это рамка в 1px, поэтому нижнее поле на неё уменьшено:
+ * 12 (зазор сетки) + 12 + 1 + 11 + 12 = 48, то есть по 24 с каждой стороны.
+ */
+.modal .contacts__form-line {
+    display: block;
+    margin: 12px 0 11px;
+    border: 0;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+/* Согласие без собственной черты: её роль играет разделитель выше. */
+.modal .input-form-item--privacy {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+/* 712:18773 — кнопка справа, блок отбит на 24. */
+.modal .input-form-action {
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+/* 712:18777 — кнопка 178x64. */
+.modal .btn-form {
+    min-width: 178px;
+    height: 64px;
+}
+
+/*
+ * 722:19927 — список стран шире узкого окна, поэтому в модалке он
+ * ограничен шириной самого поля: иначе на 320 уезжает за край.
+ */
+.modal--form .phone-field__dropdown {
+    max-width: 100%;
+}
+
+/*
+ * 722:19934 — светлый список стран. Панель 708:10707: Island/1 level,
+ * рамка Stroke 2, скругление 16, тень 0 8 24. Полоса прокрутки — из
+ * компонента Scrollbar: дорожка Island/2 level, бегунок оранжевый.
+ *
+ * Светлый стиль — и в модалках, и в секционных формах Contacts (Home, /kyc/,
+ * /solutions/, /identity-verification/, single-post `.post__form`): решение
+ * владельца 2026-10-18 вместо Р-117 (DECISIONS.md, Р-147; BACKLOG A-49). Ширину
+ * и max-width списков в секциях не меняем — `max-width:100%` выше только у модалки.
+ */
+.modal--form .phone-field__dropdown,
+body.single-post .post__form .phone-field__dropdown {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+}
+
+.modal--form .phone-field__search,
+body.single-post .post__form .phone-field__search {
+    border-color: var(--nv-surface-4);
+}
+
+.modal--form .phone-field__search-input,
+body.single-post .post__form .phone-field__search-input {
+    color: var(--nv-object-1);
+}
+
+.modal--form .phone-field__search-input::placeholder,
+body.single-post .post__form .phone-field__search-input::placeholder {
+    color: var(--nv-object-3);
+}
+
+.modal--form .phone-field__search-btn,
+body.single-post .post__form .phone-field__search-btn {
+    border-color: var(--nv-surface-4);
+    color: var(--nv-object-1);
+}
+
+.modal--form .phone-field__search-btn:hover,
+body.single-post .post__form .phone-field__search-btn:hover {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+}
+
+.modal--form .phone-field__option,
+body.single-post .post__form .phone-field__option {
+    color: var(--nv-object-1);
+    border-top-color: var(--nv-surface-4);
+}
+
+.modal--form .phone-field__option:hover,
+body.single-post .post__form .phone-field__option:hover {
+    color: var(--nv-primary);
+}
+
+.modal--form .phone-field__empty,
+body.single-post .post__form .phone-field__empty {
+    color: var(--nv-object-3);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-track,
+body.single-post .post__form .phone-field__list::-webkit-scrollbar-track {
+    background: var(--nv-surface-3);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-thumb,
+body.single-post .post__form .phone-field__list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+}
+
+.modal--form .phone-field__list::-webkit-scrollbar-thumb:hover,
+body.single-post .post__form .phone-field__list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--nv-primary-2) 15%, var(--nv-primary) 100%);
+}
+
+/*
+ * 722:20952 — светлый список услуг: панель Island/1 level, рамка Stroke 2,
+ * текст Text 1. Контексты те же, что у списка стран.
+ */
+.modal--form .help-select__dropdown,
+body.single-post .post__form .help-select__dropdown {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.30);
+}
+
+.modal--form .help-select__option,
+body.single-post .post__form .help-select__option {
+    color: var(--nv-object-1);
+    border-bottom-color: var(--nv-surface-4);
+}
+
+.modal--form .help-select__option:hover,
+.modal--form .help-select__option:focus-visible,
+body.single-post .post__form .help-select__option:hover,
+body.single-post .post__form .help-select__option:focus-visible {
+    color: var(--nv-primary);
+}
+
+.modal--form .help-select__option:last-child,
+body.single-post .post__form .help-select__option:last-child {
+    border-bottom: 0;
+}
+
+/* Галочка согласия: обводка на видимом квадрате, а не на скрытом input. */
+.modal--form .ui-check__input:focus-visible + .ui-check__box {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Строки списка и кнопка поиска: обводка из палитры вместо системной. */
+.modal--form .phone-field__option:focus-visible,
+body.single-post .post__form .phone-field__option:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: -2px;
+}
+
+.modal--form .phone-field__search-btn:focus-visible,
+.modal--form .phone-field__country-btn:focus-visible,
+.modal--form .phone-field__clear:focus-visible,
+body.single-post .post__form .phone-field__search-btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * Поиск по странам: фокус показываем рамкой обёртки, как у остальных полей,
+ * иначе браузер рисует своё синее кольцо поверх светлой панели.
+ */
+.modal--form .phone-field__search:focus-within,
+body.single-post .post__form .phone-field__search:focus-within {
+    border-color: var(--nv-primary);
+}
+
+.modal--form .phone-field__search-input:focus-visible,
+body.single-post .post__form .phone-field__search-input:focus-visible {
+    outline: none;
+}
+
+/*
+ * У кнопки селекта не было своего :focus-visible, и браузер рисовал синее
+ * кольцо — чужое для палитры. Обводка как у остальных элементов формы.
+ */
+.modal--form .help-select__button:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* Заголовок окна нужен только программам чтения: в макете его нет. */
+.modal__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/*
+ * Кнопка закрытия. В макетах её нет ни в одном фрейме, но окно обязано
+ * закрываться не только Escape и кликом по подложке, поэтому берём
+ * оформление кнопок очистки из той же системы: 28x28, рамка Stroke 2,
+ * скругление 6 (DECISIONS.md, Р-115). Стоит в поле окна, над первой
+ * строкой подписей, содержимое не перекрывает.
+ */
+.modal--form .modal__close,
+.modal--result .modal__close {
+    position: absolute;
+    background: var(--nv-surface-2);
+    top: 11px;
+    right: 11px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--nv-object-1);
+    backdrop-filter: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal--form .modal__close svg,
+.modal--result .modal__close svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.modal--form .modal__close:hover,
+.modal--result .modal__close:hover {
+    border-color: var(--nv-primary);
+    background: transparent;
+    color: var(--nv-primary);
+}
+
+.modal--form .modal__close:focus-visible,
+.modal--result .modal__close:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * 869:12477 / 870:12695 — окно результата: тот же светлый стиль.
+ * Маскот выходит за правый и нижний край карточки, поэтому обрезку
+ * с окна снимаем (базовое правило выше задаёт её по id).
+ */
+#thanks .modal-window,
+#error .modal-window {
+    overflow: visible;
+}
+
+/*
+ * Текстовая колонка не заезжает под маскота: в макете у окна успеха
+ * 869:12481 она шире, у окна ошибки 870:12697 — 190, потому что трубка
+ * занимает больше места слева.
+ */
+#thanks .modal__thanks-info {
+    max-width: 220px;
+}
+
+#error .modal__thanks-info {
+    max-width: 190px;
+}
+
+/* 869:12482 — картинка 294x231, выходит на 22 вправо и на 55 вниз. */
+.modal--result .modal__thanks-image {
+    right: -22px;
+    bottom: -55px;
+    width: 294px;
+}
+
+.modal--result .modal__thanks-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.modal__thanks-title {
+    color: var(--nv-primary);
+}
+
+.modal__thanks-description {
+    color: var(--nv-object-1);
+    font-weight: 400;
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 722:23079 и 722:23197 — оба окна 600, поля 16. */
+    .modal--large .modal__container,
+    .modal--compact .modal__container {
+        max-width: 600px;
+    }
+
+    .modal--form .modal-window,
+    .modal--result .modal-window {
+        padding: 15px;
+    }
+
+    .modal .contacts__form {
+        column-gap: 16px;
+    }
+
+    .modal .input-form-item--50 {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 722:23484 и 722:23517 — окно 360 при полях страницы 16. */
+    .modal--form .modal__overlay,
+    .modal--result .modal__overlay {
+        padding: 16px;
+    }
+
+    .modal--large .modal__container,
+    .modal--compact .modal__container {
+        max-width: 360px;
+    }
+
+    .modal--form .modal-window,
+    .modal--result .modal-window {
+        padding: 11px;
+        max-height: calc(100vh - 32px);
+    }
+
+    /* 722:23491 — у большой формы на мобильной вокруг линии по 16. */
+    .modal--large .contacts__form-line {
+        margin: 4px 0 3px;
+    }
+
+    /* 722:23523 — у малой формы макет оставляет прежние 24. */
+    .modal--compact .contacts__form-line {
+        margin: 12px 0 11px;
+    }
+
+    /* 722:23495 — у большой формы текстовое поле ниже, у малой прежнее. */
+    .modal--large .input-form-item:has(.input-form-block--textarea) {
+        height: 160px;
+    }
+
+    /* 722:23534 — кнопка 130x40. */
+    .modal .btn-form {
+        min-width: 130px;
+        height: 40px;
+    }
+
+    /*
+     * Окна результата на мобильной: отдельного фрейма нет. Маскот
+     * в ширину 360 не помещается рядом с текстом, поэтому он уходит
+     * под текст и не перекрывает его (DECISIONS.md, Р-116).
+     */
+    .modal--result .modal__thanks {
+        display: block;
+        padding-right: 0;
+        /* Прежний запас 160 под абсолютный маскот больше не нужен. */
+        padding-bottom: 0;
+    }
+
+    #thanks .modal__thanks-info,
+    #error .modal__thanks-info {
+        max-width: none;
+    }
+
+    .modal--result .modal__thanks-image {
+        position: static;
+        width: 200px;
+        margin: 12px auto 0;
+    }
+}

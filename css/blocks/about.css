@@ -1,0 +1,595 @@
+/* Блок «about» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.about {
+    padding: 64px 0;
+    border: none;
+    position: relative;
+    z-index: 2;
+}
+
+.about__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/*
+ * Базовый уровень — Full HD 2380:22898: секция колонкой с gap 48, внутри блок
+ * заголовка (1389px) и ряд из трёх карточек, между ними 24. Desktop-раскладка
+ * (291:5892) — в `max-width: 1599.98px`.
+ */
+.about .section__content {
+    gap: 24px;
+}
+
+.about .section__title-block {
+    max-width: 1389px;
+}
+
+/* На Full HD заголовок умещается в одну строку. */
+.about .section__title br {
+    display: none;
+}
+
+.about__info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Блок «Join hundreds of companies…» в новом макете отсутствует, разметка убрана. */
+.about__description {
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+    padding-right: 300px;
+}
+
+/*
+ * Full HD: три карточки в одном ряду, ширины 1 : 1 : 1.5 (521.14 / 521.14 / 781.71).
+ * База задана процентом, а не `flex-basis: 0` — при нулевой базе Chrome
+ * раздаёт свободное место поверх padding и border, и доли уезжают.
+ */
+.about__cards {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    position: relative;
+}
+
+.about__card {
+    flex: 0 1 calc((100% - 32px) / 3.5);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 5;
+    background-color: transparent;
+}
+
+/*
+ * Карточка со статистикой. Full HD 2380:22909 — две строки с горизонтальным
+ * разделителем, в строке процент и подпись рядом. Desktop 291:5892 — две
+ * колонки с вертикальным разделителем, он восстановлен в `max-width: 1599.98px`.
+ */
+.about__card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+}
+
+.about__card-stat {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    min-width: 0;
+}
+
+.about__card-divider {
+    width: 100%;
+    height: 1px;
+    align-self: auto;
+    background: var(--nv-surface-4);
+    flex-shrink: 0;
+}
+
+/* Карточка с крупной формулировкой: вторая в верхнем ряду. */
+.about__card--statement {
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+}
+
+.about__card-statement {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.about__card-statement span {
+    color: var(--nv-primary);
+}
+
+.about__card--maskot {
+    
+}
+
+.about__card-info {
+    width: calc(50% - 12px);
+    max-width: 296px;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.about__card-text {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 400;
+    line-height: 155.556%;
+}
+
+.about__card-percent {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+    white-space: nowrap;
+}
+
+.about__card-description {
+    max-width: 192px;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.about__card-image {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    align-self: center;
+}
+
+.about__card-image-text {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.about__card--map .about__card-image{
+    background-image: url('../../img/about__card-image.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: screen;
+    mix-blend-mode: screen;
+    filter: blur(0px);
+    position: absolute;
+    right: 0;
+    top:0;
+    height: 100%;
+    border-radius: 24px;
+}
+
+.about__card--maskot {
+    gap: 0;
+}
+
+.about__card--maskot .about__card-info {
+    max-width: 221px;
+    width: 40%;
+}
+
+.about__card--maskot .about__card-image {
+    width: 60%;
+}
+
+.about__card--maskot {
+    position: relative;
+}
+
+.maskot-animation {
+    position: absolute;
+    width: 227px;
+    height: 140px;
+    background-image: url('../../img/teaser_maskot2.png');
+    background-position: center;
+    background-size: cover;
+    bottom: calc(100% - 12px);
+    right: 40px;
+    opacity: 0;
+    transform: translateY(40px); /* старт снизу */
+}
+
+/*
+ * Full HD 2380:22920: текст занимает всю ширину карточки, под ним ряд
+ * «кнопки слева — знаки справа», кнопки идут столбиком (2380:22923).
+ * Desktop 1738:16152 оставляет текст и знаки в одну строку — возвращается
+ * в `max-width: 1599.98px`.
+ */
+.about__card--long {
+    flex: 0 1 calc((100% - 32px) / 3.5 * 1.5);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 24px;
+    row-gap: 24px;
+    height: auto;
+}
+
+.about__card--long .about__card-content {
+    display: contents;
+}
+
+/* Full HD 2380:22922 — Title/H6 18/24 в поле 588. */
+.about__card--long .about__card-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: 588px;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    line-height: 133.333%;
+}
+
+.about__card--long .about__card-actions {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about__card--long .about__card-logos {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.about__card-title {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.about__card-logos {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.about__card-logo {
+    line-height: 0;
+}
+
+/* Full HD 2380:22926 — 72px; Desktop 1738:16173 — 120px. Ширина по пропорции. */
+.about__card-logo img {
+    height: 72px;
+    width: auto;
+    display: block;
+}
+
+.about__card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.about__card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/*
+ * Кнопки сертификатов. `.btn--small` и `.btn--gray` — общие классы, поэтому
+ * светлый вид ограничен карточкой, чтобы не задеть /solutions/ и /pricing-matrix/.
+ */
+.about__card-actions .btn--gray {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 5px 5px 11px;
+    min-height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.about__card-actions .btn--gray .btn__text {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Button-Size-Small, 14px);
+    font-weight: 700;
+    line-height: 142.857%;
+}
+
+/*
+ * В макете иконка задана как h-full внутри строки кнопки: она тянется по высоте
+ * текста (14/20), а не по своим 24px. Отсюда 20x20 и общая высота 6+20+6 = 32.
+ */
+.about__card-actions .btn--gray .btn__icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--nv-object-1);
+}
+
+.about__card-actions .btn--gray .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.about__card-actions .btn--gray:hover,
+.about__card-actions .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 291:5892: две карточки в ряд, третья на всю ширину под ними. */
+    .about__card-description {
+        max-width: none;
+    }
+
+    .about__card--long .about__card-title {
+        max-width: none;
+        font-size: var(--Text-Title-Size-H5, 20px);
+        line-height: 140%;
+    }
+
+    .about__card--long {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .about__card--long .about__card-content {
+        display: flex;
+    }
+
+    .about__card--long .about__card-actions {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .about__card {
+        gap: 24px;
+    }
+
+    /* Собственный отступ карточки с формулировкой — восстанавливаем после правила выше. */
+    .about__card--statement {
+        gap: 12px;
+    }
+
+    .about__card-stats {
+        flex-direction: row;
+        gap: 40px;
+    }
+
+    .about__card-stat {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .about__card-divider {
+        width: 1px;
+        height: auto;
+        align-self: stretch;
+    }
+
+    .about .section__title-block {
+        max-width: 1048px;
+    }
+
+    .about .section__title br {
+        display: inline;
+    }
+
+    .about__cards {
+        flex-wrap: wrap;
+    }
+
+    .about__card {
+        flex: 0 1 auto;
+        width: calc(50% - 8px);
+        min-width: 340px;
+    }
+
+    .about__card--long {
+        flex: none;
+        width: 100%;
+    }
+
+    .about__card-logos {
+        gap: 24px;
+    }
+
+    .about__card-logo img {
+        height: 120px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .about__card--long {
+        align-items: flex-end;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .about {
+        /* margin-top: 870px; */
+    }
+
+    /* Планшетный фрейм Figma 2376:16731: карточки на всю ширину, в столбик. */
+    .about__cards {
+        flex-direction: column;
+    }
+
+    .about__card {
+        width: 100%;
+        min-width: 0;
+        padding: 16px;
+    }
+
+    .about__card--statement {
+        padding: 16px 24px;
+    }
+
+    .about__card--maskot::after {
+        display: none;
+    }
+
+    .about__card-logo img {
+        height: 72px;
+        width: auto;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .about__card-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .about__description {
+        padding-right: 0;
+        margin-bottom: 80px;
+    }
+
+    .about__card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .about__card-stats {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .about__card-divider {
+        width: 100%;
+        height: 1px;
+        align-self: auto;
+    }
+
+    .about__card--long {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .about__card-logos {
+        justify-content: flex-start;
+    }
+
+    .about__card-info {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .about__card-text {
+        width: 100%;
+    }
+
+    .about__description {
+        font-size: 16px;
+    }
+
+    .about__card-percent {
+        font-size: 40px;
+        width: calc(50% - 4px);
+    }
+
+    .about__card-description {
+        width: calc(50% - 4px);
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .about__card-image-text {
+        font-size: 16px;
+    }
+
+    .about__card--maskot .about__card-image {
+        width: 100%;
+        max-width: unset;
+        height: 180px;
+        bottom: 0;
+        top:unset;
+    }
+
+    .about__card--maskot .about__card-info {
+        width: 100%;
+        max-width: unset;
+    }
+
+    .about__card--maskot .about__card-description {
+        width: 100%;
+        text-align: center;
+    }
+
+    .about__card--maskot {
+        height: 300px;
+    }
+
+    .about__card-title {
+        font-size: 16px;
+    }
+
+    .about__card-actions {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    /*
+     * Три значка фиксированной ширины не помещались в карточку на 375px
+     * (348px против 309px доступных). Высота уменьшена, ширина — по пропорции,
+     * плюс перенос на случай совсем узких экранов.
+     */
+    .about__card-logos {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .about__card-logo img {
+        height: 72px;
+        width: auto;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .about__card--maskot {
+        height: 320px;
+    }
+}

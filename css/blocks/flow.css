@@ -1,0 +1,308 @@
+/* Блок «flow» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.flow {
+    overflow: hidden;
+    margin-top: -32px;
+    padding-top: 128px;
+    margin-bottom: -32px;
+    padding-bottom: 64px;
+    position: relative;
+    z-index: 0;
+    background: 
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px), 
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px), 
+        radial-gradient(178.48% 141.54% at 100.17% 0%, rgba(249, 170, 102, 0.30) 0%, rgba(33, 33, 33, 0.00) 50.21%), #212121;
+        
+    background-size: 16px 16px, 16px 16px, 100% 100%, auto;
+    background-position: 0 0, 8px 8px, 0 0, 0 0;
+}
+
+.flow__wrapper {
+    width: 100%;
+    display: flex;
+    gap: 48px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.flow__col {
+    width: calc(50% - 24px);
+    min-width: 0;
+}
+
+.flow__col--left {
+    max-width: 426px;
+    width: 420px;
+    flex: 0 0 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.flow__col--right {
+    max-width: 640px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.flow .section__subtitle {
+    max-width: 270px;
+}
+
+.flow__steps {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.flow__steps .flow__step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.flow__col {
+    
+}
+
+.flow__col--left {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.flow__col-top {
+
+}
+
+.flow__steps {}
+
+.flow__step {}
+
+.flow__col-content {
+    margin-top: -16px;
+}
+
+.flow__col-content p {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-weight: 500;
+}
+
+.flow__slider {
+    width: 100%;
+    height: 680px;
+    overflow: visible;
+}
+
+.flow__slider-wrapper {
+    gap: 0;
+}
+
+.flow__slide {
+    width: 100%;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.flow__slide-top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.flow__slide-icon {
+    border-radius: 6px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flow__slide-title {
+    color: var(--Text-Orange, #F9AA66);
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.flow__slide-image {
+
+}
+
+.flow__slide-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.flow__slide-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.flow__slide-subtitle {
+    color: var(--Text-White, #FBFBFB);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.flow__slide-description {
+    font-size: 14px;
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+    text-align: center;
+
+}
+
+.flow__slide--center {
+    justify-content: center;
+}
+
+@media (max-width: 1399.98px) {
+    .flow__wrapper {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .flow {
+        padding-bottom: 96px;
+    }
+
+    .flow__wrapper {
+        flex-direction: column;
+    }
+
+    .flow__col {
+        width: 100%;
+    }
+
+    .flow__col--left {
+        max-width: unset;
+    }
+
+    .flow__steps {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .flow .section__badge {
+        order: 1;
+    }
+
+    .flow .section__title-block {
+        order: 2;
+    }
+
+    .flow__col-content {
+        order: 3;
+    }
+
+    .flow__steps {
+        order: 4;
+    }
+
+    .flow__col-content {
+        margin-top: 0;
+        max-width: 780px;
+    }
+
+    .flow__slider .swiper-wrapper {
+        align-items: stretch;
+    }
+
+    .flow__slider .swiper-slide {
+        height: auto !important;
+        display: flex;
+    }
+
+    .flow__slider .flow__slide {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .flow__slider {
+        height: 600px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .flow__wrapper {
+        flex-direction: column;
+    }
+
+    .flow__col--left {
+        width: 100%;
+        max-width: none;
+        flex: none;
+    }
+
+    .flow__col--right {
+        width: 100%;
+    }
+
+    .flow__slider {
+        height: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .flow {
+        padding-top: 96px;
+        padding-bottom: 64px;
+    }
+
+    .flow__col--left {
+        gap: 24px;
+    }
+
+    .flow__col-content p {
+        font-size: 14px;
+    }
+
+    .flow__steps .flow__step {
+        font-size: 16px;
+    }
+
+    .flow__slide {
+        padding: 12px;
+        height: 100%;
+    }
+
+    .flow__slide-title {
+        font-size: 24px;
+    }
+
+    .flow__slide-subtitle {
+        font-size: 16px;
+    }
+
+    .flow__slide-description {
+        font-size: 14px;
+    }
+
+    .flow__slider .flow__slide {
+        padding: 12px;
+        border-radius: 12px;
+    }
+}

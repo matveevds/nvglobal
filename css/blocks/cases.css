@@ -1,0 +1,418 @@
+/* Блок «cases» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.cases {
+    padding: 64px 0 64px;
+    margin-bottom: -32px;
+    border-radius: 32px 32px 0 0;
+    border: none;
+    border-top: 1px solid rgba(251, 251, 251, 0.15);
+    background: var(--Background-Black, #212121);
+    margin-top: -32px;
+    position: relative;
+    z-index: 2;
+}
+
+.cases__wrapper {
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+}
+
+.cases__title-left {
+    width: 282px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cases__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+.cases__title {
+    margin-top: 8px;
+}
+
+.cases__arrows {
+    align-self: self-end;
+    display: flex;
+    gap: 8px;
+}
+
+.cases__arrow {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    cursor: pointer;
+}
+
+.cases__arrow:hover,
+.cases__arrow:focus,
+.cases__arrow:active {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.cases__arrow-prev {}
+
+.cases__arrow-next {}
+
+.cases__line {
+    width: 1px;
+    height: auto;
+    background: rgba(251, 251, 251, 0.10);
+    flex-shrink: 0;
+}
+
+.cases__content {
+    width: calc(100% - 331px);
+}
+
+.cases__slider {}
+
+.cases__slider-wrapper {}
+
+.cases__slide {
+
+}
+
+.cases__slide-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    height: 100%;
+    min-height: 100%;
+}
+
+.cases__slide-image {
+    align-self: flex-end;
+}
+
+.cases__slide-image img {}
+
+.cases__slide-title {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+}
+
+.cases__slide-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cases__slide-subtitle {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.cases__slide-description {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.cases__slide-metriks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cases__slide-metriks-title {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.cases__slide-metriks-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.cases__slide-metrik {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.cases__slide-metrik-name {
+  
+}
+
+.cases__slide-metrik-value {
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    line-height: 142.857%;
+}
+
+.cases__slide-metrik-value-old {
+    opacity: 0.7;
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+}
+
+.cases__slide-metrik-icon {
+    margin-left: -4px;
+    margin-right: -4px;
+}
+
+.cases__slide-metrik-line {
+    background: rgba(251, 251, 251, 0.10);
+    width: 1px;
+    height: auto;
+}
+
+.cases__slide-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cases__slide-btn {}
+
+.btn--gray {
+    display: flex;
+    padding: 7px 7px 7px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+}
+
+.btn--gray .btn__text {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 125%;
+}
+
+.btn--gray:hover,
+.btn--gray:focus,
+.btn--gray:active {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.btn--gray:hover .btn__text,
+.btn--gray:focus .btn__text,
+.btn--gray:active .btn__text {
+    color:#F9AA66;
+}
+
+.btn--gray .btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.btn--small {
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.btn--small .btn__text {
+    font-size: 14px;
+}
+
+.btn--small .btn__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.cases__bottom {
+    margin-top: 16px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    padding: 24px;
+    display: flex;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    align-items: flex-end;
+    gap: 48px;
+    align-self: stretch;
+    justify-content: space-between;
+}
+
+.cases__bottom-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cases__bottom-title {
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.cases__bottom-subtitle {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.cases__bottom-action .btn__text {
+    white-space: nowrap;
+}
+
+/* 1) Слайд растягиваем по высоте контейнера */
+.cases__slider,
+.cases__slider-wrapper,
+.cases__slide {
+  height: 100%;
+}
+
+.cases__slide-action {
+  margin-top: auto;
+}
+
+.cases__slider .swiper-wrapper {
+    align-items: stretch; /* растягиваем слайды */
+}
+
+.cases__slider .swiper-slide {
+    height: auto;          /* убрать авто-высоту Swiper */
+    display: flex;         /* чтобы контент тянулся */
+}
+
+.cases__slider .swiper-slide > * {
+    flex: 1;               /* карточка внутри растягивается */
+}
+
+.cases__slider .swiper-wrapper {
+    align-items: stretch; /* растягиваем слайды */
+}
+
+.cases__slider .swiper-slide {
+    height: auto;          /* убрать авто-высоту Swiper */
+    display: flex;         /* чтобы контент тянулся */
+}
+
+.cases__slider .swiper-slide > * {
+    flex: 1;               /* карточка внутри растягивается */
+}
+
+@media (max-width: 991.98px) {
+    .cases__wrapper {
+        flex-direction: column;
+    }
+
+    .cases__line {
+        width: 100%;
+        height: 1px;
+    }
+
+    .cases__title-left {
+        width: 100%;
+    }
+
+    .cases__content {
+        width: 100%;
+    }
+
+    .cases__title-block {
+        margin-bottom: 0;
+    }
+
+    .cases__title-left {
+        gap: 40px;
+    }
+
+    .cases__bottom {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .cases__slide-metriks-list {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .cases__slide-metrik-line {
+        height: 1px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cases__wrapper {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .cases__slide-title {
+        font-size: 20px;
+    }
+
+    .cases__slide-subtitle,
+    .cases__slide-description,
+    .cases__slide-metriks-title {
+        font-size: 16px;
+    }
+
+    .cases__slide-metrik-name {
+        font-size: 14px;
+    }
+
+    .cases__slide-metrik-value {
+        font-size: 12px;
+        padding: 2px 16px;
+    }
+
+    .btn--gray .btn__text {
+        font-size: 16px;
+    }
+
+    .btn--small .btn__text {
+        font-size: 12px;
+    }
+
+    .btn--small .btn__icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .cases__bottom {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .cases__bottom-title {
+        font-size: 32px;
+    }
+
+    .cases__bottom-subtitle {
+        font-size: 20px;
+    }
+
+    .cases__bottom-action .btn {
+        gap: 17px;
+    }
+
+    .btn--gray .btn__icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}

@@ -1,0 +1,624 @@
+/* Блок «idv-coverage» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/* COVERAGE (new composition, 3 состояния: Documents/Regions/Southeast Asia, 2620:26028, 2636:20653, 2636:23113).
+   Figma: head+tabs+panel слева, visual справа на одном уровне (flex row, items-start) — не head
+   на всю ширину секции сверху. */
+.idv-coverage__row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.idv-coverage__left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 1 0;
+    min-width: 0;
+    order: 1;
+}
+
+/* C5-01: badge вынесен из .idv-coverage__head отдельным sibling'ом над .idv-coverage__row —
+   coverage-1920.json: badge(32h) y64, row(head+visual) y144, разрыв 48px. */
+.idv-coverage > .container > .section__badge {
+    margin-bottom: 48px;
+}
+
+.idv-coverage__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 8px;
+}
+
+/* F2-01 (followup-3, QA): без JS табы видны, но «мертвы» (клик ничего не делает) и несут
+   aria-selected/tabindex, подразумевающие интерактивность, которой нет. Прячем их тем же
+   enhancement-гейтом, что и панели (initCoverage() выставляет [data-coverage-ready]); весь
+   текст всех 3 состояний остаётся читаемым без JS — скрываются только сами кнопки-переключатели. */
+.idv-coverage__tabs {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+[data-idv-coverage][data-coverage-ready] .idv-coverage__tabs {
+    display: flex;
+}
+
+@media (min-width: 1200px) {
+/* QA-C1 High: source (2666:50221/2620:26035) — head наверху ряда, controls(tabs+panel) не сразу
+   под head через uniform gap, а у нижнего края ряда (controls-обёртка292 с padding-bottom64 даёт
+   её низ824 = низ ряда; саму панель к824 не прижимать — уточнено координатором). Без доп.
+   wrapper-разметки: margin-top на tabs сдвигает И tabs, И следующий за ним panel (siblings в
+   column) как единую группу вниз на100 (432→532 tabs, 480→580 panel — та же дельта у обоих,
+   gap16 между tabs/panel уже верен, не трогается). Применяется только после JS-инициализации
+   (tabs display:flex) — no-JS раскладка (все3 панели сразу после head) не затронута. */
+    [data-idv-coverage][data-coverage-ready] .idv-coverage__tabs {
+        margin-top: 72px;
+    }
+}
+
+.idv-coverage__tab {
+    padding: 4px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.idv-coverage__tab.is-active {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.idv-coverage__tab:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/* V2-07: без JS все 3 состояния должны быть читаемы — схлопывание до одной панели работает
+   только после того, как JS реально инициализировался и пометил корень `[data-coverage-ready]`
+   (initCoverage()). Раньше `display:none` был безусловным и не зависел от JS/`hidden` вовсе. */
+[data-idv-coverage][data-coverage-ready] .idv-coverage__panel:not(.is-active) {
+    display: none;
+}
+
+.idv-coverage__panel.is-active {
+    display: flex;
+}
+
+.idv-coverage__visual {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    order: 2;
+    min-height: 680px;
+    padding: 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+/* followup-3: `height:100%` на панели не резолвился надёжно — на FHD `.idv-coverage__row`
+   раскрыт в display:contents, и .idv-coverage__visual стал grid-элементом вместо flex-элемента;
+   percentage-height цепочка (panel→grid→row→doc) рвалась, документы схлопывались до 0 высоты.
+   `.idv-coverage__visual{display:flex}` + flex:1 на активной панели даёт гарантированную высоту
+   независимо от того, grid или flex у родителя снаружи. */
+.idv-coverage__visual-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+}
+
+[data-idv-coverage][data-coverage-ready] .idv-coverage__visual-panel:not(.is-active) {
+    display: none;
+}
+
+.idv-coverage__visual-panel.is-active {
+    display: block;
+}
+
+/* followup-4: `flex:1`/`height:100%` делили ширину/высоту по СВОБОДНОМУ месту контейнера —
+   паспорта превращались в широкие горизонтальные полосы вместо реальных 140×200 (392: 98×140)
+   обложек. Источник (references/1920-coverage.png) — ряды ФИКСИРОВАННОГО размера, по центру,
+   обрезанные по краям visual (5/6/5 карточек, ряд из 6 шире, чем видимая область — это и
+   задаёт «обрезку» слева/справа), а не ужатые под ширину контейнера. */
+.idv-coverage__docs-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+    opacity: .7;
+    overflow: hidden;
+}
+
+.idv-coverage__docs-row {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    gap: 8px;
+}
+
+.idv-coverage__doc {
+    flex: 0 0 140px;
+    width: 140px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+@media (max-width: 767.98px) {
+    .idv-coverage__doc {
+        flex-basis: 98px;
+        width: 98px;
+        height: 140px;
+    }
+}
+
+.idv-coverage__map {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.idv-coverage__visual-panel[data-coverage-visual="regions"] {
+    position: relative;
+}
+
+/* Квадратная сцена карты: панель Regions не квадратная (840: 726×630, 392: 334×434, 1600: 355×630), карта
+   в ней `object-fit: contain` по центру. Оверлей `inset:0` не влияет на высоту панели (её задаёт карта/колонка),
+   но даёт container-размер; сцена = min(cqw, cqh) по центру — совпадает с нарисованной картой, и доли маркеров
+   (карта 632×632) считаются от неё, а не от панели. */
+.idv-coverage__map-overlay {
+    position: absolute;
+    inset: 0;
+    container-type: size;
+    pointer-events: none;
+}
+
+.idv-coverage__map-stage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(100cqw, 100cqh);
+    height: min(100cqw, 100cqh);
+    transform: translate(-50%, -50%);
+}
+
+/* Маркеры регионов (Figma Target 2636:20687/22952/22974/22996, 60×60): серая выноска-«подушка» с хвостиком
+   (Rectangle 3923, 68×61.46, left −4 / top 8) и плашка 60×36 (radius 8, Surface2, inset-тень, обрезка)
+   с тремя флагами 24×24, gap 4, по центру — 3×24+2×4 = 80 > 60, крайние флаги обрезаются краями плашки.
+   left — центр маркера, top — верх фрейма Target, в долях карты (см. $nv_region_markers). */
+.idv-coverage__region-marker {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    transform: translateX(-50%);
+}
+
+.idv-coverage__region-callout {
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    display: block;
+    width: 68px;
+    height: 61.463px;
+}
+
+.idv-coverage__region-plate {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 60px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    box-shadow: inset 0 2px 4.2px rgba(255, 255, 255, 0.05);
+}
+
+.idv-coverage__region-flag {
+    display: block;
+    flex: none;
+    width: 24px;
+    height: 24px;
+}
+
+/* followup-5 L-03: переиспользована точная 16-слойная география Security (F4-01) — каждый слой
+   получает явные inline width/height из inset (замещённые элементы не вычисляют размер из
+   top/right/bottom/left). `.idv-coverage__sea-map` — собственный aspect-ratio:369/360 canvas,
+   центрированный и масштабируемый внутри панели (той же техникой, что .idv-security__map). */
+.idv-coverage__sea-layer {
+    position: absolute;
+}
+
+.idv-coverage__sea-map {
+    position: relative;
+    width: min(100%, 360px);
+    aspect-ratio: 369 / 360;
+    margin: auto;
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+/* Tablet (768–1199.98): панель SEA — от 639×630 до 1070×630, кадр 360 терялся в ней.
+   560×546 — по высоте панели с полями ≈42. На Mobile и Desktop — прежние 360. */
+    .idv-coverage__sea-map {
+        width: min(100%, 560px);
+    }
+}
+
+.idv-coverage__visual-panel[data-coverage-visual="sea"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.idv-coverage__bottom {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Левое выравнивание promo/stats (Figma), не правое, как у общего .kyc-card. */
+.idv-coverage__promo {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.idv-coverage__stats {
+    display: flex;
+    gap: 16px;
+    flex: 0 0 auto;
+    width: 760px;
+    max-width: 100%;
+}
+
+.idv-coverage__stat {
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+/* QA-C2 High (source 2666:50256 / 2654:34330, get_metadata): inset16 (CSS15+border1), звезда
+   top-right inset16 (absolute), text-group (value48 + gap8 + label24 = 80) прижат к низу.
+   Высоты: FHD — колонка 388 (3×118.67, ниже, ≥1600); 1440 — по ряду с promo (stretch, 168);
+   840 — 140; Mobile (≤767.98) — прежний row-reverse (104h верно). */
+    .idv-coverage__stat {
+        position: relative;
+        padding: 15px;
+        justify-content: flex-end;
+        gap: 0;
+    }
+
+    .idv-coverage__stat .kyc-icon-box {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .idv-coverage__stat-text {
+        gap: 8px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .idv-coverage__stat {
+        min-height: 140px;
+    }
+}
+
+.idv-coverage__stat-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.idv-coverage__stat-value {
+    display: block;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H3, 32px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.idv-coverage__stat-label {
+    display: block;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 133.333%;
+}
+
+/* followup-5 (продолжение после 1.1.44): координатор предоставил DOM-проверенный overlap-proof
+   (component-scoped position:relative/z-index, без абсолютного позиционирования всей секции).
+   `main` (1420 на FHD) — это НЕ единая grid-колонка, а left(680, fixed)+visual(auto), gap:0
+   вплотную друг к другу (680+740=1420 ровно, без зазора); только ПОСЛЕ main идёт gap48 до
+   side(388). Поэтому `.idv-coverage__row` возвращает себе реальный flex (не `display:contents`)
+   и становится ОДНИМ grid-item'ом рядом с `.idv-coverage__bottom` — вложенная структура вместо
+   плоской 3-колоночной сетки. */
+.idv-coverage__panel.is-active,
+.idv-coverage__panel,
+.idv-coverage__tabs {
+    position: relative;
+}
+
+@media (min-width: 1200px) {
+    /* L-02 overlap: coverage-{1920,1440}.json — tabs/text-панель 816px с margin-left:64px внутри
+       680px левой колонки (64+816=880, что на 200px шире самой колонки) — перекрывает visual
+       слева. C5-01 (независимая проверка 1.1.45, elementsFromPoint): в Figma ПАНЕЛЬ рисуется
+       целиком ПОВЕРХ visual (документы её не закрывают), а не наоборот — DOM-порядок (visual
+       идёт в разметке ПОСЛЕ left) красил visual НАД панелью по умолчанию, это и был баг;
+       явный z-index переворачивает порядок в нужную сторону. */
+    .idv-coverage__tabs,
+    .idv-coverage__panel {
+        width: 816px;
+        max-width: none;
+        margin-left: 64px;
+        z-index: 2;
+    }
+
+    /* C5-01: panel180h в JSON — это высота самого длинного состояния (SEA, естественно
+       рендерится 180h из-за более длинного текста); Documents/Regions короче (152h) и без
+       min-height карточка "прыгает" при переключении вкладок, а не держит единую высоту,
+       как в Figma (один задуманный размер для всех 3 состояний). */
+    .idv-coverage__panel {
+        min-height: 180px;
+    }
+
+    .idv-coverage__visual {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* L-02: layout-contracts/coverage-1920.json — main(1420=left680+visual740, gap0) + gap48 +
+       side388 (была плоская 3-колоночная сетка с gap16 везде и side280px). C5-01: badge — прямой
+       child .container (вне .idv-coverage__row), поэтому ему нужна ЯВНАЯ grid-row:1 (span
+       1/-1) отдельно от row/bottom (grid-row:2) — без этого auto-placement сталкивал badge
+       с уже явно позиционированным row в одной ячейке и выталкивал его в произвольную строку
+       ниже всего контента. */
+    .idv-coverage > .container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 388px;
+        grid-template-rows: auto auto;
+        gap: 48px;
+        align-items: start;
+    }
+
+    .idv-coverage > .container > .section__badge {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        margin-bottom: 0;
+    }
+
+    .idv-coverage__row {
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        gap: 0;
+        align-items: flex-start;
+    }
+
+    .idv-coverage__left {
+        flex: 0 0 680px;
+        width: 680px;
+    }
+
+    .idv-coverage__visual {
+        flex: 1 1 auto;
+    }
+
+    .idv-coverage__bottom {
+        grid-column: 2;
+        grid-row: 2;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0;
+    }
+
+    .idv-coverage__promo {
+        flex: 0 0 auto;
+    }
+
+    .idv-coverage__stats {
+        flex-direction: column;
+        width: auto;
+    }
+
+    .idv-coverage__stat {
+        flex: 0 0 auto;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+/* L-02 overlap (1440): main=1376=left680+visual696, gap0 (та же логика, что FHD, но без side-
+   колонки рядом — stats/promo остаются отдельной строкой `.idv-coverage__bottom` ниже). */
+    .idv-coverage__row {
+        gap: 0;
+    }
+
+    .idv-coverage__left {
+        flex: 0 0 680px;
+        width: 680px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /* followup-5 L-02: базовый `.idv-coverage__row{align-items:flex-start}` рассчитан на
+       row-направление (≥1200px), где он влияет только на вертикальное выравнивание. В
+       column-направлении (эта ширина) та же команда становится КРОСС-осью (шириной) и
+       схлопывает `.idv-coverage__visual` до max-content её некопируемого ряда документов
+       (662px на 392 вместо 360px секции) — отсюда «сдвинутый вправо» ряд и Morocco вместо
+       центральных Armenia/Andorra/Italy: сам visual-блок был шире вьюпорта и обрезан справа
+       контейнером страницы, а не центрирован собственным overflow:hidden. */
+    .idv-coverage__row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .idv-coverage__bottom {
+        flex-direction: column;
+    }
+
+    .idv-coverage__stats {
+        width: 100%;
+    }
+
+    /* V2-06: на 840 и 392 порядок один и тот же — badge/H2/intro → visual → tabs → text panel
+       (раньше 840 показывал tabs/panel перед visual, а 392 — visual перед самим heading).
+       `.idv-coverage__left` раскрывается, чтобы head/tabs/панели стали независимыми flex-
+       элементами наравне с `.idv-coverage__visual`, без дублирования разметки. */
+    .idv-coverage__left {
+        display: contents;
+    }
+
+    .idv-coverage__head {
+        order: 1;
+    }
+
+    .idv-coverage__visual {
+        order: 2;
+    }
+
+    .idv-coverage__tabs {
+        order: 3;
+    }
+
+    .idv-coverage__panel {
+        order: 4;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* L-02: coverage-392.json — visual360×460 с padding12, не 468/16 (3×140+2×8gap+2×12padding
+       =460, точно совпадает с reference-кадром). */
+    .idv-coverage__visual {
+        min-height: 460px;
+        padding: 12px;
+    }
+
+    .idv-coverage__stats {
+        flex-direction: column;
+    }
+
+    /* V2-06: на Mobile иконка справа от текста (не сверху слева). */
+    .idv-coverage__stat {
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+/* C4: lead — Medium 500 (в разметке только `.kyc-lead--md`, без базы `.kyc-lead`); head560
+   (292h, lead в 4 строки) на ≥1200. */
+.idv-coverage__head .kyc-lead--md {
+    color: var(--nv-object-2);
+    font-weight: 500;
+    line-height: 1.55555556;
+}
+
+@media (min-width: 1200px) {
+    .idv-coverage__head {
+        max-width: 560px;
+    }
+}
+
+/* promo: title→text gap16 (был generic12 `.kyc-card`), padding по моду. */
+.idv-coverage__promo {
+    gap: 16px;
+}
+
+@media (min-width: 768px) and (max-width: 1599.98px) {
+/* bottom-ряд: 48 до row на 1440/840, 24 на 392 (был 20). */
+    .idv-coverage__bottom {
+        margin-top: 48px;
+    }
+}
+
+@media (min-width: 1600px) {
+/* FHD: колонка stats 388 = 3×118.67 (gap16), не растёт от контента. */
+    .idv-coverage__stats {
+        height: 388px;
+    }
+
+    .idv-coverage__stat {
+        flex: 1 1 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    /* C3: 3 равные вкладки на всю ширину (253.33×32). C5: head→visual48, visual→tabs24,
+       панель inset16, promo inset16, stats-ряд 760. */
+    .idv-coverage__tab {
+        flex: 1 1 0;
+    }
+
+    .idv-coverage__head {
+        margin-bottom: 32px;
+    }
+
+    .idv-coverage__tabs {
+        margin-top: 8px;
+    }
+
+    .idv-coverage__panel,
+    .idv-coverage__promo {
+        padding: 15px;
+    }
+
+    /* единая высота панели для всех 3 состояний: 164 (source 2654:34300) */
+    .idv-coverage__panel {
+        min-height: 164px;
+    }
+
+    /* Tablet source 2654:34329 — 760 при контейнере 776 (в макете 16px недотяга). Решение владельца: ряд на всю
+       ширину контейнера (840 → 776, а не 760), карточки flex 1 1 0 делят её поровну. */
+    .idv-coverage__stats {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* C3: 3 × 114.67×28 (Regular 14/20). C5: visual→tabs24, панель/promo inset12, promo→row24. */
+    .idv-coverage__tab {
+        flex: 1 1 0;
+        padding: 4px 8px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .idv-coverage__tabs {
+        margin-top: 8px;
+    }
+
+    .idv-coverage__panel,
+    .idv-coverage__promo {
+        padding: 11px;
+    }
+
+    /* единая высота панели: 220 (source 2666:42271) */
+    .idv-coverage__panel {
+        min-height: 220px;
+    }
+
+    .idv-coverage__bottom {
+        margin-top: 24px;
+    }
+}

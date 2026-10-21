@@ -1,0 +1,215 @@
+/* Блок «page-nav» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.page-nav {
+    padding: 16px 0 15px;
+    border-radius: 0 0 12px 12px;
+    border-bottom: 1px solid var(--Stroke-Orange, #F9AA66);
+    background: var(--Island-Black, #212121);
+    box-shadow: 0 -4px 40px 0 rgba(0, 0, 0, 0.20);
+    margin-bottom: -56px;
+    position: relative;
+    z-index: 7;
+}
+
+.page-nav__wrapper::before {
+    content: attr(data-active);
+    display: none;
+}
+
+.page-nav__wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.page-nav__wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.page-nav__menu {
+    min-width: max-content;
+    width: 100%;
+}
+
+.page-nav__menu-list {
+    margin: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 24px;
+    min-width: max-content;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page-nav__menu-item,
+.page-nav__menu-dot {
+    flex: 0 0 auto;
+}
+
+.page-nav__menu-dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+    flex-shrink: 0;
+}
+
+.page-nav__menu-link {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.page-nav__menu-link:hover {
+    color: var(--Text-Orange, #F9AA66);
+    text-decoration-line: underline;
+}
+
+.page-nav__menu-item.page-nav__menu-item--active .page-nav__menu-link {
+    color: var(--Text-Orange, #F9AA66);
+    text-decoration-line: underline;
+}
+
+.page-nav.page-nav--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.page-nav + section {
+    padding-top: 120px;
+}
+
+.page-nav__toggle-text,
+.page-nav__toggle-icon {
+    display: none;
+}
+
+@media (max-width: 1199.98px) {
+    .page-nav__menu-list {
+        justify-content: flex-start;
+        width: max-content;
+    }
+
+    .page-nav__menu {
+        min-width: max-content;
+    }
+
+    .page-nav__wrapper {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .page-nav {
+        padding: 12px 0;
+    }
+
+    .page-nav__wrapper {
+        position: relative;
+        overflow: visible;
+    }
+
+    /* Верхняя кнопка */
+    .page-nav__toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    /* Список — выпадающий */
+    .page-nav__menu {
+        position: absolute;
+        top: calc(100% + 24px);
+        left: 0;
+        width: 100%;
+        background: #212121;
+        box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
+        border-radius: 16px;
+        border: 1px solid rgba(251, 251, 251, 0.15);
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .page-nav__menu-list {
+        padding: 12px 20px;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .page-nav__menu-item {
+        border-bottom: 1px solid rgba(251, 251, 251, 0.1);
+    }
+
+    .page-nav__menu-item:last-of-type {
+        border-bottom: none;
+    }
+
+    .page-nav__menu-link {
+        display: block;
+        padding: 12px 0;
+    }
+
+    .page-nav__menu-item:first-of-type .page-nav__menu-link {
+        padding-top: 0;
+    }
+
+    .page-nav__menu-item:last-of-type .page-nav__menu-link {
+        padding-bottom: 0;
+    }
+
+    .page-nav__menu-dot {
+        display: none;
+    }
+
+    /* Открытое состояние */
+    .page-nav--open .page-nav__menu {
+        max-height: max-content;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .page-nav__toggle-text {
+        display: block;
+        color: var(--Text-White, #FBFBFB);
+        font-size: var(--Text-Title-Size-H5, 16px);
+        font-weight: 700;
+        line-height: 125%;
+    }
+
+    .page-nav__toggle-icon {
+        padding: 5px;
+        border-radius: 6px;
+        border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+        background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .page-nav__toggle-icon svg {
+        transition: transform 0.35s ease;
+        transform-origin: center;
+    }
+
+    .page-nav--open .page-nav__toggle-icon svg {
+        transform: scaleY(-1);
+    }
+}

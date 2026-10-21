@@ -1,0 +1,188 @@
+/* Блок «solutions» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+@media (max-width: 478.98px) {
+    .solutions__item-title {
+        font-size: 20px;
+    }
+
+    .solutions__item-description {
+        font-size: 14px;
+        line-height: 1.43;
+    }
+
+    .solutions__item {
+        padding: 12px;
+    }
+}
+
+.solutions {
+    position: relative;
+    z-index: 2;
+}
+
+/*
+ * Раньше здесь был grid 1fr/2fr под маскота слева. Маскота в макете нет,
+ * раскладка стала линейной — колонка на Flexbox, как требует регламент.
+ */
+.solutions__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.solutions__title {
+    margin: 0;
+    min-width: 300px;
+}
+
+.solutions__list {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    /*
+     * В макете карточки — компоненты фиксированной высоты, и в ряду они равны.
+     * Здесь высота задаётся контентом, поэтому stretch: иначе карточка с тремя
+     * строками описания оказывается выше соседней с двумя.
+     */
+    align-items: stretch;
+    padding-bottom: 2px;
+}
+
+/*
+ * Три колонки во всех широких фреймах: Full HD 2380:22956 — 608,
+ * Desktop 2363:33915 — 448, оба = (ширина − 32) / 3. Планшет 2376:16784 —
+ * две колонки по 380. Прежнее `flex: 1 0 0` с минимумом 340 раскладывало
+ * на Full HD пять карточек в ряд и шестую на всю ширину.
+ */
+.solutions__item {
+    display: flex;
+    min-width: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+    flex: 0 1 calc((100% - 32px) / 3);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* I2380:22957;147:2731 — рамка иконки 32x32, обводка внутри (padding 4 - border). */
+.solutions__item-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    padding: 3px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.solutions__item-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.solutions__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.solutions__item-title {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.solutions__item-description {
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.solutions__item-action {
+}
+
+@media (max-width: 991.98px) {
+    /* Планшетный фрейм 2376:16780: шаг между заголовком и карточками 48, поле карточки 16. */
+    .solutions__content {
+        gap: 48px;
+    }
+
+    /* Планшет 2376:16784 — две колонки. */
+    .solutions__item {
+        flex: 0 1 calc((100% - 16px) / 2);
+        padding: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .solutions {
+        padding-top: 32px;
+    }
+
+    .solutions__content {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .solutions__item {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .solutions__item-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .btn {
+        padding: 6px 6px 6px 12px;
+        gap: 4px;
+        height: auto;
+    }
+
+    .btn__text {
+        font-size: 14px;
+    }
+
+    .btn__icon {
+        width: 16px;
+        height: 16px;
+        line-height: 1;
+    }
+
+    .btn__icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .btn__icon-arrow {
+        width: 32px;
+        height: 32px;
+    }
+
+    .btn__icon-arrow svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 419.98px) {
+    .solutions__item {
+        min-width: unset;
+        width: 100%;
+        flex:unset;
+    }
+}

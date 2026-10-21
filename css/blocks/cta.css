@@ -1,0 +1,225 @@
+/* Блок «cta» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.cta {
+    padding-bottom: 64px;
+    border-radius: 0 0 32px 32px;
+    border-right: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    border-bottom: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    border-left: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Background-Black, #212121);
+    margin-bottom: -32px;
+    z-index: 3;
+}
+
+.cta__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    align-items: center;
+}
+
+.cta .section__badge {
+    align-self: center;
+}
+
+.cta__content {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cta__card {
+    border-radius: 32px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Gradient, linear-gradient(142deg, #F9AA66 0%, #FF7759 100%));
+    backdrop-filter: blur(10px);
+    padding: 48px 24px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    text-align: center;
+    width: 100%;
+}
+
+.cta__card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.cta__card-title {
+    margin: 0;
+    padding: 0;
+    color: var(--Text-Dark-blue, #2B323B);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.cta__card-text {
+    color: var(--Text-Dark-blue, #2B323B);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+    max-width: 720px;
+}
+
+.cta__card-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.cta__card-action-text {
+    color: var(--Text-Dark-blue, #2B323B);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+    line-height: 150%;
+    max-width: 500px;
+}
+
+.cta__contacts {
+    padding: 23px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    display: none;
+}
+
+.cta__contacts-title {}
+
+.cta__contacts-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cta__contacts-item {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.cta__contacts-item span {
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+    font-size: var(--Text-Body-Text-Size-Small, 14px);
+    font-weight: 500;
+    line-height: 142.857%;
+}
+
+.cta__contacts-link {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.cta__contacts-link span {
+    color: var(--Text-White, #FBFBFB);
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.cta__contacts-link svg {
+    width: 24px;
+    height: 24px;
+}
+
+.cta__contacts-link:hover span {
+    color: #F9AA66;
+}
+
+.cta__contacts-sep {
+    height: auto;
+    width: 1px;
+    background: rgba(251, 251, 251, 0.10);
+}
+
+.cta__contacts-social {
+    display: flex;
+    gap: 8px;
+}
+
+.cta__contacts-social-link {}
+
+.cta__contacts-link:hover svg path,
+.cta__contacts-social-link:hover svg path {
+    fill: #F9AA66;
+}
+
+@media (max-width: 991.98px) {
+    .cta__contacts-sep {
+        display: none;
+    }
+
+    .cta__contacts-title {
+        text-align: center;
+    }
+
+    .cta__contacts-list {
+        flex-wrap: wrap;
+        gap: 28px;
+    }
+
+    .cta__card {
+        padding: 48px 16px;
+    }
+
+    .cta__contacts {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .cta__card {
+        border-radius: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .cta__card {
+        padding: 32px 12px;
+    }
+
+    .cta__card-title {
+        font-size: 32px;
+    }
+
+    .cta__card-text {
+        font-size: 16px;
+    }
+
+    .cta__card-action-text {
+        font-size: 20px;
+    }
+
+    .cta__card {
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cta__card,
+    .cta__contacts {
+        border-radius: 12px;
+    }
+
+    .cta__contacts-item span {
+        font-size: 12px;
+    }
+
+    .cta__contacts-link span {
+        font-size: 16px;
+    }
+}

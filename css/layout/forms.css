@@ -1,0 +1,532 @@
+/* Каркас сайта (forms) — есть на каждой странице. */
+
+.input-form-block {
+    padding: 4px;
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    width: 100%;
+}
+
+.input-form-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+}
+
+.input-form {
+    overflow: hidden;
+    color: #FBFBFB;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: calc(100% - 64px);
+}
+
+.input-form:active,
+.input-form:focus,
+.input-form:hover,
+.input-form-block--textarea:active,
+.input-form-block--textarea:focus,
+.input-form-block--textarea:hover,
+.phone-field__input:active,
+.phone-field__input:focus,
+.phone-field__input:hover {
+    border:none;
+    outline: none;
+    box-shadow: none;
+}
+
+.input-form-block:hover,
+.input-form-block:focus-within,
+.input-form-block:has(.input-form:active),
+.input-form-block:has(.input-form:hover),
+.input-form-block:has(.input-form:focus), 
+.input-form-block:has(.phone-field__input:active),
+.input-form-block:has(.phone-field__input:hover),
+.input-form-block:has(.phone-field__input:focus) {
+    border: 1px solid var(--Stroke-Orange, #F9AA66);
+}
+
+.input-form-clear {
+    border-radius: 6px;
+    border: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    display: flex;
+    width: 28px;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    aspect-ratio: 1/1;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.input-form-clear--disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.input-form-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.input-form-item--50 {
+    width: calc(50% - 12px);
+}
+
+.input-form-label {
+    color: var(--Text-White, #FBFBFB);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 133.333%;
+}
+
+.input-form-label span {
+    color: #F9AA66;
+}
+
+.phone-field__input {
+    color: #fbfbfb;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
+.phone-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.phone-field__country-btn {
+    background: transparent;
+    border: none;
+    padding: 0 8px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    cursor:pointer;
+}
+
+.phone-field__country-code {
+    color: var(--Text-White, #FBFBFB);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.phone-field__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: var(--island-orange-20, rgba(249, 170, 102, 0.20));
+    width: 28px;
+    height: 28px;
+}
+
+.phone-field__control {
+    position: relative;
+}
+
+.phone-field__dropdown[hidden] {
+  display: none !important;
+}
+
+.phone-field__dropdown {
+    width: 320px;
+    padding: 16px 16px 12px 16px;
+    position: absolute;
+    top:calc(100% + 8px);
+    left: 0;
+    border-radius: 16px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Black, #212121);
+    box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 3;
+}
+
+.phone-field__search {
+    padding: 6px 8px 6px 6px;
+    display: flex;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: transparent;
+}
+
+.phone-field__search-input {
+    display: flex;
+    color: #fff;
+    padding: 0 8px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+    background: transparent;
+    border: none;
+    width: calc(100% - 24px);
+}
+
+.phone-field__search-input::placeholder {
+    color: rgba(251, 251, 251, 0.50);
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.phone-field__search-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    border-radius: 6px;
+    border: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    padding: 2px;
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.phone-field__list {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(32px * 5); /* 5 элементов по 40px */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 6px;         /* место под скроллбар, чтобы текст не прилипал */
+    overscroll-behavior: contain;
+}
+
+.phone-field__option {
+    padding-bottom: 8px;
+    padding-top: 8px;
+    background: transparent;
+    border:none;
+    color:#fff;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    cursor:pointer;
+    height: 40px;
+    font-size: 14px;
+}
+
+.input-form-error {
+    /* display: flex; */
+    display: none;
+    gap: 8px;
+}
+
+.input-form-error-icon {
+    width: 16px;
+    height: 16px;
+    background: url('../../img/error_icon.svg');
+}
+
+.input-form-error-text {
+    color: var(--Universal-Red, #FF3434);
+    font-size: 12px;
+    line-height: 133.333%;
+}
+
+.phone-field__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.phone-field__list::-webkit-scrollbar-track {
+  background: rgba(251, 251, 251, 0.08);
+  border-radius: 4px;
+}
+
+.phone-field__list::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: linear-gradient(142deg, #F9AA66 0%, #FF7759 100%);
+}
+
+.phone-field__list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(142deg, #FFB77A 0%, #FF8A6B 100%);
+}
+
+.phone-field__option[hidden] {
+    display: none;
+}
+
+.phone-field__option:first-of-type {
+    border-top: none;
+}
+
+.phone-field__country-arrow {
+    line-height: 0;
+}
+
+.phone-field__country-arrow svg {
+  transition: transform 0.25s ease;
+  transform-origin: center;
+}
+
+.phone-field__country-btn[aria-expanded="true"] 
+.phone-field__country-arrow svg {
+  transform: scaleY(-1);
+}
+
+.help-select {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.help-select__arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Orange, #F9AA66);
+    padding: 2px;
+    cursor: pointer;
+}
+
+.help-select__button {
+    height: 28px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: #FBFBFB;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+    cursor: pointer;
+}
+
+.help-select__placeholder {
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+}
+
+.help-select__control {
+    position: relative;
+}
+
+.help-select__dropdown {
+    position: absolute;
+    top:calc(100% + 8px);
+    left:0;
+}
+
+.help-select__dropdown {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px 20px 4px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Island-Black, #212121);
+    box-shadow: 0 8px 48px 0 rgba(0, 0, 0, 0.30);
+}
+
+.help-select__dropdown[hidden] {
+    display: none;
+}
+
+.help-select__option {
+    text-align: left;
+    background: transparent;
+    border:none;
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    border-bottom: 1px solid var(--stroke-white-10, rgba(251, 251, 251, 0.10));
+    cursor: pointer;
+}
+
+.help-select__option:last-of-type {
+    border-bottom: none;
+}
+
+.input-form-block--textarea {
+    padding: 0;
+    width: 100%;
+}
+
+.input-form-block--textarea textarea {
+    width: 100%;
+    height: 100px;
+    background: transparent;
+    border:none;
+    color: var(--Text-White, #FBFBFB);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.input-form-block--textarea textarea::placeholder {
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.input-form-block--textarea textarea:active,
+.input-form-block--textarea textarea:focus,
+.input-form-block--textarea textarea:hover {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+/* контейнер строки (как тёмная плашка на скрине) */
+.privacy-consent{
+
+}
+
+/* label делает кликабельным всё */
+.ui-check{
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* прячем нативный чекбокс, но оставляем доступность */
+.ui-check__input{
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* квадрат */
+.ui-check__box{
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(251, 251, 251, 0.15);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  margin-top: 1px;
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+/* галочка (по умолчанию скрыта) */
+.ui-check__box::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transition: opacity .12s ease;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%232B323B' fill-rule='evenodd' clip-rule='evenodd' d='M6.25 11.8751C6.07934 11.8751 5.90867 11.8098 5.77867 11.6798L2.862 8.7632C2.60134 8.50253 2.60134 8.08113 2.862 7.82053C3.12267 7.55987 3.544 7.55987 3.80467 7.82053L6.25 10.2659L12.1953 4.3205C12.456 4.05983 12.8773 4.05983 13.138 4.3205C13.3987 4.58117 13.3987 5.0025 13.138 5.26317L6.72133 11.6798C6.59134 11.8098 6.42067 11.8751 6.25 11.8751Z'/%3E%3C/svg%3E");
+}
+
+/* показываем при checked */
+.ui-check__input:checked + .ui-check__box::after {
+  opacity: 1;
+}
+
+/* текст */
+.ui-check__text{
+    color: #FBFBFB;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 142.857%ж
+}
+
+/* ссылка (оранжевая) */
+.ui-check__link{
+  color: #F9AA66;
+  text-decoration: none;
+}
+
+.ui-check__link:hover{
+  text-decoration: underline;
+}
+
+/* состояние checked */
+.ui-check__input:checked + .ui-check__box{
+  border-color: transparent;
+  background-color: #F9AA66;
+}
+
+.ui-check__input:checked + .ui-check__box::after{
+  opacity: 1;
+}
+
+/* фокус с клавиатуры */
+.ui-check__input:focus-visible + .ui-check__box{
+  box-shadow: 0 0 0 3px rgba(249, 170, 102, 0.35);
+}
+
+.input-form-action {
+    margin-top: 12px;
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 575.98px) {
+    .phone-field__dropdown {
+        width:320px;
+        left: 0;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .input-form-block {
+        gap:4px;
+    }
+}

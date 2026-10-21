@@ -1,0 +1,1616 @@
+/* Каркас сайта (footer) — есть на каждой странице. */
+
+.footer {
+    margin-top: -6px;
+    padding-top: 6px;
+    padding-bottom: 0;
+    position: relative;
+    z-index: 0;
+    background: radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px), radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px), radial-gradient(53.66% 53.66% at 50% 49.83%, rgba(249, 170, 102, 0.30) 0%, rgba(33, 33, 33, 0.00) 100%), #212121;
+    background-repeat: repeat, repeat, no-repeat, repeat;
+    background-size: 16px 16px, 16px 16px, 100% 100%, auto;
+    background-position: 0 0, 8px 8px, 0 300px, 0 0;
+    overflow:visible;
+    z-index: 3;
+    padding-top: 0;
+}
+
+.footer .container {
+    position: relative;
+}
+
+.footer__wrapper {
+    position: relative;
+    border-radius: 32px 32px 0 0;
+    border-top: 1px solid  rgba(251, 251, 251, 0.15);
+    border-right: 1px solid rgba(251, 251, 251, 0.15);
+    border-left: 1px solid rgba(251, 251, 251, 0.15);
+    background: var(--Background-Black, #212121);
+    padding: 64px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    z-index:1;
+}
+
+.footer__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.footer__info {
+    max-width: 314px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.footer__logo {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.footer__logo-image {
+    width: 250px;
+}
+
+.footer__logo-text {
+    color: var(--Text-White, #FBFBFB);
+}
+
+.footer__info-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.footer__navigation {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+}
+
+.footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.footer__nav-title {
+    color: var(--Text-Orange, #F9AA66);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.footer__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer__nav-link {
+    color: var(--Text-White, #FBFBFB);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 142.857%;
+    text-decoration: none;
+}
+
+.footer__nav-link:hover {
+    color:#F9AA66
+}
+
+.footer__social {
+    max-width: 168px;
+    display: flex;
+    flex-direction: column;    
+    gap: 32px;
+}
+
+.footer__social-title {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.footer__social-list {
+    display: flex;
+    gap: 8px;
+    padding-right: 32px;
+}
+
+.footer__social-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.footer__social-item:hover {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.footer__line {
+    background: rgba(251, 251, 251, 0.10);
+    height: 1px;
+    width: 100%;
+}
+
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer__bottom-col {}
+
+.footer__bottom p {
+    color: var(--text-white-50, rgba(251, 251, 251, 0.50));
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+.footer__bottom-list {
+    display: flex;
+    gap: 16px;
+}
+
+.footer__bottom-link {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+    text-decoration: none;
+}
+
+.footer__bottom-link:hover {
+    color:#F9AA66;
+}
+
+.footer__bottom-line {
+    width: 1px;
+    height: auto;
+    background: rgba(251, 251, 251, 0.10);
+}
+
+@media (max-width: 1399.98px) {
+    .footer__info-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .footer__info {
+        max-width: 290px;
+    }
+
+    .footer__social-list {
+        padding-right: 0;
+    }
+
+    .footer__navigation {
+        gap: 32px;
+    }
+
+    .footer__bottom {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .footer__top {
+        flex-direction: column;
+        gap: 64px;
+    }
+
+    .footer__navigation {
+        justify-content: space-between;
+    }
+
+    .footer__info {
+        flex-direction: row;
+        justify-content: space-between;
+        max-width: unset;
+        align-items: flex-end;
+    }
+
+    .footer__logo {
+        width: 302px;
+    }
+
+    .footer__social {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+    }
+
+    .footer__bottom-list {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .footer__navigation {
+        gap: 32px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .footer__info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer__navigation {
+        flex-direction: column;
+    }
+
+    .footer__nav {
+        gap: 16px;
+    }
+
+    .footer__nav-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .footer__nav-link {
+        width: calc(50% - 8px);
+    }
+
+    .footer__nav:first-of-type .footer__nav-link {
+        width: calc(33.33% - 10.67px);
+    }
+
+    .footer .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .footer__wrapper {
+        padding-top: 32px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .footer__bottom-list {
+        flex-wrap: wrap;
+    }
+}
+
+/*
+ * Светлый футер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
+ * `2380:23846`, Tablet 840 — `2376:17671`, ховеры — `2386:37529`.
+ *
+ * Разметка — `template-parts/footer-home.php`, выводится на светлых шаблонах
+ * (условие `nv_is_light_theme()`). Футер глобальный, поэтому каждый селектор
+ * ограничен `body.home` / `body.page-template-page-solutions` /
+ * `body.page-template-page-privacy`: тёмная версия на остальных страницах
+ * остаётся на правилах блока FOOTER выше.
+ *
+ * Базовый уровень — Full HD. Desktop — в `max-width: 1599.98px`, Tablet — в
+ * `max-width: 991.98px`. Ниже 768 макета нет, раскладка подобрана по логике темы.
+ */
+body.home .footer,
+body.single-document .footer,
+body.nv-blog .footer,
+body.error404 .footer,
+body.page-template-page-docs .footer,
+body.page-template-page-kyc .footer,
+body.page-template-page-identity-verification .footer,
+body.page-template-page-solutions .footer,
+body.page-template-page-privacy .footer,
+body.page-template-page-price-matrix .footer,
+body.single-post .footer {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: var(--nv-surface-2);
+}
+
+/* Карточка футера. Обводка в Figma внутренняя, поэтому паддинг минус её ширина. */
+body.home .footer__wrapper,
+body.single-document .footer__wrapper,
+body.nv-blog .footer__wrapper,
+body.error404 .footer__wrapper,
+body.page-template-page-docs .footer__wrapper,
+body.page-template-page-kyc .footer__wrapper,
+body.page-template-page-identity-verification .footer__wrapper,
+body.page-template-page-solutions .footer__wrapper,
+body.page-template-page-privacy .footer__wrapper,
+body.page-template-page-price-matrix .footer__wrapper,
+body.single-post .footer__wrapper {
+    gap: 32px;
+    padding: 63px 31px 32px;
+    border-width: 1px 1px 0;
+    border-style: solid;
+    border-color: var(--nv-surface-4);
+    border-radius: var(--nv-radius-hero) var(--nv-radius-hero) 0 0;
+    background: var(--nv-surface-1);
+}
+
+body.home .footer__top,
+body.single-document .footer__top,
+body.nv-blog .footer__top,
+body.error404 .footer__top,
+body.page-template-page-docs .footer__top,
+body.page-template-page-kyc .footer__top,
+body.page-template-page-identity-verification .footer__top,
+body.page-template-page-solutions .footer__top,
+body.page-template-page-privacy .footer__top,
+body.page-template-page-price-matrix .footer__top,
+body.single-post .footer__top {
+    align-items: flex-start;
+    gap: 0;
+}
+
+/* --- Левая колонка: логотип, слоган, реквизиты, сертификаты --- */
+body.home .footer__info,
+body.single-document .footer__info,
+body.nv-blog .footer__info,
+body.error404 .footer__info,
+body.page-template-page-docs .footer__info,
+body.page-template-page-kyc .footer__info,
+body.page-template-page-identity-verification .footer__info,
+body.page-template-page-solutions .footer__info,
+body.page-template-page-privacy .footer__info,
+body.page-template-page-price-matrix .footer__info,
+body.single-post .footer__info {
+    flex: 1 0 0;
+    max-width: none;
+    justify-content: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__brand,
+body.single-document .footer__brand,
+body.nv-blog .footer__brand,
+body.error404 .footer__brand,
+body.page-template-page-docs .footer__brand,
+body.page-template-page-kyc .footer__brand,
+body.page-template-page-identity-verification .footer__brand,
+body.page-template-page-solutions .footer__brand,
+body.page-template-page-privacy .footer__brand,
+body.page-template-page-price-matrix .footer__brand,
+body.single-post .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+body.home .footer__logo-image,
+body.single-document .footer__logo-image,
+body.nv-blog .footer__logo-image,
+body.error404 .footer__logo-image,
+body.page-template-page-docs .footer__logo-image,
+body.page-template-page-kyc .footer__logo-image,
+body.page-template-page-identity-verification .footer__logo-image,
+body.page-template-page-solutions .footer__logo-image,
+body.page-template-page-privacy .footer__logo-image,
+body.page-template-page-price-matrix .footer__logo-image,
+body.single-post .footer__logo-image {
+    display: block;
+    width: 302px;
+    line-height: 0;
+}
+
+body.home .footer__logo-image img,
+body.single-document .footer__logo-image img,
+body.nv-blog .footer__logo-image img,
+body.error404 .footer__logo-image img,
+body.page-template-page-docs .footer__logo-image img,
+body.page-template-page-kyc .footer__logo-image img,
+body.page-template-page-identity-verification .footer__logo-image img,
+body.page-template-page-solutions .footer__logo-image img,
+body.page-template-page-privacy .footer__logo-image img,
+body.page-template-page-price-matrix .footer__logo-image img,
+body.single-post .footer__logo-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+body.home .footer__tagline,
+body.single-document .footer__tagline,
+body.nv-blog .footer__tagline,
+body.error404 .footer__tagline,
+body.page-template-page-docs .footer__tagline,
+body.page-template-page-kyc .footer__tagline,
+body.page-template-page-identity-verification .footer__tagline,
+body.page-template-page-solutions .footer__tagline,
+body.page-template-page-privacy .footer__tagline,
+body.page-template-page-price-matrix .footer__tagline,
+body.single-post .footer__tagline {
+    color: var(--nv-primary);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+body.home .footer__details,
+body.single-document .footer__details,
+body.nv-blog .footer__details,
+body.error404 .footer__details,
+body.page-template-page-docs .footer__details,
+body.page-template-page-kyc .footer__details,
+body.page-template-page-identity-verification .footer__details,
+body.page-template-page-solutions .footer__details,
+body.page-template-page-privacy .footer__details,
+body.page-template-page-price-matrix .footer__details,
+body.single-post .footer__details {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__legal,
+body.single-document .footer__legal,
+body.nv-blog .footer__legal,
+body.error404 .footer__legal,
+body.page-template-page-docs .footer__legal,
+body.page-template-page-kyc .footer__legal,
+body.page-template-page-identity-verification .footer__legal,
+body.page-template-page-solutions .footer__legal,
+body.page-template-page-privacy .footer__legal,
+body.page-template-page-price-matrix .footer__legal,
+body.single-post .footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.home .footer__legal-name,
+body.single-document .footer__legal-name,
+body.nv-blog .footer__legal-name,
+body.error404 .footer__legal-name,
+body.page-template-page-docs .footer__legal-name,
+body.page-template-page-kyc .footer__legal-name,
+body.page-template-page-identity-verification .footer__legal-name,
+body.page-template-page-solutions .footer__legal-name,
+body.page-template-page-privacy .footer__legal-name,
+body.page-template-page-price-matrix .footer__legal-name,
+body.single-post .footer__legal-name {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__legal-address,
+body.single-document .footer__legal-address,
+body.nv-blog .footer__legal-address,
+body.error404 .footer__legal-address,
+body.page-template-page-docs .footer__legal-address,
+body.page-template-page-kyc .footer__legal-address,
+body.page-template-page-identity-verification .footer__legal-address,
+body.page-template-page-solutions .footer__legal-address,
+body.page-template-page-privacy .footer__legal-address,
+body.page-template-page-price-matrix .footer__legal-address,
+body.single-post .footer__legal-address {
+    color: var(--nv-object-2);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+/* В Full HD значки стоят слева от реквизитов, ниже — под ними. */
+body.home .footer__badges,
+body.single-document .footer__badges,
+body.nv-blog .footer__badges,
+body.error404 .footer__badges,
+body.page-template-page-docs .footer__badges,
+body.page-template-page-kyc .footer__badges,
+body.page-template-page-identity-verification .footer__badges,
+body.page-template-page-solutions .footer__badges,
+body.page-template-page-privacy .footer__badges,
+body.page-template-page-price-matrix .footer__badges,
+body.single-post .footer__badges {
+    display: flex;
+    align-items: center;
+    order: -1;
+    gap: 12px;
+}
+
+body.home .footer__badge,
+body.single-document .footer__badge,
+body.nv-blog .footer__badge,
+body.error404 .footer__badge,
+body.page-template-page-docs .footer__badge,
+body.page-template-page-kyc .footer__badge,
+body.page-template-page-identity-verification .footer__badge,
+body.page-template-page-solutions .footer__badge,
+body.page-template-page-privacy .footer__badge,
+body.page-template-page-price-matrix .footer__badge,
+body.single-post .footer__badge {
+    display: block;
+    line-height: 0;
+}
+
+body.home .footer__badge img,
+body.single-document .footer__badge img,
+body.nv-blog .footer__badge img,
+body.error404 .footer__badge img,
+body.page-template-page-docs .footer__badge img,
+body.page-template-page-kyc .footer__badge img,
+body.page-template-page-identity-verification .footer__badge img,
+body.page-template-page-solutions .footer__badge img,
+body.page-template-page-privacy .footer__badge img,
+body.page-template-page-price-matrix .footer__badge img,
+body.single-post .footer__badge img {
+    display: block;
+    width: auto;
+    height: 64px;
+}
+
+/* Круглый значок в макете обрезан по окружности с небольшим зумом. */
+body.home .footer__badge--round,
+body.single-document .footer__badge--round,
+body.nv-blog .footer__badge--round,
+body.error404 .footer__badge--round,
+body.page-template-page-docs .footer__badge--round,
+body.page-template-page-kyc .footer__badge--round,
+body.page-template-page-identity-verification .footer__badge--round,
+body.page-template-page-solutions .footer__badge--round,
+body.page-template-page-privacy .footer__badge--round,
+body.page-template-page-price-matrix .footer__badge--round,
+body.single-post .footer__badge--round {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+body.home .footer__badge--round img,
+body.single-document .footer__badge--round img,
+body.nv-blog .footer__badge--round img,
+body.error404 .footer__badge--round img,
+body.page-template-page-docs .footer__badge--round img,
+body.page-template-page-kyc .footer__badge--round img,
+body.page-template-page-identity-verification .footer__badge--round img,
+body.page-template-page-solutions .footer__badge--round img,
+body.page-template-page-privacy .footer__badge--round img,
+body.page-template-page-price-matrix .footer__badge--round img,
+body.single-post .footer__badge--round img {
+    position: absolute;
+    top: -4.75%;
+    left: -9.54%;
+    width: 116.02%;
+    height: 111.05%;
+}
+
+/* --- Навигация --- */
+body.home .footer__navigation,
+body.single-document .footer__navigation,
+body.nv-blog .footer__navigation,
+body.error404 .footer__navigation,
+body.page-template-page-docs .footer__navigation,
+body.page-template-page-kyc .footer__navigation,
+body.page-template-page-identity-verification .footer__navigation,
+body.page-template-page-solutions .footer__navigation,
+body.page-template-page-privacy .footer__navigation,
+body.page-template-page-price-matrix .footer__navigation,
+body.single-post .footer__navigation {
+    flex: 1 0 0;
+    justify-content: flex-start;
+    gap: 96px;
+}
+
+body.home .footer__nav,
+body.single-document .footer__nav,
+body.nv-blog .footer__nav,
+body.error404 .footer__nav,
+body.page-template-page-docs .footer__nav,
+body.page-template-page-kyc .footer__nav,
+body.page-template-page-identity-verification .footer__nav,
+body.page-template-page-solutions .footer__nav,
+body.page-template-page-privacy .footer__nav,
+body.page-template-page-price-matrix .footer__nav,
+body.single-post .footer__nav {
+    gap: 32px;
+}
+
+body.home .footer__nav-title,
+body.single-document .footer__nav-title,
+body.nv-blog .footer__nav-title,
+body.error404 .footer__nav-title,
+body.page-template-page-docs .footer__nav-title,
+body.page-template-page-kyc .footer__nav-title,
+body.page-template-page-identity-verification .footer__nav-title,
+body.page-template-page-solutions .footer__nav-title,
+body.page-template-page-privacy .footer__nav-title,
+body.page-template-page-price-matrix .footer__nav-title,
+body.single-post .footer__nav-title {
+    color: var(--nv-primary);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__nav-list,
+body.single-document .footer__nav-list,
+body.nv-blog .footer__nav-list,
+body.error404 .footer__nav-list,
+body.page-template-page-docs .footer__nav-list,
+body.page-template-page-kyc .footer__nav-list,
+body.page-template-page-identity-verification .footer__nav-list,
+body.page-template-page-solutions .footer__nav-list,
+body.page-template-page-privacy .footer__nav-list,
+body.page-template-page-price-matrix .footer__nav-list,
+body.single-post .footer__nav-list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+/* Шесть продуктов в макете разложены в две колонки по три. */
+body.home .footer__nav--products .footer__nav-list,
+body.single-document .footer__nav--products .footer__nav-list,
+body.nv-blog .footer__nav--products .footer__nav-list,
+body.error404 .footer__nav--products .footer__nav-list,
+body.page-template-page-docs .footer__nav--products .footer__nav-list,
+body.page-template-page-kyc .footer__nav--products .footer__nav-list,
+body.page-template-page-identity-verification .footer__nav--products .footer__nav-list,
+body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+body.single-post .footer__nav--products .footer__nav-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    justify-items: start;
+    column-gap: 64px;
+    row-gap: 16px;
+}
+
+body.home .footer__nav-link,
+body.single-document .footer__nav-link,
+body.nv-blog .footer__nav-link,
+body.error404 .footer__nav-link,
+body.page-template-page-docs .footer__nav-link,
+body.page-template-page-kyc .footer__nav-link,
+body.page-template-page-identity-verification .footer__nav-link,
+body.page-template-page-solutions .footer__nav-link,
+body.page-template-page-privacy .footer__nav-link,
+body.page-template-page-price-matrix .footer__nav-link,
+body.single-post .footer__nav-link {
+    width: auto;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 133.333%;
+    opacity: 0.7;
+    transition: color 0.2s ease;
+}
+
+body.home .footer__nav-link:hover,
+body.single-document .footer__nav-link:hover,
+body.nv-blog .footer__nav-link:hover,
+body.error404 .footer__nav-link:hover,
+body.page-template-page-docs .footer__nav-link:hover,
+body.page-template-page-kyc .footer__nav-link:hover,
+body.page-template-page-identity-verification .footer__nav-link:hover,
+body.page-template-page-solutions .footer__nav-link:hover,
+body.page-template-page-privacy .footer__nav-link:hover,
+body.page-template-page-price-matrix .footer__nav-link:hover,
+body.single-post .footer__nav-link:hover,
+body.home .footer__nav-link:focus-visible,
+body.single-document .footer__nav-link:focus-visible,
+body.nv-blog .footer__nav-link:focus-visible,
+body.error404 .footer__nav-link:focus-visible,
+body.page-template-page-docs .footer__nav-link:focus-visible,
+body.page-template-page-kyc .footer__nav-link:focus-visible,
+body.page-template-page-identity-verification .footer__nav-link:focus-visible,
+body.page-template-page-solutions .footer__nav-link:focus-visible,
+body.page-template-page-privacy .footer__nav-link:focus-visible,
+body.page-template-page-price-matrix .footer__nav-link:focus-visible,
+body.single-post .footer__nav-link:focus-visible {
+    color: var(--nv-primary);
+}
+
+/* --- Правая колонка: почта и соцсети --- */
+body.home .footer__aside,
+body.single-document .footer__aside,
+body.nv-blog .footer__aside,
+body.error404 .footer__aside,
+body.page-template-page-docs .footer__aside,
+body.page-template-page-kyc .footer__aside,
+body.page-template-page-identity-verification .footer__aside,
+body.page-template-page-solutions .footer__aside,
+body.page-template-page-privacy .footer__aside,
+body.page-template-page-price-matrix .footer__aside,
+body.single-post .footer__aside {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 32px;
+    gap: 48px;
+}
+
+body.home .footer__contacts,
+body.single-document .footer__contacts,
+body.nv-blog .footer__contacts,
+body.error404 .footer__contacts,
+body.page-template-page-docs .footer__contacts,
+body.page-template-page-kyc .footer__contacts,
+body.page-template-page-identity-verification .footer__contacts,
+body.page-template-page-solutions .footer__contacts,
+body.page-template-page-privacy .footer__contacts,
+body.page-template-page-price-matrix .footer__contacts,
+body.single-post .footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+body.home .footer__contacts-title,
+body.single-document .footer__contacts-title,
+body.nv-blog .footer__contacts-title,
+body.error404 .footer__contacts-title,
+body.page-template-page-docs .footer__contacts-title,
+body.page-template-page-kyc .footer__contacts-title,
+body.page-template-page-identity-verification .footer__contacts-title,
+body.page-template-page-solutions .footer__contacts-title,
+body.page-template-page-privacy .footer__contacts-title,
+body.page-template-page-price-matrix .footer__contacts-title,
+body.single-post .footer__contacts-title,
+body.home .footer__social-title,
+body.single-document .footer__social-title,
+body.nv-blog .footer__social-title,
+body.error404 .footer__social-title,
+body.page-template-page-docs .footer__social-title,
+body.page-template-page-kyc .footer__social-title,
+body.page-template-page-identity-verification .footer__social-title,
+body.page-template-page-solutions .footer__social-title,
+body.page-template-page-privacy .footer__social-title,
+body.page-template-page-price-matrix .footer__social-title,
+body.single-post .footer__social-title {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+body.home .footer__contacts-list,
+body.single-document .footer__contacts-list,
+body.nv-blog .footer__contacts-list,
+body.error404 .footer__contacts-list,
+body.page-template-page-docs .footer__contacts-list,
+body.page-template-page-kyc .footer__contacts-list,
+body.page-template-page-identity-verification .footer__contacts-list,
+body.page-template-page-solutions .footer__contacts-list,
+body.page-template-page-privacy .footer__contacts-list,
+body.page-template-page-price-matrix .footer__contacts-list,
+body.single-post .footer__contacts-list {
+    display: flex;
+    align-items: flex-start;
+}
+
+body.home .footer__mail,
+body.single-document .footer__mail,
+body.nv-blog .footer__mail,
+body.error404 .footer__mail,
+body.page-template-page-docs .footer__mail,
+body.page-template-page-kyc .footer__mail,
+body.page-template-page-identity-verification .footer__mail,
+body.page-template-page-solutions .footer__mail,
+body.page-template-page-privacy .footer__mail,
+body.page-template-page-price-matrix .footer__mail,
+body.single-post .footer__mail {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 5px 5px 11px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 142.857%;
+    text-decoration: none;
+    gap: 4px;
+    backdrop-filter: blur(10px);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.home .footer__mail:hover,
+body.single-document .footer__mail:hover,
+body.nv-blog .footer__mail:hover,
+body.error404 .footer__mail:hover,
+body.page-template-page-docs .footer__mail:hover,
+body.page-template-page-kyc .footer__mail:hover,
+body.page-template-page-identity-verification .footer__mail:hover,
+body.page-template-page-solutions .footer__mail:hover,
+body.page-template-page-privacy .footer__mail:hover,
+body.page-template-page-price-matrix .footer__mail:hover,
+body.single-post .footer__mail:hover,
+body.home .footer__mail:focus-visible,
+body.single-document .footer__mail:focus-visible,
+body.nv-blog .footer__mail:focus-visible,
+body.error404 .footer__mail:focus-visible,
+body.page-template-page-docs .footer__mail:focus-visible,
+body.page-template-page-kyc .footer__mail:focus-visible,
+body.page-template-page-identity-verification .footer__mail:focus-visible,
+body.page-template-page-solutions .footer__mail:focus-visible,
+body.page-template-page-privacy .footer__mail:focus-visible,
+body.page-template-page-price-matrix .footer__mail:focus-visible,
+body.single-post .footer__mail:focus-visible {
+    background: var(--nv-surface-3);
+    color: var(--nv-primary);
+}
+
+body.home .footer__mail-icon,
+body.single-document .footer__mail-icon,
+body.nv-blog .footer__mail-icon,
+body.error404 .footer__mail-icon,
+body.page-template-page-docs .footer__mail-icon,
+body.page-template-page-kyc .footer__mail-icon,
+body.page-template-page-identity-verification .footer__mail-icon,
+body.page-template-page-solutions .footer__mail-icon,
+body.page-template-page-privacy .footer__mail-icon,
+body.page-template-page-price-matrix .footer__mail-icon,
+body.single-post .footer__mail-icon {
+    display: flex;
+    line-height: 0;
+}
+
+body.home .footer__social,
+body.single-document .footer__social,
+body.nv-blog .footer__social,
+body.error404 .footer__social,
+body.page-template-page-docs .footer__social,
+body.page-template-page-kyc .footer__social,
+body.page-template-page-identity-verification .footer__social,
+body.page-template-page-solutions .footer__social,
+body.page-template-page-privacy .footer__social,
+body.page-template-page-price-matrix .footer__social,
+body.single-post .footer__social {
+    max-width: none;
+    gap: 24px;
+}
+
+body.home .footer__social-list,
+body.single-document .footer__social-list,
+body.nv-blog .footer__social-list,
+body.error404 .footer__social-list,
+body.page-template-page-docs .footer__social-list,
+body.page-template-page-kyc .footer__social-list,
+body.page-template-page-identity-verification .footer__social-list,
+body.page-template-page-solutions .footer__social-list,
+body.page-template-page-privacy .footer__social-list,
+body.page-template-page-price-matrix .footer__social-list,
+body.single-post .footer__social-list {
+    padding-right: 0;
+    gap: 8px;
+}
+
+body.home .footer__social-item,
+body.single-document .footer__social-item,
+body.nv-blog .footer__social-item,
+body.error404 .footer__social-item,
+body.page-template-page-docs .footer__social-item,
+body.page-template-page-kyc .footer__social-item,
+body.page-template-page-identity-verification .footer__social-item,
+body.page-template-page-solutions .footer__social-item,
+body.page-template-page-privacy .footer__social-item,
+body.page-template-page-price-matrix .footer__social-item,
+body.single-post .footer__social-item {
+    padding: 7px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    opacity: 0.7;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.home .footer__social-item:hover,
+body.single-document .footer__social-item:hover,
+body.nv-blog .footer__social-item:hover,
+body.error404 .footer__social-item:hover,
+body.page-template-page-docs .footer__social-item:hover,
+body.page-template-page-kyc .footer__social-item:hover,
+body.page-template-page-identity-verification .footer__social-item:hover,
+body.page-template-page-solutions .footer__social-item:hover,
+body.page-template-page-privacy .footer__social-item:hover,
+body.page-template-page-price-matrix .footer__social-item:hover,
+body.single-post .footer__social-item:hover,
+body.home .footer__social-item:focus-visible,
+body.single-document .footer__social-item:focus-visible,
+body.nv-blog .footer__social-item:focus-visible,
+body.error404 .footer__social-item:focus-visible,
+body.page-template-page-docs .footer__social-item:focus-visible,
+body.page-template-page-kyc .footer__social-item:focus-visible,
+body.page-template-page-identity-verification .footer__social-item:focus-visible,
+body.page-template-page-solutions .footer__social-item:focus-visible,
+body.page-template-page-privacy .footer__social-item:focus-visible,
+body.page-template-page-price-matrix .footer__social-item:focus-visible,
+body.single-post .footer__social-item:focus-visible {
+    background: var(--nv-surface-3);
+    color: var(--nv-primary);
+}
+
+/* --- Нижняя строка --- */
+body.home .footer__line,
+body.single-document .footer__line,
+body.nv-blog .footer__line,
+body.error404 .footer__line,
+body.page-template-page-docs .footer__line,
+body.page-template-page-kyc .footer__line,
+body.page-template-page-identity-verification .footer__line,
+body.page-template-page-solutions .footer__line,
+body.page-template-page-privacy .footer__line,
+body.page-template-page-price-matrix .footer__line,
+body.single-post .footer__line {
+    background: var(--nv-surface-4);
+}
+
+body.home .footer__bottom,
+body.single-document .footer__bottom,
+body.nv-blog .footer__bottom,
+body.error404 .footer__bottom,
+body.page-template-page-docs .footer__bottom,
+body.page-template-page-kyc .footer__bottom,
+body.page-template-page-identity-verification .footer__bottom,
+body.page-template-page-solutions .footer__bottom,
+body.page-template-page-privacy .footer__bottom,
+body.page-template-page-price-matrix .footer__bottom,
+body.single-post .footer__bottom {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+body.home .footer__bottom-col--copy,
+body.single-document .footer__bottom-col--copy,
+body.nv-blog .footer__bottom-col--copy,
+body.error404 .footer__bottom-col--copy,
+body.page-template-page-docs .footer__bottom-col--copy,
+body.page-template-page-kyc .footer__bottom-col--copy,
+body.page-template-page-identity-verification .footer__bottom-col--copy,
+body.page-template-page-solutions .footer__bottom-col--copy,
+body.page-template-page-privacy .footer__bottom-col--copy,
+body.page-template-page-price-matrix .footer__bottom-col--copy,
+body.single-post .footer__bottom-col--copy,
+body.home .footer__bottom-col--links,
+body.single-document .footer__bottom-col--links,
+body.nv-blog .footer__bottom-col--links,
+body.error404 .footer__bottom-col--links,
+body.page-template-page-docs .footer__bottom-col--links,
+body.page-template-page-kyc .footer__bottom-col--links,
+body.page-template-page-identity-verification .footer__bottom-col--links,
+body.page-template-page-solutions .footer__bottom-col--links,
+body.page-template-page-privacy .footer__bottom-col--links,
+body.page-template-page-price-matrix .footer__bottom-col--links,
+body.single-post .footer__bottom-col--links {
+    flex: 0 0 auto;
+}
+
+body.home .footer__bottom-col--trademark,
+body.single-document .footer__bottom-col--trademark,
+body.nv-blog .footer__bottom-col--trademark,
+body.error404 .footer__bottom-col--trademark,
+body.page-template-page-docs .footer__bottom-col--trademark,
+body.page-template-page-kyc .footer__bottom-col--trademark,
+body.page-template-page-identity-verification .footer__bottom-col--trademark,
+body.page-template-page-solutions .footer__bottom-col--trademark,
+body.page-template-page-privacy .footer__bottom-col--trademark,
+body.page-template-page-price-matrix .footer__bottom-col--trademark,
+body.single-post .footer__bottom-col--trademark {
+    flex: 1 1 auto;
+}
+
+body.home .footer__bottom p,
+body.single-document .footer__bottom p,
+body.nv-blog .footer__bottom p,
+body.error404 .footer__bottom p,
+body.page-template-page-docs .footer__bottom p,
+body.page-template-page-kyc .footer__bottom p,
+body.page-template-page-identity-verification .footer__bottom p,
+body.page-template-page-solutions .footer__bottom p,
+body.page-template-page-privacy .footer__bottom p,
+body.page-template-page-price-matrix .footer__bottom p,
+body.single-post .footer__bottom p {
+    color: var(--nv-object-3);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+}
+
+body.home .footer__bottom-list,
+body.single-document .footer__bottom-list,
+body.nv-blog .footer__bottom-list,
+body.error404 .footer__bottom-list,
+body.page-template-page-docs .footer__bottom-list,
+body.page-template-page-kyc .footer__bottom-list,
+body.page-template-page-identity-verification .footer__bottom-list,
+body.page-template-page-solutions .footer__bottom-list,
+body.page-template-page-privacy .footer__bottom-list,
+body.page-template-page-price-matrix .footer__bottom-list,
+body.single-post .footer__bottom-list {
+    align-items: center;
+    gap: 16px;
+}
+
+body.home .footer__bottom-link,
+body.single-document .footer__bottom-link,
+body.nv-blog .footer__bottom-link,
+body.error404 .footer__bottom-link,
+body.page-template-page-docs .footer__bottom-link,
+body.page-template-page-kyc .footer__bottom-link,
+body.page-template-page-identity-verification .footer__bottom-link,
+body.page-template-page-solutions .footer__bottom-link,
+body.page-template-page-privacy .footer__bottom-link,
+body.page-template-page-price-matrix .footer__bottom-link,
+body.single-post .footer__bottom-link {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+    transition: color 0.2s ease;
+}
+
+body.home .footer__bottom-link:hover,
+body.single-document .footer__bottom-link:hover,
+body.nv-blog .footer__bottom-link:hover,
+body.error404 .footer__bottom-link:hover,
+body.page-template-page-docs .footer__bottom-link:hover,
+body.page-template-page-kyc .footer__bottom-link:hover,
+body.page-template-page-identity-verification .footer__bottom-link:hover,
+body.page-template-page-solutions .footer__bottom-link:hover,
+body.page-template-page-privacy .footer__bottom-link:hover,
+body.page-template-page-price-matrix .footer__bottom-link:hover,
+body.single-post .footer__bottom-link:hover,
+body.home .footer__bottom-link:focus-visible,
+body.single-document .footer__bottom-link:focus-visible,
+body.nv-blog .footer__bottom-link:focus-visible,
+body.error404 .footer__bottom-link:focus-visible,
+body.page-template-page-docs .footer__bottom-link:focus-visible,
+body.page-template-page-kyc .footer__bottom-link:focus-visible,
+body.page-template-page-identity-verification .footer__bottom-link:focus-visible,
+body.page-template-page-solutions .footer__bottom-link:focus-visible,
+body.page-template-page-privacy .footer__bottom-link:focus-visible,
+body.page-template-page-price-matrix .footer__bottom-link:focus-visible,
+body.single-post .footer__bottom-link:focus-visible {
+    color: var(--nv-primary);
+}
+
+body.home .footer__bottom-line,
+body.single-document .footer__bottom-line,
+body.nv-blog .footer__bottom-line,
+body.error404 .footer__bottom-line,
+body.page-template-page-docs .footer__bottom-line,
+body.page-template-page-kyc .footer__bottom-line,
+body.page-template-page-identity-verification .footer__bottom-line,
+body.page-template-page-solutions .footer__bottom-line,
+body.page-template-page-privacy .footer__bottom-line,
+body.page-template-page-price-matrix .footer__bottom-line,
+body.single-post .footer__bottom-line {
+    width: 1px;
+    height: 20px;
+    background: var(--nv-surface-4);
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 1440. */
+    body.home .footer__navigation,
+    body.single-document .footer__navigation,
+    body.nv-blog .footer__navigation,
+    body.error404 .footer__navigation,
+    body.page-template-page-docs .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
+    body.page-template-page-identity-verification .footer__navigation,
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
+        gap: 80px;
+    }
+
+    body.home .footer__nav--products .footer__nav-list,
+    body.single-document .footer__nav--products .footer__nav-list,
+    body.nv-blog .footer__nav--products .footer__nav-list,
+    body.error404 .footer__nav--products .footer__nav-list,
+    body.page-template-page-docs .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
+    body.page-template-page-identity-verification .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
+        grid-auto-flow: row;
+        grid-template-rows: none;
+        column-gap: 0;
+    }
+
+    body.home .footer__nav-link,
+    body.single-document .footer__nav-link,
+    body.nv-blog .footer__nav-link,
+    body.error404 .footer__nav-link,
+    body.page-template-page-docs .footer__nav-link,
+    body.page-template-page-kyc .footer__nav-link,
+    body.page-template-page-identity-verification .footer__nav-link,
+    body.page-template-page-solutions .footer__nav-link,
+    body.page-template-page-privacy .footer__nav-link,
+    body.page-template-page-price-matrix .footer__nav-link,
+    body.single-post .footer__nav-link {
+        font-size: 14px;
+        line-height: 142.857%;
+    }
+
+    body.home .footer__details,
+    body.single-document .footer__details,
+    body.nv-blog .footer__details,
+    body.error404 .footer__details,
+    body.page-template-page-docs .footer__details,
+    body.page-template-page-kyc .footer__details,
+    body.page-template-page-identity-verification .footer__details,
+    body.page-template-page-solutions .footer__details,
+    body.page-template-page-privacy .footer__details,
+    body.page-template-page-price-matrix .footer__details,
+    body.single-post .footer__details {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    body.home .footer__badges,
+    body.single-document .footer__badges,
+    body.nv-blog .footer__badges,
+    body.error404 .footer__badges,
+    body.page-template-page-docs .footer__badges,
+    body.page-template-page-kyc .footer__badges,
+    body.page-template-page-identity-verification .footer__badges,
+    body.page-template-page-solutions .footer__badges,
+    body.page-template-page-privacy .footer__badges,
+    body.page-template-page-price-matrix .footer__badges,
+    body.single-post .footer__badges {
+        order: 0;
+    }
+
+    body.home .footer__badge img,
+    body.single-document .footer__badge img,
+    body.nv-blog .footer__badge img,
+    body.error404 .footer__badge img,
+    body.page-template-page-docs .footer__badge img,
+    body.page-template-page-kyc .footer__badge img,
+    body.page-template-page-identity-verification .footer__badge img,
+    body.page-template-page-solutions .footer__badge img,
+    body.page-template-page-privacy .footer__badge img,
+    body.page-template-page-price-matrix .footer__badge img,
+    body.single-post .footer__badge img {
+        height: 48px;
+    }
+
+    body.home .footer__badge--round,
+    body.single-document .footer__badge--round,
+    body.nv-blog .footer__badge--round,
+    body.error404 .footer__badge--round,
+    body.page-template-page-docs .footer__badge--round,
+    body.page-template-page-kyc .footer__badge--round,
+    body.page-template-page-identity-verification .footer__badge--round,
+    body.page-template-page-solutions .footer__badge--round,
+    body.page-template-page-privacy .footer__badge--round,
+    body.page-template-page-price-matrix .footer__badge--round,
+    body.single-post .footer__badge--round {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.home .footer__navigation,
+    body.single-document .footer__navigation,
+    body.nv-blog .footer__navigation,
+    body.error404 .footer__navigation,
+    body.page-template-page-docs .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
+    body.page-template-page-identity-verification .footer__navigation,
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
+        gap: 32px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 840: три ряда — реквизиты, навигация, контакты. */
+    body.home .footer__top,
+    body.single-document .footer__top,
+    body.nv-blog .footer__top,
+    body.error404 .footer__top,
+    body.page-template-page-docs .footer__top,
+    body.page-template-page-kyc .footer__top,
+    body.page-template-page-identity-verification .footer__top,
+    body.page-template-page-solutions .footer__top,
+    body.page-template-page-privacy .footer__top,
+    body.page-template-page-price-matrix .footer__top,
+    body.single-post .footer__top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 64px;
+    }
+
+    body.home .footer__info,
+    body.single-document .footer__info,
+    body.nv-blog .footer__info,
+    body.error404 .footer__info,
+    body.page-template-page-docs .footer__info,
+    body.page-template-page-kyc .footer__info,
+    body.page-template-page-identity-verification .footer__info,
+    body.page-template-page-solutions .footer__info,
+    body.page-template-page-privacy .footer__info,
+    body.page-template-page-price-matrix .footer__info,
+    body.single-post .footer__info {
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    body.home .footer__brand,
+    body.single-document .footer__brand,
+    body.nv-blog .footer__brand,
+    body.error404 .footer__brand,
+    body.page-template-page-docs .footer__brand,
+    body.page-template-page-kyc .footer__brand,
+    body.page-template-page-identity-verification .footer__brand,
+    body.page-template-page-solutions .footer__brand,
+    body.page-template-page-privacy .footer__brand,
+    body.page-template-page-price-matrix .footer__brand,
+    body.single-post .footer__brand {
+        flex: 0 0 44%;
+    }
+
+    body.home .footer__logo-image,
+    body.single-document .footer__logo-image,
+    body.nv-blog .footer__logo-image,
+    body.error404 .footer__logo-image,
+    body.page-template-page-docs .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
+    body.page-template-page-identity-verification .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
+        width: 207px;
+    }
+
+    body.home .footer__details,
+    body.single-document .footer__details,
+    body.nv-blog .footer__details,
+    body.error404 .footer__details,
+    body.page-template-page-docs .footer__details,
+    body.page-template-page-kyc .footer__details,
+    body.page-template-page-identity-verification .footer__details,
+    body.page-template-page-solutions .footer__details,
+    body.page-template-page-privacy .footer__details,
+    body.page-template-page-price-matrix .footer__details,
+    body.single-post .footer__details {
+        flex: 1 1 auto;
+        gap: 24px;
+    }
+
+    /* В макете у ряда навигации справа 64px запаса — отсюда равные промежутки. */
+    body.home .footer__navigation,
+    body.single-document .footer__navigation,
+    body.nv-blog .footer__navigation,
+    body.error404 .footer__navigation,
+    body.page-template-page-docs .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
+    body.page-template-page-identity-verification .footer__navigation,
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
+        flex: 0 0 auto;
+        justify-content: space-between;
+        padding-right: 64px;
+        gap: 32px;
+    }
+
+    body.home .footer__nav--products .footer__nav-list,
+    body.single-document .footer__nav--products .footer__nav-list,
+    body.nv-blog .footer__nav--products .footer__nav-list,
+    body.error404 .footer__nav--products .footer__nav-list,
+    body.page-template-page-docs .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
+    body.page-template-page-identity-verification .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
+        grid-auto-flow: column;
+        grid-template-rows: repeat(3, auto);
+        column-gap: 48px;
+    }
+
+    body.home .footer__aside,
+    body.single-document .footer__aside,
+    body.nv-blog .footer__aside,
+    body.error404 .footer__aside,
+    body.page-template-page-docs .footer__aside,
+    body.page-template-page-kyc .footer__aside,
+    body.page-template-page-identity-verification .footer__aside,
+    body.page-template-page-solutions .footer__aside,
+    body.page-template-page-privacy .footer__aside,
+    body.page-template-page-price-matrix .footer__aside,
+    body.single-post .footer__aside {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding-right: 0;
+        gap: 96px;
+    }
+
+    body.home .footer__contacts,
+    body.single-document .footer__contacts,
+    body.nv-blog .footer__contacts,
+    body.error404 .footer__contacts,
+    body.page-template-page-docs .footer__contacts,
+    body.page-template-page-kyc .footer__contacts,
+    body.page-template-page-identity-verification .footer__contacts,
+    body.page-template-page-solutions .footer__contacts,
+    body.page-template-page-privacy .footer__contacts,
+    body.page-template-page-price-matrix .footer__contacts,
+    body.single-post .footer__contacts,
+    body.home .footer__social,
+    body.single-document .footer__social,
+    body.nv-blog .footer__social,
+    body.error404 .footer__social,
+    body.page-template-page-docs .footer__social,
+    body.page-template-page-kyc .footer__social,
+    body.page-template-page-identity-verification .footer__social,
+    body.page-template-page-solutions .footer__social,
+    body.page-template-page-privacy .footer__social,
+    body.page-template-page-price-matrix .footer__social,
+    body.single-post .footer__social {
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+    }
+
+    body.home .footer__bottom,
+    body.single-document .footer__bottom,
+    body.nv-blog .footer__bottom,
+    body.error404 .footer__bottom,
+    body.page-template-page-docs .footer__bottom,
+    body.page-template-page-kyc .footer__bottom,
+    body.page-template-page-identity-verification .footer__bottom,
+    body.page-template-page-solutions .footer__bottom,
+    body.page-template-page-privacy .footer__bottom,
+    body.page-template-page-price-matrix .footer__bottom,
+    body.single-post .footer__bottom {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    body.home .footer__bottom-col--trademark,
+    body.single-document .footer__bottom-col--trademark,
+    body.nv-blog .footer__bottom-col--trademark,
+    body.error404 .footer__bottom-col--trademark,
+    body.page-template-page-docs .footer__bottom-col--trademark,
+    body.page-template-page-kyc .footer__bottom-col--trademark,
+    body.page-template-page-identity-verification .footer__bottom-col--trademark,
+    body.page-template-page-solutions .footer__bottom-col--trademark,
+    body.page-template-page-privacy .footer__bottom-col--trademark,
+    body.page-template-page-price-matrix .footer__bottom-col--trademark,
+    body.single-post .footer__bottom-col--trademark {
+        flex: 0 0 auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Tablet 840 (Figma 2376:17671): слоган переносится по ширине логотипа — «Confidence in / every client». */
+    body.home .footer__tagline,
+    body.single-document .footer__tagline,
+    body.nv-blog .footer__tagline,
+    body.error404 .footer__tagline,
+    body.page-template-page-docs .footer__tagline,
+    body.page-template-page-kyc .footer__tagline,
+    body.page-template-page-identity-verification .footer__tagline,
+    body.page-template-page-solutions .footer__tagline,
+    body.page-template-page-privacy .footer__tagline,
+    body.page-template-page-price-matrix .footer__tagline,
+    body.single-post .footer__tagline {
+        max-width: 207px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Макета нет — сохраняем логику темы: колонки распрямляются. */
+    body.home .footer__wrapper,
+    body.single-document .footer__wrapper,
+    body.nv-blog .footer__wrapper,
+    body.error404 .footer__wrapper,
+    body.page-template-page-docs .footer__wrapper,
+    body.page-template-page-kyc .footer__wrapper,
+    body.page-template-page-identity-verification .footer__wrapper,
+    body.page-template-page-solutions .footer__wrapper,
+    body.page-template-page-privacy .footer__wrapper,
+    body.page-template-page-price-matrix .footer__wrapper,
+    body.single-post .footer__wrapper {
+        padding: 31px 15px 32px;
+    }
+
+    body.home .footer__info,
+    body.single-document .footer__info,
+    body.nv-blog .footer__info,
+    body.error404 .footer__info,
+    body.page-template-page-docs .footer__info,
+    body.page-template-page-kyc .footer__info,
+    body.page-template-page-identity-verification .footer__info,
+    body.page-template-page-solutions .footer__info,
+    body.page-template-page-privacy .footer__info,
+    body.page-template-page-price-matrix .footer__info,
+    body.single-post .footer__info {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    body.home .footer__brand,
+    body.single-document .footer__brand,
+    body.nv-blog .footer__brand,
+    body.error404 .footer__brand,
+    body.page-template-page-docs .footer__brand,
+    body.page-template-page-kyc .footer__brand,
+    body.page-template-page-identity-verification .footer__brand,
+    body.page-template-page-solutions .footer__brand,
+    body.page-template-page-privacy .footer__brand,
+    body.page-template-page-price-matrix .footer__brand,
+    body.single-post .footer__brand {
+        flex: 0 0 auto;
+    }
+
+    body.home .footer__aside,
+    body.single-document .footer__aside,
+    body.nv-blog .footer__aside,
+    body.error404 .footer__aside,
+    body.page-template-page-docs .footer__aside,
+    body.page-template-page-kyc .footer__aside,
+    body.page-template-page-identity-verification .footer__aside,
+    body.page-template-page-solutions .footer__aside,
+    body.page-template-page-privacy .footer__aside,
+    body.page-template-page-price-matrix .footer__aside,
+    body.single-post .footer__aside {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    body.home .footer__contacts,
+    body.single-document .footer__contacts,
+    body.nv-blog .footer__contacts,
+    body.error404 .footer__contacts,
+    body.page-template-page-docs .footer__contacts,
+    body.page-template-page-kyc .footer__contacts,
+    body.page-template-page-identity-verification .footer__contacts,
+    body.page-template-page-solutions .footer__contacts,
+    body.page-template-page-privacy .footer__contacts,
+    body.page-template-page-price-matrix .footer__contacts,
+    body.single-post .footer__contacts,
+    body.home .footer__social,
+    body.single-document .footer__social,
+    body.nv-blog .footer__social,
+    body.error404 .footer__social,
+    body.page-template-page-docs .footer__social,
+    body.page-template-page-kyc .footer__social,
+    body.page-template-page-identity-verification .footer__social,
+    body.page-template-page-solutions .footer__social,
+    body.page-template-page-privacy .footer__social,
+    body.page-template-page-price-matrix .footer__social,
+    body.single-post .footer__social {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    body.home .footer__navigation,
+    body.single-document .footer__navigation,
+    body.nv-blog .footer__navigation,
+    body.error404 .footer__navigation,
+    body.page-template-page-docs .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
+    body.page-template-page-identity-verification .footer__navigation,
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.home .footer__navigation,
+    body.single-document .footer__navigation,
+    body.nv-blog .footer__navigation,
+    body.error404 .footer__navigation,
+    body.page-template-page-docs .footer__navigation,
+    body.page-template-page-kyc .footer__navigation,
+    body.page-template-page-identity-verification .footer__navigation,
+    body.page-template-page-solutions .footer__navigation,
+    body.page-template-page-privacy .footer__navigation,
+    body.page-template-page-price-matrix .footer__navigation,
+    body.single-post .footer__navigation {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    body.home .footer__nav,
+    body.single-document .footer__nav,
+    body.nv-blog .footer__nav,
+    body.error404 .footer__nav,
+    body.page-template-page-docs .footer__nav,
+    body.page-template-page-kyc .footer__nav,
+    body.page-template-page-identity-verification .footer__nav,
+    body.page-template-page-solutions .footer__nav,
+    body.page-template-page-privacy .footer__nav,
+    body.page-template-page-price-matrix .footer__nav,
+    body.single-post .footer__nav {
+        gap: 16px;
+    }
+
+    body.home .footer__nav--products .footer__nav-list,
+    body.single-document .footer__nav--products .footer__nav-list,
+    body.nv-blog .footer__nav--products .footer__nav-list,
+    body.error404 .footer__nav--products .footer__nav-list,
+    body.page-template-page-docs .footer__nav--products .footer__nav-list,
+    body.page-template-page-kyc .footer__nav--products .footer__nav-list,
+    body.page-template-page-identity-verification .footer__nav--products .footer__nav-list,
+    body.page-template-page-solutions .footer__nav--products .footer__nav-list,
+    body.page-template-page-privacy .footer__nav--products .footer__nav-list,
+    body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
+    body.single-post .footer__nav--products .footer__nav-list {
+        column-gap: 32px;
+    }
+
+    body.home .footer__logo-image,
+    body.single-document .footer__logo-image,
+    body.nv-blog .footer__logo-image,
+    body.error404 .footer__logo-image,
+    body.page-template-page-docs .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
+    body.page-template-page-identity-verification .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
+        width: 240px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    body.home .footer__logo-image,
+    body.single-document .footer__logo-image,
+    body.nv-blog .footer__logo-image,
+    body.error404 .footer__logo-image,
+    body.page-template-page-docs .footer__logo-image,
+    body.page-template-page-kyc .footer__logo-image,
+    body.page-template-page-identity-verification .footer__logo-image,
+    body.page-template-page-solutions .footer__logo-image,
+    body.page-template-page-privacy .footer__logo-image,
+    body.page-template-page-price-matrix .footer__logo-image,
+    body.single-post .footer__logo-image {
+        width: 100%;
+        max-width: 240px;
+    }
+}

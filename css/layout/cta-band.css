@@ -1,0 +1,480 @@
+/* Каркас сайта (teaser) — есть на каждой странице. */
+
+.teaser__maskot--about {
+    position: absolute;
+    bottom: calc(100% - 12px);
+    right: 40px;
+}
+
+@media (max-width: 1199.98px) {
+    /* Маскот используется шаблоном main-page-video-autoplay.php */
+    .teaser__maskot.teaser__maskot--about {
+        right: 40px;
+        left: unset;
+        transform: none;
+    }
+}
+
+.teaser {
+    margin-top: -9px;
+    padding-top: 96px;
+    padding-bottom: 0;
+    position: relative;
+    z-index: 0;
+    background: #212121;
+    position: relative;
+    z-index: 2;
+    background: 
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px),
+        radial-gradient(circle, rgba(249, 170, 102, 0.04) 1.4px, transparent 1.4px), 
+        #212121;
+    background-repeat: 
+        repeat, 
+        repeat, 
+        repeat;
+    background-size: 
+        16px 16px, 
+        16px 16px, 
+        auto;
+    background-position: 0 0, 8px 8px, 0 300px, 0 0;
+    overflow: hidden;
+}
+
+.teaser::after {
+    content: '';
+    display: block;
+    width: 100%;
+    max-width: 1460px;
+    height: 600px;
+    position: absolute;
+    bottom: -420px;
+    left:50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    background: 
+        radial-gradient(53.66% 53.66% at 50% 49.83%, rgba(249, 170, 102, 0.30) 0%, rgba(33, 33, 33, 0.00) 96%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.teaser__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    padding-bottom: 64px;
+}
+
+.teaser__logo {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: linear-gradient(135deg, #3d3c3a 0%, #292623 100%);
+}
+
+.teaser__logo-image {
+    width: 84px;
+    height: 84px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: var(--Island-Black, #212121);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.30) inset;
+}
+
+.teaser__logo-image svg {
+
+}
+
+.teaser__info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+}
+
+.teaser__title {
+    color: var(--Text-White, #FBFBFB);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H2, 40px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+    margin: 0;
+}
+
+.teaser__subtitle {
+    color: var(--Text-Orange, #F9AA66);
+    text-align: center;
+}
+
+.teaser__maskot {
+    position: absolute;
+    right: 40px;
+    top:-114px;
+    line-height: 1;
+}
+
+.teaser__maskot-head {
+    line-height: 1;
+    margin-bottom: -25px;
+    position: relative;
+    z-index: 1;
+}
+
+.teaser__maskot-hand {
+    line-height: 1;
+    position: relative;
+    z-index:5;
+    
+    transform: scaleY(0);
+    transform-origin: center; /* ВАЖНО — растёт снизу вверх */
+    transition: transform 0.5s ease;
+}
+
+.teaser__maskot-hand.animate {
+    transform: scaleY(1);
+}
+
+.teaser__maskot-head img {
+  display: block;
+  transform: translateY(100%); /* старт снизу */
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out, scaleY 0.8s ease-out;
+  transform-origin: bottom; /* для scaleY */
+}
+
+/* Когда блок активен / появляется в viewport */
+.teaser__maskot-head.animate img {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+@media (max-width: 1199.98px) {
+/* .teaser__maskot-hand.animate img {
+  transform: translateY(0) scaleY(1);
+  opacity: 1;
+} */
+    .teaser__wrapper {
+        padding-bottom: 128px;
+    }
+
+    .teaser__maskot {
+        right: unset;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .teaser__title br {
+        display: none;
+    }
+
+    .teaser__title {
+        max-width: 660px;
+    }
+}
+
+/*
+ * Светлый тизер главной. Figma: Desktop 1440 — `655:11651`, Full HD 1920 —
+ * `2380:23846`, Tablet 840 — `2376:17671`.
+ *
+ * `template-parts/teaser.php` подключается на всех шаблонах темы, поэтому
+ * правила ниже ограничены светлыми шаблонами (`body.home`, `page-solutions.php`,
+ * `page-privacy.php`); тёмная версия остальных страниц остаётся на прежних
+ * правилах блока `teaser`.
+ *
+ * Вертикаль макета: Page edge 64 + отступ секции 64 + логотип 100 + 32 + текст,
+ * снизу 64 до карточки футера.
+ */
+body.home .teaser,
+body.single-document .teaser,
+body.nv-blog .teaser,
+body.error404 .teaser,
+body.page-template-page-docs .teaser,
+body.page-template-page-kyc .teaser,
+body.page-template-page-identity-verification .teaser,
+body.page-template-page-solutions .teaser,
+body.page-template-page-privacy .teaser,
+body.page-template-page-price-matrix .teaser,
+body.single-post .teaser {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: var(--nv-surface-2);
+}
+
+/*
+ * На страницах светлого контента (`/pricing-matrix/`, записи блога) `layout/light-content.css` красит любой `.section`
+ * в surface-1 с той же специфичностью, но позже по порядку, и тизер сливался с «Page edge». Макет — surface-2.
+ */
+body.page-template-page-price-matrix section.teaser,
+body.single-post section.teaser {
+    background: var(--nv-surface-2);
+}
+
+/* «Page edge» из макета — скруглённый низ контентной области страницы. */
+body.home .teaser::before,
+body.single-document .teaser::before,
+body.nv-blog .teaser::before,
+body.error404 .teaser::before,
+body.page-template-page-docs .teaser::before,
+body.page-template-page-kyc .teaser::before,
+body.page-template-page-identity-verification .teaser::before,
+body.page-template-page-solutions .teaser::before,
+body.page-template-page-privacy .teaser::before,
+body.page-template-page-price-matrix .teaser::before,
+body.single-post .teaser::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+    border: 1px solid var(--nv-surface-4);
+    border-top: 0;
+    border-radius: 0 0 var(--nv-radius-hero) var(--nv-radius-hero);
+    background: var(--nv-surface-1);
+}
+
+/* Тёплое свечение тёмной темы в светлом макете не используется. */
+body.home .teaser::after,
+body.single-document .teaser::after,
+body.nv-blog .teaser::after,
+body.error404 .teaser::after,
+body.page-template-page-docs .teaser::after,
+body.page-template-page-kyc .teaser::after,
+body.page-template-page-identity-verification .teaser::after,
+body.page-template-page-solutions .teaser::after,
+body.page-template-page-privacy .teaser::after,
+body.page-template-page-price-matrix .teaser::after,
+body.single-post .teaser::after {
+    display: none;
+}
+
+body.home .teaser__wrapper,
+body.single-document .teaser__wrapper,
+body.nv-blog .teaser__wrapper,
+body.error404 .teaser__wrapper,
+body.page-template-page-docs .teaser__wrapper,
+body.page-template-page-kyc .teaser__wrapper,
+body.page-template-page-identity-verification .teaser__wrapper,
+body.page-template-page-solutions .teaser__wrapper,
+body.page-template-page-privacy .teaser__wrapper,
+body.page-template-page-price-matrix .teaser__wrapper,
+body.single-post .teaser__wrapper {
+    gap: 32px;
+    padding-bottom: 64px;
+    padding-top: 128px;
+}
+
+body.home .teaser__logo,
+body.single-document .teaser__logo,
+body.nv-blog .teaser__logo,
+body.error404 .teaser__logo,
+body.page-template-page-docs .teaser__logo,
+body.page-template-page-kyc .teaser__logo,
+body.page-template-page-identity-verification .teaser__logo,
+body.page-template-page-solutions .teaser__logo,
+body.page-template-page-privacy .teaser__logo,
+body.page-template-page-price-matrix .teaser__logo,
+body.single-post .teaser__logo {
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-3);
+}
+
+body.home .teaser__logo-image,
+body.single-document .teaser__logo-image,
+body.nv-blog .teaser__logo-image,
+body.error404 .teaser__logo-image,
+body.page-template-page-docs .teaser__logo-image,
+body.page-template-page-kyc .teaser__logo-image,
+body.page-template-page-identity-verification .teaser__logo-image,
+body.page-template-page-solutions .teaser__logo-image,
+body.page-template-page-privacy .teaser__logo-image,
+body.page-template-page-price-matrix .teaser__logo-image,
+body.single-post .teaser__logo-image {
+    background: var(--nv-surface-2);
+}
+
+body.home .teaser__info,
+body.single-document .teaser__info,
+body.nv-blog .teaser__info,
+body.error404 .teaser__info,
+body.page-template-page-docs .teaser__info,
+body.page-template-page-kyc .teaser__info,
+body.page-template-page-identity-verification .teaser__info,
+body.page-template-page-solutions .teaser__info,
+body.page-template-page-privacy .teaser__info,
+body.page-template-page-price-matrix .teaser__info,
+body.single-post .teaser__info {
+    width: 100%;
+    gap: 16px;
+}
+
+body.home .teaser__title,
+body.single-document .teaser__title,
+body.nv-blog .teaser__title,
+body.error404 .teaser__title,
+body.page-template-page-docs .teaser__title,
+body.page-template-page-kyc .teaser__title,
+body.page-template-page-identity-verification .teaser__title,
+body.page-template-page-solutions .teaser__title,
+body.page-template-page-privacy .teaser__title,
+body.page-template-page-price-matrix .teaser__title,
+body.single-post .teaser__title {
+    max-width: none;
+    color: var(--nv-object-1);
+}
+
+/* Full HD — заголовок в одну строку. */
+body.home .teaser__title br,
+body.single-document .teaser__title br,
+body.nv-blog .teaser__title br,
+body.error404 .teaser__title br,
+body.page-template-page-docs .teaser__title br,
+body.page-template-page-kyc .teaser__title br,
+body.page-template-page-identity-verification .teaser__title br,
+body.page-template-page-solutions .teaser__title br,
+body.page-template-page-privacy .teaser__title br,
+body.page-template-page-price-matrix .teaser__title br,
+body.single-post .teaser__title br {
+    display: none;
+}
+
+body.home .teaser__subtitle,
+body.single-document .teaser__subtitle,
+body.nv-blog .teaser__subtitle,
+body.error404 .teaser__subtitle,
+body.page-template-page-docs .teaser__subtitle,
+body.page-template-page-kyc .teaser__subtitle,
+body.page-template-page-identity-verification .teaser__subtitle,
+body.page-template-page-solutions .teaser__subtitle,
+body.page-template-page-privacy .teaser__subtitle,
+body.page-template-page-price-matrix .teaser__subtitle,
+body.single-post .teaser__subtitle {
+    color: var(--nv-primary);
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 1440 — перенос после «Platform» из макета. */
+    body.home .teaser__title br,
+    body.single-document .teaser__title br,
+    body.nv-blog .teaser__title br,
+    body.error404 .teaser__title br,
+    body.page-template-page-docs .teaser__title br,
+    body.page-template-page-kyc .teaser__title br,
+    body.page-template-page-identity-verification .teaser__title br,
+    body.page-template-page-solutions .teaser__title br,
+    body.page-template-page-privacy .teaser__title br,
+    body.page-template-page-price-matrix .teaser__title br,
+    body.single-post .teaser__title br {
+        display: inline;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    /* Маскота в светлом футере нет — запас под него не нужен. */
+    body.home .teaser__wrapper,
+    body.single-document .teaser__wrapper,
+    body.nv-blog .teaser__wrapper,
+    body.error404 .teaser__wrapper,
+    body.page-template-page-docs .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
+    body.page-template-page-identity-verification .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
+        padding-bottom: 64px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet 840 — перенос по ширине контейнера. */
+    body.home .teaser__title br,
+    body.single-document .teaser__title br,
+    body.nv-blog .teaser__title br,
+    body.error404 .teaser__title br,
+    body.page-template-page-docs .teaser__title br,
+    body.page-template-page-kyc .teaser__title br,
+    body.page-template-page-identity-verification .teaser__title br,
+    body.page-template-page-solutions .teaser__title br,
+    body.page-template-page-privacy .teaser__title br,
+    body.page-template-page-price-matrix .teaser__title br,
+    body.single-post .teaser__title br {
+        display: none;
+    }
+
+    /* В планшетном макете до карточки футера 128px, а не 64 (2376:17671). */
+    body.home .teaser__wrapper,
+    body.single-document .teaser__wrapper,
+    body.nv-blog .teaser__wrapper,
+    body.error404 .teaser__wrapper,
+    body.page-template-page-docs .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
+    body.page-template-page-identity-verification .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
+        padding-bottom: 128px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Ниже 768 макета нет — возвращаем отступ темы. */
+    body.home .teaser__wrapper,
+    body.single-document .teaser__wrapper,
+    body.nv-blog .teaser__wrapper,
+    body.error404 .teaser__wrapper,
+    body.page-template-page-docs .teaser__wrapper,
+    body.page-template-page-kyc .teaser__wrapper,
+    body.page-template-page-identity-verification .teaser__wrapper,
+    body.page-template-page-solutions .teaser__wrapper,
+    body.page-template-page-privacy .teaser__wrapper,
+    body.page-template-page-price-matrix .teaser__wrapper,
+    body.single-post .teaser__wrapper {
+        padding-top: 96px;
+        padding-bottom: 64px;
+    }
+
+    body.home .teaser__title,
+    body.single-document .teaser__title,
+    body.nv-blog .teaser__title,
+    body.error404 .teaser__title,
+    body.page-template-page-docs .teaser__title,
+    body.page-template-page-kyc .teaser__title,
+    body.page-template-page-identity-verification .teaser__title,
+    body.page-template-page-solutions .teaser__title,
+    body.page-template-page-privacy .teaser__title,
+    body.page-template-page-price-matrix .teaser__title,
+    body.single-post .teaser__title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.home .teaser__title,
+    body.single-document .teaser__title,
+    body.nv-blog .teaser__title,
+    body.error404 .teaser__title,
+    body.page-template-page-docs .teaser__title,
+    body.page-template-page-kyc .teaser__title,
+    body.page-template-page-identity-verification .teaser__title,
+    body.page-template-page-solutions .teaser__title,
+    body.page-template-page-privacy .teaser__title,
+    body.page-template-page-price-matrix .teaser__title,
+    body.single-post .teaser__title {
+        font-size: 28px;
+    }
+}

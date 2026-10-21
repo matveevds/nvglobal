@@ -22,18 +22,15 @@ $nv_footer_uri = get_template_directory_uri();
 $nv_footer_products_url = home_url('/#products');
 $nv_footer_products     = ['KYC', 'KYB', 'AML', 'KYT', 'Liveness', 'NeuroPay'];
 
-// Resources. Blog появится, когда в «Настройки → Чтение» будет назначена
-// страница записей (`page_for_posts`) — см. BACKLOG R-17.
+// Resources. Blog — страница записей из «Настройки → Чтение» (`page_for_posts`), если она назначена;
+// иначе — прямой адрес `/blog/` (в макете пункт есть всегда; BACKLOG R-17).
+$nv_footer_blog_id = (int) get_option('page_for_posts');
+
 $nv_footer_resources = [
     ['label' => 'Documentation', 'url' => home_url('/docs/')],
     ['label' => 'Pricing',       'url' => home_url('/pricing-matrix/')],
+    ['label' => 'Blog',          'url' => $nv_footer_blog_id > 0 ? get_permalink($nv_footer_blog_id) : home_url('/blog/')],
 ];
-
-$nv_footer_blog_id = (int) get_option('page_for_posts');
-
-if ($nv_footer_blog_id > 0) {
-    $nv_footer_resources[] = ['label' => 'Blog', 'url' => get_permalink($nv_footer_blog_id)];
-}
 
 $nv_footer_company = [
     ['label' => 'About us', 'url' => home_url('/#about')],
@@ -148,6 +145,9 @@ $nv_footer_badges = [
                         <div class="footer__social-list">
                             <a href="https://www.linkedin.com/company/nvglobal-ai/posts/" class="footer__social-item" aria-label="NeuroVision Global Systems on LinkedIn" target="_blank" rel="noopener noreferrer">
                                 <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.976 15.7988C16.976 16.2128 16.64 16.5488 16.226 16.5488C15.812 16.5488 15.476 16.2128 15.476 15.7988V12.3888C15.476 11.3848 14.662 10.5688 13.661 10.5688C12.66 10.5688 11.846 11.3848 11.846 12.3888V15.7988C11.846 16.2128 11.51 16.5488 11.096 16.5488C10.682 16.5488 10.346 16.2128 10.346 15.7988V12.3888C10.346 10.5578 11.833 9.06879 13.661 9.06879C15.489 9.06879 16.976 10.5578 16.976 12.3888V15.7988ZM7.775 10.0088C7.361 10.0088 6.989 9.63279 6.989 9.21879C6.989 8.80479 7.361 8.42879 7.775 8.42879C8.189 8.42879 8.559 8.80479 8.559 9.21879C8.559 9.63279 8.189 10.0088 7.775 10.0088ZM8.524 15.7988C8.524 16.2128 8.188 16.5488 7.774 16.5488C7.36 16.5488 7.024 16.2128 7.024 15.7988V12.0278C7.024 11.6138 7.36 11.2778 7.774 11.2778C8.188 11.2778 8.524 11.6138 8.524 12.0278V15.7988ZM16.217 3.00879H7.783C4.623 3.00879 2.5 5.23179 2.5 8.53879V16.4788C2.5 19.7858 4.623 22.0088 7.783 22.0088H16.216C19.376 22.0088 21.5 19.7858 21.5 16.4788V8.53879C21.5 5.23179 19.377 3.00879 16.217 3.00879Z" fill="currentColor"/></svg>
+                            </a>
+                            <a href="https://www.youtube.com/@NeuroVisionGlobal" class="footer__social-item" aria-label="NeuroVision on YouTube" target="_blank" rel="noopener">
+                                <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 5C4.46 5 2.5 6.9 2.5 9.5V14.5C2.5 17.1 4.46 19 7.5 19H16.5C19.54 19 21.5 17.1 21.5 14.5V9.5C21.5 6.9 19.54 5 16.5 5H7.5ZM10 9.2C10 8.8 10.43 8.56 10.77 8.77L15.23 11.57C15.55 11.77 15.55 12.23 15.23 12.43L10.77 15.23C10.43 15.44 10 15.2 10 14.8V9.2Z" fill="currentColor"/></svg>
                             </a>
                         </div>
                     </div>

@@ -1,0 +1,328 @@
+/* Блок «kyc-compliance» (Compliance map) — универсальный: вид не зависит от страницы и объёма контента. */
+
+/*
+ * Раскладка как в Figma (2504:24910, 2561:31089): слева заголовок и карточка выбранного маркера, справа карта
+ * с маркерами. Карточка отступает от левого края контейнера (64, на планшетных ширинах 24) и правым краем заходит
+ * поверх карты на 200px (--cm-overlap), прижата к низу карты. Заголовок и карточка — в разных строках сетки,
+ * поэтому не пересекаются при любом объёме текста; если они вместе выше карты, растёт строка, а не обрезается
+ * текст. Маркеры — настоящие кнопки; позиции — доли области карты (центр маркера), размер маркера следует за
+ * шириной карты (--mk), у края карты он не обрезается. Левее ~27% ширины карты маркеры ставить только в верхней
+ * части карты — внизу слева их закроет карточка.
+ */
+.kyc-compliance > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-compliance__stage {
+    --cm-overlap: 200px;
+    --cm-left: 588px;
+    --cm-pad: 64px;
+    display: grid;
+    grid-template-columns: var(--cm-left) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "head map"
+        "info map";
+    align-items: start;
+}
+
+.kyc-compliance__head {
+    grid-area: head;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 416px;
+    min-width: 0;
+    padding-bottom: 24px;
+}
+
+.kyc-compliance__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H2, 40px);
+    line-height: 130%;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.kyc-compliance__lead {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-compliance__note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+}
+
+/* Левый край — отступ от контейнера, правый заходит на карту; обёртка пропускает клики к маркерам под полем. */
+.kyc-compliance__info {
+    grid-area: info;
+    position: relative;
+    z-index: 2;
+    align-self: end;
+    min-width: 0;
+    margin-left: var(--cm-pad);
+    margin-right: calc(var(--cm-overlap) * -1);
+    padding-bottom: 64px;
+    pointer-events: none;
+}
+
+.kyc-compliance__card {
+    overflow-wrap: anywhere;
+    pointer-events: auto;
+}
+
+.kyc-compliance__card-title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-compliance__card-text {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 400;
+}
+
+.kyc-compliance__card-title:empty,
+.kyc-compliance__card-text:empty {
+    display: none;
+}
+
+.kyc-compliance__map-card {
+    grid-area: map;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 680px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    container-type: inline-size;
+}
+
+/* --mk — сторона маркера: 60px при карте 738px (Figma), пропорционально меньше на узкой карте, но не мельче 40. */
+.kyc-compliance__map {
+    --mk: clamp(40px, calc(min(100cqw, 738px) * .0813), 60px);
+    position: relative;
+    flex: 0 0 auto;
+    width: min(100%, 738px);
+    aspect-ratio: 738 / 630;
+}
+
+/* Карта: inset 0 7.3% — квадрат 630x630 по центру области. */
+.kyc-compliance__world {
+    position: absolute;
+    top: 0;
+    left: 7.3%;
+    display: block;
+    width: 85.4%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+}
+
+/* Маркер 60x60, радиус 12; «булавка» 68x83 выступает на 4 за рамку (все размеры — доли --mk). */
+.kyc-marker {
+    position: absolute;
+    left: clamp(calc(var(--mk) * .6), var(--mx, 50%), calc(100% - var(--mk) * .6));
+    top: clamp(calc(var(--mk) * .6), var(--my, 50%), calc(100% - var(--mk) * .9));
+    display: block;
+    width: var(--mk);
+    height: var(--mk);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--mk) * .2);
+    background: none;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.kyc-marker__pin {
+    position: absolute;
+    top: calc(var(--mk) * -.0667);
+    left: calc(var(--mk) * -.0667);
+    display: block;
+    width: calc(var(--mk) * 1.1333);
+    height: calc(var(--mk) * 1.3833);
+    max-width: none;
+}
+
+.kyc-marker__pin--on {
+    opacity: 0;
+}
+
+.kyc-marker__plate {
+    position: absolute;
+    top: calc(var(--mk) * -.0667);
+    left: calc(var(--mk) * -.0667);
+    display: block;
+    width: calc(var(--mk) * 1.1333);
+    height: calc(var(--mk) * 1.1333);
+    border-radius: calc(var(--mk) * .2667);
+    background: var(--nv-surface-4);
+}
+
+.kyc-marker__face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--mk) * .2);
+    background: var(--nv-surface-2);
+    box-shadow: inset 0 2px 4.2px rgba(255, 255, 255, .05);
+}
+
+.kyc-marker__face img {
+    display: block;
+    width: calc(var(--mk) * .7333);
+    height: calc(var(--mk) * .7333);
+}
+
+/* Выбранный маркер — поверх соседних, даже если они стоят вплотную. */
+.kyc-marker.is-active {
+    z-index: 2;
+}
+
+.kyc-marker.is-active .kyc-marker__pin:not(.kyc-marker__pin--on) {
+    opacity: 0;
+}
+
+.kyc-marker.is-active .kyc-marker__pin--on {
+    opacity: 1;
+}
+
+.kyc-marker.is-active .kyc-marker__plate {
+    background: var(--nv-gradient);
+}
+
+.kyc-marker:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 6px;
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-compliance__stage {
+        --cm-left: 440px;
+    }
+
+    .kyc-compliance__head {
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-compliance__stage {
+        --cm-left: 360px;
+        --cm-pad: 24px;
+    }
+
+    .kyc-compliance__head {
+        max-width: calc(var(--cm-left) - 24px);
+    }
+
+    .kyc-compliance__map-card {
+        min-height: 620px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: заголовок, карта, под ней карточка с описанием выбранного маркера. */
+    .kyc-compliance__stage {
+        --cm-overlap: 0px;
+        --cm-pad: 0px;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        grid-template-areas:
+            "head"
+            "map"
+            "info";
+        row-gap: 16px;
+    }
+
+    .kyc-compliance__head {
+        max-width: none;
+        padding-bottom: 16px;
+    }
+
+    .kyc-compliance__info {
+        align-self: stretch;
+        margin: 0;
+        padding: 0;
+        pointer-events: auto;
+    }
+
+    .kyc-compliance__map-card {
+        align-self: auto;
+        min-height: 0;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-compliance > .container {
+        gap: 24px;
+    }
+
+    .kyc-compliance .section__badge {
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-compliance__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .kyc-compliance__lead {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .kyc-compliance__card-title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .kyc-compliance__card-text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-compliance__map-card {
+        padding: 7px;
+        border-radius: 16px;
+    }
+
+    .kyc-compliance__map {
+        --mk: clamp(32px, calc(min(100cqw, 738px) * .0813), 60px);
+        width: 100%;
+    }
+
+    .kyc-marker:focus-visible {
+        outline-offset: 3px;
+    }
+}

@@ -1,0 +1,392 @@
+/* Блок «kyc-risk» (template-parts/kyc-risk-section.php) — универсальный: вид не зависит от страницы, высота панели — по самой длинной вкладке, боковая карточка необязательна. */
+
+/*
+ * Risk-Based KYC: 2492:14501 (Desktop: левая колонка 420, боковая карточка 280, ряд 532);
+ * Full HD 2561:31026 — колонка 480, карточка 440, ряд 476. Один tabpanel, содержимое подставляет JS.
+ */
+.kyc-risk > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.kyc-risk__row {
+    display: flex;
+    align-items: stretch;
+    gap: 48px;
+    min-height: 532px;
+}
+
+.kyc-risk__left {
+    display: flex;
+    flex: 0 0 420px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.kyc-risk__text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kyc-risk__tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Button/Regular 18/24 на всю ширину колонки: текст слева, стрелка справа. */
+.kyc-risk__tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 42px;
+    padding: 7px 7px 7px 15px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.kyc-risk__tab-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-risk__tab-icon {
+    display: flex;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+}
+
+.kyc-risk__tab-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.kyc-risk__tab:hover {
+    background: var(--nv-surface-3);
+}
+
+.kyc-risk__tab.is-active {
+    border-color: transparent;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-risk__tab:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-risk__right {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 16px;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* Основная карточка: Island/1, радиус 24, внутри — серая подложка Island/2 с двумя блоками. */
+/* Панель — grid с одной ячейкой: реальное содержимое и скрытые копии всех вкладок лежат друг на друге,
+   поэтому высота панели равна самой длинной вкладке и не прыгает при переключении. */
+.kyc-risk__main {
+    display: grid;
+    flex: 1 1 0;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.kyc-risk__state {
+    display: flex;
+    grid-area: 1 / 1;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.kyc-risk__state--ghost {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.kyc-risk [hidden] {
+    display: none;
+}
+
+.kyc-risk__title {
+    margin: 0;
+    padding: 0 8px;
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H4, 24px);
+    line-height: 150%;
+    font-weight: 700;
+}
+
+.kyc-risk__inner {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    border-radius: 24px;
+    background: var(--nv-surface-3);
+}
+
+.kyc-risk__summary {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 23px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 24px;
+    background: var(--nv-surface-2);
+    overflow: hidden;
+}
+
+.kyc-risk__summary .kyc-icon-box {
+    align-self: flex-start;
+}
+
+.kyc-risk__summary-text {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 133.333%;
+    font-weight: 700;
+}
+
+.kyc-risk__details {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 232px;
+    padding: 24px;
+}
+
+.kyc-risk__row-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.kyc-risk__row-item--checks {
+    padding-top: 24px;
+    border-top: 1px solid var(--nv-surface-4);
+}
+
+.kyc-risk__row-item--checks:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.kyc-risk__label {
+    flex: 0 0 80px;
+    color: var(--nv-primary);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+}
+
+.kyc-risk__when {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    line-height: 140%;
+    font-weight: 700;
+}
+
+.kyc-risk__checks {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Иконка панели у каждой вкладки своя (data-index): показываем иконку активной вкладки. */
+@supports selector(:has(*)) {
+    .kyc-risk__icon[data-index] {
+        display: none;
+    }
+
+    .kyc-risk:has(.kyc-risk__tab[data-index="0"].is-active) .kyc-risk__icon[data-index="0"],
+    .kyc-risk:has(.kyc-risk__tab[data-index="1"].is-active) .kyc-risk__icon[data-index="1"],
+    .kyc-risk:has(.kyc-risk__tab[data-index="2"].is-active) .kyc-risk__icon[data-index="2"],
+    .kyc-risk:has(.kyc-risk__tab[data-index="3"].is-active) .kyc-risk__icon[data-index="3"] {
+        display: flex;
+    }
+}
+
+/* Боковая карточка (необязательна): заголовок H4 и текст 16/24, картинка стоит в потоке под текстом у правого нижнего угла и текст не пересекает. */
+.kyc-risk__side {
+    flex: 0 0 280px;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.kyc-risk__side-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kyc-risk__side-image {
+    flex: 0 0 auto;
+    align-self: flex-end;
+    width: 245px;
+    max-width: calc(100% + 8px);
+    height: auto;
+    margin: auto -8px -2px 0;
+}
+
+@media (min-width: 1600px) {
+    /* Full HD 2561:31026: колонка 480, боковая карточка 440, ряд 476, блок проверок 200. */
+    .kyc-risk__row {
+        min-height: 476px;
+    }
+
+    .kyc-risk__left {
+        flex-basis: 480px;
+    }
+
+    .kyc-risk__side {
+        flex-basis: 440px;
+    }
+
+    .kyc-risk__side-image {
+        width: 296px;
+        margin: auto 47px -10px 0;
+    }
+
+    .kyc-risk__details {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-risk__right {
+        flex-direction: column;
+    }
+
+    /* Карточка под панелью: текст слева, картинка справа в потоке. */
+    .kyc-risk__side {
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+        min-height: 200px;
+    }
+
+    .kyc-risk__side-text {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .kyc-risk__side-image {
+        width: min(245px, 40%);
+        margin: -23px -8px -23px 0;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-risk__left {
+        flex-basis: 360px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kyc-risk__row {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .kyc-risk__left {
+        flex: 0 0 auto;
+    }
+
+    .kyc-risk__tabs {
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28561: колонка, под панелью — карточка с картинкой в правом нижнем углу. */
+    .kyc-risk > .container {
+        gap: 32px;
+    }
+
+    .kyc-risk__tabs {
+        max-width: none;
+    }
+
+    .kyc-risk__tab-text {
+        font-size: 16px;
+    }
+
+    .kyc-risk__main {
+        padding: 15px;
+    }
+
+    .kyc-risk__summary {
+        padding: 15px;
+        gap: 32px;
+    }
+
+    .kyc-risk__details {
+        padding: 16px;
+        min-height: 0;
+    }
+
+    .kyc-risk__row-item {
+        gap: 16px;
+    }
+
+    /* Mobile: текст сверху, картинка под ним справа. */
+    .kyc-risk__side {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        min-height: 0;
+        padding-bottom: 15px;
+    }
+
+    .kyc-risk__side-text {
+        flex: 0 0 auto;
+    }
+
+    .kyc-risk__side-image {
+        width: 190px;
+        max-width: 100%;
+        margin: 8px -8px -15px 0;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .kyc-risk__row-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .kyc-risk__label {
+        flex-basis: auto;
+    }
+}

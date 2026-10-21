@@ -1,0 +1,242 @@
+/* Блок «security» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+.security {
+    border-radius: 0 0 32px 32px;
+    border-right: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    border-bottom: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    border-left: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--Background-Black, #212121);
+    margin-bottom: -32px;
+    z-index: 3;
+    padding-bottom: 132px;
+}
+
+.security__wrapper {
+    display: flex;
+    gap: 16px;
+}
+
+.security__left {
+    width: calc(40% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.security .security__title-block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: space-between;
+}
+
+.security__right {
+    width: calc(60% - 8px);
+    position: relative;
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
+.security__bg {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.security__bg img {
+    margin-bottom: 20px;
+}
+
+.security__slider {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    max-width: 720px;
+    padding-top: 96px;
+    padding-bottom: 64px;
+    margin: 0 auto;
+}
+
+.security__slider-inner {
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    padding-bottom: 23px;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    height: auto;
+}
+
+.security__slider-wrapper {
+    align-items: stretch;
+}
+
+.security__slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 23px;
+    text-align: center;
+    height: auto;
+}
+
+.security__slide-title {
+    color: var(--Text-Orange, #F9AA66);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H4, 24px);
+    font-weight: 700;
+}
+
+.security__slide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.security__slide-text {
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+    text-align: center;
+    font-size: var(--Text-Body-Text-Size-Medium, 18px);
+    font-weight: 500;
+    line-height: 155.556%;
+}
+
+.security__slide-subtitle {
+    color: var(--Text-White, #FBFBFB);
+    text-align: center;
+    font-size: var(--Text-Title-Size-H6, 18px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.security__arrows {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.security__arrow {
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-white-15, rgba(251, 251, 251, 0.15));
+    background: var(--island-white-5, rgba(251, 251, 251, 0.05));
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    line-height: 0;
+}
+
+.security__arrow:hover, 
+.security__arrow:active,
+.security__arrow:focus {
+    background: var(--island-white-10, rgba(251, 251, 251, 0.10));
+}
+
+.security__arrow--prev {}
+
+.security__arrow--next {}
+
+@media (max-width: 1399.98px) {
+    .security__right {
+        padding-right: 32px;
+        padding-left: 32px;
+    }
+
+    .security__slider {
+        margin: 0 auto;
+    }
+
+    .security__slider-inner {
+        margin: 0 auto; 
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .security__wrapper {
+        flex-direction: column;
+        gap: 64px;
+    }
+
+    .security__left {
+        width: 100%;
+    }
+
+    .security__right {
+        width: 100%;
+    }
+
+    .security .section__title {
+        max-width: 480px;
+    }
+
+    .security .security__title-block {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .security__right {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+   .security {
+        padding-bottom: 80px;
+   }
+}
+
+@media (max-width: 575.98px) {
+    .security__wrapper {
+        gap: 24px;
+    }
+
+    .security__slide-title {
+        font-size: 20px;
+    }
+
+    .security__slide-text,
+    .security__slide-subtitle {
+        font-size: 16px;
+    }
+
+    .security__slide {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .security {
+        padding-bottom: 96px;
+    }
+
+    .security__bg {
+        width: 460px;
+    }
+
+    .security__bg img {
+        width: 100%;
+    }
+
+    .security__slider {
+        padding-top: 64px;
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 419.98px) {
+    .security__bg {
+        width: calc(100% + 40px);
+        left:-20px;
+        transform:unset;
+    }
+
+    .security__slider {
+        padding-top: 48px;
+    }
+}

@@ -1,0 +1,246 @@
+/* Стили, уникальные для страницы «404». Перенесены из css/styles.css без изменений. */
+
+.page-404 {
+
+}
+
+.page-id-582 ul.wp-block-list {
+    list-style: initial;
+}
+
+.page-id-582 ul.wp-block-list li{
+    margin-bottom: 8px;
+    color: var(--text-white-70, rgba(251, 251, 251, 0.70));
+}
+
+body.error404 .page-404 {
+    padding: 140px 0 64px;
+    background: var(--nv-surface-1);
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+body.error404 .section-404 {
+    padding: 0;
+    background: transparent;
+}
+
+body.error404 .section-404__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+body.error404 .section-404__content {
+    flex: 0 1 574px;
+    min-width: 0;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+body.error404 .section-404__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+body.error404 .section-404__title {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 64px;
+}
+
+body.error404 .section-404__description {
+    margin: 0;
+    color: var(--nv-primary);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+/*
+ * Кнопка «Animated button» (Figma 722:20645): серая плашка, оранжевый круг со стрелкой.
+ * База `.btn-hero` — общая тёмная, поэтому всё задано явно. На hover/focus круг
+ * #FD6B01 разрастается из-под иконки на всю плашку (transform, без сдвига вёрстки).
+ */
+body.error404 .section-404 .btn-hero {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    height: 64px;
+    padding: 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-3);
+    color: var(--nv-constant-1);
+    text-decoration: none;
+}
+
+body.error404 .section-404 .btn-hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 32px;
+    right: auto;
+    bottom: auto;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    aspect-ratio: auto;
+    border-radius: 50%;
+    background: var(--nv-gradient);
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    z-index: 0;
+    transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+body.error404 .section-404 .btn-hero:hover::before,
+body.error404 .section-404 .btn-hero:focus-visible::before {
+    transform: scale(9);
+}
+
+body.error404 .section-404 .btn-hero .btn__text {
+    color: var(--nv-object-1);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    white-space: nowrap;
+    transition: color .3s ease;
+}
+
+body.error404 .section-404 .btn-hero .btn__icon-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 16px;
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+    transition: background-color .3s ease, color .3s ease;
+}
+
+body.error404 .section-404 .btn-hero .btn__icon-arrow::after {
+    content: none;
+}
+
+body.error404 .section-404 .btn-hero .btn__icon-arrow svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+body.error404 .section-404 .btn-hero:hover .btn__text,
+body.error404 .section-404 .btn-hero:focus-visible .btn__text {
+    color: var(--nv-constant-1);
+}
+
+body.error404 .section-404 .btn-hero:hover .btn__icon-arrow,
+body.error404 .section-404 .btn-hero:focus-visible .btn__icon-arrow {
+    background: var(--nv-constant-1);
+    color: var(--nv-primary);
+}
+
+body.error404 .section-404 .btn-hero:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+/*
+ * Иллюстрация: бокс 737 × 473 (Figma 722:20646), картинка — inset 11.42% / 0 / 1.9% / 0,
+ * эллипс-тень — inset 86.26% / 0 / 0 / 4.21% (SVG уже содержит blur, расширяется на ±1.7%).
+ */
+body.error404 .section-404__image {
+    position: relative;
+    flex: 1 1 737px;
+    min-width: 0;
+    max-width: 737px;
+    aspect-ratio: 737 / 473;
+    opacity: .9;
+}
+
+body.error404 .section-404__picture {
+    position: absolute;
+    inset: 11.42% 0 1.9% 0;
+    width: 100%;
+    height: 86.68%;
+    object-fit: cover;
+}
+
+body.error404 .section-404__shadow {
+    position: absolute;
+    inset: 86.26% 0 0 4.21%;
+    width: 95.79%;
+    height: 13.74%;
+    max-width: none;
+    transform: scale(1.034, 1.369);
+}
+
+@media (max-width: 991.98px) {
+    body.error404 .page-404 {
+        padding-top: 128px;
+    }
+
+    /* Tablet 722:23852: колонка, текст на всю ширину, иллюстрация 776 × 395 ниже, зазор 80. */
+    body.error404 .section-404__wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 80px;
+    }
+
+    body.error404 .section-404__content {
+        flex: none;
+        width: 100%;
+    }
+
+    body.error404 .section-404__image {
+        flex: none;
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 776 / 395;
+    }
+
+    body.error404 .section-404__picture {
+        inset: -2.78% 0 2.03% 0;
+        height: 100.75%;
+    }
+
+    body.error404 .section-404__shadow {
+        transform: scale(1.032, 1.442);
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 722:24249: поля 16, иллюстрация 360 × 211. Вертикаль — как у остальных светлых страниц. */
+    body.error404 .page-404 {
+        padding: 112px 0 48px;
+    }
+
+    body.error404 .section-404__image {
+        aspect-ratio: 360 / 211;
+    }
+
+    body.error404 .section-404__picture {
+        inset: 0 0 3.79% 0;
+        height: 96.21%;
+    }
+
+    body.error404 .section-404__shadow {
+        inset: 74.27% 0 0 4.21%;
+        height: 25.73%;
+        transform: scale(1.07, 1.442);
+    }
+}

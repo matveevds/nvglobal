@@ -1,0 +1,433 @@
+/* Блок «pricing» — стили не зависят от страницы. Правила перенесены из css/styles.css без изменений. */
+
+/* Новая секция по макету Figma 2363:30854. */
+.pricing__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.pricing__title {
+    margin: 0;
+}
+
+.pricing__cards {
+    display: flex;
+    /*
+     * Full HD 2380:23639: карточка цены 240, карточка преимуществ 228 —
+     * высоты независимы. На Desktop карточки выравниваются (`1599.98`).
+     */
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Full HD 2380:23640 — карточка цены 560; Desktop 2377:20690 — 360. */
+.pricing__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0;
+    width: 560px;
+    flex-shrink: 0;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+}
+
+.pricing__price-icon {
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+}
+
+.pricing__price-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.pricing__price-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.pricing__price-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.pricing__price-value {
+    color: var(--nv-primary);
+    font-size: var(--Text-Title-Size-H1, 52px);
+    font-weight: 700;
+    line-height: 123.077%;
+}
+
+.pricing__price-unit {
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.pricing__price-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--nv-surface-4);
+}
+
+.pricing__price-note {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: var(--Text-Body-Text-Size-Regular, 16px);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.pricing__price-note span {
+    color: var(--nv-primary);
+    font-weight: 700;
+}
+
+/*
+ * Full HD 2380:23649: преимущества и кнопки стоят в ряд, кнопки — столбиком
+ * справа по нижнему краю. Desktop 2363:31369 (кнопки строкой под карточками)
+ * восстановлен в `max-width: 1599.98px`.
+ */
+.pricing__offer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
+    flex: 1 1 auto;
+    min-width: 304px;
+    padding: var(--Frame-Card-Padding-Outside, 24px);
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.pricing__benefits {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex: 1 1 auto;
+    align-self: flex-start;
+    min-width: 0;
+    width: auto;
+}
+
+.pricing__benefit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 180px;
+    padding: 16px 16px 16px 24px;
+    border-radius: var(--Frame-Card-Padding-Corner, 24px);
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.pricing__benefit-icon {
+    display: block;
+    color: var(--nv-primary);
+}
+
+.pricing__benefit-icon svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.pricing__benefit-text {
+    width: 100%;
+    color: var(--nv-object-1);
+    font-size: var(--Text-Title-Size-H5, 20px);
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.pricing__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-end;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    gap: 12px;
+    width: auto;
+}
+
+/* `.btn` и модификаторы общие, поэтому оформление ограничено секцией. */
+.pricing .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 7px 7px 15px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--nv-surface-4);
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease;
+}
+
+.pricing .btn__text {
+    font-size: var(--Text-Button-Size-Regular, 18px);
+    font-weight: 700;
+    line-height: 133.333%;
+}
+
+.pricing .btn__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.pricing .btn__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.pricing .btn--primary {
+    background: var(--nv-gradient);
+}
+
+.pricing .btn--primary .btn__text,
+.pricing .btn--primary .btn__icon {
+    color: var(--nv-constant-1);
+}
+
+.pricing .btn--gray {
+    background: var(--nv-surface-2);
+}
+
+.pricing .btn--gray .btn__text,
+.pricing .btn--gray .btn__icon {
+    color: var(--nv-object-1);
+}
+
+.pricing .btn--primary:hover,
+.pricing .btn--primary:focus-visible {
+    background: var(--nv-primary);
+}
+
+.pricing .btn--gray:hover,
+.pricing .btn--gray:focus-visible {
+    background: var(--nv-surface-3);
+}
+
+.pricing .btn:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+@media (max-width: 1599.98px) {
+    /* Desktop 2363:31369: карточка цены 360, кнопки строкой под преимуществами. */
+    .pricing__cards {
+        align-items: stretch;
+    }
+
+    .pricing__price {
+        gap: 24px;
+        width: 360px;
+    }
+
+    .pricing__benefits {
+        align-self: auto;
+    }
+
+    .pricing__offer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+    }
+
+    .pricing__benefits {
+        flex: 0 1 auto;
+        width: 100%;
+    }
+
+    .pricing__actions {
+        flex-direction: row;
+        align-items: center;
+        align-self: auto;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .pricing__cards {
+        flex-direction: column;
+    }
+
+    .pricing__price {
+        width: 100%;
+    }
+
+    .pricing__offer {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* В планшетном макете между заголовком и карточками 52 (2376:17423). */
+    .pricing__content {
+        gap: 52px;
+    }
+
+    .pricing__cards {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .pricing__price {
+        flex: 0 0 326px;
+        width: 326px;
+        justify-content: space-between;
+    }
+
+    /* Поле 16 из макета минус толщина рамки — Figma рисует обводку внутрь. */
+    .pricing__offer {
+        min-width: 0;
+        padding: 15px;
+    }
+
+    .pricing__benefits {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .pricing__benefit {
+        position: relative;
+        flex: 0 0 auto;
+        align-items: stretch;
+        min-height: 0;
+        gap: 0;
+        padding: 15px;
+    }
+
+    .pricing__benefit-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .pricing__benefit-text {
+        margin-top: 24px;
+    }
+
+    /* В планшетном макете третий пункт умещается в одну строку. */
+    .pricing__benefit:nth-child(3) .pricing__benefit-text br {
+        display: none;
+    }
+
+    /*
+     * В макете кнопки ровно заполняют ряд (225 + 12 + 157 = 394). В теме они
+     * на 2px шире каждая, и при зазоре 12 ряд не сходится на 3px — уменьшаем
+     * зазор до 8, иначе кнопки переносятся уже на ширине макета.
+     * Ниже 840 ряд всё равно не помещается и переносится штатно.
+     */
+    .pricing__actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        column-gap: 8px;
+        row-gap: 12px;
+    }
+
+    /* В планшетном макете основная кнопка стоит первой. */
+    .pricing__actions .btn--primary {
+        order: -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Макета ниже 768 нет — возвращаем поведение темы. */
+    .pricing__cards {
+        flex-direction: column;
+    }
+
+    .pricing__price {
+        flex: 0 0 auto;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .pricing__benefits {
+        flex-wrap: wrap;
+    }
+
+    .pricing__benefit {
+        position: static;
+        flex: 1 1 100%;
+        min-height: 0;
+        gap: 16px;
+        padding: 16px 16px 16px 24px;
+        align-items: flex-end;
+    }
+
+    .pricing__benefit-icon {
+        position: static;
+    }
+
+    .pricing__benefit-text {
+        margin-top: 0;
+    }
+
+    .pricing__actions {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .pricing__actions .btn--primary {
+        order: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .pricing__price,
+    .pricing__offer {
+        padding: 16px;
+    }
+
+    .pricing__price-value {
+        font-size: 40px;
+        line-height: 130%;
+    }
+
+    .pricing__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pricing__actions .btn {
+        max-width: none;
+        justify-content: space-between;
+    }
+}

@@ -923,6 +923,8 @@ h4.wp-block-heading {
  */
 
 /* ---------- Раскладка страницы ---------- */
+body.single-document .post,
+body.page-template-page-docs .post,
 body.single-post .post {
     position: relative;
     z-index: 2;
@@ -931,18 +933,24 @@ body.single-post .post {
     background: var(--nv-surface-1);
 }
 
+body.single-document .post__wrapper,
+body.page-template-page-docs .post__wrapper,
 body.single-post .post__wrapper {
     display: flex;
     flex-direction: column;
     gap: 48px;
 }
 
+body.single-document .post__content,
+body.page-template-page-docs .post__content,
 body.single-post .post__content {
     display: flex;
     align-items: flex-start;
     gap: 36px;
 }
 
+body.single-document .post-sidebar,
+body.page-template-page-docs .post-sidebar,
 body.single-post .post-sidebar {
     position: relative;
     flex: 0 0 436px;
@@ -951,11 +959,15 @@ body.single-post .post-sidebar {
     height: auto;
 }
 
+body.single-document .post-sidebar__wrapper,
+body.page-template-page-docs .post-sidebar__wrapper,
 body.single-post .post-sidebar__wrapper {
     position: sticky;
     top: 40px;
 }
 
+body.single-document .post-content,
+body.page-template-page-docs .post-content,
 body.single-post .post-content {
     flex: 0 1 1080px;
     min-width: 0;
@@ -965,6 +977,8 @@ body.single-post .post-content {
 }
 
 /* ---------- Хлебные крошки ---------- */
+body.single-document .breadcrumbs a,
+body.page-template-page-docs .breadcrumbs a,
 body.single-post .breadcrumbs a {
     color: var(--nv-object-2);
     font-size: var(--Text-Title-Size-H6, 18px);
@@ -972,11 +986,17 @@ body.single-post .breadcrumbs a {
     text-decoration: none;
 }
 
+body.single-document .breadcrumbs a:hover,
+body.page-template-page-docs .breadcrumbs a:hover,
 body.single-post .breadcrumbs a:hover,
+body.single-document .breadcrumbs a:focus-visible,
+body.page-template-page-docs .breadcrumbs a:focus-visible,
 body.single-post .breadcrumbs a:focus-visible {
     color: var(--nv-primary);
 }
 
+body.single-document .breadcrumbs span,
+body.page-template-page-docs .breadcrumbs span,
 body.single-post .breadcrumbs span {
     color: var(--nv-primary);
     font-size: var(--Text-Title-Size-H6, 18px);
@@ -985,6 +1005,8 @@ body.single-post .breadcrumbs span {
 
 /* ---------- Шапка статьи ---------- */
 /* 2570:38932 — заголовок, под ним 24 до счётчиков и ещё 24 до картинки. */
+body.single-document .post__header,
+body.page-template-page-docs .post__header,
 body.single-post .post__header {
     display: flex;
     flex-direction: column;
@@ -993,6 +1015,8 @@ body.single-post .post__header {
 }
 
 /* Title/H1 52/64. */
+body.single-document .post-title,
+body.page-template-page-docs .post-title,
 body.single-post .post-title {
     margin: 0;
     color: var(--nv-object-1);
@@ -1002,13 +1026,19 @@ body.single-post .post-title {
     line-height: 123.077%;
 }
 
+body.single-document .post__meta,
+body.page-template-page-docs .post__meta,
 body.single-post .post__meta {
     display: flex;
     gap: 16px;
 }
 
 /* Поля 8/16 с обводкой внутрь габарита. */
+body.single-document .post__meta-views,
+body.page-template-page-docs .post__meta-views,
 body.single-post .post__meta-views,
+body.single-document .post__meta-likes,
+body.page-template-page-docs .post__meta-likes,
 body.single-post .post__meta-likes {
     display: flex;
     justify-content: center;
@@ -1020,11 +1050,15 @@ body.single-post .post__meta-likes {
     backdrop-filter: blur(10px);
 }
 
+body.single-document .post__meta-views,
+body.page-template-page-docs .post__meta-views,
 body.single-post .post__meta-views {
     background: var(--nv-surface-2);
     color: var(--nv-object-1);
 }
 
+body.single-document .post__meta-likes,
+body.page-template-page-docs .post__meta-likes,
 body.single-post .post__meta-likes {
     background: var(--nv-gradient);
     border-color: transparent;
@@ -1033,10 +1067,14 @@ body.single-post .post__meta-likes {
     transition: filter .2s ease;
 }
 
+body.single-document .post__meta-likes:hover,
+body.page-template-page-docs .post__meta-likes:hover,
 body.single-post .post__meta-likes:hover {
     filter: brightness(1.05);
 }
 
+body.single-document .post__meta-icon,
+body.page-template-page-docs .post__meta-icon,
 body.single-post .post__meta-icon {
     width: 24px;
     height: 24px;
@@ -1044,11 +1082,15 @@ body.single-post .post__meta-icon {
     color: inherit;
 }
 
+body.single-document .post__meta-icon svg path,
+body.page-template-page-docs .post__meta-icon svg path,
 body.single-post .post__meta-icon svg path {
     fill: currentColor;
 }
 
 /* Button/Regular 18/24. */
+body.single-document .post__meta-count,
+body.page-template-page-docs .post__meta-count,
 body.single-post .post__meta-count {
     color: inherit;
     font-size: var(--Text-Button-Size-Regular, 18px);
@@ -1057,6 +1099,8 @@ body.single-post .post__meta-count {
 }
 
 /* 2570:38937 — картинка в светлой рамке: поле 8, радиус 24, внутри радиус 16. */
+body.single-document .post__thumbnail,
+body.page-template-page-docs .post__thumbnail,
 body.single-post .post__thumbnail {
     width: 100%;
     padding: 7px;
@@ -1066,6 +1110,8 @@ body.single-post .post__thumbnail {
     line-height: 0;
 }
 
+body.single-document .post__thumbnail-wrapper,
+body.page-template-page-docs .post__thumbnail-wrapper,
 body.single-post .post__thumbnail-wrapper {
     /* 2570:38937 — слот 1080x512. */
     aspect-ratio: 1080 / 512;
@@ -1075,6 +1121,8 @@ body.single-post .post__thumbnail-wrapper {
     height: 100%;
 }
 
+body.single-document .post__thumbnail img,
+body.page-template-page-docs .post__thumbnail img,
 body.single-post .post__thumbnail img {
     width: 100%;
     height: 100%;
@@ -1084,6 +1132,8 @@ body.single-post .post__thumbnail img {
 }
 
 /* ---------- Лид ---------- */
+body.single-document .post-intro p,
+body.page-template-page-docs .post-intro p,
 body.single-post .post-intro p {
     margin: 0;
     color: var(--nv-object-1);
@@ -1097,10 +1147,14 @@ body.single-post .post-intro p {
  * 2570:38949 — вертикальный ритм статьи один на все блоки: 32.
  * Заголовки задают отступ сверху сами, параграфы — снизу.
  */
+body.single-document .post-text,
+body.page-template-page-docs .post-text,
 body.single-post .post-text {
     color: var(--nv-object-2);
 }
 
+body.single-document h2.wp-block-heading,
+body.page-template-page-docs h2.wp-block-heading,
 body.single-post h2.wp-block-heading {
     margin-top: 48px;
     margin-bottom: 32px;
@@ -1110,6 +1164,8 @@ body.single-post h2.wp-block-heading {
     line-height: 130%;
 }
 
+body.single-document h3.wp-block-heading,
+body.page-template-page-docs h3.wp-block-heading,
 body.single-post h3.wp-block-heading {
     margin-top: 40px;
     margin-bottom: 28px;
@@ -1119,6 +1175,8 @@ body.single-post h3.wp-block-heading {
     line-height: 150%;
 }
 
+body.single-document h4.wp-block-heading,
+body.page-template-page-docs h4.wp-block-heading,
 body.single-post h4.wp-block-heading {
     margin-top: 32px;
     margin-bottom: 24px;
@@ -1128,6 +1186,8 @@ body.single-post h4.wp-block-heading {
     line-height: 150%;
 }
 
+body.single-document .post-text > *:first-child,
+body.page-template-page-docs .post-text > *:first-child,
 body.single-post .post-text > *:first-child {
     margin-top: 0;
 }
@@ -1139,6 +1199,8 @@ body.single-post .post-text > *:first-child {
  * элементов выигрывало бы это правило — врезки теряли бы свой цвет.
  * Дочерний комбинатор оставляет внутренности блоков их собственным стилям.
  */
+body.single-document .post-text > p,
+body.page-template-page-docs .post-text > p,
 body.single-post .post-text > p {
     margin-bottom: 32px;
     color: var(--nv-object-2);
@@ -1147,25 +1209,39 @@ body.single-post .post-text > p {
     line-height: 155.556%;
 }
 
+body.single-document .post-text > p:last-child,
+body.page-template-page-docs .post-text > p:last-child,
 body.single-post .post-text > p:last-child {
     margin-bottom: 0;
 }
 
+body.single-document .post-text a,
+body.page-template-page-docs .post-text a,
 body.single-post .post-text a {
     color: var(--nv-primary);
     text-decoration: none;
 }
 
+body.single-document .post-text a:hover,
+body.page-template-page-docs .post-text a:hover,
 body.single-post .post-text a:hover,
+body.single-document .post-text a:focus-visible,
+body.page-template-page-docs .post-text a:focus-visible,
 body.single-post .post-text a:focus-visible {
     text-decoration: underline;
 }
 
+body.single-document .wp-block-paragraph strong,
+body.page-template-page-docs .wp-block-paragraph strong,
 body.single-post .wp-block-paragraph strong,
+body.single-document .post-text strong,
+body.page-template-page-docs .post-text strong,
 body.single-post .post-text strong {
     color: var(--nv-object-1);
 }
 
+body.single-document .wp-block-separator,
+body.page-template-page-docs .wp-block-separator,
 body.single-post .wp-block-separator {
     margin-top: 32px;
     margin-bottom: 32px;
@@ -1175,6 +1251,8 @@ body.single-post .wp-block-separator {
 }
 
 /* ---------- Картинки в статье ---------- */
+body.single-document .wp-block-image,
+body.page-template-page-docs .wp-block-image,
 body.single-post .wp-block-image {
     width: 100%;
     margin-bottom: 32px;
@@ -1184,6 +1262,8 @@ body.single-post .wp-block-image {
     background: var(--nv-surface-2);
 }
 
+body.single-document .wp-block-image img,
+body.page-template-page-docs .wp-block-image img,
 body.single-post .wp-block-image img {
     width: 100%;
     height: 100%;
@@ -1192,17 +1272,27 @@ body.single-post .wp-block-image img {
     overflow: hidden;
 }
 
+body.single-document .wp-block-image :where(figcaption),
+body.page-template-page-docs .wp-block-image :where(figcaption),
 body.single-post .wp-block-image :where(figcaption) {
     margin: 0;
 }
 
+body.single-document .wp-block-image:has(.alignleft),
+body.page-template-page-docs .wp-block-image:has(.alignleft),
 body.single-post .wp-block-image:has(.alignleft),
+body.single-document .wp-block-image:has(.alignright),
+body.page-template-page-docs .wp-block-image:has(.alignright),
 body.single-post .wp-block-image:has(.alignright),
+body.single-document .wp-block-image:has(.aligncenter),
+body.page-template-page-docs .wp-block-image:has(.aligncenter),
 body.single-post .wp-block-image:has(.aligncenter) {
     width: fit-content;
 }
 
 /* Body text/Small Regular 14/20. */
+body.single-document .wp-element-caption,
+body.page-template-page-docs .wp-element-caption,
 body.single-post .wp-element-caption {
     max-width: 760px;
     margin-left: auto;
@@ -1215,32 +1305,46 @@ body.single-post .wp-element-caption {
     text-align: center;
 }
 
+body.single-document .wp-block-image:has(.aligncenter),
+body.page-template-page-docs .wp-block-image:has(.aligncenter),
 body.single-post .wp-block-image:has(.aligncenter) {
     margin-left: auto;
     margin-right: auto;
 }
 
+body.single-document .post__content .wp-block-image:has(.alignleft),
+body.page-template-page-docs .post__content .wp-block-image:has(.alignleft),
 body.single-post .post__content .wp-block-image:has(.alignleft) {
     float: left;
     margin-right: 20px;
     margin-bottom: 20px;
 }
 
+body.single-document .post__content .wp-block-image .alignleft,
+body.page-template-page-docs .post__content .wp-block-image .alignleft,
 body.single-post .post__content .wp-block-image .alignleft {
     margin: 0;
 }
 
+body.single-document .post__content .wp-block-image:has(.alignright),
+body.page-template-page-docs .post__content .wp-block-image:has(.alignright),
 body.single-post .post__content .wp-block-image:has(.alignright) {
     float: right;
     margin-left: 20px;
     margin-bottom: 20px;
 }
 
+body.single-document .post__content .wp-block-image .alignright,
+body.page-template-page-docs .post__content .wp-block-image .alignright,
 body.single-post .post__content .wp-block-image .alignright {
     margin: 0;
 }
 
+body.single-document .no-border,
+body.page-template-page-docs .no-border,
 body.single-post .no-border,
+body.single-document .no-border img,
+body.page-template-page-docs .no-border img,
 body.single-post .no-border img {
     border: none;
     border-radius: unset;
@@ -1250,14 +1354,22 @@ body.single-post .no-border img {
 }
 
 /* ---------- Списки ---------- */
+body.single-document .post__content ul.wp-block-list,
+body.page-template-page-docs .post__content ul.wp-block-list,
 body.single-post .post__content ul.wp-block-list,
+body.single-document .post__content ol.wp-block-list,
+body.page-template-page-docs .post__content ol.wp-block-list,
 body.single-post .post__content ol.wp-block-list {
     list-style: none;
     padding-left: 0;
     margin: 0 0 32px;
 }
 
+body.single-document .post__content ul.wp-block-list li,
+body.page-template-page-docs .post__content ul.wp-block-list li,
 body.single-post .post__content ul.wp-block-list li,
+body.single-document .post__content ol.wp-block-list li,
+body.page-template-page-docs .post__content ol.wp-block-list li,
 body.single-post .post__content ol.wp-block-list li {
     position: relative;
     margin-bottom: 16px;
@@ -1267,12 +1379,18 @@ body.single-post .post__content ol.wp-block-list li {
     line-height: 155.556%;
 }
 
+body.single-document .post__content ul.wp-block-list li:last-child,
+body.page-template-page-docs .post__content ul.wp-block-list li:last-child,
 body.single-post .post__content ul.wp-block-list li:last-child,
+body.single-document .post__content ol.wp-block-list li:last-child,
+body.page-template-page-docs .post__content ol.wp-block-list li:last-child,
 body.single-post .post__content ol.wp-block-list li:last-child {
     margin-bottom: 0;
 }
 
 /* Маркер — кружок 24 с градиентом. */
+body.single-document .post__content ul.wp-block-list li::before,
+body.page-template-page-docs .post__content ul.wp-block-list li::before,
 body.single-post .post__content ul.wp-block-list li::before {
     content: '';
     position: absolute;
@@ -1288,14 +1406,20 @@ body.single-post .post__content ul.wp-block-list li::before {
 }
 
 /* 2570:38994 — номер в квадрате 24, текст с отступом 40. */
+body.single-document .post__content ol.wp-block-list,
+body.page-template-page-docs .post__content ol.wp-block-list,
 body.single-post .post__content ol.wp-block-list {
     counter-reset: post-counter;
 }
 
+body.single-document .post__content ol.wp-block-list li,
+body.page-template-page-docs .post__content ol.wp-block-list li,
 body.single-post .post__content ol.wp-block-list li {
     counter-increment: post-counter;
 }
 
+body.single-document .post__content ol.wp-block-list li::before,
+body.page-template-page-docs .post__content ol.wp-block-list li::before,
 body.single-post .post__content ol.wp-block-list li::before {
     content: counter(post-counter);
     position: absolute;
@@ -1322,12 +1446,16 @@ body.single-post .post__content ol.wp-block-list li::before {
  * (Space Grotesk Medium 18/28 в макете, здесь шрифт темы). Выравнивание ячеек
  * Gutenberg (`has-text-align-*`) сохраняется.
  */
+body.single-document .post__content .wp-block-table,
+body.page-template-page-docs .post__content .wp-block-table,
 body.single-post .post__content .wp-block-table {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
+body.single-document .post__content .wp-block-table figcaption,
+body.page-template-page-docs .post__content .wp-block-table figcaption,
 body.single-post .post__content .wp-block-table figcaption {
     order: -1;
     margin: 0;
@@ -1338,12 +1466,16 @@ body.single-post .post__content .wp-block-table figcaption {
     text-align: left;
 }
 
+body.single-document .post__content .wp-block-table table,
+body.page-template-page-docs .post__content .wp-block-table table,
 body.single-post .post__content .wp-block-table table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 8px;
 }
 
+body.single-document .post__content .wp-block-table thead th,
+body.page-template-page-docs .post__content .wp-block-table thead th,
 body.single-post .post__content .wp-block-table thead th {
     padding: 8px 16px;
     border: 1px solid var(--nv-primary);
@@ -1356,11 +1488,17 @@ body.single-post .post__content .wp-block-table thead th {
     text-align: center;
 }
 
+body.single-document .post__content .wp-block-table thead th:first-child,
+body.page-template-page-docs .post__content .wp-block-table thead th:first-child,
 body.single-post .post__content .wp-block-table thead th:first-child {
     text-align: left;
 }
 
+body.single-document .post__content .wp-block-table tbody td,
+body.page-template-page-docs .post__content .wp-block-table tbody td,
 body.single-post .post__content .wp-block-table tbody td,
+body.single-document .post__content .wp-block-table tfoot td,
+body.page-template-page-docs .post__content .wp-block-table tfoot td,
 body.single-post .post__content .wp-block-table tfoot td {
     padding: 8px 16px;
     border: 2px dashed var(--nv-surface-4);
@@ -1374,23 +1512,33 @@ body.single-post .post__content .wp-block-table tfoot td {
     vertical-align: middle;
 }
 
+body.single-document .post__content .wp-block-table tbody td:first-child,
+body.page-template-page-docs .post__content .wp-block-table tbody td:first-child,
 body.single-post .post__content .wp-block-table tbody td:first-child {
     color: var(--nv-object-2);
 }
 
+body.single-document .post__content .wp-block-table .has-text-align-center,
+body.page-template-page-docs .post__content .wp-block-table .has-text-align-center,
 body.single-post .post__content .wp-block-table .has-text-align-center {
     text-align: center;
 }
 
+body.single-document .post__content .wp-block-table .has-text-align-right,
+body.page-template-page-docs .post__content .wp-block-table .has-text-align-right,
 body.single-post .post__content .wp-block-table .has-text-align-right {
     text-align: right;
 }
 
+body.single-document .post__content .wp-block-table .has-text-align-left,
+body.page-template-page-docs .post__content .wp-block-table .has-text-align-left,
 body.single-post .post__content .wp-block-table .has-text-align-left {
     text-align: left;
 }
 
 /* Узкая колонка — таблица прокручивается внутри своей обёртки. */
+body.single-document .wp-block-table,
+body.page-template-page-docs .wp-block-table,
 body.single-post .wp-block-table {
     max-width: 100%;
     margin-bottom: 32px;
@@ -1400,30 +1548,44 @@ body.single-post .wp-block-table {
     scrollbar-color: var(--nv-primary) var(--nv-surface-3);
 }
 
+body.single-document .wp-block-table table,
+body.page-template-page-docs .wp-block-table table,
 body.single-post .wp-block-table table {
     min-width: 700px;
 }
 
+body.single-document .wp-block-table::-webkit-scrollbar,
+body.page-template-page-docs .wp-block-table::-webkit-scrollbar,
 body.single-post .wp-block-table::-webkit-scrollbar {
     height: 8px;
 }
 
+body.single-document .wp-block-table::-webkit-scrollbar-track,
+body.page-template-page-docs .wp-block-table::-webkit-scrollbar-track,
 body.single-post .wp-block-table::-webkit-scrollbar-track {
     border-radius: 4px;
     background: var(--nv-surface-3);
 }
 
+body.single-document .wp-block-table::-webkit-scrollbar-thumb,
+body.page-template-page-docs .wp-block-table::-webkit-scrollbar-thumb,
 body.single-post .wp-block-table::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background: var(--nv-gradient);
 }
 
 /* ---------- Кнопки сайдбара ---------- */
+body.single-document .post-sidebar-btn,
+body.page-template-page-docs .post-sidebar-btn,
 body.single-post .post-sidebar-btn,
+body.single-document .post-sidebar-btn-mobile,
+body.page-template-page-docs .post-sidebar-btn-mobile,
 body.single-post .post-sidebar-btn-mobile {
     display: none;
 }
 
+body.single-document .post-sidebar-btn-mobile,
+body.page-template-page-docs .post-sidebar-btn-mobile,
 body.single-post .post-sidebar-btn-mobile {
     position: fixed;
     right: 32px;
@@ -1444,11 +1606,17 @@ body.single-post .post-sidebar-btn-mobile {
     transition: all 0.3s;
 }
 
+body.single-document .post-sidebar-btn svg path,
+body.page-template-page-docs .post-sidebar-btn svg path,
 body.single-post .post-sidebar-btn svg path,
+body.single-document .post-sidebar-btn-mobile svg path,
+body.page-template-page-docs .post-sidebar-btn-mobile svg path,
 body.single-post .post-sidebar-btn-mobile svg path {
     fill: currentColor;
 }
 
+body.single-document .sidebar-overlay,
+body.page-template-page-docs .sidebar-overlay,
 body.single-post .sidebar-overlay {
     position: fixed;
     inset: 0;
@@ -1460,6 +1628,8 @@ body.single-post .sidebar-overlay {
     transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
+body.single-document .sidebar-overlay.is-active,
+body.page-template-page-docs .sidebar-overlay.is-active,
 body.single-post .sidebar-overlay.is-active {
     opacity: 1;
     visibility: visible;
@@ -1467,10 +1637,14 @@ body.single-post .sidebar-overlay.is-active {
     z-index: 2;
 }
 
+body.single-document .post-sidebar.is-open,
+body.page-template-page-docs .post-sidebar.is-open,
 body.single-post .post-sidebar.is-open {
     z-index: 20;
 }
 
+body.single-document.body__widget--active .post-sidebar-btn-mobile,
+body.page-template-page-docs.body__widget--active .post-sidebar-btn-mobile,
 body.single-post.body__widget--active .post-sidebar-btn-mobile {
     transform: translateY(-60px);
 }
@@ -1480,6 +1654,8 @@ body.single-post.body__widget--active .post-sidebar-btn-mobile {
  * 2570:39540 — нижняя полоса на Island/1 level, карточки на Background/1 level
  * с обводкой Stroke 2. Над ней — скруглённый «page edge» светлой области статьи.
  */
+body.single-document .post-bottom,
+body.page-template-page-docs .post-bottom,
 body.single-post .post-bottom {
     position: relative;
     z-index: 0;
@@ -1488,6 +1664,8 @@ body.single-post .post-bottom {
     background: var(--nv-surface-2);
 }
 
+body.single-document .post-bottom::before,
+body.page-template-page-docs .post-bottom::before,
 body.single-post .post-bottom::before {
     content: '';
     position: absolute;
@@ -1501,6 +1679,8 @@ body.single-post .post-bottom::before {
     background: var(--nv-surface-1);
 }
 
+body.single-document .post-bottom__wrapper,
+body.page-template-page-docs .post-bottom__wrapper,
 body.single-post .post-bottom__wrapper {
     position: relative;
     z-index: 1;
@@ -1508,6 +1688,8 @@ body.single-post .post-bottom__wrapper {
     gap: 36px;
 }
 
+body.single-document .post-bottom__left,
+body.page-template-page-docs .post-bottom__left,
 body.single-post .post-bottom__left {
     width: calc(28% - 18px);
     display: flex;
@@ -1515,24 +1697,34 @@ body.single-post .post-bottom__left {
     gap: 8px;
 }
 
+body.single-document .post__author,
+body.page-template-page-docs .post__author,
 body.single-post .post__author,
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles {
     border: 1px solid var(--nv-surface-4);
     border-radius: var(--nv-radius-card);
     background: var(--nv-surface-1);
 }
 
+body.single-document .post__author,
+body.page-template-page-docs .post__author,
 body.single-post .post__author {
     display: flex;
     flex-direction: column;
 }
 
+body.single-document .post__author-top,
+body.page-template-page-docs .post__author-top,
 body.single-post .post__author-top {
     display: flex;
     flex-direction: column;
     padding: 23px;
 }
 
+body.single-document .post__author-title,
+body.page-template-page-docs .post__author-title,
 body.single-post .post__author-title {
     color: var(--nv-primary);
     text-align: right;
@@ -1541,12 +1733,16 @@ body.single-post .post__author-title {
     line-height: 1;
 }
 
+body.single-document .post__author-content,
+body.page-template-page-docs .post__author-content,
 body.single-post .post__author-content {
     display: flex;
     gap: 16px;
     align-items: flex-end;
 }
 
+body.single-document .post__author-image,
+body.page-template-page-docs .post__author-image,
 body.single-post .post__author-image {
     width: 100px;
     height: 100px;
@@ -1556,12 +1752,16 @@ body.single-post .post__author-image {
     overflow: hidden;
 }
 
+body.single-document .post__author-image img,
+body.page-template-page-docs .post__author-image img,
 body.single-post .post__author-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+body.single-document .post__author-info,
+body.page-template-page-docs .post__author-info,
 body.single-post .post__author-info {
     display: flex;
     flex-direction: column;
@@ -1569,6 +1769,8 @@ body.single-post .post__author-info {
 }
 
 /* Title/H4 24/36. */
+body.single-document .post__author-name,
+body.page-template-page-docs .post__author-name,
 body.single-post .post__author-name {
     color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H4, 24px);
@@ -1576,12 +1778,16 @@ body.single-post .post__author-name {
     line-height: 150%;
 }
 
+body.single-document .post__author-job,
+body.page-template-page-docs .post__author-job,
 body.single-post .post__author-job {
     color: var(--nv-object-2);
     font-size: var(--Text-Body-Text-Size-Regular, 16px);
     line-height: 150%;
 }
 
+body.single-document .post__author-bottom,
+body.page-template-page-docs .post__author-bottom,
 body.single-post .post__author-bottom {
     display: flex;
     justify-content: space-between;
@@ -1590,12 +1796,16 @@ body.single-post .post__author-bottom {
     border-top: 1px solid var(--nv-surface-4);
 }
 
+body.single-document .post__author-bottom p,
+body.page-template-page-docs .post__author-bottom p,
 body.single-post .post__author-bottom p {
     margin: 0;
     color: var(--nv-object-1);
     font-size: var(--Text-Body-Text-Size-Medium, 18px);
 }
 
+body.single-document .post__author-bottom p span,
+body.page-template-page-docs .post__author-bottom p span,
 body.single-post .post__author-bottom p span {
     color: var(--nv-object-3);
 }
@@ -1604,6 +1814,8 @@ body.single-post .post__author-bottom p span {
  * Кнопка «See» — общий `.btn`, на тёмных страницах он персиковый.
  * Здесь перекрашиваем только в пределах карточки автора.
  */
+body.single-document .post__author-action .btn,
+body.page-template-page-docs .post__author-action .btn,
 body.single-post .post__author-action .btn {
     padding: 7px 7px 7px 15px;
     gap: 8px;
@@ -1614,11 +1826,17 @@ body.single-post .post__author-action .btn {
     transition: background .2s ease;
 }
 
+body.single-document .post__author-action .btn:hover,
+body.page-template-page-docs .post__author-action .btn:hover,
 body.single-post .post__author-action .btn:hover,
+body.single-document .post__author-action .btn:focus-visible,
+body.page-template-page-docs .post__author-action .btn:focus-visible,
 body.single-post .post__author-action .btn:focus-visible {
     background: var(--nv-primary);
 }
 
+body.single-document .post__author-action .btn .btn__text,
+body.page-template-page-docs .post__author-action .btn .btn__text,
 body.single-post .post__author-action .btn .btn__text {
     color: var(--nv-constant-1);
     font-size: var(--Text-Button-Size-Small, 14px);
@@ -1626,6 +1844,8 @@ body.single-post .post__author-action .btn .btn__text {
     line-height: 142.857%;
 }
 
+body.single-document .post__author-action .btn .btn__icon,
+body.page-template-page-docs .post__author-action .btn .btn__icon,
 body.single-post .post__author-action .btn .btn__icon {
     display: flex;
     width: 20px;
@@ -1634,15 +1854,21 @@ body.single-post .post__author-action .btn .btn__icon {
     color: var(--nv-constant-1);
 }
 
+body.single-document .post__author-action .btn .btn__icon svg,
+body.page-template-page-docs .post__author-action .btn .btn__icon svg,
 body.single-post .post__author-action .btn .btn__icon svg {
     width: 100%;
     height: 100%;
 }
 
+body.single-document .post__author-action .btn .btn__icon svg path,
+body.page-template-page-docs .post__author-action .btn .btn__icon svg path,
 body.single-post .post__author-action .btn .btn__icon svg path {
     fill: currentColor;
 }
 
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles {
     display: flex;
     flex-direction: column;
@@ -1651,6 +1877,8 @@ body.single-post .post__articles {
 }
 
 /* Title/H5 20/28. */
+body.single-document .post__articles-title,
+body.page-template-page-docs .post__articles-title,
 body.single-post .post__articles-title {
     color: var(--nv-object-1);
     font-size: var(--Text-Title-Size-H5, 20px);
@@ -1658,12 +1886,16 @@ body.single-post .post__articles-title {
     line-height: 140%;
 }
 
+body.single-document .post__articles-list,
+body.page-template-page-docs .post__articles-list,
 body.single-post .post__articles-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+body.single-document .post__article-item,
+body.page-template-page-docs .post__article-item,
 body.single-post .post__article-item {
     display: flex;
     gap: 16px;
@@ -1672,6 +1904,8 @@ body.single-post .post__article-item {
     background: var(--nv-surface-2);
 }
 
+body.single-document .post__article-image,
+body.page-template-page-docs .post__article-image,
 body.single-post .post__article-image {
     width: 76px;
     height: 88px;
@@ -1680,12 +1914,16 @@ body.single-post .post__article-image {
     overflow: hidden;
 }
 
+body.single-document .post__article-image img,
+body.page-template-page-docs .post__article-image img,
 body.single-post .post__article-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+body.single-document .post__article-title,
+body.page-template-page-docs .post__article-title,
 body.single-post .post__article-title {
     color: var(--nv-object-1);
     font-size: var(--Text-Body-Text-Size-Regular, 16px);
@@ -1693,16 +1931,24 @@ body.single-post .post__article-title {
     text-decoration: none;
 }
 
+body.single-document .post__article-title:hover,
+body.page-template-page-docs .post__article-title:hover,
 body.single-post .post__article-title:hover,
+body.single-document .post__article-title:focus-visible,
+body.page-template-page-docs .post__article-title:focus-visible,
 body.single-post .post__article-title:focus-visible {
     color: var(--nv-primary);
     text-decoration: underline;
 }
 
+body.single-document .post-bottom__right,
+body.page-template-page-docs .post-bottom__right,
 body.single-post .post-bottom__right {
     width: calc(72% - 18px);
 }
 
+body.single-document .post__form,
+body.page-template-page-docs .post__form,
 body.single-post .post__form {
     padding: 23px;
     border: 1px solid var(--nv-surface-4);
@@ -1721,6 +1967,8 @@ body.single-post .post__form {
 
 @media (max-width: 1199.98px) {/* Сайдбар уезжает в выдвижную панель — поведение темы сохраняем. */
     
+    body.single-document .post-sidebar,
+    body.page-template-page-docs .post-sidebar,
     body.single-post .post-sidebar {
         position: fixed;
         top: calc(50% + 32px);
@@ -1739,7 +1987,10 @@ body.single-post .post__form {
         backdrop-filter: blur(30px);
         transform: translateY(-50%) translateX(calc(100% - 24px));
         transition: transform 0.3s ease;
-    }    body.single-post .post-sidebar-btn {
+    }
+    body.single-document .post-sidebar-btn,
+    body.page-template-page-docs .post-sidebar-btn,
+    body.single-post .post-sidebar-btn {
         position: absolute;
         top: 50%;
         left: -20px;
@@ -1756,153 +2007,315 @@ body.single-post .post__form {
         backdrop-filter: blur(10px);
         cursor: pointer;
         transform: translateY(-50%);
-    }    body.single-post .post-sidebar-btn svg {
+    }
+    body.single-document .post-sidebar-btn svg,
+    body.page-template-page-docs .post-sidebar-btn svg,
+    body.single-post .post-sidebar-btn svg {
         transform: scaleX(1);
-    }    body.single-post .post-sidebar.is-open {
+    }
+    body.single-document .post-sidebar.is-open,
+    body.page-template-page-docs .post-sidebar.is-open,
+    body.single-post .post-sidebar.is-open {
         transform: translateY(-50%) translateX(0);
-    }    body.single-post .post-sidebar-btn.open svg,
+    }
+    body.single-document .post-sidebar-btn.open svg,
+    body.page-template-page-docs .post-sidebar-btn.open svg,
+    body.single-post .post-sidebar-btn.open svg,
+body.single-document .post-sidebar-btn-mobile.open svg,
+body.page-template-page-docs .post-sidebar-btn-mobile.open svg,
 body.single-post .post-sidebar-btn-mobile.open svg {
         transform: scaleX(-1);
-    }    body.single-post .post-sidebar__wrapper {
+    }
+    body.single-document .post-sidebar__wrapper,
+    body.page-template-page-docs .post-sidebar__wrapper,
+    body.single-post .post-sidebar__wrapper {
         position: unset;
         height: 100%;
-    }    body.single-post .post-content {
+    }
+    body.single-document .post-content,
+    body.page-template-page-docs .post-content,
+    body.single-post .post-content {
         flex: 1 1 auto;
         width: 100%;
-    }    body.single-post .post__wrapper {
+    }
+    body.single-document .post__wrapper,
+    body.page-template-page-docs .post__wrapper,
+    body.single-post .post__wrapper {
         gap: 36px;
-    }    body.single-post .post-bottom__left {
+    }
+    body.single-document .post-bottom__left,
+    body.page-template-page-docs .post-bottom__left,
+    body.single-post .post-bottom__left {
         width: calc(40% - 18px);
-    }    body.single-post .post-bottom__right {
+    }
+    body.single-document .post-bottom__right,
+    body.page-template-page-docs .post-bottom__right,
+    body.single-post .post-bottom__right {
         width: calc(60% - 18px);
-    }    body.single-post .single-document .footer {
+    }
+    body.single-document .single-document .footer,
+    body.page-template-page-docs .single-document .footer,
+    body.single-post .single-document .footer {
         position: unset;
     }
 }
 
 @media (max-width: 991.98px) {/* Tablet 236:5552 — поля карточек 16, заголовки на ступень ниже. */
     
+    body.single-document .post,
+    body.page-template-page-docs .post,
     body.single-post .post {
         padding-top: 32px;
         padding-bottom: 48px;
-    }    body.single-post .post__thumbnail,
+    }
+    body.single-document .post__thumbnail,
+    body.page-template-page-docs .post__thumbnail,
+    body.single-post .post__thumbnail,
+body.single-document .wp-block-image,
+body.page-template-page-docs .wp-block-image,
 body.single-post .wp-block-image {
         border-radius: 16px;
-    }    body.single-post .post__content .wp-block-table {
+    }
+    body.single-document .post__content .wp-block-table,
+    body.page-template-page-docs .post__content .wp-block-table,
+    body.single-post .post__content .wp-block-table {
         overflow-x: auto;
         padding-bottom: 8px;
-    }    body.single-post .post__content .wp-block-table table {
+    }
+    body.single-document .post__content .wp-block-table table,
+    body.page-template-page-docs .post__content .wp-block-table table,
+    body.single-post .post__content .wp-block-table table {
         min-width: 600px;
-    }    body.single-post .post-title {
+    }
+    body.single-document .post-title,
+    body.page-template-page-docs .post-title,
+    body.single-post .post-title {
         font-size: 44px;
         line-height: 127.273%;
-    }    body.single-post h2.wp-block-heading {
+    }
+    body.single-document h2.wp-block-heading,
+    body.page-template-page-docs h2.wp-block-heading,
+    body.single-post h2.wp-block-heading {
         margin-top: 40px;
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 150%;
-    }    body.single-post h3.wp-block-heading {
+    }
+    body.single-document h3.wp-block-heading,
+    body.page-template-page-docs h3.wp-block-heading,
+    body.single-post h3.wp-block-heading {
         font-size: var(--Text-Title-Size-H4, 24px);
         line-height: 150%;
-    }    body.single-post .post__meta-icon,
+    }
+    body.single-document .post__meta-icon,
+    body.page-template-page-docs .post__meta-icon,
+    body.single-post .post__meta-icon,
+body.single-document .post__meta-icon svg,
+body.page-template-page-docs .post__meta-icon svg,
 body.single-post .post__meta-icon svg {
         width: 20px;
         height: 20px;
-    }    body.single-post .post-bottom {
+    }
+    body.single-document .post-bottom,
+    body.page-template-page-docs .post-bottom,
+    body.single-post .post-bottom {
         padding-top: 72px;
         padding-bottom: 72px;
-    }    body.single-post .post-bottom__wrapper {
+    }
+    body.single-document .post-bottom__wrapper,
+    body.page-template-page-docs .post-bottom__wrapper,
+    body.single-post .post-bottom__wrapper {
         flex-direction: column;
-    }    body.single-post .post-bottom__left,
+    }
+    body.single-document .post-bottom__left,
+    body.page-template-page-docs .post-bottom__left,
+    body.single-post .post-bottom__left,
+body.single-document .post-bottom__right,
+body.page-template-page-docs .post-bottom__right,
 body.single-post .post-bottom__right {
         width: 100%;
-    }    body.single-post .post__author-top,
+    }
+    body.single-document .post__author-top,
+    body.page-template-page-docs .post__author-top,
+    body.single-post .post__author-top,
+body.single-document .post__author-bottom,
+body.page-template-page-docs .post__author-bottom,
 body.single-post .post__author-bottom,
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles,
+body.single-document .post__form,
+body.page-template-page-docs .post__form,
 body.single-post .post__form {
         padding: 15px;
-    }    body.single-post .post__author,
+    }
+    body.single-document .post__author,
+    body.page-template-page-docs .post__author,
+    body.single-post .post__author,
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles,
+body.single-document .post__form,
+body.page-template-page-docs .post__form,
 body.single-post .post__form {
         border-radius: 16px;
     }
 }
 
-@media (max-width: 767.98px) {    body.single-post .post-sidebar {
+@media (max-width: 767.98px) {
+body.single-document .post-sidebar,
+body.page-template-page-docs .post-sidebar,
+body.single-post .post-sidebar {
         width: 460px;
     }
 }
 
 @media (max-width: 575.98px) {/* Mobile 236:6388 — поля 12, H1 32/40. */
     
+    body.single-document .post__thumbnail,
+    body.page-template-page-docs .post__thumbnail,
     body.single-post .post__thumbnail,
+body.single-document .wp-block-image,
+body.page-template-page-docs .wp-block-image,
 body.single-post .wp-block-image {
         border-radius: 12px;
-    }    body.single-post .post-text p,
+    }
+    body.single-document .post-text p,
+    body.page-template-page-docs .post-text p,
+    body.single-post .post-text p,
+body.single-document .post-intro p,
+body.page-template-page-docs .post-intro p,
 body.single-post .post-intro p {
         font-size: var(--Text-Body-Text-Size-Regular, 16px);
         line-height: 150%;
-    }    body.single-post .post-sidebar-btn-mobile {
+    }
+    body.single-document .post-sidebar-btn-mobile,
+    body.page-template-page-docs .post-sidebar-btn-mobile,
+    body.single-post .post-sidebar-btn-mobile {
         display: flex;
-    }    body.single-post .post-sidebar-btn {
+    }
+    body.single-document .post-sidebar-btn,
+    body.page-template-page-docs .post-sidebar-btn,
+    body.single-post .post-sidebar-btn {
         display: none;
-    }    body.single-post .post-sidebar {
+    }
+    body.single-document .post-sidebar,
+    body.page-template-page-docs .post-sidebar,
+    body.single-post .post-sidebar {
         top: 64px;
         right: -26px;
         width: 320px;
         height: calc(100% - 240px);
         padding: 12px;
         transform: translateX(calc(100% - 24px));
-    }    body.single-post .post-sidebar.is-open {
+    }
+    body.single-document .post-sidebar.is-open,
+    body.page-template-page-docs .post-sidebar.is-open,
+    body.single-post .post-sidebar.is-open {
         transform: translateX(-26px);
         z-index: 20;
-    }    body.single-post .post-title {
+    }
+    body.single-document .post-title,
+    body.page-template-page-docs .post-title,
+    body.single-post .post-title {
         font-size: 32px;
         line-height: 125%;
-    }    body.single-post .post__meta-count {
+    }
+    body.single-document .post__meta-count,
+    body.page-template-page-docs .post__meta-count,
+    body.single-post .post__meta-count {
         font-size: 16px;
         line-height: 1.25;
-    }    body.single-post .post__wrapper {
+    }
+    body.single-document .post__wrapper,
+    body.page-template-page-docs .post__wrapper,
+    body.single-post .post__wrapper {
         gap: 24px;
-    }    body.single-post h2.wp-block-heading {
+    }
+    body.single-document h2.wp-block-heading,
+    body.page-template-page-docs h2.wp-block-heading,
+    body.single-post h2.wp-block-heading {
         margin-top: 32px;
         margin-bottom: 24px;
         font-size: var(--Text-Title-Size-H4, 24px);
         line-height: 150%;
-    }    body.single-post h3.wp-block-heading {
+    }
+    body.single-document h3.wp-block-heading,
+    body.page-template-page-docs h3.wp-block-heading,
+    body.single-post h3.wp-block-heading {
         margin-top: 24px;
         margin-bottom: 16px;
         font-size: var(--Text-Title-Size-H5, 20px);
         line-height: 140%;
-    }    body.single-post h4.wp-block-heading {
+    }
+    body.single-document h4.wp-block-heading,
+    body.page-template-page-docs h4.wp-block-heading,
+    body.single-post h4.wp-block-heading {
         margin-top: 24px;
         margin-bottom: 16px;
         font-size: var(--Text-Title-Size-H6, 18px);
         line-height: 133.333%;
-    }    body.single-post .post__content .wp-block-image:has(.alignright),
+    }
+    body.single-document .post__content .wp-block-image:has(.alignright),
+    body.page-template-page-docs .post__content .wp-block-image:has(.alignright),
+    body.single-post .post__content .wp-block-image:has(.alignright),
+body.single-document .wp-block-image:has(.aligncenter),
+body.page-template-page-docs .wp-block-image:has(.aligncenter),
 body.single-post .wp-block-image:has(.aligncenter),
+body.single-document .post__content .wp-block-image:has(.alignleft),
+body.page-template-page-docs .post__content .wp-block-image:has(.alignleft),
 body.single-post .post__content .wp-block-image:has(.alignleft) {
         width: 100%;
         margin-left: 0;
         margin-right: 0;
-    }    body.single-post .post__content ol.wp-block-list li,
+    }
+    body.single-document .post__content ol.wp-block-list li,
+    body.page-template-page-docs .post__content ol.wp-block-list li,
+    body.single-post .post__content ol.wp-block-list li,
+body.single-document .post__content ul.wp-block-list li,
+body.page-template-page-docs .post__content ul.wp-block-list li,
 body.single-post .post__content ul.wp-block-list li {
         font-size: var(--Text-Body-Text-Size-Regular, 16px);
         line-height: 150%;
-    }    body.single-post .post__content ol.wp-block-list li::before {
+    }
+    body.single-document .post__content ol.wp-block-list li::before,
+    body.page-template-page-docs .post__content ol.wp-block-list li::before,
+    body.single-post .post__content ol.wp-block-list li::before {
         font-size: 14px;
-    }    body.single-post .post__author,
+    }
+    body.single-document .post__author,
+    body.page-template-page-docs .post__author,
+    body.single-post .post__author,
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles,
+body.single-document .post__form,
+body.page-template-page-docs .post__form,
 body.single-post .post__form {
         border-radius: 12px;
-    }    body.single-post .post__author-top,
+    }
+    body.single-document .post__author-top,
+    body.page-template-page-docs .post__author-top,
+    body.single-post .post__author-top,
+body.single-document .post__author-bottom,
+body.page-template-page-docs .post__author-bottom,
 body.single-post .post__author-bottom,
+body.single-document .post__articles,
+body.page-template-page-docs .post__articles,
 body.single-post .post__articles,
+body.single-document .post__form,
+body.page-template-page-docs .post__form,
 body.single-post .post__form {
         padding: 11px;
-    }    body.single-post .post__author-name {
+    }
+    body.single-document .post__author-name,
+    body.page-template-page-docs .post__author-name,
+    body.single-post .post__author-name {
         font-size: var(--Text-Title-Size-H5, 20px);
         line-height: 140%;
-    }    body.single-post .post__author-image {
+    }
+    body.single-document .post__author-image,
+    body.page-template-page-docs .post__author-image,
+    body.single-post .post__author-image {
         width: 72px;
         height: 72px;
     }
@@ -1917,12 +2330,16 @@ body.single-post .post__form {
 }
 
 /* ---------- Комментарии (Figma 2570:39540, Р-142) ---------- */
+body.single-document .post-comments,
+body.page-template-page-docs .post-comments,
 body.single-post .post-comments {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
+body.single-document .post-comments__form-card,
+body.page-template-page-docs .post-comments__form-card,
 body.single-post .post-comments__form-card {
     padding: 24px;
     border: 1px solid var(--nv-surface-4);
@@ -1930,6 +2347,8 @@ body.single-post .post-comments__form-card {
     background: var(--nv-surface-1);
 }
 
+body.single-document .post-comments__title,
+body.page-template-page-docs .post-comments__title,
 body.single-post .post-comments__title {
     margin: 0 0 16px;
     color: var(--nv-object-1);
@@ -1938,6 +2357,8 @@ body.single-post .post-comments__title {
     line-height: 28px;
 }
 
+body.single-document .post-comments__notice,
+body.page-template-page-docs .post-comments__notice,
 body.single-post .post-comments__notice {
     margin: 0 0 16px;
     padding: 12px 16px;
@@ -1949,18 +2370,24 @@ body.single-post .post-comments__notice {
     line-height: 20px;
 }
 
+body.single-document .post-comments__form,
+body.page-template-page-docs .post-comments__form,
 body.single-post .post-comments__form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
+body.single-document .post-comments__row,
+body.page-template-page-docs .post-comments__row,
 body.single-post .post-comments__row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
 }
 
+body.single-document .post-comments__field,
+body.page-template-page-docs .post-comments__field,
 body.single-post .post-comments__field {
     display: flex;
     flex-direction: column;
@@ -1968,16 +2395,22 @@ body.single-post .post-comments__field {
     min-width: 0;
 }
 
+body.single-document .post-comments__label,
+body.page-template-page-docs .post-comments__label,
 body.single-post .post-comments__label {
     color: var(--nv-object-2);
     font-size: 12px;
     line-height: 16px;
 }
 
+body.single-document .post-comments__req,
+body.page-template-page-docs .post-comments__req,
 body.single-post .post-comments__req {
     color: var(--nv-primary);
 }
 
+body.single-document .post-comments__control,
+body.page-template-page-docs .post-comments__control,
 body.single-post .post-comments__control {
     display: flex;
     align-items: center;
@@ -1989,6 +2422,8 @@ body.single-post .post-comments__control {
     background: var(--nv-surface-2);
 }
 
+body.single-document .post-comments__icon,
+body.page-template-page-docs .post-comments__icon,
 body.single-post .post-comments__icon {
     flex-shrink: 0;
     box-sizing: content-box;
@@ -1999,7 +2434,11 @@ body.single-post .post-comments__icon {
     color: var(--nv-primary);
 }
 
+body.single-document .post-comments__control input,
+body.page-template-page-docs .post-comments__control input,
 body.single-post .post-comments__control input,
+body.single-document .post-comments__textarea,
+body.page-template-page-docs .post-comments__textarea,
 body.single-post .post-comments__textarea {
     width: 100%;
     border: 0;
@@ -2010,11 +2449,15 @@ body.single-post .post-comments__textarea {
     line-height: 20px;
 }
 
+body.single-document .post-comments__control input,
+body.page-template-page-docs .post-comments__control input,
 body.single-post .post-comments__control input {
     height: 100%;
     padding: 0;
 }
 
+body.single-document .post-comments__textarea,
+body.page-template-page-docs .post-comments__textarea,
 body.single-post .post-comments__textarea {
     box-sizing: border-box;
     min-height: 120px;
@@ -2025,21 +2468,33 @@ body.single-post .post-comments__textarea {
     resize: vertical;
 }
 
+body.single-document .post-comments__control input::placeholder,
+body.page-template-page-docs .post-comments__control input::placeholder,
 body.single-post .post-comments__control input::placeholder,
+body.single-document .post-comments__textarea::placeholder,
+body.page-template-page-docs .post-comments__textarea::placeholder,
 body.single-post .post-comments__textarea::placeholder {
     color: var(--nv-object-3);
 }
 
+body.single-document .post-comments__control:focus-within,
+body.page-template-page-docs .post-comments__control:focus-within,
 body.single-post .post-comments__control:focus-within,
+body.single-document .post-comments__textarea:focus,
+body.page-template-page-docs .post-comments__textarea:focus,
 body.single-post .post-comments__textarea:focus {
     outline: 2px solid var(--nv-object-1);
     outline-offset: 2px;
 }
 
+body.single-document .post-comments__control input:focus,
+body.page-template-page-docs .post-comments__control input:focus,
 body.single-post .post-comments__control input:focus {
     outline: 0;
 }
 
+body.single-document .post-comments__consent,
+body.page-template-page-docs .post-comments__consent,
 body.single-post .post-comments__consent {
     display: flex;
     align-items: flex-start;
@@ -2049,6 +2504,8 @@ body.single-post .post-comments__consent {
     line-height: 16px;
 }
 
+body.single-document .post-comments__consent input,
+body.page-template-page-docs .post-comments__consent input,
 body.single-post .post-comments__consent input {
     flex-shrink: 0;
     width: 20px;
@@ -2057,11 +2514,15 @@ body.single-post .post-comments__consent input {
     accent-color: var(--nv-primary);
 }
 
+body.single-document .post-comments__consent a,
+body.page-template-page-docs .post-comments__consent a,
 body.single-post .post-comments__consent a {
     color: var(--nv-primary);
 }
 
 /* Ловушка для ботов: за пределами экрана, не display:none (его боты распознают). */
+body.single-document .post-comments__trap,
+body.page-template-page-docs .post-comments__trap,
 body.single-post .post-comments__trap {
     position: absolute;
     left: -9999px;
@@ -2070,11 +2531,15 @@ body.single-post .post-comments__trap {
     overflow: hidden;
 }
 
+body.single-document .post-comments__actions,
+body.page-template-page-docs .post-comments__actions,
 body.single-post .post-comments__actions {
     display: flex;
     justify-content: flex-end;
 }
 
+body.single-document .post-comments__list,
+body.page-template-page-docs .post-comments__list,
 body.single-post .post-comments__list {
     display: flex;
     flex-direction: column;
@@ -2084,6 +2549,8 @@ body.single-post .post-comments__list {
     list-style: none;
 }
 
+body.single-document .post-comments__item,
+body.page-template-page-docs .post-comments__item,
 body.single-post .post-comments__item {
     margin: 0;
     padding: 12px 16px;
@@ -2092,6 +2559,8 @@ body.single-post .post-comments__item {
     background: var(--nv-surface-1);
 }
 
+body.single-document .post-comments__meta,
+body.page-template-page-docs .post-comments__meta,
 body.single-post .post-comments__meta {
     display: flex;
     flex-wrap: wrap;
@@ -2099,6 +2568,8 @@ body.single-post .post-comments__meta {
     gap: 4px 12px;
 }
 
+body.single-document .post-comments__author,
+body.page-template-page-docs .post-comments__author,
 body.single-post .post-comments__author {
     color: var(--nv-object-1);
     font-size: 14px;
@@ -2106,12 +2577,16 @@ body.single-post .post-comments__author {
     line-height: 20px;
 }
 
+body.single-document .post-comments__position,
+body.page-template-page-docs .post-comments__position,
 body.single-post .post-comments__position {
     color: var(--nv-primary);
     font-size: 12px;
     line-height: 16px;
 }
 
+body.single-document .post-comments__date,
+body.page-template-page-docs .post-comments__date,
 body.single-post .post-comments__date {
     margin-left: auto;
     color: var(--nv-object-3);
@@ -2119,6 +2594,8 @@ body.single-post .post-comments__date {
     line-height: 16px;
 }
 
+body.single-document .post-comments__text,
+body.page-template-page-docs .post-comments__text,
 body.single-post .post-comments__text {
     margin-top: 8px;
     color: var(--nv-object-2);
@@ -2126,6 +2603,8 @@ body.single-post .post-comments__text {
     line-height: 20px;
 }
 
+body.single-document .post-comments__text p,
+body.page-template-page-docs .post-comments__text p,
 body.single-post .post-comments__text p {
     margin: 0;
     color: inherit;
@@ -2134,10 +2613,14 @@ body.single-post .post-comments__text p {
 }
 
 @media (max-width: 575.98px) {
+    body.single-document .post-comments__row,
+    body.page-template-page-docs .post-comments__row,
     body.single-post .post-comments__row {
         grid-template-columns: minmax(0, 1fr);
     }
 
+    body.single-document .post-comments__form-card,
+    body.page-template-page-docs .post-comments__form-card,
     body.single-post .post-comments__form-card {
         padding: 16px;
     }

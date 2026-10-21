@@ -1,0 +1,417 @@
+/* ==========================================================================
+   Каталог блоков (page-bloki.php, ?nv_bloki=1) — только оформление каталога:
+   вступление, оглавление, переключатель ширины, подписи и рамки кадров.
+   Подключается только в режиме каталога (inc/block-catalog.php).
+   ========================================================================== */
+
+.bloki {
+    background: var(--nv-surface-1);
+}
+
+/* Плавающие элементы сайта перекрывают кадры и подписи: на странице каталога они не нужны. */
+body.nv-bloki .top__widget,
+body.nv-bloki:not(.bloki-show-cookie) .cookie-banner {
+    display: none !important;
+}
+
+/* BLOKI-INTRO START */
+.bloki-intro {
+    padding-top: 128px;
+    padding-bottom: 48px;
+    background-color: var(--nv-surface-2);
+}
+
+.bloki-intro__title {
+    margin-bottom: 16px;
+    font-size: 48px;
+    line-height: 116.67%;
+    font-weight: 600;
+    color: var(--nv-object-1);
+}
+
+.bloki-intro__text {
+    max-width: 900px;
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--nv-object-2);
+}
+
+.bloki-toc__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bloki-toc__group {
+    flex: 0 0 100%;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 142.86%;
+    font-weight: 600;
+    color: var(--nv-primary);
+}
+
+.bloki-toc__item {
+    flex: 0 0 calc((100% - 72px) / 4);
+    min-width: 0;
+}
+
+.bloki-toc__link {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 142.86%;
+    color: var(--nv-object-1);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.bloki-toc__link:hover {
+    color: var(--nv-primary);
+}
+
+.bloki-toc__num {
+    flex-shrink: 0;
+    min-width: 24px;
+    font-weight: 600;
+    color: var(--nv-object-3);
+}
+
+@media (max-width: 1199.98px) {
+    .bloki-toc__item {
+        flex-basis: calc((100% - 48px) / 3);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .bloki-toc__item {
+        flex-basis: calc((100% - 24px) / 2);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .bloki-intro {
+        padding-top: 120px;
+    }
+
+    .bloki-intro__title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .bloki-toc__item {
+        flex-basis: 100%;
+    }
+}
+/* памятка «Как собрать новую страницу» */
+.bloki-memo {
+    max-width: 1100px;
+    margin-bottom: 40px;
+    padding: 24px;
+    border: 1px solid var(--nv-surface-4);
+    border-left: 4px solid var(--nv-primary);
+    border-radius: 16px;
+    background: var(--nv-surface-1);
+}
+
+.bloki-memo__title {
+    margin: 0 0 12px;
+    font-size: 24px;
+    line-height: 133.33%;
+    font-weight: 600;
+    color: var(--nv-object-1);
+}
+
+.bloki-memo__list {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 15px;
+    line-height: 150%;
+    color: var(--nv-object-2);
+}
+
+.bloki-memo__list > li + li {
+    margin-top: 8px;
+}
+
+.bloki-memo__list ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.bloki-memo__list b {
+    color: var(--nv-object-1);
+}
+/* BLOKI-INTRO END */
+
+/* BLOKI-SWITCH START */
+.bloki-switch {
+    position: sticky;
+    top: 80px;
+    z-index: 30;
+    border-bottom: 1px solid var(--nv-surface-4);
+    background: var(--nv-surface-1);
+}
+
+.bloki-switch__inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.bloki-switch__label {
+    margin-right: 8px;
+    font-size: 14px;
+    line-height: 142.86%;
+    color: var(--nv-object-2);
+}
+
+.bloki-switch__btn,
+.bloki-item__vw {
+    padding: 4px 12px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    line-height: 142.86%;
+    color: var(--nv-object-1);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.bloki-switch__btn:hover,
+.bloki-item__vw:hover {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+}
+
+.bloki-switch__btn.is-active,
+.bloki-item__vw.is-active {
+    border-color: var(--nv-primary);
+    background: var(--nv-primary);
+    color: #fff;
+}
+/* BLOKI-SWITCH END */
+
+/* BLOKI-LABEL START */
+.bloki-group {
+    padding: 32px 16px;
+    background-image: linear-gradient(135deg, var(--nv-primary) 15%, var(--nv-primary-2) 100%);
+    font-size: 32px;
+    line-height: 137.5%;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+}
+
+.bloki-group__note {
+    max-width: 900px;
+    margin: 16px auto;
+    padding: 0 16px;
+    font-size: 15px;
+    line-height: 150%;
+    color: var(--nv-object-2);
+}
+
+.bloki-label {
+    padding: 24px 16px;
+    border-top: 4px solid var(--nv-primary);
+    background-color: var(--nv-object-1);
+    scroll-margin-top: 150px;
+}
+
+.bloki-label__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bloki-label__inner p {
+    margin: 0;
+}
+
+.bloki-label__head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bloki-label__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    min-height: 32px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background-color: var(--nv-primary);
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 600;
+    color: #fff;
+}
+
+.bloki-label__name {
+    font-size: 24px;
+    line-height: 133.33%;
+    font-weight: 600;
+    color: #fff;
+}
+
+.bloki-label__desc {
+    font-size: 16px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.bloki-label__meta {
+    font-size: 14px;
+    line-height: 142.86%;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bloki-label__meta b {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.bloki-label__meta--scope {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-left: 3px solid var(--nv-primary);
+    border-radius: 0 6px 6px 0;
+    background: rgba(253, 107, 1, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.bloki-label__meta--scope b {
+    color: var(--nv-primary);
+}
+
+.bloki-label__tools {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.bloki-label__tools-label {
+    margin-right: 4px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bloki-label__tools .bloki-item__vw {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.bloki-label__link {
+    margin-left: 8px;
+    font-size: 14px;
+    color: var(--nv-primary);
+    text-decoration: underline;
+}
+
+.bloki-label__link:hover {
+    color: #fff;
+}
+/* BLOKI-LABEL END */
+
+/* BLOKI-FRAME START */
+.bloki-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--nv-surface-3);
+}
+
+.bloki-frame__stage {
+    margin: 0 auto;
+    overflow: hidden;
+    background: #fff;
+}
+
+.bloki-frame__iframe {
+    display: block;
+    max-width: none;
+    border: 0;
+    background: #fff;
+    transform-origin: top left;
+}
+/* BLOKI-FRAME END */
+
+/* BLOKI-ACTION START */
+/* Блоки без кадра (модалки, cookie, плавающие элементы): кнопка вместо iframe. */
+.bloki-action {
+    padding: 24px 0;
+    background: var(--nv-surface-2);
+}
+
+.bloki-action__inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.bloki-action__btn {
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--nv-primary);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.bloki-action__btn:hover {
+    background: var(--nv-primary-2);
+}
+
+.bloki-action__note {
+    margin: 0;
+    font-size: 15px;
+    line-height: 150%;
+    color: var(--nv-object-2);
+}
+/* BLOKI-ACTION END */
+
+/* Имена файлов, классов и функций в подписях и памятке. */
+.bloki code {
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(33, 33, 33, 0.07);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    word-break: break-word;
+}
+
+.bloki-label code {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* Ссылка между полным каталогом и каталогом уникальных блоков. */
+.bloki-intro__link {
+    font-weight: 600;
+    color: var(--nv-primary);
+    text-decoration: underline;
+}

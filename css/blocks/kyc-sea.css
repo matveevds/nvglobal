@@ -1,0 +1,380 @@
+/* Блок «kyc-sea» — универсальный (template-parts/kyc-sea-section.php): вид не зависит от страницы, страны, порядка и объёма текстов. */
+
+/* Подложка-панель (как `.solutions-products`): светлый фон по краям, серая панель со скруглением 32. */
+.kyc-sea {
+    padding: 64px 0;
+    background: var(--nv-surface-1);
+}
+
+@media (max-width: 767.98px) {
+    .kyc-sea {
+        padding: 32px 0;
+    }
+}
+
+/*
+ * eKYC in Southeast Asia: 2492:14522, страны 2538:15792 / 16413 / 17034 / 17655 / 18276. Карта 604x520
+ * собрана из слоёв-стран (позиции — Figma, доли), у активной страны подменяется слой. Увеличительный круг
+ * Сингапура с выносками — только в его состоянии. Вкладки — tablist, одна панель.
+ */
+.kyc-sea__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.kyc-sea__top {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.kyc-sea__head {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.kyc-sea__head .kyc-lead {
+    width: 700px;
+    max-width: 100%;
+}
+
+.kyc-sea .section__badge {
+    align-self: center;
+}
+
+.kyc-sea__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.kyc-sea__map {
+    position: relative;
+    flex: 0 1 604px;
+    min-width: 0;
+    aspect-ratio: 604 / 520;
+    overflow: hidden;
+}
+
+/* Слой растягивается на свою рамку (left/top/width/height в долях карты); SVG — без сохранения пропорций, как в Figma. */
+.kyc-sea__layer {
+    position: absolute;
+    display: block;
+    max-width: none;
+}
+
+.kyc-sea__zoom {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.kyc-sea__zoom[hidden] {
+    display: none;
+}
+
+.kyc-sea__ellipse {
+    position: absolute;
+    left: 27.8%;
+    top: 66%;
+    width: 3.97%;
+    height: auto;
+}
+
+.kyc-sea__line {
+    position: absolute;
+    height: 1px;
+    transform-origin: center;
+}
+
+.kyc-sea__line--a {
+    left: 35.35%;
+    top: 45.4%;
+    width: 41.76%;
+    transform: translate(-50%, -50%) rotate(-69.34deg);
+}
+
+.kyc-sea__line--b {
+    left: 47.35%;
+    top: 55.86%;
+    width: 40.1%;
+    transform: translate(-50%, -50%) rotate(-36.78deg);
+}
+
+.kyc-sea__circle {
+    position: absolute;
+    left: 41.4%;
+    top: 12.9%;
+    width: 27.8%;
+    height: 32.1%;
+    border: 1px solid var(--nv-primary);
+    border-radius: 50%;
+    background: var(--nv-surface-1);
+}
+
+.kyc-sea__circle img {
+    position: absolute;
+    left: 5.36%;
+    top: 26.35%;
+    display: block;
+    width: 89.03%;
+    height: 47.49%;
+}
+
+.kyc-sea__side {
+    display: flex;
+    flex: 0 1 640px;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.kyc-sea__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 8px;
+}
+
+/* Tabs: Body Regular 16/24, поле 4/16; неактивная — Island/2 и серый текст, активная — градиент. */
+.kyc-sea__tab {
+    padding: 4px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--nv-surface-3);
+    color: var(--nv-object-3);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.kyc-sea__tab:hover {
+    background: var(--nv-surface-4);
+    color: var(--nv-object-1);
+}
+
+.kyc-sea__tab.is-active {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.kyc-sea__tab:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+}
+
+.kyc-sea__card {
+    gap: 32px;
+    min-height: 0;
+}
+
+/* Заголовок и абзац страны; пустой абзац скрыт — под заголовком нет промежутка (JS пишет в слот textContent). */
+.kyc-sea__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.kyc-sea__intro .kyc-card__title {
+    overflow-wrap: anywhere;
+}
+
+.kyc-sea__text {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--nv-object-2);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 400;
+}
+
+.kyc-sea__text:empty {
+    display: none;
+}
+
+/*
+ * Строки-характеристики: по одному <dl> на страну, в порядке вкладок. Показывается блок активной вкладки
+ * (n-я вкладка ↔ n-й <dl>; стран не больше шести). Без :has() виден только первый блок.
+ */
+.kyc-sea__facts {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+}
+
+.kyc-sea__facts:first-of-type:not(:empty) {
+    display: flex;
+}
+
+@supports selector(:has(*)) {
+    .kyc-sea__facts:first-of-type:not(:empty) {
+        display: none;
+    }
+
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(1).is-active) .kyc-sea__facts:nth-of-type(1):not(:empty),
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(2).is-active) .kyc-sea__facts:nth-of-type(2):not(:empty),
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(3).is-active) .kyc-sea__facts:nth-of-type(3):not(:empty),
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(4).is-active) .kyc-sea__facts:nth-of-type(4):not(:empty),
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(5).is-active) .kyc-sea__facts:nth-of-type(5):not(:empty),
+    .kyc-sea__side:has(.kyc-sea__tab:nth-child(6).is-active) .kyc-sea__facts:nth-of-type(6):not(:empty) {
+        display: flex;
+    }
+}
+
+.kyc-sea__fact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.kyc-sea__fact dt {
+    margin: 0;
+    color: var(--nv-object-1);
+    font-size: 18px;
+    line-height: 155.556%;
+    font-weight: 500;
+}
+
+.kyc-sea__fact dd {
+    min-width: 0;
+    margin: 0;
+}
+
+.kyc-sea__tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.kyc-sea__tokens .kyc-token {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 1399.98px) {
+    .kyc-sea__side {
+        flex-basis: 560px;
+    }
+
+    .kyc-sea__map {
+        flex-basis: 520px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-sea__side {
+        flex-basis: 480px;
+    }
+
+    .kyc-sea__map {
+        flex-basis: 440px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Колонка: карта, под ней вкладки и карточка. */
+    .kyc-sea__row {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .kyc-sea__side {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 640px;
+    }
+
+    .kyc-sea__map {
+        flex: 0 0 auto;
+        width: min(100%, 604px);
+    }
+
+    .kyc-sea__tabs {
+        justify-content: center;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile 2558:28688: вкладки в две строки по центру, карточка на всю ширину. */
+    .kyc-sea__inner,
+    .kyc-sea__top {
+        gap: 32px;
+    }
+
+    .kyc-sea__text {
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .kyc-sea__card {
+        gap: 16px;
+    }
+
+    .kyc-sea__fact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /*
+     * Full HD 2561:31154: слева колонка 362 (бейдж и текст), справа в одной полосе карта и вкладки с карточкой 720.
+     * Карта и слои — те же 604x520, что на Desktop. Без бейджа и текста карта и карточка занимают всю полосу.
+     */
+    .kyc-sea__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 48px;
+    }
+
+    .kyc-sea__top {
+        flex: 0 0 362px;
+        width: 362px;
+        align-items: flex-start;
+        align-self: flex-start;
+    }
+
+    .kyc-sea .section__badge {
+        align-self: flex-start;
+    }
+
+    .kyc-sea__head {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .kyc-sea__head .kyc-lead {
+        width: 100%;
+    }
+
+    .kyc-sea__row {
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto;
+        /* Поля 120 из Figma есть только на ширине 1920; на 1600 карта и карточка занимают всю полосу. */
+        padding: 0 clamp(0px, calc((100vw - 1700px) / 1.83), 120px);
+    }
+
+    .kyc-sea__side {
+        flex: 0 1 720px;
+    }
+}

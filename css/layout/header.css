@@ -1,0 +1,1635 @@
+/* Каркас сайта (header) — есть на каждой странице. */
+
+.header {
+    --nv-primary: #FD6B01;
+    --nv-primary-2: #FF4601;
+    --nv-primary-soft: #FFF0E6;
+
+    --nv-object-1: #212121;
+    --nv-object-2: #5A5A5A;
+    --nv-object-3: #898989;
+
+    --nv-surface-1: #F8F8F8;
+    --nv-surface-2: #F2F2F2;
+    --nv-surface-3: #E4E4E4;
+    --nv-surface-4: #D2D2D2;
+
+    --nv-white: #FFFFFF;
+    --nv-constant-1: #F8F8F8;
+    --nv-constant-85: rgba(248, 248, 248, 0.85);
+    --nv-constant-50: rgba(248, 248, 248, 0.5);
+
+    /* Приглушённый оранжевый: номер на акцентной карточке Products. */
+    --nv-primary-tint: #FEB580;
+
+    --nv-gradient: linear-gradient(167deg, #FD6B01 15%, #FF4601 100%);
+
+    --nv-radius-card: 24px;
+    --nv-radius-hero: 32px;
+    --nv-gutter: 32px;
+}
+
+/*
+ * Глобальная шапка (header.php). Figma NV Global, Header: Full HD 2580:50483…,
+ * Desktop 2580:45386 / 2580:47102, Tablet 2580:48317…, Mobile 2580:49995…,
+ * sticky 2580:48215 (docs/DECISIONS.md, Р-141).
+ *
+ * Шапка одна на весь сайт и светлая. Токены --nv-* объявлены на `.header`
+ * (см. HOME THEME), поэтому она не зависит от класса body.
+ *
+ * Схема: `.header` — плейсхолдер высотой 80px (64px на мобильном), реальная
+ * панель `.header__bar` всегда `position: fixed`. Контент под шапкой не
+ * смещается при скролле. `position: sticky` не годится: у html и body
+ * стоит overflow-x: hidden.
+ *
+ * Состояния задаёт один контроллер (initHeaderMenu в js/main.js):
+ *   .header.is-scrolled     — страница прокручена (класс ставит JS; своих стилей нет);
+ *   .header.is-open         — открыта панель десктопа/планшета;
+ *   .header__item.is-open   — какая именно;
+ *   .header.is-menu-open    — открыто мобильное меню;
+ *   data-view="root|product|industries|resources" — экран мобильного меню.
+ */
+.header {
+    --header-h: 80px;
+    --header-radius: 24px;
+    --header-pad: 24px;
+    position: relative;
+    height: var(--header-h);
+    font-family: inherit;
+}
+
+.header__bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 900;
+    box-sizing: border-box;
+    height: var(--header-h);
+    padding: 16px 16px 0;
+    border-bottom: 1px solid transparent;
+    background: var(--nv-surface-1);
+}
+
+.admin-bar .header__bar {
+    top: 32px;
+}
+
+/* Тот же потолок, что у `.container` (1920 с боковыми 16): на сверхшироких экранах шапка не растягивается. */
+.header__shell {
+    position: relative;
+    max-width: 1888px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-sizing: border-box;
+    height: 64px;
+    padding: 0 var(--header-pad);
+    border-bottom: 1px solid transparent;
+    border-radius: var(--header-radius) var(--header-radius) 0 0;
+    background: var(--nv-surface-1);
+}
+
+.header.is-open .header__shell {
+    border-bottom-color: var(--nv-surface-3);
+}
+
+/* Логотип: в макете Desktop/Tablet его в шапке нет, знак «N» — только на Mobile. */
+.header__logo {
+    display: none;
+    flex-shrink: 0;
+    line-height: 0;
+}
+
+.header__logo img {
+    display: block;
+    width: 46px;
+    height: 32px;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+:where(.header__list, .header__list li, .mega ul, .mega li, .header-language ul, .header-language li) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header__list {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.header__item {
+    display: flex;
+    align-items: center;
+}
+
+.header__trigger,
+.header__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nv-object-1);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .2s ease;
+}
+
+.header__trigger:hover,
+.header__link:hover,
+.header__item.is-open > .header__trigger,
+.header__item.is-current > .header__link,
+.header__item.is-current > .header__trigger {
+    color: var(--nv-primary);
+}
+
+.header__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    padding: 2px;
+    border: .5px solid var(--nv-surface-3);
+    border-radius: 8px;
+    color: var(--nv-object-1);
+    transition: transform .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.header__item.is-open > .header__trigger .header__chevron {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+    transform: rotate(180deg);
+}
+
+.header__trigger:hover .header__chevron {
+    border-color: var(--nv-primary);
+    color: var(--nv-primary);
+}
+
+.header__chevron .header__icon {
+    width: 12px;
+    height: 12px;
+}
+
+.header__chevron .header__icon--m {
+    display: none;
+}
+
+.header__trigger:focus-visible,
+.header__link:focus-visible,
+.header__burger:focus-visible,
+.header__back:focus-visible,
+.header-btn:focus-visible,
+.header-language__trigger:focus-visible,
+.header-language__option:focus-visible,
+.mega a:focus-visible,
+.mega button:focus-visible {
+    outline: 2px solid var(--nv-object-1);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.header__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.header__mobile-cta,
+.header__burger,
+.header__back {
+    display: none;
+}
+
+.header__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 899;
+    background: rgba(33, 33, 33, .6);
+    backdrop-filter: blur(4px);
+}
+
+.header.is-open .header__overlay {
+    display: block;
+}
+
+/* ---------- Кнопки ---------- */
+.header-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-sizing: border-box;
+    border: 1px solid rgba(251, 251, 251, .15);
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: filter .2s ease, background-color .2s ease;
+}
+
+.header-btn--primary {
+    background: var(--nv-gradient);
+    color: var(--nv-constant-1);
+}
+
+.header-btn--primary:hover {
+    filter: brightness(1.06);
+}
+
+.header-btn--secondary {
+    border-color: var(--nv-surface-4);
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.header-btn--secondary:hover {
+    background: var(--nv-surface-3);
+}
+
+/* Размеры по Figma включают рамку: 32px (small) и 44px (regular); иконка 24px высоту не увеличивает. */
+.header-btn--small {
+    padding: 5px 5px 5px 11px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.header-btn--regular {
+    width: 100%;
+    padding: 11px 7px 11px 15px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.header-btn--small .header-btn__icon,
+.header-btn--regular .header-btn__icon {
+    margin: -2px 0;
+}
+
+.header-btn__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+/* ---------- Язык (UI без мультиязычности) ---------- */
+/* Переключатель языков скрыт по решению владельца (мультиязычности нет); разметка в header.php остаётся. Вернуть — убрать display. */
+.header-language {
+    position: relative;
+    display: none;
+}
+
+.header-language__trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+    width: 62px;
+    height: 32px;
+    padding: 4px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 10px;
+    background: var(--nv-surface-2);
+    color: #1C1C1C;
+    cursor: pointer;
+}
+
+.header-language__flag {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.header-language__chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform .2s ease;
+}
+
+.header-language.is-open .header-language__chevron {
+    transform: rotate(180deg);
+}
+
+.header-language__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    z-index: 3;
+    box-sizing: border-box;
+    width: 200px;
+    max-height: 240px;
+    padding: 8px;
+    overflow-y: auto;
+    border: 1px solid var(--nv-surface-3);
+    border-radius: 10px;
+    background: var(--nv-surface-2);
+}
+
+.header-language.is-open .header-language__dropdown {
+    display: block;
+}
+
+.header-language__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header-language__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 4px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: #777777;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    cursor: default;
+}
+
+.header-language__option.is-current {
+    background: var(--nv-surface-3);
+    color: #1C1C1C;
+}
+
+.header-language__option-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-language__option-flag {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.header-language__check {
+    width: 20px;
+    height: 20px;
+    color: #FE7338;
+}
+
+/* ---------- Панели (mega-menu) ---------- */
+.header__panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    margin-top: 1px;
+    overflow: hidden;
+    border-radius: 0 0 var(--header-radius) var(--header-radius);
+    background: var(--nv-surface-1);
+}
+
+.header__item.is-open > .header__panel {
+    display: block;
+}
+
+.mega {
+    box-sizing: border-box;
+    color: var(--nv-object-1);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega a,
+.mega button {
+    font-family: inherit;
+}
+
+.mega__link,
+.mega__nav-link,
+.mega__group-title,
+.mega__item {
+    color: var(--nv-object-1);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.mega__link:hover,
+.mega__nav-link:hover,
+.mega__group-title:hover,
+.mega__item:hover,
+.mega__item.is-active,
+.mega__nav-link.is-current {
+    color: var(--nv-primary);
+}
+
+.mega__link {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+/* --- Products --- */
+.mega--products {
+    display: grid;
+    grid-template-columns: 304px minmax(0, 1fr) 624px;
+    min-height: 440px;
+    padding: 0 var(--header-pad);
+}
+
+.mega__col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--header-pad) 0;
+}
+
+.mega__col--list {
+    justify-content: space-between;
+    gap: 24px;
+    padding-right: 24px;
+}
+
+.mega__col--detail,
+.mega__col--promo {
+    padding-right: 0;
+    padding-left: 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__col--detail {
+    padding-right: 24px;
+}
+
+.mega__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mega__item-icon {
+    display: none;
+    width: 24px;
+    height: 24px;
+}
+
+.mega__cta {
+    align-self: flex-start;
+}
+
+.mega__pane {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.mega__pane.is-active {
+    display: flex;
+}
+
+.mega__card {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+    backdrop-filter: blur(10px);
+}
+
+.mega__card-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.mega__card-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.mega__card-desc {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__card-btn {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.mega__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 24px;
+    padding: 0 16px;
+}
+
+.mega__col--promo {
+    justify-content: center;
+    gap: 32px;
+}
+
+.mega__promo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 32px;
+    min-height: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mega__promo-media {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    overflow: hidden;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 16px;
+}
+
+.mega__promo-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mega__promo-play {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 64px;
+    height: 56px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 12px;
+    background: var(--nv-primary);
+    color: var(--nv-constant-1);
+    filter: drop-shadow(0 8px 8px rgba(0, 0, 0, .3));
+    backdrop-filter: blur(10px);
+}
+
+.mega__promo-play .header__icon {
+    width: 36px;
+    height: 36px;
+}
+
+.mega__promo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 8px;
+    text-align: center;
+}
+
+.mega__promo-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.mega__promo-desc {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* --- Industries --- */
+.mega--industries {
+    display: grid;
+    grid-template-columns: 304px minmax(0, 1fr) 532px;
+    min-height: 440px;
+    padding: 0 var(--header-pad);
+}
+
+.mega--industries.mega--no-aside {
+    grid-template-columns: 304px minmax(0, 1fr);
+}
+
+.mega__intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: var(--header-pad) 24px var(--header-pad) 0;
+}
+
+.mega__intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mega__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+.mega__desc {
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__intro-btn {
+    align-self: flex-start;
+}
+
+.mega__groups {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-content: start;
+    gap: 48px 24px;
+    padding: var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__group-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.mega__group .mega__links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+}
+
+.mega__aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    padding: var(--header-pad) 0 var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__aside-title {
+    margin: 0;
+    padding: 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.mega__posts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mega__post {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--nv-surface-2);
+    color: inherit;
+    text-decoration: none;
+    backdrop-filter: blur(4px);
+}
+
+.mega__post-thumb {
+    flex-shrink: 0;
+    align-self: stretch;
+    width: 132px;
+    border: 1px solid var(--nv-surface-3);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.mega__post-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 8px 0;
+}
+
+.mega__post-date {
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__post-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+/* --- Resources --- */
+.mega--resources {
+    display: grid;
+    grid-template-columns: 680px 220px minmax(0, 1fr);
+    grid-template-areas: "banner nav latest";
+    min-height: 280px;
+}
+
+.mega--resources.mega--no-latest {
+    grid-template-columns: 680px 220px;
+}
+
+.mega__banner {
+    position: relative;
+    grid-area: banner;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    padding: var(--header-pad);
+    background: var(--nv-surface-3);
+    text-align: center;
+}
+
+.mega__banner-texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: soft-light;
+    opacity: .5;
+}
+
+.mega__banner-title {
+    position: relative;
+    margin: 0;
+    color: var(--nv-object-1);
+    font-family: Martel, Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 52px;
+}
+
+.mega__banner-title span {
+    color: var(--nv-primary);
+}
+
+.mega__banner-text {
+    position: relative;
+    z-index: 1;
+    max-width: 380px;
+    margin: 0;
+    color: var(--nv-object-2);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__banner-mascot {
+    position: absolute;
+    bottom: -12px;
+    left: calc(50% - .5px);
+    width: 187px;
+    height: auto;
+    transform: translateX(-50%);
+}
+
+.mega__nav {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--header-pad) 16px;
+}
+
+.mega__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mega__nav-link {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.mega__social {
+    display: flex;
+    gap: 8px;
+    opacity: .7;
+}
+
+.mega__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 6px;
+    border: 1px solid var(--nv-surface-4);
+    border-radius: 6px;
+    background: var(--nv-surface-2);
+    color: var(--nv-object-1);
+}
+
+.mega__social-link .header__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.mega__latest {
+    grid-area: latest;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: var(--header-pad) var(--header-pad) var(--header-pad) 24px;
+    border-left: 1px solid var(--nv-surface-3);
+}
+
+.mega__latest-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mega__cards {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.mega__card-post {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mega__card-post-thumb {
+    flex: 1;
+    min-height: 80px;
+    width: 100%;
+    border: 1px solid var(--nv-surface-3);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.mega__card-post-title {
+    padding: 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+@media (max-width: 1599.98px) {
+/* ---------- Desktop (Figma 1440) ---------- */
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr) 384px;
+    }
+
+    .mega--industries {
+        grid-template-columns: 264px minmax(0, 1fr) 404px;
+    }
+
+    .mega--industries.mega--no-aside {
+        grid-template-columns: 264px minmax(0, 1fr);
+    }
+
+    .mega--resources {
+        grid-template-columns: 520px 220px minmax(0, 1fr);
+    }
+
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 520px 220px;
+    }
+
+    .mega__links {
+        gap: 16px 24px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .header__list {
+        gap: 24px;
+    }
+
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr) 304px;
+    }
+
+    .mega--industries {
+        grid-template-columns: 244px minmax(0, 1fr) 324px;
+    }
+
+    .mega--industries.mega--no-aside {
+        grid-template-columns: 244px minmax(0, 1fr);
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega__links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega--resources {
+        grid-template-columns: 420px 200px minmax(0, 1fr);
+    }
+
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 420px 200px;
+    }
+
+    .mega__cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega__cards li:nth-child(n + 3) {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) {
+/* ---------- Tablet (Figma 840) ---------- */
+    .header {
+        --header-radius: 16px;
+        --header-pad: 32px;
+    }
+
+    .header__list {
+        gap: 24px;
+    }
+
+    .mega--products {
+        grid-template-columns: 204px minmax(0, 1fr);
+        grid-template-areas:
+            "list detail"
+            "promo promo";
+        padding: 0 var(--header-pad);
+        min-height: 0;
+    }
+
+    .mega--products .mega__col--list {
+        grid-area: list;
+    }
+
+    .mega--products .mega__col--detail {
+        grid-area: detail;
+        padding-right: 0;
+    }
+
+    .mega--products .mega__col--list,
+    .mega--products .mega__col--detail {
+        padding-top: 16px;
+    }
+
+    .mega--products .mega__col--promo {
+        grid-area: promo;
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+        padding: var(--header-pad) 0;
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega__promo {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+
+    .mega__promo-media {
+        flex: 0 0 360px;
+        aspect-ratio: 360 / 214;
+        min-height: 0;
+    }
+
+    .mega__promo-text {
+        flex: 1;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .mega--industries,
+    .mega--industries.mega--no-aside {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+        padding: 0;
+    }
+
+    .mega__intro {
+        padding: var(--header-pad) var(--header-pad) 24px;
+    }
+
+    .mega__intro-text {
+        max-width: 580px;
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: var(--header-pad);
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega__aside {
+        padding: var(--header-pad);
+        border-top: 1px solid var(--nv-surface-3);
+        border-left: 0;
+    }
+
+    .mega--resources,
+    .mega--resources.mega--no-latest {
+        grid-template-columns: 220px minmax(0, 1fr);
+        grid-template-rows: auto minmax(284px, auto);
+        grid-template-areas:
+            "banner banner"
+            "nav latest";
+        min-height: 0;
+    }
+
+    .mega__banner {
+        align-items: flex-start;
+        min-height: 164px;
+        padding: var(--header-pad);
+        text-align: left;
+    }
+
+    .mega__banner-text {
+        max-width: 320px;
+    }
+
+    .mega__banner-mascot {
+        right: 56px;
+        left: auto;
+        transform: none;
+    }
+
+    .mega__nav {
+        padding: var(--header-pad);
+    }
+
+    .mega__latest {
+        padding: var(--header-pad) var(--header-pad) var(--header-pad) 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+/* ---------- Mobile (Figma 392) ---------- */
+    .header {
+        --header-h: 64px;
+        --header-pad: 0px;
+        --header-radius: 0px;
+    }
+
+    .header__bar {
+        padding: 0 16px;
+    }
+
+    .header__shell {
+        gap: 12px;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .header__logo,
+    .header__burger {
+        display: flex;
+    }
+
+    .header__actions .header__cta {
+        display: none;
+    }
+
+    .header__actions {
+        gap: 12px;
+        margin-left: auto;
+    }
+
+    .header__burger {
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        border: 1px solid rgba(251, 251, 251, .15);
+        border-radius: 6px;
+        background: var(--nv-surface-2);
+        color: var(--nv-object-1);
+        cursor: pointer;
+    }
+
+    .header__burger .header__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__burger-close,
+    .header.is-menu-open .header__burger-open {
+        display: none;
+    }
+
+    .header.is-menu-open .header__burger-close {
+        display: block;
+    }
+
+    .header.is-menu-open .header-language {
+        display: none;
+    }
+
+    .header.is-open .header__overlay {
+        display: none;
+    }
+
+    .header.is-open .header__shell {
+        border-bottom-color: transparent;
+    }
+
+    /* Меню — экран под панелью шапки. */
+    .header__nav {
+        position: fixed;
+        top: var(--header-h);
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        box-sizing: border-box;
+        padding: 24px 16px 32px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: var(--nv-surface-1);
+    }
+
+    .admin-bar .header__nav {
+        top: calc(var(--header-h) + 46px);
+    }
+
+    .header.is-menu-open .header__nav {
+        display: flex;
+    }
+
+    .header__list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+    }
+
+    .header__item {
+        display: block;
+        border-top: 1px solid var(--nv-surface-3);
+    }
+
+    .header__item:last-child {
+        border-bottom: 1px solid var(--nv-surface-3);
+    }
+
+    .header__trigger,
+    .header__link {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px 0;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 32px;
+        white-space: normal;
+    }
+
+    .header__trigger:hover,
+    .header__link:hover {
+        color: var(--nv-object-1);
+    }
+
+    .header__item.is-open > .header__trigger,
+    .header__item.is-current > .header__link,
+    .header__item.is-current > .header__trigger {
+        color: var(--nv-object-1);
+    }
+
+    /* Кнопка раскрытия: 32×32, как в макете. */
+    .header__chevron {
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 6px;
+        background: var(--nv-surface-2);
+    }
+
+    .header__chevron .header__icon {
+        display: none;
+    }
+
+    .header__chevron .header__icon--m {
+        display: block;
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__item.is-open > .header__trigger .header__chevron {
+        border-color: var(--nv-surface-4);
+        color: var(--nv-object-1);
+    }
+
+    /* Industries и Resources открываются отдельным экраном — шеврон смотрит вправо. */
+    .header__item[data-menu="industries"] .header__chevron,
+    .header__item[data-menu="resources"] .header__chevron {
+        transform: rotate(-90deg);
+    }
+
+    .header__item[data-menu="industries"].is-open > .header__trigger .header__chevron,
+    .header__item[data-menu="resources"].is-open > .header__trigger .header__chevron {
+        transform: rotate(-90deg);
+    }
+
+    .header__panel {
+        position: static;
+        margin-top: 0;
+        border-radius: 0;
+        background: none;
+    }
+
+    .mega {
+        color: var(--nv-object-1);
+    }
+
+    /* Products: аккордеон со списком, подэкран — выбранный продукт. */
+    .mega--products {
+        display: block;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .mega__col {
+        padding: 0;
+    }
+
+    .mega__col--detail,
+    .mega__col--promo {
+        padding: 0;
+        border-left: 0;
+    }
+
+    .mega__col--promo,
+    .mega__cta {
+        display: none;
+    }
+
+    .mega__col--detail {
+        display: none;
+    }
+
+    .mega__col--list {
+        padding: 0 8px 16px;
+    }
+
+    .mega__list {
+        gap: 24px;
+    }
+
+    .mega__item {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .mega__item-icon {
+        display: block;
+    }
+
+    .mega__item:hover {
+        color: var(--nv-object-1);
+    }
+
+    .mega__item.is-active {
+        color: var(--nv-object-1);
+    }
+
+    .header__back {
+        display: none;
+        align-items: center;
+        align-self: flex-start;
+        gap: 8px;
+        box-sizing: border-box;
+        padding: 8px 16px 8px 8px;
+        border: 1px solid var(--nv-surface-4);
+        border-radius: 8px;
+        background: var(--nv-surface-2);
+        color: var(--nv-object-1);
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+    }
+
+    .header__back-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Подэкраны: видим только выбранный пункт, остальное скрыто. */
+    .header:not([data-view="root"]) .header__mobile-cta,
+    .header:not([data-view="root"]) .header__item:not(.is-open) {
+        display: none;
+    }
+
+    .header:not([data-view="root"]) .header__item.is-open {
+        border: 0;
+    }
+
+    .header:not([data-view="root"]) .header__item.is-open > .header__trigger {
+        display: none;
+    }
+
+    .header:not([data-view="root"]) .header__nav {
+        justify-content: flex-start;
+    }
+
+    .header[data-view="product"] .mega__col--list {
+        display: none;
+    }
+
+    .header[data-view="product"] .mega__col--detail {
+        display: flex;
+    }
+
+    .header[data-view="product"] .mega__pane.is-active,
+    .header[data-view="industries"] .header__panel,
+    .header[data-view="resources"] .header__panel {
+        gap: 32px;
+    }
+
+    .header:not([data-view="root"]) .header__back {
+        display: inline-flex;
+    }
+
+    .mega__pane {
+        gap: 32px;
+    }
+
+    .mega__card {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 16px;
+        padding: 0;
+        border: 0;
+        background: none;
+        backdrop-filter: none;
+    }
+
+    .mega__card-text {
+        gap: 8px;
+        align-self: stretch;
+    }
+
+    .mega__card-title {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .mega__card-btn {
+        align-self: flex-end;
+        padding: 8px 8px 8px 16px;
+        font-size: 16px;
+    }
+
+    .mega__links {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 0 8px;
+    }
+
+    .mega__link {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    /* Industries */
+    .mega--industries,
+    .mega--industries.mega--no-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .mega__intro {
+        gap: 24px;
+        padding: 0;
+    }
+
+    .mega__intro-text {
+        max-width: none;
+    }
+
+    .mega__title {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .mega__intro-btn {
+        align-self: flex-end;
+        padding: 8px 8px 8px 16px;
+        font-size: 16px;
+    }
+
+    .mega__groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px 24px;
+        padding: 24px 8px 0;
+        border-top: 1px solid var(--nv-surface-3);
+    }
+
+    .mega__group-title {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .mega__group .mega__links {
+        padding: 0;
+    }
+
+    .mega__aside {
+        display: none;
+    }
+
+    /* Resources */
+    .mega--resources,
+    .mega--resources.mega--no-latest {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .mega__banner {
+        align-items: center;
+        min-height: 240px;
+        margin: 0 -16px;
+        text-align: center;
+    }
+
+    .mega__banner-text {
+        max-width: 320px;
+    }
+
+    .mega__banner-mascot {
+        right: auto;
+        left: calc(50% - .5px);
+        transform: translateX(-50%);
+    }
+
+    .mega__nav {
+        gap: 32px;
+        padding: 0 8px;
+    }
+
+    .mega__nav-link {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .mega__nav-list {
+        gap: 24px;
+    }
+
+    .mega__social {
+        justify-content: flex-end;
+        padding-right: 32px;
+    }
+
+    .mega__latest {
+        display: none;
+    }
+
+    .header__mobile-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .mega__banner-title {
+        font-size: 40px;
+        line-height: 48px;
+    }
+}
+
+@media (max-width: 478.98px) {
+    .header-language__dropdown {
+        max-height: 224px;
+    }
+}
+
+@media (max-width: 419.98px) {
+    .mega__groups {
+        gap: 32px 16px;
+    }
+}
+
+/* Без JS: панели десктопа открываются по наведению и фокусу, мобильное меню видно всегда. */
+html:not(.has-js) .header__item:hover > .header__panel,
+html:not(.has-js) .header__item:focus-within > .header__panel {
+    display: block;
+}
+
+html:not(.has-js) .mega__pane:first-child {
+    display: flex;
+}
+
+@media (max-width: 767.98px) {
+    html:not(.has-js) .header__nav {
+        position: static;
+        display: flex;
+        padding: 0 0 16px;
+    }
+
+    html:not(.has-js) .header {
+        height: auto;
+    }
+
+    html:not(.has-js) .header__bar {
+        position: static;
+        height: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header *,
+    .header *::before,
+    .header *::after {
+        transition: none !important;
+    }
+}

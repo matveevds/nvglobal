@@ -1,0 +1,162 @@
+/* Industries Cards (`.kyc-industries`) — универсальный блок, не зависит от страницы. Подключается после styles.css. */
+
+.kyc-industries .section__badge {
+    padding: 4px 20px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--nv-primary);
+    background: var(--nv-primary-soft);
+    color: var(--nv-primary);
+    backdrop-filter: blur(10px);
+}
+
+@media (max-width: 1199.98px) {
+    .kyc-industries .kyc-title {
+        font-size: 40px;
+        line-height: 130%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-industries .section__badge {
+        padding: 2px 16px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .kyc-industries .kyc-title {
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    .kyc-industries .kyc-subtitle {
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .kyc-industries .kyc-card__title {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .kyc-industries .kyc-card__title--lg {
+        font-size: 24px;
+        line-height: 150%;
+    }
+}
+
+/*
+ * Industries — один вид (Identity): карточка с иконкой, текстом и тегами. Сетка — 1 колонка на <768, 2 колонки
+ * выше; строки по содержимому, карточки строки одной высоты, теги прижаты к низу. Нечётная последняя
+ * карточка занимает всю строку (нет «висящей»).
+ */
+.kyc-industries > .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kyc-industries > .container > .section__badge {
+    margin-bottom: 24px;
+}
+
+.kyc-industries .kyc-subtitle {
+    margin-top: -12px;
+}
+
+.kyc-industries__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kyc-industries__card {
+    justify-content: space-between;
+    gap: 24px;
+    min-width: 0;
+    background: var(--nv-surface-2);
+}
+
+.kyc-industries__top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+}
+
+.kyc-industries__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 0 4px;
+}
+
+.kyc-industries__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.kyc-industries__tags .kyc-token {
+    padding-left: 13px;
+    padding-right: 13px;
+    background: var(--nv-surface-3);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.kyc-industries .kyc-card__text {
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@media (min-width: 768px) {
+    .kyc-industries__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .kyc-industries__card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    .kyc-industries .kyc-card__text {
+        font-size: 18px;
+        line-height: 155.556%;
+    }
+
+    .kyc-industries__tags .kyc-token {
+        font-size: 18px;
+        line-height: 1.55555556;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .kyc-industries__card {
+        padding: 15px;
+        border-radius: 16px;
+        justify-content: flex-start;
+    }
+}
+
+@media (min-width: 1200px) {
+    .kyc-industries .kyc-subtitle {
+        max-width: 1080px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .kyc-industries__card {
+        padding: 11px;
+        border-radius: 12px;
+        justify-content: flex-start;
+    }
+
+    .kyc-industries .kyc-card__title--md {
+        font-size: 16px;
+        line-height: 1.25;
+    }
+}

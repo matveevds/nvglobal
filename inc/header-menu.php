@@ -86,18 +86,20 @@ function nv_header_menu(): array {
     ];
 
     // Продукты из Figma. Описания — из макета (KYC) и из секции Products
-    // страницы Solutions; для остальных текст не выдумываем.
+    // страницы Solutions; для остальных текст не выдумываем. Ссылки ведут на
+    // реальные страницы (slug верхнего уровня); у KYT страницы пока нет —
+    // плановый /products/kyt/ с 'exists' => false.
     $products = [
-        ['id' => 'kyc', 'link' => nv_header_link('KYC & eKYC', '/products/kyc-ekyc/', false),
+        ['id' => 'kyc', 'link' => nv_header_link('KYC & eKYC', '/kyc/', true),
          'desc' => 'Automated KYC and eKYC Verification for Fast, Compliant Onboarding', 'links' => $kyc_docs],
-        ['id' => 'identity', 'link' => nv_header_link('Identity Verification', '/products/identity-verification/', false)],
-        ['id' => 'document', 'link' => nv_header_link('Document Verification', '/products/document-verification/', false)],
-        ['id' => 'face', 'link' => nv_header_link('Face Verification', '/products/face-verification/', false)],
-        ['id' => 'liveness', 'link' => nv_header_link('Liveness Detection', '/products/liveness-detection/', false),
+        ['id' => 'identity', 'link' => nv_header_link('Identity Verification', '/identity-verification/', true)],
+        ['id' => 'document', 'link' => nv_header_link('Document Verification', '/document-verification/', true)],
+        ['id' => 'face', 'link' => nv_header_link('Face Verification', '/face-verification/', true)],
+        ['id' => 'liveness', 'link' => nv_header_link('Liveness Detection', '/liveness/', true),
          'desc' => 'A live person, not a photo, video or mask — deepfake-resistant; password-free login by face.'],
-        ['id' => 'aml', 'link' => nv_header_link('AML Screening', '/products/aml-screening/', false),
+        ['id' => 'aml', 'link' => nv_header_link('AML Screening', '/aml/', true),
          'desc' => 'Screening against 1,700+ databases: OFAC, EU, UK, UN, PEP lists and adverse media; daily re-screening.'],
-        ['id' => 'kyb', 'link' => nv_header_link('KYB', '/products/kyb/', false),
+        ['id' => 'kyb', 'link' => nv_header_link('KYB', '/kyb/', true),
          'desc' => 'Corporate structure down to the UBO, registry checks and signatory verification.'],
         ['id' => 'kyt', 'link' => nv_header_link('KYT', '/products/kyt/', false),
          'desc' => 'Real-time risk scoring of crypto transactions, wallets and addresses.'],
@@ -127,6 +129,10 @@ function nv_header_menu(): array {
         unset($group['path'], $group['chips']);
     }
     unset($group);
+
+    $blog_page    = get_page_by_path('blog');
+    $blog_page_ok = $blog_page && 'publish' === $blog_page->post_status;
+    $blog_page_url = $blog_page_ok ? get_permalink($blog_page) : home_url('/blog/');
 
     $blog_id  = (int) get_option('page_for_posts');
     $blog_url = $blog_id > 0 ? get_permalink($blog_id) : home_url('/blog/');
@@ -173,6 +179,9 @@ function nv_header_menu(): array {
             ],
             'latest' => nv_header_latest_posts(),
         ],
+        // Простая ссылка вместо выпадающего Resources (решение владельца 2026-10-21, Р-141): страница со slug blog,
+        // если она опубликована, иначе плановый /blog/.
+        'blog'    => ['label' => 'Blog', 'url' => $blog_page_url, 'exists' => $blog_page_ok],
         'docs'    => nv_header_link('Docs',    '/docs/',           true),
         'pricing' => nv_header_link('Pricing', '/pricing-matrix/', true),
         'cta'     => ['label' => 'Start Free Trial', 'modal' => 'open-callForm2'],
@@ -197,7 +206,7 @@ function nv_header_languages(): array {
 
 /**
  * Какой пункт верхнего уровня соответствует текущей странице.
- * Возвращает ключ: products | industries | resources | docs | pricing | ''.
+ * Возвращает ключ: products | industries | resources | blog | docs | pricing | ''. Блог (запись, архив, рубрика, автор, поиск) → 'blog'; 'resources' сейчас не выводится.
  */
 function nv_header_current(): string {
     if (is_page_template('page-docs.php') || is_singular('document')) {
@@ -206,8 +215,8 @@ function nv_header_current(): string {
     if (is_page_template('page-price-matrix.php')) {
         return 'pricing';
     }
-    if (is_singular('post') || is_home() || is_category() || is_author() || is_search()) {
-        return 'resources';
+    if (is_page('blog') || is_singular('post') || is_home() || is_category() || is_tag() || is_date() || is_author() || is_search()) {
+        return 'blog';
     }
     return '';
 }
