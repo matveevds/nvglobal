@@ -10,7 +10,7 @@ get_header();
  * Mobile 2558:28451 (392). Макета Tablet нет: узел 2553:24034, названный в задании Tablet, — это
  * блок FAQ с раскрытыми ответами шириной 1440 (docs/DECISIONS.md, запись по KYC).
  *
- * Переиспользовано без копирования: первый экран `.main--solutions` (модификатор `.main--kyc`),
+ * Переиспользовано без копирования: первый экран `.main--hero` (partial kyc-hero-section),
  * аккордеон `.solutions-why` (модификатор `--kyc`), секции Integration / Contacts / FAQ
  * (template-parts/*-section.php, общие со /solutions/), панель `.solutions-products__panel`,
  * тизер и футер. Новое — только `.kyc-*` и один контроллер initKycPage() в js/main.js.
@@ -34,79 +34,40 @@ $nv_kyc_img = static function (string $name, int $w, int $h, string $class = '',
 
 <main>
 
-    <?php /* 1. Первый экран: 2561:30924 (FHD 1856x872), 2492:14452 (Desktop 1376x732), 2560:30238 (Mobile). */ ?>
-    <section class="main main--solutions main--kyc">
-        <div class="container">
-            <div class="main__card">
-                <picture class="main__media">
-                    <source media="(min-width: 1600px)"
-                            srcset="<?php echo esc_url($nv_img . 'kyc-hero-fhd.webp'); ?> 1x, <?php echo esc_url($nv_img . 'kyc-hero-fhd@2x.webp'); ?> 2x"
-                            width="1856" height="872">
-                    <source media="(min-width: 992px)"
-                            srcset="<?php echo esc_url($nv_img . 'kyc-hero-desktop.webp'); ?> 1x, <?php echo esc_url($nv_img . 'kyc-hero-desktop@2x.webp'); ?> 2x"
-                            width="1376" height="732">
-                    <source media="(min-width: 768px)"
-                            srcset="<?php echo esc_url($nv_img . 'kyc-hero-tablet.webp'); ?> 1x, <?php echo esc_url($nv_img . 'kyc-hero-tablet@2x.webp'); ?> 2x"
-                            width="776" height="872">
-                    <img src="<?php echo esc_url($nv_img . 'kyc-hero-mobile.webp'); ?>"
-                         srcset="<?php echo esc_url($nv_img . 'kyc-hero-mobile.webp'); ?> 1x, <?php echo esc_url($nv_img . 'kyc-hero-mobile@2x.webp'); ?> 2x"
-                         width="360" height="144" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
-                </picture>
-
-                <div class="main__body">
-                    <img class="main__logo" src="<?php echo esc_url($nv_img . 'logo-hero.svg'); ?>" width="206" height="39" alt="NeuroVision Global Systems">
-
-                    <div class="main__group">
-                        <div class="main__content">
-                            <h1 class="main__title">Automated KYC and eKYC Verification for Fast, Compliant Onboarding</h1>
-                            <p class="main__subtitle">One KYC solution for the whole process: ID document checks, selfie face match, liveness detection, AML screening and risk scoring — with an audit trail for every customer. Run KYC verification worldwide and eKYC under the rules of Singapore, Malaysia, Indonesia and the Philippines.</p>
-                        </div>
-                        <div class="main__actions">
-                            <button class="main__btn main__btn--primary open-callForm2" type="button">
-                                <span class="main__btn-text">Start Free Pilot</span>
-                                <span class="main__btn-icon"><?php echo $nv_arrow; ?></span>
-                            </button>
-                            <a class="main__btn main__btn--ghost" href="#how-it-works">
-                                <span class="main__btn-text">See How It Works</span>
-                                <span class="main__btn-icon"><?php echo $nv_arrow; ?></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="main__facts">
-                    <li class="main__fact">
-                        <span class="main__fact-icon" aria-hidden="true"><?php echo nv_kyc_icon('globe'); ?></span>
-                        <span class="main__fact-title">99.74% face match accuracy&nbsp;(NIST)</span>
-                    </li>
-                    <li class="main__fact">
-                        <span class="main__fact-icon" aria-hidden="true"><?php echo nv_kyc_icon('shield'); ?></span>
-                        <span class="main__fact-title">0.1&nbsp;s per face match</span>
-                    </li>
-                    <li class="main__fact">
-                        <span class="main__fact-icon" aria-hidden="true"><?php echo nv_kyc_icon('scan'); ?></span>
-                        <span class="main__fact-title">195+ countries and&nbsp;territories</span>
-                    </li>
-                    <li class="main__fact">
-                        <span class="main__fact-icon" aria-hidden="true"><?php echo nv_kyc_icon('document'); ?></span>
-                        <span class="main__fact-title">From $0.25 per KYC&nbsp;check</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* 1. Первый экран: 2561:30924 (FHD 1856x872), 2492:14452 (Desktop 1376x732), 2560:30238 (Mobile). Универсальный partial
+     * template-parts/kyc-hero-section.php; кадры по брейкпоинтам — fhd / desktop / tablet, на мобильной — тот же вертикальный кадр. */
+    get_template_part('template-parts/kyc-hero-section', null, array(
+        'media'         => array(
+            'src'          => 'kyc-hero-tablet', 'w' => 776, 'h' => 872, 'alt' => '',
+            'fhd'          => array('src' => 'kyc-hero-fhd', 'w' => 1856, 'h' => 872),
+            'desktop'      => array('src' => 'kyc-hero-desktop', 'w' => 1376, 'h' => 732),
+            'tablet'       => array('src' => 'kyc-hero-tablet', 'w' => 776, 'h' => 872),
+            'mobile'       => array('src' => 'kyc-hero-tablet', 'w' => 776, 'h' => 872),
+            'focus'        => '100% 50%',
+            'focus_mobile' => '50% 40%',
+        ),
+        'title'         => 'Automated KYC and eKYC Verification for Fast, Compliant Onboarding',
+        'subtitle'      => 'One KYC solution for the whole process: ID document checks, selfie face match, liveness detection, AML screening and risk scoring — with an audit trail for every customer. Run KYC verification worldwide and eKYC under the rules of Singapore, Malaysia, Indonesia and the Philippines.',
+        'primary_btn'   => array('text' => 'Start Free Pilot'),
+        'secondary_btn' => array('text' => 'See How It Works', 'href' => '#how-it-works'),
+        'facts'         => array(
+            array('icon_html' => nv_kyc_icon('globe'), 'text' => '99.74% face match accuracy&nbsp;(NIST)'),
+            array('icon_html' => nv_kyc_icon('shield'), 'text' => '0.1&nbsp;s per face match'),
+            array('icon_html' => nv_kyc_icon('scan'), 'text' => '195+ countries and&nbsp;territories'),
+            array('icon_html' => nv_kyc_icon('document'), 'text' => 'From $0.25 per KYC&nbsp;check'),
+        ),
+        'arrow_icon'    => $nv_arrow,
+    ));
+    ?>
 
     <?php /* 2. Сертификации: 2495:24360. */ ?>
-    <section class="kyc-certs" aria-labelledby="kyc-certs-title">
-        <div class="container">
-            <p class="kyc-certs__title" id="kyc-certs-title">Independently tested and certified</p>
-            <ul class="kyc-certs__list">
-                <?php foreach (array('NIST FRVT', 'ISO/IEC 27001:2022', 'GDPR', 'FATF-aligned AML') as $nv_cert) : ?>
-                <li class="kyc-certs__chip"><?php echo nv_kyc_icon('check', 20); ?><span><?php echo esc_html($nv_cert); ?></span></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    </section>
+    <?php get_template_part('template-parts/certs-section', null, array(
+        'section_id' => 'kyc-certs',
+        'title'      => 'Independently tested and certified',
+        'chip_icon'  => nv_kyc_icon('check', 20),
+        'chips'      => array('NIST FRVT', 'ISO/IEC 27001:2022', 'GDPR', 'FATF-aligned AML'),
+    )); ?>
 
     <?php
     /*
@@ -168,310 +129,133 @@ $nv_kyc_img = static function (string $name, int $w, int $h, string $class = '',
      * Один список карточек; кнопки «Step N» сдвигают окно списка (с 992px — по вертикали, ниже — лента со свайпом).
      */
     ?>
-    <section class="kyc-steps" id="how-it-works" data-kyc-steps>
-        <div class="solutions-products__panel kyc-panel">
-            <div class="container">
-                <div class="kyc-steps__grid">
-                    <div class="kyc-steps__left">
-                        <div class="section__badge">How it works</div>
-                        <div class="kyc-steps__text">
-                            <div class="kyc-steps__head">
-                                <h2 class="kyc-steps__title">How KYC Verification Works</h2>
-                                <p class="kyc-steps__lead">An automated decision in seconds, a documented record for your compliance team.</p>
-                            </div>
-                            <p class="kyc-steps__note">Every check in under a second — auto-approve, decline or route to manual review, by your scenario.</p>
-                            <div class="kyc-steps__nav" role="group" aria-label="KYC verification steps">
-                                <?php foreach ($nv_kyc['steps'] as $nv_i => $nv_step) : ?>
-                                <button type="button" class="kyc-steps__btn<?php echo (0 === $nv_i) ? ' is-active' : ''; ?>" data-step="<?php echo (int) $nv_i; ?>" aria-pressed="<?php echo (0 === $nv_i) ? 'true' : 'false'; ?>" aria-controls="kyc-step-<?php echo (int) $nv_i; ?>">
-                                    <span class="kyc-steps__btn-text">Step <?php echo (int) ($nv_i + 1); ?></span>
-                                    <span class="kyc-steps__btn-icon"><?php echo $nv_arrow; ?></span>
-                                </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kyc-steps__right">
-                        <div class="kyc-steps__viewport" data-steps-viewport>
-                            <ol class="kyc-steps__list" data-steps-list>
-                                <?php foreach ($nv_kyc['steps'] as $nv_i => $nv_step) : ?>
-                                <li class="kyc-steps__card" id="kyc-step-<?php echo (int) $nv_i; ?>" data-step-card>
-                                    <span class="kyc-steps__chip">Step <?php echo (int) ($nv_i + 1); ?></span>
-                                    <?php echo $nv_kyc_img($nv_step['img'], $nv_step['w'], $nv_step['w'], 'kyc-steps__image', '', false); ?>
-                                    <div class="kyc-steps__card-text">
-                                        <h3 class="kyc-steps__card-title"><?php echo esc_html($nv_step['title']); ?></h3>
-                                        <p class="kyc-steps__card-desc"><?php echo esc_html($nv_step['text']); ?></p>
-                                    </div>
-                                </li>
-                                <?php endforeach; ?>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* Общий partial с /identity-verification/ (I-01); section_id/step_id_prefix по умолчанию
+     * воспроизводят прежние "how-it-works"/"kyc-step-N" — byte-identical для KYC. */
+    get_template_part('template-parts/kyc-steps-section', null, array(
+        'badge'          => 'How it works',
+        'title'          => 'How KYC Verification Works',
+        'lead'           => 'An automated decision in seconds, a documented record for your compliance team.',
+        'note'           => 'Every check in under a second — auto-approve, decline or route to manual review, by your scenario.',
+        'steps'          => $nv_kyc['steps'],
+        'arrow_icon'     => $nv_arrow,
+        'step_id_prefix' => 'kyc-step',
+        'nav_label'      => 'KYC verification steps',
+    ));
+    ?>
 
     <?php
     /*
      * 5. Risk-Based KYC: 2492:14501, вкладки 2502:24747 / 2539:20397 (FHD 2561:31026 / 37195 / 37270).
      * В Figma 2502:24747 подсвечена третья кнопка при содержимом CDD — ошибка макета: активна вторая (CDD).
+     * Универсальный блок — partial template-parts/kyc-risk-section.php; данные вкладок — `risk` в inc/kyc-data.php.
      */
-    $nv_risk_states = array();
+    $nv_risk_tabs = array();
     foreach ($nv_kyc['risk'] as $nv_r) {
-        $nv_risk_states[] = array('title' => $nv_r['title'], 'text' => $nv_r['text'], 'when' => $nv_r['when'], 'checks' => $nv_r['checks']);
+        $nv_risk_tabs[] = $nv_r + array('icon' => nv_kyc_icon('temple'));
     }
-    $nv_risk0 = $nv_kyc['risk'][0];
+    get_template_part('template-parts/kyc-risk-section', null, array(
+        'badge'        => 'Due diligence',
+        'title'        => 'Risk-Based KYC: Simplified, Standard and Enhanced Due Diligence',
+        'lead'         => 'FATF and most national regulators require a risk-based approach: light checks for low-risk customers, deeper checks where the risk is higher. Set the rules once, and every customer gets the right level of KYC automatically.',
+        'tabs'         => $nv_risk_tabs,
+        'when_label'   => 'When',
+        'checks_label' => 'Checks',
+        'side'         => array(
+            'title' => 'Re-verification and KYC refresh',
+            'text'  => 'Ask customers to verify again when their ID expires, their details change or their risk level goes up — without a new onboarding flow.',
+            'img'   => 'kyc-risk-refresh',
+            'w'     => 245,
+            'h'     => 233,
+        ),
+        'arrow_icon'   => $nv_arrow,
+        'tabs_label'   => 'Due diligence level',
+    ));
     ?>
-    <section class="kyc-section kyc-risk" data-kyc-risk data-kyc-states="<?php echo esc_attr(wp_json_encode($nv_risk_states)); ?>">
-        <div class="container">
-            <div class="section__badge">Due diligence</div>
-            <div class="kyc-risk__row">
-                <div class="kyc-risk__left">
-                    <div class="kyc-risk__text">
-                        <h2 class="kyc-title">Risk-Based KYC: Simplified, Standard and Enhanced Due Diligence</h2>
-                        <p class="kyc-lead">FATF and most national regulators require a risk-based approach: light checks for low-risk customers, deeper checks where the risk is higher. Set the rules once, and every customer gets the right level of KYC automatically.</p>
-                    </div>
-                    <div class="kyc-risk__tabs" role="tablist" aria-label="Due diligence level" aria-orientation="vertical">
-                        <?php foreach ($nv_kyc['risk'] as $nv_i => $nv_r) : ?>
-                        <button type="button" role="tab" class="kyc-risk__tab<?php echo (0 === $nv_i) ? ' is-active' : ''; ?>"
-                                id="kyc-risk-tab-<?php echo (int) $nv_i; ?>" data-index="<?php echo (int) $nv_i; ?>"
-                                aria-selected="<?php echo (0 === $nv_i) ? 'true' : 'false'; ?>" aria-controls="kyc-risk-panel"
-                                tabindex="<?php echo (0 === $nv_i) ? '0' : '-1'; ?>">
-                            <span class="kyc-risk__tab-text"><?php echo esc_html($nv_r['button']); ?></span>
-                            <span class="kyc-risk__tab-icon"><?php echo $nv_arrow; ?></span>
-                        </button>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
 
-                <div class="kyc-risk__right">
-                    <div class="kyc-risk__main" id="kyc-risk-panel" role="tabpanel" aria-labelledby="kyc-risk-tab-0" aria-live="polite">
-                        <h3 class="kyc-risk__title" data-slot="title"><?php echo esc_html($nv_risk0['title']); ?></h3>
-                        <div class="kyc-risk__inner">
-                            <div class="kyc-risk__summary">
-                                <span class="kyc-icon-box" aria-hidden="true"><?php echo nv_kyc_icon('temple'); ?></span>
-                                <p class="kyc-risk__summary-text" data-slot="text"><?php echo esc_html($nv_risk0['text']); ?></p>
-                            </div>
-                            <div class="kyc-risk__details">
-                                <div class="kyc-risk__row-item">
-                                    <span class="kyc-risk__label">When</span>
-                                    <span class="kyc-risk__when" data-slot="when"><?php echo esc_html($nv_risk0['when']); ?></span>
-                                </div>
-                                <div class="kyc-risk__row-item kyc-risk__row-item--checks">
-                                    <span class="kyc-risk__label">Checks</span>
-                                    <ul class="kyc-risk__checks" data-slot="checks">
-                                        <?php foreach ($nv_risk0['checks'] as $nv_c) : ?>
-                                        <li class="kyc-token"><?php echo esc_html($nv_c); ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kyc-card kyc-risk__side">
-                        <div class="kyc-risk__side-text">
-                            <h3 class="kyc-card__title">Re-verification and KYC refresh</h3>
-                            <p class="kyc-card__text">Ask customers to verify again when their ID expires, their details change or their risk level goes up — without a new onboarding flow.</p>
-                        </div>
-                        <?php echo $nv_kyc_img('kyc-risk-refresh', 245, 233, 'kyc-risk__side-image'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <?php /* 6. Case management и платформа: 2502:24611. */ ?>
-    <section class="kyc-section kyc-platform">
-        <div class="container">
-            <div class="section__badge">Platform</div>
-            <h2 class="kyc-title">A KYC Platform Your Compliance Team Will Actually Use</h2>
-            <div class="kyc-platform__grid">
-                <div class="kyc-platform__col">
-                    <div class="kyc-card kyc-card--filled kyc-platform__case">
-                        <div class="kyc-platform__case-text">
-                            <h3 class="kyc-card__title kyc-card__title--lg">Case management and manual review</h3>
-                            <p class="kyc-card__text kyc-card__text--md">Flagged customers land in a review queue with everything side by side: document, selfie, liveness frames, extracted data and screening hits.</p>
-                        </div>
-                        <div class="kyc-platform__note">
-                            <span class="kyc-icon-box" aria-hidden="true"><?php echo nv_kyc_icon('user'); ?></span>
-                            <p class="kyc-platform__note-text">Your analyst approves or declines in one click and leaves a comment.</p>
-                        </div>
-                    </div>
-                    <div class="kyc-platform__row">
-                        <div class="kyc-card kyc-platform__audit">
-                            <h3 class="kyc-card__title kyc-card__title--lg">Audit trail for every decision</h3>
-                            <p class="kyc-card__text kyc-card__text--md">Every KYC session is logged with timestamps, check results, risk level and reviewer actions, so you can show a regulator why each customer was accepted.</p>
-                            <?php echo $nv_kyc_img('kyc-step-4', 255, 255, 'kyc-platform__audit-image'); ?>
-                        </div>
-                        <div class="kyc-platform__pair">
-                            <div class="kyc-card kyc-card--filled">
-                                <h3 class="kyc-card__title">Roles and access rights</h3>
-                                <p class="kyc-card__text kyc-card__text--md">Give analysts, managers and auditors different permissions, and limit who can see personal data.</p>
-                            </div>
-                            <div class="kyc-card kyc-card--filled">
-                                <h3 class="kyc-card__title">Reports and statistics</h3>
-                                <p class="kyc-card__text kyc-card__text--md">Track pass rates, review times, decline reasons and volumes by country in the KYC dashboard, and export reports for audits.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kyc-platform__screen">
-                    <picture>
-                        <source media="(min-width: 1600px)"
-                                srcset="<?php echo esc_url($nv_img . 'kyc-platform-laptop-fhd.webp'); ?> 1x, <?php echo esc_url($nv_img . 'kyc-platform-laptop-fhd@2x.webp'); ?> 2x"
-                                width="555" height="431">
-                        <?php echo $nv_kyc_img('kyc-platform-laptop', 400, 489, 'kyc-platform__laptop'); ?>
-                    </picture>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* 6. Case management и платформа: 2502:24611. Общий скелет .kyc-platform* с /identity-verification/
+     * (I-01/I-02); блок универсальный — тот же вид, что на /identity-verification/ (решение владельца 2026-10-21). */
+    get_template_part('template-parts/kyc-platform-section', null, array(
+        'badge'       => 'Platform',
+        'title'       => 'A KYC Platform Your Compliance Team Will Actually Use',
+        'top'         => array(
+            'title'     => 'Case management and manual review',
+            'text'      => 'Flagged customers land in a review queue with everything side by side: document, selfie, liveness frames, extracted data and screening hits.',
+            'note'      => 'Your analyst approves or declines in one click and leaves a comment.',
+            'note_icon' => nv_kyc_icon('user'),
+        ),
+        'audit'       => array('title' => 'Audit trail for every decision', 'text' => 'Every KYC session is logged with timestamps, check results, risk level and reviewer actions, so you can show a regulator why each customer was accepted.', 'img' => 'kyc-step-4', 'w' => 255),
+        'pair'        => array(
+            array('title' => 'Roles and access rights', 'text' => 'Give analysts, managers and auditors different permissions, and limit who can see personal data.'),
+            array('title' => 'Reports and statistics', 'text' => 'Track pass rates, review times, decline reasons and volumes by country in the KYC dashboard, and export reports for audits.'),
+        ),
+        'screen'      => array('image' => 'identity-platform-screen'),
+    ));
+    ?>
 
     <?php
     /*
-     * 7. KYC Compliance: 2504:24910, страны 2513:31315 / 31448 / 31544 / 31640.
-     * По умолчанию выбран глобус (FATF). Маркеры — настоящие кнопки: наведение и фокус показывают страну,
-     * клик/касание фиксирует выбор. Позиции маркеров — доли области карты 738x630 (центр-привязка Figma).
+     * 7. KYC Compliance: 2504:24910, страны 2513:31315 / 31448 / 31544 / 31640 — template-parts/kyc-compliance-section.php.
+     * По умолчанию выбран глобус (FATF, общий маркер). Позиции маркеров — доли области карты 738x630 (центр-привязка Figma; UK и EU сдвинуты на ~3% друг от друга, чтобы маркеры не слипались на мобильных).
      */
-    $nv_markers = array(
+    $nv_comp_pos = array(
         'us'    => array(13.0, 22.5),
-        'uk'    => array(48.2, 17.9),
-        'eu'    => array(58.0, 23.3),
+        'uk'    => array(46.5, 15.5),
+        'eu'    => array(59.0, 25.5),
         'ae'    => array(76.4, 40.3),
         'world' => array(92.8, 88.4),
     );
-    $nv_comp_states = array();
+    $nv_comp_args = array(
+        'badge'   => 'Compliance',
+        'title'   => 'KYC Compliance Worldwide: FATF, US, EU, UK and UAE',
+        'lead'    => 'Our KYC software gives you the checks and records these rules ask for. Your compliance program decides how to use them.',
+        'markers' => array(),
+    );
     foreach ($nv_kyc['compliance'] as $nv_c) {
-        $nv_comp_states[$nv_c['id']] = array('title' => $nv_c['title'], 'text' => $nv_c['text']);
+        $nv_m = array(
+            'id'    => $nv_c['id'],
+            'flag'  => $nv_c['flag'],
+            'label' => ('world' === $nv_c['id']) ? 'FATF recommendations (global)' : $nv_c['label'],
+            'x'     => $nv_comp_pos[$nv_c['id']][0],
+            'y'     => $nv_comp_pos[$nv_c['id']][1],
+            'title' => $nv_c['title'],
+            'text'  => $nv_c['text'],
+        );
+        if ('world' === $nv_c['id']) {
+            $nv_comp_args['general'] = $nv_m;
+        } else {
+            $nv_comp_args['markers'][] = $nv_m;
+        }
     }
-    $nv_comp0 = $nv_kyc['compliance'][0];
+    get_template_part('template-parts/kyc-compliance-section', null, $nv_comp_args);
     ?>
-    <section class="kyc-section kyc-compliance" data-kyc-compliance data-kyc-states="<?php echo esc_attr(wp_json_encode($nv_comp_states)); ?>">
-        <div class="container">
-            <div class="section__badge">Compliance</div>
-            <div class="kyc-compliance__stage">
-                <div class="kyc-compliance__head">
-                    <h2 class="kyc-title">KYC Compliance Worldwide: FATF, US, EU, UK and UAE</h2>
-                    <p class="kyc-subtitle">Our KYC software gives you the checks and records these rules ask for. Your compliance program decides how to use them.</p>
-                </div>
-                <div class="kyc-compliance__row">
-                    <div class="kyc-compliance__info">
-                        <div class="kyc-card kyc-card--filled kyc-compliance__card" aria-live="polite">
-                            <h3 class="kyc-card__title" data-slot="title"><?php echo esc_html($nv_comp0['title']); ?></h3>
-                            <p class="kyc-card__text kyc-card__text--md" data-slot="text"><?php echo esc_html($nv_comp0['text']); ?></p>
-                        </div>
-                    </div>
-                    <div class="kyc-compliance__map-card">
-                        <div class="kyc-compliance__map" data-map-area>
-                            <img class="kyc-compliance__world" src="<?php echo esc_url($nv_img . 'kyc-map-world.svg'); ?>" width="630" height="630" alt="" aria-hidden="true" loading="lazy" decoding="async">
-                            <?php foreach ($nv_kyc['compliance'] as $nv_i => $nv_c) :
-                                $nv_pos = $nv_markers[$nv_c['id']];
-                                $nv_on  = (0 === $nv_i);
-                                ?>
-                            <button type="button" class="kyc-marker kyc-marker--<?php echo esc_attr($nv_c['id']); ?><?php echo $nv_on ? ' is-active' : ''; ?>"
-                                    data-country="<?php echo esc_attr($nv_c['id']); ?>"
-                                    aria-pressed="<?php echo $nv_on ? 'true' : 'false'; ?>"
-                                    aria-label="<?php echo esc_attr('world' === $nv_c['id'] ? 'FATF recommendations (global)' : $nv_c['label']); ?>"
-                                    style="left: <?php echo esc_attr($nv_pos[0]); ?>%; top: <?php echo esc_attr($nv_pos[1]); ?>%;">
-                                <?php if ('world' !== $nv_c['id']) : ?>
-                                <img class="kyc-marker__pin" src="<?php echo esc_url($nv_img . 'kyc-marker.svg'); ?>" width="68" height="83" alt="" aria-hidden="true">
-                                <img class="kyc-marker__pin kyc-marker__pin--on" src="<?php echo esc_url($nv_img . 'kyc-marker-active.svg'); ?>" width="68" height="83" alt="" aria-hidden="true">
-                                <?php else : ?>
-                                <span class="kyc-marker__plate" aria-hidden="true"></span>
-                                <?php endif; ?>
-                                <span class="kyc-marker__face"><img src="<?php echo esc_url($nv_img . 'kyc-flag-' . $nv_c['flag'] . '.svg'); ?>" width="44" height="44" alt="" aria-hidden="true"></span>
-                            </button>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <?php
-    /*
-     * 8. eKYC in Southeast Asia: 2492:14522, страны 2538:15792 / 16413 / 17034 / 17655 / 18276.
-     * Одна карта из слоёв-стран (позиции — Figma, в долях), активной стране подставляется оранжевый слой;
-     * увеличительный круг с выносками есть только у Сингапура (стартовое состояние).
-     */
-    $nv_sea_layers = array(
-        array('thailand',     array(23.55, 67.42, 41.21, 16.29), 'th'),
-        array('indonesia',    array(58.58, 7.84, 4.79, 12.65),   'id'),
-        array('laos',         array(18.66, 63.69, 60.98, 21.79), ''),
-        array('cambodia',     array(37.16, 63.55, 52.77, 26.09), ''),
-        array('vietnam',      array(16.76, 60.12, 48.42, 25.71), 'vn'),
-        array('group-a',      array(18.87, 63.63, 62.66, 25.66), ''),
-        array('myanmar',      array(3.86, 76.07, 51.47, 6.09),   ''),
-        array('philippines',  array(21.04, 25.82, 39.19, 54.38), 'ph'),
-        array('dili',         array(89.82, 26.99, 8.03, 69.24),  ''),
-        array('singapore',    array(68.04, 70.6, 31.48, 28.62),  'sg'),
-        array('malaysia',     array(54.88, 41.35, 30.83, 20.94), 'my'),
-        array('group-b',      array(56.25, 74.33, 41.15, 21.93), ''),
-        array('group-c',      array(61.34, 44.69, 30.77, 39.99), ''),
-        array('cambodia-b',   array(37.09, 63.49, 52.68, 26.04), ''),
-        array('group-d',      array(20.98, 67.36, 61.9, 21.74),  ''),
-        array('thailand-b',   array(23.48, 78.2, 51.63, 16.23),  ''),
-    );
-    $nv_sea_key = array('th' => 'thailand', 'id' => 'indonesia', 'vn' => 'vietnam', 'ph' => 'philippines', 'sg' => 'singapore', 'my' => 'malaysia');
-    $nv_sea_states = array();
+    /* 8. eKYC in Southeast Asia: 2492:14522, страны 2538:15792 / 16413 / 17034 / 17655 / 18276 — partial template-parts/kyc-sea-section (универсальный блок; JS — initKycPage()). */
+    $nv_sea_items = array();
     foreach ($nv_kyc['sea'] as $nv_s) {
-        $nv_sea_states[$nv_s['id']] = array('title' => $nv_s['title'], 'text' => $nv_s['text'], 'regulator' => $nv_s['regulator'], 'id_doc' => $nv_s['id_doc']);
+        $nv_sea_items[] = array(
+            'id'    => $nv_s['id'],
+            'label' => $nv_s['label'],
+            'title' => $nv_s['title'],
+            'text'  => $nv_s['text'],
+            'rows'  => array(
+                array('label' => 'Regulator', 'values' => array($nv_s['regulator'])),
+                array('label' => 'Main ID', 'values' => array($nv_s['id_doc'])),
+                array('label' => 'What we check', 'values' => $nv_kyc['sea_checks']),
+            ),
+        );
     }
-    $nv_sea0 = $nv_kyc['sea'][0];
+    get_template_part('template-parts/kyc-sea-section', null, array(
+        'section_id' => 'southeast-asia',
+        'badge'      => 'Southeast Asia',
+        'title'      => 'eKYC in Southeast Asia: Rules and IDs by Country',
+        'lead'       => 'In Southeast Asia, regulators call it eKYC — electronic KYC — and each country has its own rules, ID cards and government databases. NeuroVision runs one eKYC solution across the region and adapts the checks to each market.',
+        'tabs_label' => 'Southeast Asia countries',
+        'countries'  => $nv_sea_items,
+    ));
     ?>
-    <section class="kyc-sea" id="southeast-asia" data-kyc-sea data-kyc-states="<?php echo esc_attr(wp_json_encode($nv_sea_states)); ?>">
-        <div class="solutions-products__panel kyc-panel">
-            <div class="container">
-                <div class="kyc-sea__inner">
-                    <div class="section__badge">Southeast Asia</div>
-                    <div class="kyc-sea__head">
-                        <h2 class="kyc-title">eKYC in Southeast Asia: Rules and IDs by Country</h2>
-                        <p class="kyc-lead">In Southeast Asia, regulators call it eKYC — electronic KYC — and each country has its own rules, ID cards and government databases. NeuroVision runs one eKYC solution across the region and adapts the checks to each market.</p>
-                    </div>
-                    <div class="kyc-sea__row">
-                        <div class="kyc-sea__map" data-sea-map aria-hidden="true">
-                            <?php foreach ($nv_sea_layers as $nv_layer) :
-                                $nv_name = $nv_layer[0]; $nv_in = $nv_layer[1]; $nv_code = $nv_layer[2];
-                                $nv_on_key = $nv_code ? $nv_sea_key[$nv_code] : '';
-                                $nv_is_on  = ($nv_on_key && $nv_on_key === $nv_sea0['id']);
-                                $nv_src    = $nv_img . 'kyc-sea-' . $nv_name . ($nv_is_on ? '-on' : '') . '.svg';
-                                ?>
-                            <img class="kyc-sea__layer" src="<?php echo esc_url($nv_src); ?>" alt="" loading="lazy" decoding="async"
-                                 <?php if ($nv_on_key) : ?>data-country="<?php echo esc_attr($nv_on_key); ?>" data-src="<?php echo esc_url($nv_img . 'kyc-sea-' . $nv_name . '.svg'); ?>" data-src-on="<?php echo esc_url($nv_img . 'kyc-sea-' . $nv_name . '-on.svg'); ?>"<?php endif; ?>
-                                 style="left: <?php echo esc_attr(round($nv_in[3], 2)); ?>%; top: <?php echo esc_attr(round($nv_in[0], 2)); ?>%; width: <?php echo esc_attr(round(100 - $nv_in[1] - $nv_in[3], 2)); ?>%; height: <?php echo esc_attr(round(100 - $nv_in[0] - $nv_in[2], 2)); ?>%;">
-                            <?php endforeach; ?>
-                            <div class="kyc-sea__zoom"<?php echo 'singapore' === $nv_sea0['id'] ? '' : ' hidden'; ?> data-sea-zoom>
-                                <img class="kyc-sea__ellipse" src="<?php echo esc_url($nv_img . 'kyc-sea-ellipse.svg'); ?>" width="24" height="24" alt="">
-                                <img class="kyc-sea__line kyc-sea__line--a" src="<?php echo esc_url($nv_img . 'kyc-sea-line-a.svg'); ?>" alt="">
-                                <img class="kyc-sea__line kyc-sea__line--b" src="<?php echo esc_url($nv_img . 'kyc-sea-line-b.svg'); ?>" alt="">
-                                <span class="kyc-sea__circle"><img src="<?php echo esc_url($nv_img . 'kyc-sea-singapore-zoom.svg'); ?>" alt=""></span>
-                            </div>
-                        </div>
-                        <div class="kyc-sea__side">
-                            <div class="kyc-sea__tabs" role="tablist" aria-label="Southeast Asia countries">
-                                <?php foreach ($nv_kyc['sea'] as $nv_i => $nv_s) : ?>
-                                <button type="button" role="tab" class="kyc-sea__tab<?php echo (0 === $nv_i) ? ' is-active' : ''; ?>"
-                                        id="kyc-sea-tab-<?php echo esc_attr($nv_s['id']); ?>" data-country="<?php echo esc_attr($nv_s['id']); ?>"
-                                        aria-selected="<?php echo (0 === $nv_i) ? 'true' : 'false'; ?>" aria-controls="kyc-sea-panel"
-                                        tabindex="<?php echo (0 === $nv_i) ? '0' : '-1'; ?>"><?php echo esc_html($nv_s['label']); ?></button>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="kyc-card kyc-card--filled kyc-sea__card" id="kyc-sea-panel" role="tabpanel" aria-labelledby="kyc-sea-tab-singapore" aria-live="polite">
-                                <h3 class="kyc-card__title" data-slot="title"><?php echo esc_html($nv_sea0['title']); ?></h3>
-                                <p class="kyc-sea__text" data-slot="text"><?php echo esc_html($nv_sea0['text']); ?></p>
-                                <dl class="kyc-sea__facts">
-                                    <div class="kyc-sea__fact"><dt>Regulator</dt><dd><span class="kyc-token kyc-token--orange" data-slot="regulator"><?php echo esc_html($nv_sea0['regulator']); ?></span></dd></div>
-                                    <div class="kyc-sea__fact"><dt>Main ID</dt><dd><span class="kyc-token kyc-token--orange" data-slot="id_doc"><?php echo esc_html($nv_sea0['id_doc']); ?></span></dd></div>
-                                    <div class="kyc-sea__fact"><dt>What we check</dt><dd class="kyc-sea__tokens"><?php foreach ($nv_kyc['sea_checks'] as $nv_c) : ?><span class="kyc-token kyc-token--orange"><?php echo esc_html($nv_c); ?></span><?php endforeach; ?></dd></div>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <?php /* 9. KYC Onboarding That Customers Finish: 2538:18915. */ ?>
     <section class="kyc-section kyc-onboarding">
@@ -485,7 +269,7 @@ $nv_kyc_img = static function (string $name, int $w, int $h, string $class = '',
                 <div class="kyc-card kyc-card--filled kyc-onboarding__auto">
                     <h3 class="kyc-card__title kyc-card__title--lg">Automated customer onboarding with manual review only when needed</h3>
                     <p class="kyc-card__text kyc-card__text--md">Clear passes and clear fails are decided automatically. Your team only sees the borderline cases — with the reason they were flagged.</p>
-                    <?php echo $nv_kyc_img('kyc-onboard-laptop', 443, 323, 'kyc-onboarding__laptop'); ?>
+                    <?php echo $nv_kyc_img('kyc-onboard-laptop-full', 440, 394, 'kyc-onboarding__laptop'); ?>
                 </div>
                 <div class="kyc-card kyc-onboarding__retakes">
                     <picture>
@@ -518,121 +302,43 @@ $nv_kyc_img = static function (string $name, int $w, int $h, string $class = '',
         </div>
     </section>
 
-    <?php /* 10. KYC Solutions by Industry: 2538:19117. */ ?>
-    <section class="kyc-section kyc-industries">
-        <div class="container">
-            <div class="section__badge">Industries</div>
-            <h2 class="kyc-title">KYC Solutions by Industry</h2>
-            <ul class="kyc-industries__grid">
-                <?php foreach ($nv_kyc['industries'] as $nv_ind) : ?>
-                <li class="kyc-card kyc-industries__card">
-                    <div class="kyc-industries__top">
-                        <span class="kyc-icon-box" aria-hidden="true"><?php echo nv_kyc_icon('industry'); ?></span>
-                        <div class="kyc-industries__text">
-                            <h3 class="kyc-card__title kyc-card__title--md"><?php echo esc_html($nv_ind['title']); ?></h3>
-                            <p class="kyc-card__text"><?php echo esc_html($nv_ind['text']); ?></p>
-                        </div>
-                    </div>
-                    <div class="kyc-industries__req">
-                        <span class="kyc-industries__req-label">Typical requirements</span>
-                        <span class="kyc-industries__req-text"><?php echo esc_html($nv_ind['req']); ?></span>
-                    </div>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    </section>
+    <?php
+    /* 10. KYC Solutions by Industry: 2538:19117. Общий partial с /identity-verification/ (I-01). */
+    get_template_part('template-parts/kyc-industries-section', null, array(
+        'badge' => 'Industries',
+        'title' => 'KYC Solutions by Industry',
+        'items' => $nv_kyc['industries'],
+    ));
+    ?>
 
-    <?php /* 11. KYC Service Pricing: 2539:19468. */ ?>
-    <section class="kyc-pricing">
-        <div class="solutions-products__panel kyc-panel">
-            <div class="container">
-                <div class="section__badge">Industries</div>
-                <div class="kyc-pricing__inner">
-                    <div class="kyc-pricing__head">
-                        <h2 class="kyc-title">KYC Service Pricing</h2>
-                        <p class="kyc-lead kyc-lead--md">No subscription and no setup fee. You pay per completed KYC check, and the price goes down as your volume grows.</p>
-                    </div>
-                    <div class="kyc-pricing__grid">
-                        <div class="kyc-card kyc-card--filled kyc-pricing__main">
-                            <div class="kyc-pricing__main-text">
-                                <p class="kyc-pricing__price">From <span>$0.25</span> per check</p>
-                                <p class="kyc-pricing__desc">Build your check from the modules you need — document, face match, liveness, AML screening, proof of address.</p>
-                            </div>
-                            <a class="kyc-btn kyc-btn--primary" href="<?php echo esc_url(home_url('/pricing-matrix/')); ?>">
-                                <span class="kyc-btn__text">See KYC Pricing</span>
-                                <span class="kyc-btn__icon"><?php echo $nv_arrow; ?></span>
-                            </a>
-                        </div>
-                        <div class="kyc-pricing__side">
-                            <div class="kyc-card kyc-card--accent kyc-pricing__plan">
-                                <div class="kyc-pricing__plan-text">
-                                    <h3 class="kyc-card__title">Free pilot</h3>
-                                    <p class="kyc-card__text">1-month pilot on your real traffic, sandbox access from day one</p>
-                                </div>
-                                <button type="button" class="kyc-btn kyc-btn--small open-callForm2">
-                                    <span class="kyc-btn__text">Start Free Pilot</span>
-                                    <span class="kyc-btn__icon"><?php echo $nv_arrow; ?></span>
-                                </button>
-                            </div>
-                            <div class="kyc-card kyc-card--filled kyc-pricing__plan">
-                                <div class="kyc-pricing__plan-text">
-                                    <h3 class="kyc-card__title">Volume and enterprise plans</h3>
-                                    <p class="kyc-card__text">Custom pricing for high volumes, on-premise deployment, an SLA and a dedicated manager</p>
-                                </div>
-                                <button type="button" class="kyc-btn kyc-btn--small open-callForm">
-                                    <span class="kyc-btn__text">Talk to Sales</span>
-                                    <span class="kyc-btn__icon"><?php echo $nv_arrow; ?></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* 11. KYC Service Pricing: 2539:19468. Общий partial с /identity-verification/ (I-01). */
+    get_template_part('template-parts/kyc-pricing-section', null, array(
+        'badge'        => 'Industries',
+        'title'        => 'KYC Service Pricing',
+        'lead'         => 'No subscription and no setup fee. You pay per completed KYC check, and the price goes down as your volume grows.',
+        'price_prefix' => 'From',
+        'price'        => '$0.25',
+        'price_unit'   => 'per check',
+        'price_note'   => 'Build your check from the modules you need — document, face match, liveness, AML screening, proof of address.',
+        'cta'          => 'See KYC Pricing',
+        'cta_url'      => home_url('/pricing-matrix/'),
+        'arrow_icon'   => $nv_arrow,
+        'plans'        => array(
+            array('title' => 'Free pilot', 'text' => '1-month pilot on your real traffic, sandbox access from day one', 'btn' => 'Start Free Pilot', 'form' => 'open-callForm2'),
+            array('title' => 'Volume and enterprise plans', 'text' => 'Custom pricing for high volumes, on-premise deployment, an SLA and a dedicated manager', 'btn' => 'Talk to Sales', 'form' => 'open-callForm'),
+        ),
+    ));
+    ?>
 
-    <?php /* 12. About: 2539:19578. */ ?>
-    <section class="kyc-section kyc-about">
-        <div class="container">
-            <div class="section__badge">About</div>
-            <div class="kyc-about__head">
-                <h2 class="kyc-title">One identity platform for onboarding, compliance, signing and payments</h2>
-                <p class="kyc-lead kyc-lead--md">NeuroVision Global builds every engine in-house — document OCR, face recognition, liveness and anti-fraud — and runs them for banks, fintechs, telecoms and government services on four continents. Profitable and founder-owned; no third-party technology under the hood.</p>
-            </div>
-            <div class="kyc-about__stats">
-                <div class="kyc-card kyc-about__accuracy">
-                    <p class="kyc-card__text kyc-card__text--md">Our advanced computer vision technology delivers</p>
-                    <div class="kyc-about__figures">
-                        <div class="kyc-about__figure"><span class="kyc-about__value">99.74%</span><span class="kyc-about__caption">facial recognition accuracy</span></div>
-                        <span class="kyc-about__divider" aria-hidden="true"></span>
-                        <div class="kyc-about__figure"><span class="kyc-about__value">99.85%</span><span class="kyc-about__caption">document recognition accuracy</span></div>
-                    </div>
-                </div>
-                <div class="kyc-card kyc-about__documents">
-                    <p class="kyc-card__text kyc-card__text--md">Our advanced computer vision technology delivers</p>
-                    <p class="kyc-about__documents-text">over <span>16,000 document</span> types <br class="kyc-about__br">from <span>195+ countries and territories</span></p>
-                </div>
-            </div>
-            <div class="kyc-card kyc-about__certs">
-                <div class="kyc-about__certs-text">
-                    <p class="kyc-about__certs-title">NeuroVision Global operates in compliance with ISO/IEC 27001:2022 and GDPR standards, covering the design, development, and operation of AI-based identity verification systems</p>
-                    <div class="kyc-about__certs-links">
-                        <span class="kyc-tag"><span>ISO/IEC 27001:2022</span><?php echo $nv_arrow; ?></span>
-                        <span class="kyc-tag"><span>GDPR compliance certification</span><?php echo $nv_arrow; ?></span>
-                    </div>
-                </div>
-                <div class="kyc-about__badges">
-                    <?php echo $nv_kyc_img('kyc-cert-iso', 120, 120, '', 'ISO register global certification mark'); ?>
-                    <?php echo $nv_kyc_img('kyc-cert-asib', 94, 120, '', 'ASIB certification mark'); ?>
-                    <?php echo $nv_kyc_img('kyc-cert-qa', 120, 120, 'kyc-about__badge-round', 'QA Compliance Assessment certification mark'); ?>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* 12. About: 2539:19578. Общий partial с /identity-verification/ (I-01): только badge/title/lead
+     * свои, статистика/сертификаты — те же данные на обеих страницах. */
+    get_template_part('template-parts/kyc-about-section', null, array('arrow_icon' => $nv_arrow));
+    ?>
 
     <?php /* 13. Integration — общий блок со /solutions/ (Figma 2539:19620, тексты совпадают). */ ?>
-    <?php get_template_part('template-parts/integration-section'); ?>
+    <?php require_once get_template_directory() . '/inc/integration-preset.php'; get_template_part('template-parts/integration-section', null, nv_integration_preset()); ?>
 
     <?php /* 14. Contacts: 2492:14632 — общая секция и форма. FAQ: 2492:14616, ответы — 2553:24034. */ ?>
     <?php get_template_part('template-parts/contacts-section'); ?>

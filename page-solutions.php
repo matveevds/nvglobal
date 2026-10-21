@@ -670,7 +670,7 @@ get_header(); ?>
     </section>
 
 
-    <?php get_template_part('template-parts/integration-section'); ?>
+    <?php require_once get_template_directory() . '/inc/integration-preset.php'; get_template_part('template-parts/integration-section', null, nv_integration_preset()); ?>
 
     <?php
     /*
