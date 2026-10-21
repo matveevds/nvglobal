@@ -1269,140 +1269,16 @@ get_header(); ?>
     </section>
     <?php endif; ?>
 
-    <?php require_once get_template_directory() . '/template-parts/contacts-icons.php'; ?>
-    <section class="contacts section" id="contacts">
-        <div class="container">
-            <div class="contacts__wrapper">
-                <div class="section__badge">Contacts</div>
-
-                <div class="contacts__content">
-                    <div class="contacts__title-block">
-                        <h2 class="section__title">Let&rsquo;s talk about your verification flow</h2>
-                        <p class="section__subtitle">Demo, sandbox access and a pilot scenario for your flow &mdash; within one week of the first call.</p>
-                        <?php if (false) : /* Третий абзац скрыт: в макете редизайна его нет (Р-11) */ ?>
-                        <p class="section__description">Whether you're scaling your fintech platform, securing crypto transactions, or modernizing government services, we're here to show you exactly how our AI-powered verification fits your unique needs. Connect with our team and discover why leading companies trust NeuroVision Global Systems to verify hundreds of millions of identities every year.</p>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="contacts__actions">
-                        <div class="contacts__card">
-                            <div class="contacts__card-icon">
-                                <?php echo nv_contacts_icon('calling-white', 24); ?>
-                            </div>
-
-                            <div class="contacts__card-info">
-                                <div class="contacts__card-title">Prefer to reach out directly?</div>
-
-                                <div class="contacts__card-item">
-                                    <div class="contacts__card-item-name">Email us:</div>
-                                    <a href="mailto:hello@nv.global" class="contacts__card-item-link">
-                                        <span>hello@nv.global</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#2B323B"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <?php
-                                /*
-                                 * Мессенджеры из макета. Выводим только те, у которых есть
-                                 * реальный адрес: заглушек href="#" не ставим.
-                                 * Telegram и WhatsApp ждут ссылок — BACKLOG R-20.
-                                 */
-                                $nv_contacts_social = array_filter([
-                                    'telegram' => ['url' => '', 'label' => 'Telegram'],
-                                    'whatsapp' => ['url' => '', 'label' => 'WhatsApp'],
-                                    'linkedin' => ['url' => 'https://www.linkedin.com/company/nvglobal-ai/posts/', 'label' => 'LinkedIn'],
-                                ], static function ($item) { return $item['url'] !== ''; });
-                                ?>
-                                <?php if ($nv_contacts_social) : ?>
-                                    <div class="contacts__card-item contacts__card-item--social">
-                                        <div class="contacts__card-item-name">Message us</div>
-                                        <div class="contacts__card-social-list">
-                                            <?php foreach ($nv_contacts_social as $nv_social_key => $nv_social) : ?>
-                                                <a href="<?php echo esc_url($nv_social['url']); ?>"
-                                                   class="contacts__card-social-link"
-                                                   target="_blank" rel="noopener noreferrer"
-                                                   aria-label="<?php echo esc_attr($nv_social['label']); ?>">
-                                                    <?php echo nv_contacts_icon($nv_social_key, 24); ?>
-                                                </a>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="contacts__card-line"></div>
-
-                            <div class="contacts__card-action">
-                                <button class="btn btn--black open-callForm2 btn-with-lottie-arrow-orange">
-                                    <span>Book a meeting instantly</span>
-                                    <span class="btn__icon lottie-container-arrow-orange">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M13.0391 5.34572C13.2356 4.9811 13.691 4.8445 14.0557 5.04104H14.0566L14.0576 5.04201C14.0586 5.04254 14.0599 5.0431 14.0615 5.04397C14.065 5.04586 14.0699 5.04934 14.0762 5.05276C14.0888 5.05967 14.1076 5.06914 14.1309 5.08205C14.1779 5.10811 14.2463 5.14631 14.332 5.19533C14.5035 5.29333 14.7468 5.43607 15.0381 5.61526C15.6193 5.97277 16.3988 6.48141 17.1816 7.08205C17.96 7.67929 18.766 8.38638 19.3848 9.14358C19.989 9.88309 20.5 10.7738 20.5 11.7246L20.4941 11.9014C20.436 12.7859 19.9524 13.6128 19.3857 14.3067C18.767 15.0642 17.96 15.7707 17.1816 16.3682C16.3987 16.9691 15.6193 17.4783 15.0381 17.836C14.7467 18.0152 14.5035 18.1579 14.332 18.2559C14.2463 18.3049 14.1779 18.3431 14.1309 18.3692C14.1079 18.3819 14.0898 18.3916 14.0771 18.3985C14.0708 18.4019 14.0651 18.4053 14.0615 18.4072C14.0599 18.4081 14.0586 18.4087 14.0576 18.4092L14.0566 18.4102H14.0557C13.6911 18.6067 13.2357 18.471 13.0391 18.1065C12.8425 17.7419 12.9792 17.2864 13.3438 17.0899C13.3442 17.0896 13.3455 17.0895 13.3467 17.0889C13.349 17.0877 13.3525 17.0857 13.3574 17.083C13.3676 17.0775 13.3835 17.0682 13.4043 17.0567C13.4459 17.0336 13.5075 16.9985 13.5869 16.9531C13.7463 16.862 13.9761 16.7283 14.252 16.5586C14.805 16.2183 15.5381 15.7387 16.2676 15.1787C17.0016 14.6153 17.7081 13.9887 18.2236 13.3574C18.4832 13.0396 18.6739 12.7444 18.8018 12.4756H4.75C4.33579 12.4756 4 12.1398 4 11.7256C4.00002 11.3114 4.3358 10.9756 4.75 10.9756H18.8027C18.675 10.7066 18.4837 10.4112 18.2236 10.0928C17.7081 9.46187 17.0026 8.8347 16.2686 8.27151C15.539 7.71171 14.8051 7.23283 14.252 6.8926C13.9764 6.72311 13.7473 6.58918 13.5879 6.49807C13.5083 6.4526 13.4459 6.41761 13.4043 6.39455C13.3836 6.38307 13.3676 6.37472 13.3574 6.36916C13.3524 6.3664 13.349 6.36357 13.3467 6.36233C13.3455 6.36171 13.3442 6.36158 13.3438 6.36135C12.9794 6.16488 12.8429 5.71023 13.0391 5.34572Z" fill="#FBFBFB"></path>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </div>
-
-                           
-
-                        </div>
-                    </div>
-
-                    <div class="contacts__form-block animate-fade-up">
-
-                        <div class="contacts__form-title">Here's what you'll get:</div>
-
-                        <div class="contacts__form-list">
-                            <div class="contacts__form-item">
-                                <div class="contacts__form-item-icon">
-                                    <?php echo nv_contacts_icon('check', 24); ?>
-                                </div>
-                                <div class="contacts__form-item-text">Live demo on your<br> customer mix</div>
-                            </div>
-                            <div class="contacts__form-item">
-                                <div class="contacts__form-item-icon">
-                                    <?php echo nv_contacts_icon('check', 24); ?>
-                                </div>
-                                <div class="contacts__form-item-text">14-day trial with<br> full API access</div>
-                            </div>
-                            <div class="contacts__form-item">
-                                <div class="contacts__form-item-icon">
-                                    <?php echo nv_contacts_icon('check', 24); ?>
-                                </div>
-                                <div class="contacts__form-item-text">ROI estimate<br> for your volume</div>
-                            </div>
-                            <div class="contacts__form-item">
-                                <div class="contacts__form-item-icon">
-                                    <?php echo nv_contacts_icon('check', 24); ?>
-                                </div>
-                                <div class="contacts__form-item-text">Deployment advice: cloud or on-premises</div>
-                            </div>
-                        </div>
-
-                        <div class="contacts__form-line--orange"></div>
-
-                        <?php get_template_part('template-parts/contacts-form'); ?>
-
-
-                    </div>
-                </div>
-
-                <?php if (false) : /* Блок скрыт: в макете редизайна его нет (Р-11) */ ?>
-                <div class="contacts__bottom">
-                    <div class="contacts__bottom-text">Our teams are ready to help from Amsterdam, Dubai, and São Paulo</div>
-                    <div class="contacts__bottom-list">
-                        <div class="contacts__bottom-item tag">ISO 27001 certified</div>
-                        <div class="contacts__bottom-item tag">GDPR compliant</div>
-                        <div class="contacts__bottom-item tag">SOC 2 Type II</div>
-                    </div>
-                </div>
-                <?php endif; ?>
-                
-            </div>
-        </div>
-    </section>
+    <?php
+    /* Contacts: тот же блок, что `#cta` на /solutions/ (template-parts/contacts-section.php); заголовок и подзаголовок — прежние главной.
+     * Якорь оставлен `contacts`: на него ведут пункт page-nav и ссылка «Contacts» в подвале. */
+    get_template_part('template-parts/contacts-section', null, array(
+        'section_id' => 'contacts',
+        'badge'      => 'Contacts',
+        'title'      => 'Let’s talk about your verification flow',
+        'lead'       => 'Demo, sandbox access and a pilot scenario for your flow &mdash; within one week of the first call.',
+    ));
+    ?>
 
     <?php include get_stylesheet_directory() . '/template-parts/teaser.php'; ?>
 

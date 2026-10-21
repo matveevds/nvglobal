@@ -1619,7 +1619,8 @@ body.single-post .post-bottom:has(.phone-field__dropdown:not([hidden]), .help-se
 body.page-template-page-kyc .contacts,
 body.page-template-page-identity-verification .contacts,
 body.page-template-page-solutions .contacts,
-body.single-post .post__form {
+body.single-post .post__form,
+body.home .contacts {
     background: var(--nv-surface-1);
 }
 
@@ -1627,7 +1628,8 @@ body.single-post .post__form {
 body.page-template-page-kyc .contacts .container,
 body.page-template-page-identity-verification .contacts .container,
 body.page-template-page-solutions .contacts .container,
-body.single-post .post__form .container {
+body.single-post .post__form .container,
+body.home .contacts .container {
     max-width: 1920px;
     padding-left: 32px;
     padding-right: 32px;
@@ -1637,7 +1639,8 @@ body.single-post .post__form .container {
 body.page-template-page-kyc .contacts .section__badge,
 body.page-template-page-identity-verification .contacts .section__badge,
 body.page-template-page-solutions .contacts .section__badge,
-body.single-post .post__form .section__badge {
+body.single-post .post__form .section__badge,
+body.home .contacts .section__badge {
     padding: 3px 19px;
     border: 1px solid var(--nv-primary);
     background: var(--nv-primary-soft);
@@ -1649,14 +1652,16 @@ body.single-post .post__form .section__badge {
 body.page-template-page-kyc .contacts .contacts__content,
 body.page-template-page-identity-verification .contacts .contacts__content,
 body.page-template-page-solutions .contacts .contacts__content,
-body.single-post .post__form .contacts__content {
+body.single-post .post__form .contacts__content,
+body.home .contacts .contacts__content {
     grid-template-columns: 580px minmax(0, 1fr);
 }
 
 body.page-template-page-kyc .contacts .contacts__title-block,
 body.page-template-page-identity-verification .contacts .contacts__title-block,
 body.page-template-page-solutions .contacts .contacts__title-block,
-body.single-post .post__form .contacts__title-block {
+body.single-post .post__form .contacts__title-block,
+body.home .contacts .contacts__title-block {
     max-width: 580px;
 }
 
@@ -1664,7 +1669,8 @@ body.single-post .post__form .contacts__title-block {
 body.page-template-page-kyc .contacts .contacts__card,
 body.page-template-page-identity-verification .contacts .contacts__card,
 body.page-template-page-solutions .contacts .contacts__card,
-body.single-post .post__form .contacts__card {
+body.single-post .post__form .contacts__card,
+body.home .contacts .contacts__card {
     gap: 0;
     padding: 24px;
 }
@@ -1676,7 +1682,8 @@ body.single-post .post__form .contacts__card {
 body.page-template-page-kyc .contacts .contacts__card-info,
 body.page-template-page-identity-verification .contacts .contacts__card-info,
 body.page-template-page-solutions .contacts .contacts__card-info,
-body.single-post .post__form .contacts__card-info {
+body.single-post .post__form .contacts__card-info,
+body.home .contacts .contacts__card-info {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 52px;
@@ -1687,7 +1694,8 @@ body.single-post .post__form .contacts__card-info {
 body.page-template-page-kyc .contacts .contacts__card-title,
 body.page-template-page-identity-verification .contacts .contacts__card-title,
 body.page-template-page-solutions .contacts .contacts__card-title,
-body.single-post .post__form .contacts__card-title {
+body.single-post .post__form .contacts__card-title,
+body.home .contacts .contacts__card-title {
     grid-column: 1 / -1;
 }
 
@@ -1695,7 +1703,8 @@ body.single-post .post__form .contacts__card-title {
 body.page-template-page-kyc .contacts .contacts__form-block,
 body.page-template-page-identity-verification .contacts .contacts__form-block,
 body.page-template-page-solutions .contacts .contacts__form-block,
-body.single-post .post__form .contacts__form-block {
+body.single-post .post__form .contacts__form-block,
+body.home .contacts .contacts__form-block {
     border-radius: 16px;
 }
 
@@ -1707,7 +1716,8 @@ body.single-post .post__form .contacts__form-block {
 body.page-template-page-kyc .contacts .input-form-item:has(.input-form-block--textarea),
 body.page-template-page-identity-verification .contacts .input-form-item:has(.input-form-block--textarea),
 body.page-template-page-solutions .contacts .input-form-item:has(.input-form-block--textarea),
-body.single-post .post__form .input-form-item:has(.input-form-block--textarea) {
+body.single-post .post__form .input-form-item:has(.input-form-block--textarea),
+body.home .contacts .input-form-item:has(.input-form-block--textarea) {
     grid-column: 2;
     grid-row: 1 / 4;
     margin-top: 0;
@@ -1716,7 +1726,8 @@ body.single-post .post__form .input-form-item:has(.input-form-block--textarea) {
 body.page-template-page-kyc .contacts .input-form-item--privacy,
 body.page-template-page-identity-verification .contacts .input-form-item--privacy,
 body.page-template-page-solutions .contacts .input-form-item--privacy,
-body.single-post .post__form .input-form-item--privacy {
+body.single-post .post__form .input-form-item--privacy,
+body.home .contacts .input-form-item--privacy {
     grid-column: 2;
     grid-row: 4;
     align-self: end;
@@ -1727,7 +1738,8 @@ body.single-post .post__form .input-form-item--privacy {
 body.page-template-page-kyc .contacts .input-form-action,
 body.page-template-page-identity-verification .contacts .input-form-action,
 body.page-template-page-solutions .contacts .input-form-action,
-body.single-post .post__form .input-form-action {
+body.single-post .post__form .input-form-action,
+body.home .contacts .input-form-action {
     margin-top: 12px;
 }
 
@@ -1859,21 +1871,24 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-identity-verification .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
-    body.single-post .post__form .contacts__content {
+    body.single-post .post__form .contacts__content,
+    body.home .contacts .contacts__content {
         grid-template-columns: 443px minmax(0, 1fr);
     }
 
     body.page-template-page-kyc .contacts .contacts__title-block,
     body.page-template-page-identity-verification .contacts .contacts__title-block,
     body.page-template-page-solutions .contacts .contacts__title-block,
-    body.single-post .post__form .contacts__title-block {
+    body.single-post .post__form .contacts__title-block,
+    body.home .contacts .contacts__title-block {
         max-width: 427px;
     }
 
     body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-identity-verification .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
-    body.single-post .post__form .contacts__card {
+    body.single-post .post__form .contacts__card,
+    body.home .contacts .contacts__card {
         margin-left: 0;
         width: 100%;
         border-radius: var(--Frame-Card-Padding-Corner, 24px);
@@ -1886,7 +1901,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__form-line,
     body.page-template-page-identity-verification .contacts .contacts__form-line,
     body.page-template-page-solutions .contacts .contacts__form-line,
-    body.single-post .post__form .contacts__form-line {
+    body.single-post .post__form .contacts__form-line,
+    body.home .contacts .contacts__form-line {
         margin: 12px 0;
     }
 }
@@ -2076,14 +2092,16 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__content,
     body.page-template-page-identity-verification .contacts .contacts__content,
     body.page-template-page-solutions .contacts .contacts__content,
-    body.single-post .post__form .contacts__content {
+    body.single-post .post__form .contacts__content,
+    body.home .contacts .contacts__content {
         gap: 16px;
     }
 
     body.page-template-page-kyc .contacts .contacts__title-block,
     body.page-template-page-identity-verification .contacts .contacts__title-block,
     body.page-template-page-solutions .contacts .contacts__title-block,
-    body.single-post .post__form .contacts__title-block {
+    body.single-post .post__form .contacts__title-block,
+    body.home .contacts .contacts__title-block {
         margin-bottom: 32px;
     }
 
@@ -2091,7 +2109,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-identity-verification .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
-    body.single-post .post__form .contacts__card {
+    body.single-post .post__form .contacts__card,
+    body.home .contacts .contacts__card {
         display: block;
         /* Старое правило сдвигало карточку за край экрана — в макете этого нет. */
         transform: none;
@@ -2101,7 +2120,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-identity-verification .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
-    body.single-post .post__form .contacts__card-info {
+    body.single-post .post__form .contacts__card-info,
+    body.home .contacts .contacts__card-info {
         grid-template-columns: minmax(0, 1fr) auto auto;
         align-items: start;
         column-gap: 52px;
@@ -2111,7 +2131,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-title,
     body.page-template-page-identity-verification .contacts .contacts__card-title,
     body.page-template-page-solutions .contacts .contacts__card-title,
-    body.single-post .post__form .contacts__card-title {
+    body.single-post .post__form .contacts__card-title,
+    body.home .contacts .contacts__card-title {
         grid-column: 1;
         align-self: center;
     }
@@ -2193,7 +2214,8 @@ body.single-post .post__form .input-form-action {
     /* Горизонтальные поля Contacts остаются нулевыми; вертикальный inset задаёт контракт секции. */
     body.page-template-page-kyc .contacts,
     body.page-template-page-identity-verification .contacts,
-    body.page-template-page-solutions .contacts {
+    body.page-template-page-solutions .contacts,
+    body.home .contacts {
         padding-left: 0;
         padding-right: 0;
     }
@@ -2205,7 +2227,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .container,
     body.page-template-page-identity-verification .contacts .container,
     body.page-template-page-solutions .contacts .container,
-    body.single-post .post__form .container {
+    body.single-post .post__form .container,
+    body.home .contacts .container {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -2214,7 +2237,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .section__badge,
     body.page-template-page-identity-verification .contacts .section__badge,
     body.page-template-page-solutions .contacts .section__badge,
-    body.single-post .post__form .section__badge {
+    body.single-post .post__form .section__badge,
+    body.home .contacts .section__badge {
         padding: 1px 14px;
         font-size: 14px;
         line-height: 142.857%;
@@ -2224,7 +2248,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__title-block .section__title,
     body.page-template-page-identity-verification .contacts .contacts__title-block .section__title,
     body.page-template-page-solutions .contacts .contacts__title-block .section__title,
-    body.single-post .post__form .contacts__title-block .section__title {
+    body.single-post .post__form .contacts__title-block .section__title,
+    body.home .contacts .contacts__title-block .section__title {
         font-size: var(--Text-Title-Size-H3, 32px);
         line-height: 137.5%;
     }
@@ -2232,7 +2257,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-identity-verification .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
-    body.single-post .post__form .contacts__title-block .section__subtitle {
+    body.single-post .post__form .contacts__title-block .section__subtitle,
+    body.home .contacts .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
         line-height: 125%;
     }
@@ -2240,7 +2266,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__form-block,
     body.page-template-page-identity-verification .contacts .contacts__form-block,
     body.page-template-page-solutions .contacts .contacts__form-block,
-    body.single-post .post__form .contacts__form-block {
+    body.single-post .post__form .contacts__form-block,
+    body.home .contacts .contacts__form-block {
         padding: 11px;
         border-radius: 12px;
     }
@@ -2248,7 +2275,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card,
     body.page-template-page-identity-verification .contacts .contacts__card,
     body.page-template-page-solutions .contacts .contacts__card,
-    body.single-post .post__form .contacts__card {
+    body.single-post .post__form .contacts__card,
+    body.home .contacts .contacts__card {
         padding: 12px;
         border-radius: 12px;
     }
@@ -2257,7 +2285,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-info,
     body.page-template-page-identity-verification .contacts .contacts__card-info,
     body.page-template-page-solutions .contacts .contacts__card-info,
-    body.single-post .post__form .contacts__card-info {
+    body.single-post .post__form .contacts__card-info,
+    body.home .contacts .contacts__card-info {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: 60px;
@@ -2267,7 +2296,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-title,
     body.page-template-page-identity-verification .contacts .contacts__card-title,
     body.page-template-page-solutions .contacts .contacts__card-title,
-    body.single-post .post__form .contacts__card-title {
+    body.single-post .post__form .contacts__card-title,
+    body.home .contacts .contacts__card-title {
         grid-column: 1 / -1;
         align-self: start;
         font-size: var(--Text-Title-Size-H5, 16px);
@@ -2278,7 +2308,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-item-name,
     body.page-template-page-identity-verification .contacts .contacts__card-item-name,
     body.page-template-page-solutions .contacts .contacts__card-item-name,
-    body.single-post .post__form .contacts__card-item-name {
+    body.single-post .post__form .contacts__card-item-name,
+    body.home .contacts .contacts__card-item-name {
         font-size: var(--Text-Body-Text-Size-Small, 12px);
         line-height: 133.333%;
     }
@@ -2286,7 +2317,8 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__card-item-link,
     body.page-template-page-identity-verification .contacts .contacts__card-item-link,
     body.page-template-page-solutions .contacts .contacts__card-item-link,
-    body.single-post .post__form .contacts__card-item-link {
+    body.single-post .post__form .contacts__card-item-link,
+    body.home .contacts .contacts__card-item-link {
         font-size: var(--Text-Button-Size-Regular, 16px);
         line-height: 125%;
     }
@@ -2351,14 +2383,16 @@ body.single-post .post__form .input-form-action {
     body.page-template-page-kyc .contacts .contacts__title-block .section__title,
     body.page-template-page-identity-verification .contacts .contacts__title-block .section__title,
     body.page-template-page-solutions .contacts .contacts__title-block .section__title,
-    body.single-post .post__form .contacts__title-block .section__title {
+    body.single-post .post__form .contacts__title-block .section__title,
+    body.home .contacts .contacts__title-block .section__title {
         line-height: 137.5%;
     }
 
     body.page-template-page-kyc .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-identity-verification .contacts .contacts__title-block .section__subtitle,
     body.page-template-page-solutions .contacts .contacts__title-block .section__subtitle,
-    body.single-post .post__form .contacts__title-block .section__subtitle {
+    body.single-post .post__form .contacts__title-block .section__subtitle,
+    body.home .contacts .contacts__title-block .section__subtitle {
         font-size: var(--Text-Title-Size-H5, 16px);
         line-height: 125%;
     }
@@ -2555,7 +2589,8 @@ body.page-template-page-solutions .contacts .phone-field__search-input:focus-vis
 /* Почта в оранжевой карточке Contacts — белая: общее правило `.contacts__card-item-link span` красит текст в тёмный. */
 body.page-template-page-kyc .contacts .contacts__card-item-link span,
 body.page-template-page-identity-verification .contacts .contacts__card-item-link span,
-body.page-template-page-solutions .contacts .contacts__card-item-link span {
+body.page-template-page-solutions .contacts .contacts__card-item-link span,
+body.home .contacts .contacts__card-item-link span {
     color: var(--nv-constant-1);
 }
 
