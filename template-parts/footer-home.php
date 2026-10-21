@@ -11,16 +11,23 @@
  * светлой версии в `css/styles.css` живут под `body.home .footer`.
  *
  * Ссылки: только реальные адреса. Пункты макета, для которых в теме нет страницы
- * или якоря (Blog, пер-продуктовые ссылки, Telegram), не выводятся —
+ * или якоря (KYT, NeuroPay, Telegram), не выводятся —
  * см. `docs/BACKLOG.md`, R-22…R-24.
  */
 
 $nv_footer_uri = get_template_directory_uri();
 
-// Шесть продуктов из макета. Отдельных страниц под них нет — ведём в секцию
-// Products главной (вкладки `products-tab-1…6` соответствуют этим названиям).
-$nv_footer_products_url = home_url('/#products');
-$nv_footer_products     = ['KYC', 'KYB', 'AML', 'KYT', 'Liveness', 'NeuroPay'];
+// Продукты: только созданные страницы сайта. Пункты макета без страницы (KYT, NeuroPay) не выводятся — пустых ссылок нет.
+$nv_footer_products = [
+    ['label' => 'KYC',                   'url' => home_url('/kyc/')],
+    ['label' => 'KYB',                   'url' => home_url('/kyb/')],
+    ['label' => 'AML',                   'url' => home_url('/aml/')],
+    ['label' => 'Liveness',              'url' => home_url('/liveness/')],
+    ['label' => 'Identity Verification', 'url' => home_url('/identity-verification/')],
+    ['label' => 'Document Verification', 'url' => home_url('/document-verification/')],
+    ['label' => 'Face Verification',     'url' => home_url('/face-verification/')],
+    ['label' => 'Solutions',             'url' => home_url('/solutions/')],
+];
 
 // Resources. Blog — страница записей из «Настройки → Чтение» (`page_for_posts`), если она назначена;
 // иначе — прямой адрес `/blog/` (в макете пункт есть всегда; BACKLOG R-17).
@@ -30,6 +37,7 @@ $nv_footer_resources = [
     ['label' => 'Documentation', 'url' => home_url('/docs/')],
     ['label' => 'Pricing',       'url' => home_url('/pricing-matrix/')],
     ['label' => 'Blog',          'url' => $nv_footer_blog_id > 0 ? get_permalink($nv_footer_blog_id) : home_url('/blog/')],
+    ['label' => 'Demo',          'url' => home_url('/demo/')],
 ];
 
 $nv_footer_company = [
@@ -101,7 +109,7 @@ $nv_footer_badges = [
                         <div class="footer__nav-title">PRODUCTS</div>
                         <div class="footer__nav-list">
                             <?php foreach ($nv_footer_products as $nv_product) : ?>
-                                <a href="<?php echo esc_url($nv_footer_products_url); ?>" class="footer__nav-link"><?php echo esc_html($nv_product); ?></a>
+                                <a href="<?php echo esc_url($nv_product['url']); ?>" class="footer__nav-link"><?php echo esc_html($nv_product['label']); ?></a>
                             <?php endforeach; ?>
                         </div>
                     </div>

@@ -674,7 +674,7 @@ body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
 body.single-post .footer__nav--products .footer__nav-list {
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: repeat(3, auto);
+    grid-template-rows: repeat(4, auto);
     justify-items: start;
     column-gap: 64px;
     row-gap: 16px;
@@ -1339,7 +1339,7 @@ body.single-post .footer__bottom-line {
     body.page-template-page-price-matrix .footer__nav--products .footer__nav-list,
     body.single-post .footer__nav--products .footer__nav-list {
         grid-auto-flow: column;
-        grid-template-rows: repeat(3, auto);
+        grid-template-rows: repeat(4, auto);
         column-gap: 48px;
     }
 
