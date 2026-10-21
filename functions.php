@@ -32,6 +32,12 @@ define('THEME_ASSETS_VER', '1.1.92');
 
 
 /**
+ * Чат-виджет NeVi (web-chat-widget-root) временно отключён (2026-10-21): подключение стилей/скрипта и контейнер ниже не
+ * регистрируются. Чтобы включить обратно — поставить true.
+ */
+define('NVGLOBAL_NEVI_WIDGET_ENABLED', false);
+
+/**
  * Раннее подключение и инициализация NeVi Widget.
  */
 function nvglobal_enqueue_nevi_widget() {
@@ -81,7 +87,9 @@ function nvglobal_enqueue_nevi_widget() {
 })();
 JS, 'after');
 }
-add_action('wp_enqueue_scripts', 'nvglobal_enqueue_nevi_widget', 1);
+if (NVGLOBAL_NEVI_WIDGET_ENABLED) {
+    add_action('wp_enqueue_scripts', 'nvglobal_enqueue_nevi_widget', 1);
+}
 
 
 /**
@@ -213,8 +221,10 @@ function nvglobal_render_nevi_widget_root() {
     $rendered = true;
     echo '<div id="web-chat-widget-root"></div>';
 }
-add_action('wp_body_open', 'nvglobal_render_nevi_widget_root', 1);
-add_action('wp_footer', 'nvglobal_render_nevi_widget_root', 1);
+if (NVGLOBAL_NEVI_WIDGET_ENABLED) {
+    add_action('wp_body_open', 'nvglobal_render_nevi_widget_root', 1);
+    add_action('wp_footer', 'nvglobal_render_nevi_widget_root', 1);
+}
 
 
 

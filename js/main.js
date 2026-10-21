@@ -707,10 +707,12 @@ function initProductsSlider() {
                 init(swiper) {
                     current = swiper.activeIndex;
                     updateTabs(current);
+                    setDisabled(current);
                 },
                 slideChange(swiper) {
                     current = swiper.activeIndex;
                     updateTabs(current);
+                    setDisabled(current);
                 }
             }
         });
@@ -743,13 +745,20 @@ function initProductsSlider() {
         });
     });
 
+    // На мобильной ширине стрелки листают Swiper (слайд и картинка идут вместе через controller), на десктопе — активный слайд.
     prevBtn?.addEventListener('click', () => {
-        if (mobileMedia.matches) return;
+        if (mobileMedia.matches) {
+            mobileContentSwiper?.slidePrev();
+            return;
+        }
         setDesktopActive(current - 1);
     });
 
     nextBtn?.addEventListener('click', () => {
-        if (mobileMedia.matches) return;
+        if (mobileMedia.matches) {
+            mobileContentSwiper?.slideNext();
+            return;
+        }
         setDesktopActive(current + 1);
     });
 

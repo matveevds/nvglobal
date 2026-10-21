@@ -683,6 +683,13 @@ body.page-template-page-docs .post__content details > p {
   color: var(--nv-object-1);
 }
 
+/* Абзацы внутри раскрытого спойлера (`.spoiler__content > p`): общее `.post-text p` из post.css красит их в белый 70%,
+   а светлое правило выше берёт только прямых детей `details`. */
+body.single-document .post__content details .spoiler__content p,
+body.page-template-page-docs .post__content details .spoiler__content p {
+  color: var(--nv-object-1);
+}
+
 @media (max-width: 1199.98px) {
   body.single-document .toc-block,
   body.page-template-page-docs .toc-block {

@@ -151,6 +151,8 @@ function nv_header_menu(): array {
                 'url'   => '',
             ],
         ],
+        // Простая ссылка после Products (запрос владельца 2026-10-21).
+        'solutions' => nv_header_link('Solutions', '/solutions/', true),
         'industries' => [
             'label'  => 'Industries',
             'title'  => 'Identity verification for regulated industries',
@@ -184,6 +186,7 @@ function nv_header_menu(): array {
         'blog'    => ['label' => 'Blog', 'url' => $blog_page_url, 'exists' => $blog_page_ok],
         'docs'    => nv_header_link('Docs',    '/docs/',           true),
         'pricing' => nv_header_link('Pricing', '/pricing-matrix/', true),
+        'demo'    => nv_header_link('Demo',    '/demo/',           true),
         'cta'     => ['label' => 'Start Free Trial', 'modal' => 'open-callForm2'],
         'cta2'    => ['label' => 'Book a demo',      'modal' => 'open-callForm'],
     ];
@@ -214,6 +217,12 @@ function nv_header_current(): string {
     }
     if (is_page_template('page-price-matrix.php')) {
         return 'pricing';
+    }
+    if (is_page_template('page-demo.php') || is_page('demo')) {
+        return 'demo';
+    }
+    if (is_page_template('page-solutions.php')) {
+        return 'solutions';
     }
     if (is_page('blog') || is_singular('post') || is_home() || is_category() || is_tag() || is_date() || is_author() || is_search()) {
         return 'blog';

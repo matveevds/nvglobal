@@ -185,6 +185,10 @@
                             </div>
                         </li>
 
+                        <li class="header__item<?php echo esc_attr($nv_cur('solutions')); ?>">
+                            <a href="<?php echo esc_url($nv_menu['solutions']['url']); ?>" class="header__link"<?php echo $nv_aria('solutions'); ?>><?php echo esc_html($nv_menu['solutions']['label']); ?></a>
+                        </li>
+
                         <?php if ($nv_show_industries) : ?>
                         <li class="header__item<?php echo esc_attr($nv_cur('industries')); ?>" data-menu="industries">
                             <button type="button" class="header__trigger" id="header-trigger-industries" aria-expanded="false" aria-controls="header-panel-industries" data-trigger="industries">
@@ -256,6 +260,10 @@
 
                         <li class="header__item<?php echo esc_attr($nv_cur('pricing')); ?>">
                             <a href="<?php echo esc_url($nv_menu['pricing']['url']); ?>" class="header__link"<?php echo $nv_aria('pricing'); ?>><?php echo esc_html($nv_menu['pricing']['label']); ?></a>
+                        </li>
+
+                        <li class="header__item<?php echo esc_attr($nv_cur('demo')); ?>">
+                            <a href="<?php echo esc_url($nv_menu['demo']['url']); ?>" class="header__link"<?php echo $nv_aria('demo'); ?>><?php echo esc_html($nv_menu['demo']['label']); ?></a>
                         </li>
                     </ul>
 
