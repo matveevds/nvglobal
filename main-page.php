@@ -31,6 +31,10 @@ get_header(); ?>
                     <source media="(min-width: 1600px)"
                             srcset="<?php echo esc_url(get_template_directory_uri() . '/img/hero-bg-fhd.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/hero-bg-fhd@2x.webp'); ?> 2x"
                             width="1856" height="872">
+                    <?php /* Tablet 2376:16686 — свой кадр 776×872: телефон 290×610 справа, текст слева на диване. */ ?>
+                    <source media="(min-width: 768px) and (max-width: 991.98px)"
+                            srcset="<?php echo esc_url(get_template_directory_uri() . '/img/hero-bg-tablet.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/hero-bg-tablet@2x.webp'); ?> 2x"
+                            width="776" height="872">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/img/hero-bg.webp'); ?>"
                          srcset="<?php echo esc_url(get_template_directory_uri() . '/img/hero-bg.webp'); ?> 1x, <?php echo esc_url(get_template_directory_uri() . '/img/hero-bg@2x.webp'); ?> 2x"
                          width="1856" height="1006" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
